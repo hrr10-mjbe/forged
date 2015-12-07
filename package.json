@@ -102,11 +102,7 @@
     "start": "node server",
     "test": "grunt test",
     "update-webdriver": "node node_modules/grunt-protractor-runner/node_modules/protractor/bin/webdriver-manager update",
-<<<<<<< HEAD
-    "postinstall" "grunt build"
-=======
     "postinstall": "./node_modules/bower/bin/bower install"
->>>>>>> 1dd0ae2... update package.json with bower postinstall
   },
   "private": true
 }
