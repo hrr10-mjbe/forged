@@ -160,7 +160,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      deploy: ['.tmp', 'client', 'e2e', 'server'] 
     },
 
     // Add vendor prefixed styles
@@ -774,4 +775,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  
+  grunt.registerTask('heroku', ['build', 'clean:deploy']);
 };
