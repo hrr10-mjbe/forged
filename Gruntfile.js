@@ -1,4 +1,4 @@
-// Generated on 2015-12-05 using generator-angular-fullstack 3.0.1
+// Generated on 2015-12-08 using generator-angular-fullstack 3.0.1
 'use strict';
 
 module.exports = function (grunt) {
@@ -160,7 +160,8 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      server: '.tmp'
+      server: '.tmp',
+      deploy: ['.tmp', 'client', 'e2e', 'server'] 
     },
 
     // Add vendor prefixed styles
@@ -219,7 +220,6 @@ module.exports = function (grunt) {
     wiredep: {
       options: {
         exclude: [
-          /bootstrap.js/,
           '/json3/',
           '/es5-shim/'
         ]
@@ -775,4 +775,6 @@ module.exports = function (grunt) {
     'test',
     'build'
   ]);
+  
+  grunt.registerTask('heroku', ['build', 'clean:deploy']);
 };

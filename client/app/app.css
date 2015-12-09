@@ -1,16 +1,4 @@
 
-/**
- * Bootstrap Fonts
- */
-
-@font-face {
-  font-family: 'Glyphicons Halflings';
-  src: url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot');
-  src: url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.eot?#iefix') format('embedded-opentype'),
-  url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.woff') format('woff'),
-  url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.ttf') format('truetype'),
-  url('../bower_components/bootstrap/fonts/glyphicons-halflings-regular.svg#glyphicons_halflingsregular') format('svg');
-}
 
 /**
  *Font Awesome Fonts
@@ -38,3 +26,9 @@
   padding: 0.2em 0;
 }
 
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  .container {
+    max-width: 730px;
+  }
+}

@@ -7,8 +7,8 @@
 
 var OauthButtons = function() {
   var oauthButtons = this.oauthButtons = element(by.css('oauth-buttons'));
-  oauthButtons.facebook = oauthButtons.element(by.css('.btn.btn-social.btn-facebook'));
-  oauthButtons.google = oauthButtons.element(by.css('.btn.btn-social.btn-google'));
+  oauthButtons.facebook = oauthButtons.element(by.css('.btn.btn-facebook'));
+  oauthButtons.google = oauthButtons.element(by.css('.btn.btn-google'));
 };
 
 module.exports = new OauthButtons();

@@ -8,7 +8,6 @@ angular.module('hrr10MjbeApp', [
   'ngResource',
   'ngSanitize',
   'ui.router',
-  'ui.bootstrap',
   'validation.match'
 ])
   .config(function($urlRouterProvider, $locationProvider) {
