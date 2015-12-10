@@ -1,0 +1,83 @@
+
+
+{
+ "name": "flare",
+ "children": [
+  {
+   "name": "animate",
+   "children": [
+    {"name": "Easing", "size": 2010},
+    {"name": "FunctionSequence", "size": 3842},
+    {"name": "TransitionEvent", "size": 1116},
+    {"name": "Tween", "size": 2006}
+   ]
+  },
+  {
+   "name": "display",
+   "children": [
+    {"name": "DirtySprite", "size": 3833},
+    {"name": "LineSprite", "size": 2732},
+    {"name": "RectSprite", "size": 3623},
+    {"name": "TextSprite", "size": 2066}
+   ]
+  },
+  {
+   "name": "physics",
+   "children": [
+    {"name": "DragForce", "size": 2082},
+    {"name": "GravityForce", "size": 1336},
+    {"name": "IForce", "size": 319},
+    {"name": "NBodyForce", "size": 3498},
+    {"name": "Particle", "size": 2822},
+    {"name": "Simulation", "size": 4983},
+    {"name": "Spring", "size": 2213},
+    {"name": "SpringForce", "size": 1681}
+   ]
+  },
+  {
+   "name": "util",
+   "children": [
+    {"name": "Arrays", "size": 2258},
+    {"name": "Colors", "size": 3201},
+    {"name": "Stats", "size": 2557},
+    {"name": "Strings", "size": 2206}
+   ]
+  },
+  {
+   "name": "axis",
+   "children": [
+    {"name": "Axes", "size": 2302},
+    {"name": "Axis", "size": 2593},
+    {"name": "AxisGridLine", "size": 1652},
+    {"name": "AxisLabel", "size": 1636},
+    {"name": "CartesianAxes", "size": 3703}
+   ]
+  },
+  {
+   "name": "data",
+   "children": [
+    {"name": "Data", "size": 2044},
+    {"name": "DataList", "size": 1978},
+    {"name": "Tree", "size": 3147},
+    {"name": "TreeBuilder", "size": 2930}
+   ]
+  },
+  {
+   "name": "legend",
+   "children": [
+    {"name": "Legend", "size": 2089},
+    {"name": "LegendItem", "size": 2614},
+    {"name": "LegendRange", "size": 2030}
+   ]
+  },
+  {
+   "name": "operator",
+   "children": [
+    {"name": "IOperator", "size": 2286},
+    {"name": "Operator", "size": 2490},
+    {"name": "OperatorList", "size": 2248},
+    {"name": "SortOperator", "size": 2023}
+   ]
+  }
+ ]
+}
