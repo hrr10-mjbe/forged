@@ -26,14 +26,21 @@
       <!-- endinjector -->
     <!-- endbuild -->
   </head>
-  <body ng-app="hrr10MjbeApp">
+  <body ng-app="hrr10MjbeApp" class="fullbleed layout vertical">
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+
+    <!-- CUSTOM ELEMENTS -->
+    <link rel="import" href="elements/elements.html">
+    <link rel="import" href="elements/main-app/main-app.html">
+
     <!--[if lt IE 7]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div ui-view=""></div>
-
+    <ui-view></ui-view>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
