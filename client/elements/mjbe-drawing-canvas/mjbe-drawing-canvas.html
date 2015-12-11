@@ -1,0 +1,36 @@
+<script src="../../bower_components/fabric.js/dist/fabric.js"></script>
+<dom-module id="mjbe-drawing-canvas">
+  <template>
+   <canvas id="canvas" width="300" height="300"></canvas>   
+  </template>
+
+  <script>
+    (function () {
+      'use strict';
+
+      Polymer({
+        is: 'mjbe-drawing-canvas',
+        properties: {
+          items: {
+            type: Array,
+            notify: true,
+          }
+        },
+        ready: function() {
+          var canvas = new fabric.Canvas('canvas');
+
+        var rect = new fabric.Rect({
+            top : 100,
+            left : 100,
+            width : 60,
+            height : 70,
+            fill : 'red'
+        });
+
+        canvas.add(rect);
+        }
+      });
+    })();
+  </script>
+
+</dom-module>
