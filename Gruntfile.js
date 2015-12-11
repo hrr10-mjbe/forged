@@ -221,7 +221,8 @@ module.exports = function (grunt) {
       options: {
         exclude: [
           '/json3/',
-          '/es5-shim/'
+          '/es5-shim/',
+          '/webcomponents' 
         ]
       },
       client: {
