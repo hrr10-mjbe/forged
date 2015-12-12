@@ -28,24 +28,26 @@
       <link rel="stylesheet" href="components/oauth-buttons/oauth-buttons.css">
       <!-- endinjector -->
     <!-- endbuild -->
-  </head>
-  <body ng-app="hrr10MjbeApp" class="fullbleed layout vertical">
-    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+
+     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/iron-icons/iron-icons.html">
 
     <!-- CUSTOM ELEMENTS -->
     <link rel="import" href="elements/elements.html">
+  </head>
+  <body ng-app="hrr10MjbeApp" unresolved class="fullbleed layout vertical">
+   
 
     <!--[if lt IE 7]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-      <paper-header-panel class="main" main mode="waterfall">
+      <paper-header-panel class="flex" main mode="waterfall">
         <!-- Main Toolbar -->
+
         <paper-toolbar>
-          <paper-icon-button icon="menu" paper-drawer-toggle></paper-icon-button>
           <div class="title top">Adapt Academy</div>
           <div class="horizontal layout">
             <paper-tabs>
@@ -57,8 +59,12 @@
             </paper-tabs>
           </div>
         </paper-toolbar>
-        <div class="content">
-    <ui-view></ui-view>
+        <!--<div class="fit">
+        <paper-material flex elevation = "1" class="fit" style="background-color: #000;"></paper-material>
+        </div>-->
+       <div class="content fit">
+  
+    <ui-view class="fit"></ui-view>
     </div>
      </paper-header-panel>
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
