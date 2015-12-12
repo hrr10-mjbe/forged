@@ -2,6 +2,7 @@
 <link rel="import" href="../../bower_components/iron-resizable-behavior/iron-resizable-behavior.html">
 <dom-module id="mjbe-drawing-canvas">
 <<<<<<< HEAD
+<<<<<<< HEAD
   <template>
     <canvas id="canvas"></canvas>
   </template>
@@ -51,14 +52,12 @@ Polymer({
   
   paper-material {}
   </style>
+=======
+
+>>>>>>> intermediate, strange problem with drawing disappearing
   <template>
-  <style>
-  #canvas:host {
-    display: block;
-  }
-  </style>
-    <paper-material elevation="1" class="canvasContainer fit">
-      <canvas id="canvas" style="background-color: #000"></canvas>
+    <paper-material elevation="1" class="canvasContainer">
+      <canvas id="canvas" style="background-color: #eee" height="400" width="400"></canvas>
     </paper-material>
   </template>
   <script>
@@ -81,20 +80,9 @@ Polymer({
             });
 
             canvas.add(rect);
-            window.addEventListener('resize', this.resizeCanvas.bind(this), false);
-            // resize on init
-            this.resizeCanvas();
-          },
-          resizeCanvas:
 
-            function() {
-              Polymer.dom.flush();
-            console.log(this);
-            console.log(this.shadowRoot.querySelector('.canvasContainer'));
-            canvas.setHeight(this.style.height);
-            canvas.setWidth(this.offsetWidth);
-            canvas.renderAll();
           }
+         
         });
   })();
   </script>
