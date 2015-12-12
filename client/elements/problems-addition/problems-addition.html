@@ -19,43 +19,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       .container {
         margin: 50px;
+        position: relative;
+      }
+
+      paper-fab {
+        background-color: #F5A503;
+        position: absolute;
+        top: 163px;
+        right: 190px;
       }
     </style>
 
-    <div class="container">What does <span><strong>{{questionInsert}}</strong></span></div>
+    <div class="container">What is <span><strong>{{question}}</strong></span> ?</div>
     <input value="{{studentAnswer::input}}">
 
-    <paper-button class="submit" on-tap="plzwork">Submit</paper-button>
-
-    <p>{{studentAnswer}}</p>
+    <!-- <paper-button class="submit" on-tap="plzwork">Submit</paper-button> -->
+    <paper-fab icon="send" on-tap="plzwork"></paper-fab>
+    <p>{{message}}</p>
 
   </template>
   <script>
-  (function() {
-    'use strict';
-    function randInt(min, max) {
-      return Math.floor(Math.random() * (max - min + 1)) + min;
+    var generator = function() {
+      var randInt = function (max) {
+        return Math.ceil(Math.random() * max);
+      };
+
+      var x = Math.ceil(Math.random() * 10);
+      var y = Math.ceil(Math.random() * 10);
+      var operator = ['+', '-', '*'][Math.floor(Math.random() * 3)];
+      return x + ' ' + operator + ' ' + y;
     }
-
-    // Addition problem generator
-
-    var question, 
-        answer;
-    var additionUnder20 = function() {
-      'use strict'
-
-      var a = randInt(1, 10);
-
-      var b = randInt(1, 10);
-
-      answer = a+b;
-
-      question = a + ' + ' + b + ' = ?';
-
-      console.log(question, answer);
-
-    }();
-
     // var answerChecker = function(query) {
     //   console.log('inside answerChecker');
     //   console.log(this.studentAnswer);
@@ -71,15 +64,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'problems-addition',
 
       properties: {
-        questionInsert: {
+        question: {
           type: String,
-          value: question,
-          notify: true
-        },
-
-        answer: {
-          type: Number,
-          value: answer,
+          value: generator(),
           notify: true
         },
 
@@ -88,24 +75,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         },
 
-        x: {
-          type: Number,
-          value: function(){return Math.floor(Math.random()*10)},
-          notify: true
+        message: {
+          type: String
         }
-
-        // checkAnswer: {
-        //   value: function() {
-        //    return answerChecker;
-        //   }
-        // }
       },
 
       plzwork: function() {
-        console.log(this.studentAnswer == answer);
-        this.studentAnswer = this.studentAnswer == answer;
+        if (this.studentAnswer == eval(this.question)) {
+          this.message = 'Correct!';
+        } else {
+          this.message = 'Incorrect. :(';
+        }
+        this.studentAnswer = '';
+        this.question = generator();
       }
     });
-  })();
   </script>
 </dom-module>
