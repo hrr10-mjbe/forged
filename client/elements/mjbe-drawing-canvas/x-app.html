@@ -15,13 +15,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <style>
     :host {
       display: inline-block;
-      border: 3px solid lightblue;
     }
   </style>
 
   <template>
 
     <b>I'm a resize-aware, thirdifying puck at (<span>{{x}}</span> x <span>{{y}}</span>).</b>
+    <canvas id="canvas" style="background-color: #000"></canvas>
 
   </template>
 
@@ -56,9 +56,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       return this.parentNode;
     },
     _onIronResize: function() {
-      var x = this.x = Math.floor(this.parent.offsetWidth / 3);
-      var y = this.y = Math.floor(this.parent.offsetHeight / 3);
-      this.translate3d(x + 'px', y + 'px', 0);
+      var x = this.x = Math.floor(this.parent.offsetWidth);
+      var y = this.y = Math.floor(this.parent.offsetHeight);
+      this.$.canvas.setAttribute('width', x + 'px');
+      this.$.canvas.setAttribute('height', y + 'px');
     }
   });
 </script>
