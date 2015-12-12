@@ -3,6 +3,7 @@
 <dom-module id="mjbe-drawing-canvas">
   <template>
     <canvas id="canvas"></canvas>
+     <paper-fab icon="clear" on-tap="clear"></paper-fab>
   </template>
   <script>
   (function() {
@@ -36,6 +37,9 @@
         this.$.canvas.setAttribute('height', y + 'px');
         this.fabricCanvas.setWidth(x);
         this.fabricCanvas.setHeight(y);
+      },
+      clear: function() {
+        this.fabricCanvas.clear();
       }
     });
   }());
