@@ -52,10 +52,12 @@ get parent() {
   return this.parentNode;
 },
 _onIronResize: function() {
-  var x = this.x = Math.floor(this.parent.offsetWidth);
-  var y = this.y = Math.floor(this.parent.offsetHeight);
-  //this.$.canvas.setAttribute('width', x + 'px');
-  //this.$.canvas.setAttribute('height', y + 'px');
+  var x = Math.floor(this.parent.offsetWidth);
+  var y = Math.floor(this.parent.offsetHeight);
+  this.$.canvas.setAttribute('width', x + 'px');
+  this.$.canvas.setAttribute('height', y + 'px');
+  this.fabricCanvas.setWidth(x);
+  this.fabricCanvas.setHeight(y);
 }
 });
 </script>
