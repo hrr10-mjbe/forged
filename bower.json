@@ -22,7 +22,10 @@
     "iron-icons": "PolymerElements/iron-icons#~1.0.5",
     "paper-drawer-panel": "PolymerElements/paper-drawer-panel#~1.0.5",
     "paper-item": "PolymerElements/paper-item#~1.1.2",
-    "paper-menu": "PolymerElements/paper-menu#~1.2.0"
+    "paper-menu": "PolymerElements/paper-menu#~1.2.0",
+    "paper-tabs": "PolymerElements/paper-tabs#~1.2.4",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#~1.2.2",
+    "paper-fab": "PolymerElements/paper-fab#~1.1.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"

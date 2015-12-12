@@ -221,7 +221,8 @@ module.exports = function (grunt) {
       options: {
         exclude: [
           '/json3/',
-          '/es5-shim/'
+          '/es5-shim/',
+          '/webcomponents' 
         ]
       },
       client: {
@@ -367,7 +368,8 @@ module.exports = function (grunt) {
             'bower_components/**/*',
             'assets/images/{,*/}*.{webp}',
             'assets/fonts/**/*',
-            'index.html'
+            'index.html',
+            'elements/**/*'
           ]
         }, {
           expand: true,
