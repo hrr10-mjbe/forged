@@ -56,9 +56,7 @@ Polymer({
 
 >>>>>>> intermediate, strange problem with drawing disappearing
   <template>
-    <paper-material elevation="1" class="canvasContainer">
       <canvas id="canvas" style="background-color: #eee" height="400" width="400"></canvas>
-    </paper-material>
   </template>
   <script>
   (function() {
@@ -66,7 +64,7 @@ Polymer({
 
       Polymer({
           is: 'mjbe-drawing-canvas',
-          attached: function() {
+          ready: function() {
 
             var canvas = new fabric.Canvas('canvas');
             canvas.isDrawingMode = true;
