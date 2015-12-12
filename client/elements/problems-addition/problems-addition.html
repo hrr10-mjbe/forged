@@ -16,19 +16,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+
+      .container {
+        margin: 50px;
+      }
     </style>
-    <div>What does <span>5 + 5 = ?</span></div>
+
+    <div class="container">What does <span><strong>{{questionInsert}}</strong></span></div>
     <input value="{{studentAnswer::input}}">
 
-    <paper-button class="submit" onclick="{{plzwork(studentAnswer)}}">Submit</paper-button>
+    <paper-button class="submit" on-tap="plzwork">Submit</paper-button>
 
-    <paper-button class="submit" on-click="{{plzwork(studentAnswer)}}">another button</paper-button>
-    
-    <paper-button class="submit" on-click="{{anotherPlz()}}">another plz</paper-button>
-    
-    <button onclick="{{console.log('hi')}}">Check student value</button>
-    
-    <p>{{studentAnswer}}</p> 
+    <p>{{studentAnswer}}</p>
 
   </template>
   <script>
@@ -57,16 +56,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     }();
 
-    var answerChecker = function(query) {
-      console.log('inside answerChecker');
-      console.log(this.studentAnswer);
+    // var answerChecker = function(query) {
+    //   console.log('inside answerChecker');
+    //   console.log(this.studentAnswer);
 
-      if(query === 2) {
-        alert('Correct!');
-      } else {
-        alert(this.studentAnswer);
-      }
-    };
+    //   if(query === 2) {
+    //     alert('Correct!');
+    //   } else {
+    //     alert(this.studentAnswer);
+    //   }
+    // };
 
     Polymer({
       is: 'problems-addition',
@@ -93,24 +92,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Number,
           value: function(){return Math.floor(Math.random()*10)},
           notify: true
-        },
-
-        checkAnswer: {
-          value: function() {
-           return answerChecker;
-          }
         }
+
+        // checkAnswer: {
+        //   value: function() {
+        //    return answerChecker;
+        //   }
+        // }
       },
 
-      plzwork: function(final) {
-        console.log(final == 10);
-        console.log(this.studentAnswer);
-      },
-
-      anotherPlz: function() {
-        console.log(this.studentAnswer);
+      plzwork: function() {
+        console.log(this.studentAnswer == answer);
+        this.studentAnswer = this.studentAnswer == answer;
       }
-
     });
   })();
   </script>
