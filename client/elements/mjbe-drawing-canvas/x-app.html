@@ -15,7 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   }
   </style>
   <template>
-    <canvas id="canvas" style="background-color: #bbb" width="200" height="200"></canvas>
+    <canvas id="canvas" width="200" height="200"></canvas>
   </template>
 </dom-module>
 <script>
@@ -24,12 +24,15 @@ Polymer({
   behaviors: [
     Polymer.IronResizableBehavior
   ],
+  properties: {
+    fabricCanvas: Object
+  },
   listeners: {
     'iron-resize': '_onIronResize'
   },
   attached: function() {
-    var canvas = new fabric.Canvas('canvas');
-    canvas.isDrawingMode = true;
+    this.fabricCanvas = new fabric.Canvas('canvas');
+    this.fabricCanvas.isDrawingMode = true;
 
     var rect = new fabric.Rect({
       top: 100,
@@ -39,7 +42,7 @@ Polymer({
       fill: 'red'
     });
 
-    canvas.add(rect);
+    this.fabricCanvas.add(rect);
   this.async(this.notifyResize, 1);
 },
 get parent() {
