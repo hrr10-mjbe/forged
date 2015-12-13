@@ -44,16 +44,16 @@
         //   console.log(root, 'this is the root')
         // });        
 
-        var data = [21, 43, 21, 34, 25, 39, 22];
-        var subjects = ["Addition", "Subtraction", "Multiplication", "Division", "Fractions", "Decimals", "Multivariable Calculus"]
-
+        //var data = [21, 43, 21, 34, 25, 39, 22];
+        //var subjects = ["Addition", "Subtraction", "Multiplication", "Division", "Fractions", "Decimals", "Multivariable Calculus"]
+        var data = [{name: 'Easy addition', val: 50}, {name: 'Hard addition', val: 50}, {name: 'Easy subtraction', val: 50}];
         var width = 800,
             height = 400;
         var outerRadius = height / 2 -20 ,
             innerRadius = outerRadius / 3,
             cornerRadius = 10;
         var pie = d3.layout.pie()
-            .padAngle(.02);
+            .padAngle(.02).value(function(d) { return d.val;});
         var arc = d3.svg.arc()
             .padRadius(outerRadius)
             .innerRadius(innerRadius);
@@ -81,8 +81,8 @@
           };
         }
 
-        function clickHandler() {
-          console.log('click');
+        function clickHandler(d) {
+          console.log(d);
         }
 
         // var svg2 = d3.select(this.$.holder).append("svg")
