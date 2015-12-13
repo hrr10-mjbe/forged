@@ -26,7 +26,7 @@
     </style>
     <paper-material elevation="1" horizontal layout>
       <div class="container">What is <span><strong>{{question.nums.0}} {{question.operator}} {{question.nums.1}}</strong></span> ?</div>
-      <input value="{{studentAnswer::input}}">{{problemtype}}
+      <input value="{{studentAnswer::input}}">
       <paper-fab icon="send" on-tap="evaluate"></paper-fab>
       <p>{{message}}</p>
     </paper-material>
