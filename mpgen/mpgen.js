@@ -1,12 +1,15 @@
-/**xorshift128+ implementation by Andreas Madsen and Emil Bay**/
+(function(env) {
 
-//Copyright (c) 2014 Andreas Madsen & Emil Bay
+/*Xorshift+ generator:
 
-//Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+Copyright (c) 2014 Andreas Madsen & Emil Bay
 
-//The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
 
-//THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
 
 /**
  * Create a pseudorandom number generator, with a seed.
@@ -14,28 +17,6 @@
  * integers in big endian order.
  */
 function XorShift(seed) {
-  if (!seed) {
-    seed = [
-  0, Date.now() / 65536,
-  0, Date.now() % 65536
-]
-  }
-  // Note the extension, this === module.exports is required because
-  // the `constructor` function will be used to generate new instances.
-  // In that case `this` will point to the default RNG, and `this` will
-  // be an instance of XorShift.
-  if (!(this instanceof XorShift) || this === module.exports) {
-    var ret = new XorShift(seed);
-    for (var i = 0; i < 20; i++) {
-    ret.randomint();
-  }
-    return ret;
-  }
-
-  if (!Array.isArray(seed) || seed.length !== 4) {
-    throw new TypeError('seed must be an array with 4 numbers');
-  }
-
   // uint64_t s = [seed ...]
   this._state0U = seed[0] | 0;
   this._state0L = seed[1] | 0;
@@ -118,13 +99,24 @@ XorShift.prototype.random = function() {
   return (t2[0] * 4294967296 + t2[1]) / 18446744073709551616;
 };
 
-(function(env){
-    var random = new XorShift();
+//----------------------------------------------------------------------------------------------
+//Begin problem generator code
 
-    console.log(random.random());
 
-   env.test = function(){
+
+   env.getProblem = function(){
+    var random = new XorShift([
+  0, Date.now() / 65536,
+  0, Date.now() % 65536
+]);
+
+for (var i = 0; i < 20; i++) {
+    random.randomint();
+}
+console.log(random.random());
         return 'hello world'
     };
 
 })(typeof exports === 'undefined'? this['mpgen']={}: exports);
+
+module.exports.getProblem();
