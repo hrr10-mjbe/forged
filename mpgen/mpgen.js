@@ -1,3 +1,36 @@
+/*
+Simple math problem generator.
+To use client side:
+<script src="<PATH>"></script>
+var sample = mpgen.simpleAddition(0, 1000);
+
+To use server side:
+var mpgen = require('<path>');
+var sample = mpgen.simpleAddition(0, 1000);
+--------------------------------------------------------
+API:
+
+All methods return an object with the following properties:
+nums: An array (at the moment, always of length 2) with the component numbers of the problem
+answer: The integer answer to the problem
+operator: A string representation of the operator
+gen: An object which can be stored and used to regenerate the same problem in the future.
+
+mpgen.simpleAddition(min, max) 
+  returns an integer addition problem with ALL values (including answer) between min and max.
+  Note that this means that max must be at least twice min.
+
+mpgen.simpleSubtraction(min, max)
+  returns an integer subtraction problem with ALL values (including answer) between min and max.
+  Note that this means that max must be at least twice min.
+
+mpgen.simpleMultiplication(min, max)
+  returns an integer multiplication problem with multipliers between min and max (answer may be outside this range)
+
+mpgen.getProblem(gen)
+  passing the gen object of a previously generated problem to this function will cause it to return an identical problem
+*/
+
 (function(env) {
 
   /*Xorshift+ generator:
