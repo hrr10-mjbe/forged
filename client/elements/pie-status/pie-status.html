@@ -69,7 +69,8 @@
             .attr("d", arc)
             .style("fill", function(){return '#'+Math.floor(Math.random()*16777215).toString(16)})
             .on("mouseover", arcTween(outerRadius - 20, 0))
-            .on("mouseout", arcTween(outerRadius, 150));
+            .on("mouseout", arcTween(outerRadius, 150))
+            .on("click", clickHandler);
 
         function arcTween(outerRadius, delay) {
           return function() {
@@ -78,6 +79,10 @@
               return function(t) { d.outerRadius = i(t); return arc(d); };
             });
           };
+        }
+
+        function clickHandler() {
+          console.log('click');
         }
 
         // var svg2 = d3.select(this.$.holder).append("svg")
