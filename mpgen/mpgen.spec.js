@@ -18,6 +18,15 @@ describe('Math Problem Generator', function() {
         expect(problem.nums[1]).to.be.within(0, 10);
       }
     });
+    it('should correctly retrieve previous problems', function() {
+      for (var i = 0; i < SAMPLE_SIZE; i++) {
+        var problem = mpgen.simpleAddition(0, 1000);
+        var retrieval = mpgen.getProblem(problem.gen);
+        expect(problem.answer).to.equal(retrieval.answer);
+        expect(problem.nums[0]).to.equal(retrieval.nums[0]);
+          expect(problem.nums[1]).to.equal(retrieval.nums[1]);
+            expect(problem.operator).to.equal(retrieval.operator);
+      }
+    })
   });
-
 });
