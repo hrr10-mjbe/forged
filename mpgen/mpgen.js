@@ -129,6 +129,32 @@
 
   env.simpleAddition = function(min, max, seed) {
     var rand = prepareRNG(seed);
+    var answer = intRange(2 * min, max, rand);
+    var num1 = intRange(min, answer - min, rand);
+    var num2 = answer - num1;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      operator: '+',
+      gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
+    }
+  };
+
+  /*env.simpleSubtraction = function(min, max, seed) {
+    var rand = prepareRNG(seed);
+    var num1 = intRange(min, max, rand);
+    var num2 = intRange(0, answer, rand);
+    var num2 = answer - num1;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      operator: '-',
+      gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
+    }
+  };
+
+  env.simpleAddition = function(min, max, seed) {
+    var rand = prepareRNG(seed);
     var answer = intRange(min, max, rand);
     var num1 = intRange(0, answer, rand);
     var num2 = answer - num1;
@@ -139,6 +165,19 @@
       gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
     }
   };
+
+  env.simpleAddition = function(min, max, seed) {
+    var rand = prepareRNG(seed);
+    var answer = intRange(min, max, rand);
+    var num1 = intRange(0, answer, rand);
+    var num2 = answer - num1;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      operator: '+',
+      gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
+    }
+  };*/
 
   var types = {SIMPLE_ADDITION: 0}
   var funcMap = {};
