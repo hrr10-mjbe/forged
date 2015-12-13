@@ -106,17 +106,20 @@
   //----------------------------------------------------------------------------------------------
   //Begin problem generator code
 
-
-
-  env.getProblem = function() {
-    var random = new XorShift([
+  function prepareRNG(seed) {
+    seed = seed || [
       0, Date.now() / 65536,
       0, Date.now() % 65536
-    ]);
-
+    ];
+    var random = new XorShift(seed);
     for (var i = 0; i < 20; i++) {
       random.randomint();
     }
+    return random
+  }
+
+  env.getProblem = function() {
+    var random = prepareRNG();
     console.log(random.random());
     return 'hello world'
   };
