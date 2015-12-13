@@ -140,20 +140,20 @@
     }
   };
 
-  /*env.simpleSubtraction = function(min, max, seed) {
+  env.simpleSubtraction = function(min, max, seed) {
     var rand = prepareRNG(seed);
-    var num1 = intRange(min, max, rand);
-    var num2 = intRange(0, answer, rand);
-    var num2 = answer - num1;
+    var num1 = intRange(2 * min, max, rand);
+    var num2 = intRange(min, num1 - min, rand);
+    var answer = num1 - num2;
     return {
       nums: [num1, num2],
       answer: answer,
       operator: '-',
-      gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
+      gen: [types.SIMPLE_SUBTRACTION, min, max, rand.seed]
     }
   };
 
-  env.simpleAddition = function(min, max, seed) {
+  /*env.simpleAddition = function(min, max, seed) {
     var rand = prepareRNG(seed);
     var answer = intRange(min, max, rand);
     var num1 = intRange(0, answer, rand);
@@ -179,9 +179,13 @@
     }
   };*/
 
-  var types = {SIMPLE_ADDITION: 0}
+  var types = {
+    SIMPLE_ADDITION: 0,
+    SIMPLE_SUBTRACTION: 1,
+  }
   var funcMap = {};
   funcMap[types.SIMPLE_ADDITION] = env.simpleAddition;
+  funcMap[types.SIMPLE_SUBTRACTION] = env.simpleSubtraction;
 
 })(typeof exports === 'undefined' ? this['mpgen'] = {} : exports);
 

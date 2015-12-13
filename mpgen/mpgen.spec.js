@@ -12,10 +12,10 @@ describe('Math Problem Generator', function() {
     });
     it('should generate problems with all numbers within range', function() {
       for (var i = 0; i < SAMPLE_SIZE; i++) {
-        var problem = mpgen.simpleAddition(0, 10);
-        expect(problem.answer).to.be.within(0, 10);
-        expect(problem.nums[0]).to.be.within(0, 10);
-        expect(problem.nums[1]).to.be.within(0, 10);
+        var problem = mpgen.simpleAddition(100, 999);
+        expect(problem.answer).to.be.within(100, 999);
+        expect(problem.nums[0]).to.be.within(100, 999);
+        expect(problem.nums[1]).to.be.within(100, 999);
       }
     });
     it('should correctly retrieve previous problems', function() {
@@ -24,8 +24,35 @@ describe('Math Problem Generator', function() {
         var retrieval = mpgen.getProblem(problem.gen);
         expect(problem.answer).to.equal(retrieval.answer);
         expect(problem.nums[0]).to.equal(retrieval.nums[0]);
-          expect(problem.nums[1]).to.equal(retrieval.nums[1]);
-            expect(problem.operator).to.equal(retrieval.operator);
+        expect(problem.nums[1]).to.equal(retrieval.nums[1]);
+        expect(problem.operator).to.equal(retrieval.operator);
+      }
+    })
+  });
+
+  describe('Simple Subtraction', function() {
+    it('should generate correct problems', function() {
+      for (var i = 0; i < SAMPLE_SIZE; i++) {
+        var problem = mpgen.simpleSubtraction(0, 1000);
+        expect(problem.answer).to.equal(problem.nums[0] - problem.nums[1]);
+      }
+    });
+    it('should generate problems with all numbers within range', function() {
+      for (var i = 0; i < SAMPLE_SIZE; i++) {
+        var problem = mpgen.simpleSubtraction(100, 999);
+        expect(problem.answer).to.be.within(100, 999);
+        expect(problem.nums[0]).to.be.within(100, 999);
+        expect(problem.nums[1]).to.be.within(100, 999);
+      }
+    });
+    it('should correctly retrieve previous problems', function() {
+      for (var i = 0; i < SAMPLE_SIZE; i++) {
+        var problem = mpgen.simpleSubtraction(0, 1000);
+        var retrieval = mpgen.getProblem(problem.gen);
+        expect(problem.answer).to.equal(retrieval.answer);
+        expect(problem.nums[0]).to.equal(retrieval.nums[0]);
+        expect(problem.nums[1]).to.equal(retrieval.nums[1]);
+        expect(problem.operator).to.equal(retrieval.operator);
       }
     })
   });
