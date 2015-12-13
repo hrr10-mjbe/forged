@@ -112,18 +112,41 @@
       0, Date.now() % 65536
     ];
     var random = new XorShift(seed);
+    random.seed = seed;
     for (var i = 0; i < 20; i++) {
       random.randomint();
     }
-    return random
+    return random;
   }
 
-  env.getProblem = function() {
-    var random = prepareRNG();
-    console.log(random.random());
-    return 'hello world'
+  function intRange(a, b, rand) {
+    return Math.floor(a + rand.random() * (b - a));
+  }
+
+  env.getProblem = function(gen) {
+    return funcMap[gen[0]].apply(this, gen.slice(1));
+  }
+
+  env.simpleAddition = function(min, max, seed) {
+    var rand = prepareRNG(seed);
+    var answer = intRange(min, max, rand);
+    var num1 = intRange(0, answer, rand);
+    var num2 = answer - num1;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      operator: '+',
+      gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
+    }
   };
+
+  var types = {SIMPLE_ADDITION: 0}
+  var funcMap = {};
+  funcMap[types.SIMPLE_ADDITION] = env.simpleAddition;
 
 })(typeof exports === 'undefined' ? this['mpgen'] = {} : exports);
 
-module.exports.getProblem();
+var test = module.exports.simpleAddition(100, 1000);
+console.log(test.nums[0] + '+' + test.nums[1] + ' = ' + test.answer);
+var test2 = module.exports.getProblem(test.gen);
+console.log(test2.nums[0] + '+' + test2.nums[1] + ' = ' + test2.answer);
