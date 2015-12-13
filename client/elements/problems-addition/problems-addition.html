@@ -26,7 +26,7 @@
     </style>
     <paper-material elevation="1" horizontal layout>
       <div class="container">What is <span><strong>{{question.nums.0}} {{question.operator}} {{question.nums.1}}</strong></span> ?</div>
-      <input value="{{studentAnswer::input}}">
+      <input value="{{studentAnswer::input}}">{{problemtype}}
       <paper-fab icon="send" on-tap="evaluate"></paper-fab>
       <p>{{message}}</p>
     </paper-material>
@@ -39,7 +39,7 @@
     properties: {
       question: {
         type: Object,
-        value: mpgen.simpleAddition(0, 100),
+        computed: 'getProblem(problemtype)',
         notify: true
       },
 
@@ -50,6 +50,19 @@
 
       message: {
         type: String
+      },
+
+      problemtype: {
+        type: Number
+      }
+    },
+
+    getProblem: function() {
+      console.log('srg');
+      if (this.problemtype === 5) {
+        return mpgen.simpleAddition(0, 100);
+      } else {
+        return mpgen.simpleMultiplication(0, 100);
       }
     },
 
