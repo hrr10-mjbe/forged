@@ -167,19 +167,6 @@
     }
   };
 
-  /*env.simpleAddition = function(min, max, seed) {
-    var rand = prepareRNG(seed);
-    var answer = intRange(min, max, rand);
-    var num1 = intRange(0, answer, rand);
-    var num2 = answer - num1;
-    return {
-      nums: [num1, num2],
-      answer: answer,
-      operator: '+',
-      gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
-    }
-  };*/
-
   var types = {
     SIMPLE_ADDITION: 0,
     SIMPLE_SUBTRACTION: 1,
@@ -191,8 +178,3 @@
   funcMap[types.SIMPLE_MULTIPLICATION] = env.simpleMultiplication;
 
 })(typeof exports === 'undefined' ? this['mpgen'] = {} : exports);
-
-var test = module.exports.simpleAddition(100, 1000);
-console.log(test.nums[0] + '+' + test.nums[1] + ' = ' + test.answer);
-var test2 = module.exports.getProblem(test.gen);
-console.log(test2.nums[0] + '+' + test2.nums[1] + ' = ' + test2.answer);
