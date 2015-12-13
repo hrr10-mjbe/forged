@@ -37,7 +37,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 }
     </style>
  <paper-material elevation="1" horizontal layout>
-    <div class="container">What is <span><strong>{{question}}</strong></span> ?</div>
+    <div class="container">What is <span><strong>{{questionStr}}</strong></span> ?</div>
     <input value="{{studentAnswer::input}}">
 
     <!-- <paper-button class="submit" on-tap="plzwork">Submit</paper-button> -->
@@ -46,7 +46,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </paper-material>
 
   </template>
+  <script src="../../lib/mpgen.js"></script>
   <script>
+    console.log(mpgen.simpleAddition(0, 1000));
     var generator = function() {
       var randInt = function (max) {
         return Math.ceil(Math.random() * max);
@@ -72,7 +74,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'problems-addition',
 
       properties: {
-        question: {
+        questionStr: {
           type: String,
           value: generator(),
           notify: true
@@ -89,7 +91,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       plzwork: function() {
-        if (this.studentAnswer == eval(this.question)) {
+        if (this.studentAnswer == eval(this.questionStr)) {
           this.message = 'Correct!';
         } else {
           this.message = 'Incorrect. :(';
