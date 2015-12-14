@@ -10,6 +10,7 @@
         }
       </style>
       <h2 class="page-title"><span>{{greeting}}</span></h2>
+      <h2 class="page-title"><span>{{test}}</span></h2>
     </div>
   </template>
   <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -23,6 +24,11 @@
         greeting: {
           type: String,
           value: 'Go to: ' + subject,
+          notify: true
+        },
+        test: {
+          type:String,
+          value: 'hi',
           notify: true
         }
       },

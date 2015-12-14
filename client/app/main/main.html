@@ -21,16 +21,8 @@
 
 <footer></footer>
  -->
-<div class="container">
-      <div class="row">
-        <h1>Demo</h1>
-        <p>
-          <label for="f_name">First Name:</label>
-          <input type="text" ng-model="f_name">
-        </p>
-        
-        <name-card id="test" first="{{f_name}}" last="{{l_name}}" bind-polymer></name-card>
-      </div>
-    </div> 
+
+    <input type="text" ng-model="test">
+    <pie-status test="{{test}}" bind-polymer></pie-status>
  <link rel="import" href="elements/main-app/main-app.html">
 <main-app></main-app>
