@@ -1,13 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="pie-status">
   <template>
-  <iron-ajax
-    auto
-    url="/api/skills"
-    handle-as="json"
-    on-response="handleResponse"
-    last-response="{{ajaxResponse}}"
-    debounce-duration="300"></iron-ajax>
+  <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>
     <div id="holder">
       <style include="shared-styles"></style>
       <style>
@@ -22,8 +16,6 @@
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script>
   'use strict';
-
-  var subject = '';
   Polymer({
     is: 'pie-status',
     properties: {
@@ -36,32 +28,12 @@
         notify: true,
       },
     },
-
-    handleResponse: function(response) {
+    clickHandler: function(d) {
+      this.userselection = d.data.id;
+    },
+    drawPie: function() {
       console.log('got a response');
       console.log(this.ajaxResponse);
-    },
-
-    ready: function() {
-      // Get the calculated styles of the paper-material container
-      // window.addEventListener('load', function () {
-      // // var box = document.getElementsByClassName('x-scope paper-material-0')[0];
-      // var box = document.getElementsByTagName('PAPER-MATERIAL');
-      // console.log(box, 'this is the box')
-      // var styles = window.getComputedStyle(box);
-      // console.log(styles.width, 'this is the width');
-      // });  
-
-
-      // window.addEventListener('load', function () {
-      //   var host = document.querySelector('pie-status');
-      //   console.log(host, 'this is the host')
-      //   var root = host.createShadowRoot();
-      //   console.log(root, 'this is the root')
-      // });        
-
-      //var data = [21, 43, 21, 34, 25, 39, 22];
-      //var subjects = ["Addition", "Subtraction", "Multiplication", "Division", "Fractions", "Decimals", "Multivariable Calculus"]
       var data = [{
         name: 'Easy addition',
         val: 50,
@@ -117,19 +89,6 @@
           });
         };
       }
-
-
-
-      // var svg2 = d3.select(this.$.holder).append("svg")
-      //     .attr("width", 200px)
-      //     .attr("height", 50px)
-      //     .style("fill", "black")
-      //     .append("g")
-
-
-    },
-    clickHandler: function(d) {
-      this.userselection = d.data.id;
     }
   });
   </script>
