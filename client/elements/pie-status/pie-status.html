@@ -21,7 +21,7 @@
     properties: {
       greeting: {
         type: String,
-        value: 'Go to: ' + subject,
+        value: 'Go to: ',
         notify: true
       },
       userselection: {
@@ -29,12 +29,14 @@
       },
     },
     clickHandler: function(d) {
-      this.userselection = d.data.id;
+      console.log(d.data.name);
+      this.userselection = d.data.problemGenId;
     },
     drawPie: function() {
       console.log('got a response');
       console.log(this.ajaxResponse);
-      var data = [{
+      var data = this.ajaxResponse;
+      /*var data = [{
         name: 'Easy addition',
         val: 50,
         id: 0
@@ -46,7 +48,7 @@
         name: 'Easy subtraction',
         val: 50,
         id: 2
-      }];
+      }];*/
       var width = 800,
         height = 400;
       var outerRadius = height / 2 - 20,
@@ -54,7 +56,7 @@
         cornerRadius = 10;
       var pie = d3.layout.pie()
         .padAngle(.02).value(function(d) {
-          return d.val;
+          return 1;
         });
       var arc = d3.svg.arc()
         .padRadius(outerRadius)
