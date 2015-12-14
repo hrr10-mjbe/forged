@@ -1,7 +1,7 @@
 'use strict';
 
 //angular.module('hrr10MjbeApp')
-angular.module('hrr10MjbeApp', ['bindPolymer']);
+//angular.module('hrr10MjbeApp', ['bindPolymer']);
 angular.module('bindPolymer', [])
  .directive('bindPolymer', ['$parse', function($parse) {
   console.log('in directive');
