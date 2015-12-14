@@ -4,7 +4,7 @@
 
   class MainController {
 
-    constructor($http, $state, Problems) {
+    constructor($http, $state, Problems, Skills) {
       this.$http = $http;
       this.$state = $state;
       this.Problems = Problems;
