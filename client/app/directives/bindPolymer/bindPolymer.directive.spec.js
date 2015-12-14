@@ -9,12 +9,12 @@ describe('Directive: bindPolymer', function () {
     scope;
 
   beforeEach(inject(function ($rootScope) {
-    scope = $rootScope.$new();
+    //scope = $rootScope.$new();
   }));
 
-  it('should make hidden element visible', inject(function ($compile) {
-    element = angular.element('<bind-polymer></bind-polymer>');
-    element = $compile(element)(scope);
-    expect(element.text()).to.equal('this is the bindPolymer directive');
+  it('no tests yet', inject(function ($compile) {
+    //element = angular.element('<bind-polymer></bind-polymer>');
+    //element = $compile(element)(scope);
+    //expect(element.text()).to.equal('this is the bindPolymer directive');
   }));
 });
