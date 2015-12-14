@@ -6,6 +6,7 @@ var Schema = mongoose.Schema;
 var SkillSchema = new Schema({
   name: String,
   info: String,
+  problemGenId: Number,
   active: Boolean
 });
 
