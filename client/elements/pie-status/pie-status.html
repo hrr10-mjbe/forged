@@ -26,12 +26,14 @@
           value: 'Go to: ' + subject,
           notify: true
         },
-        test: {
-          type:String,
+         test: {
+         notify: true, 
           value: 'hi',
-          notify: true
+  
+          reflectToAttribute: true
         }
       },
+     
       ready: function() {
         // Get the calculated styles of the paper-material container
         // window.addEventListener('load', function () {
@@ -76,7 +78,7 @@
             .style("fill", function(){return '#'+Math.floor(Math.random()*16777215).toString(16)})
             .on("mouseover", arcTween(outerRadius - 20, 0))
             .on("mouseout", arcTween(outerRadius, 150))
-            .on("click", clickHandler);
+            .on("click", this.clickHandler.bind(this));
 
         function arcTween(outerRadius, delay) {
           return function() {
@@ -87,9 +89,7 @@
           };
         }
 
-        function clickHandler(d) {
-          console.log(d);
-        }
+        
 
         // var svg2 = d3.select(this.$.holder).append("svg")
         //     .attr("width", 200px)
@@ -98,6 +98,11 @@
         //     .append("g")
 
 
+      },
+      clickHandler: function (d) {
+        console.log(this);
+          console.log(d.data.name);
+          this.test = d.data.name;
       }
     });
   </script>
