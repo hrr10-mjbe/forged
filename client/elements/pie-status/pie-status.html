@@ -1,7 +1,7 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="pie-status">
   <template>
-  <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>
+    <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>
     <div id="holder">
       <style include="shared-styles"></style>
       <style>
@@ -29,26 +29,13 @@
       },
     },
     clickHandler: function(d) {
-      console.log(d.data.name);
       this.userselection = d.data.problemGenId;
     },
     drawPie: function() {
       console.log('got a response');
       console.log(this.ajaxResponse);
       var data = this.ajaxResponse;
-      /*var data = [{
-        name: 'Easy addition',
-        val: 50,
-        id: 0
-      }, {
-        name: 'Hard addition',
-        val: 50,
-        id: 1
-      }, {
-        name: 'Easy subtraction',
-        val: 50,
-        id: 2
-      }];*/
+
       var width = 800,
         height = 400;
       var outerRadius = height / 2 - 20,
@@ -67,7 +54,7 @@
         .append("g")
         .attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
       svg.selectAll("path")
-        .data(pie(data))
+        .data(pie(this.ajaxResponse))
         .enter().append("path")
         .each(function(d) {
           d.outerRadius = outerRadius;
