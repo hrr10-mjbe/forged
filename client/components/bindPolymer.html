@@ -22,36 +22,7 @@
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
     <script src="../app/directives/bindPolymer/bindPolymer.directive.js">
-    /*angular
-    .module('app', [])
-    .directive('bindPolymer', ['$parse', function($parse) {
-      return {
-        restrict: 'A',
-        scope : false,
-        compile: function bindPolymerCompile(el, attr) {
-          var attrMap = {};
-
-          for (var prop in attr) {
-            if (angular.isString(attr[prop])) {
-              var _match = attr[prop].match(/\{\{\s*([\.\w]+)\s*\}\}/);
-              if (_match) {
-                attrMap[prop] = $parse(_match[1]);
-              }
-            }
-          }
-          return function bindPolymerLink(scope, element, attrs) {
-            Object.keys(attrMap).forEach(function(key) {
-              element.on(key + '-changed', function(event) {
-                scope.$evalAsync(function() {
-                  if (attrMap[key](scope) === event.detail.value) return;
-                  attrMap[key].assign(scope, event.detail.value);
-                });
-              });
-            });
-          };
-        }
-      };
-    }]);*/
+   
     </script>
   </body>
 </html>
