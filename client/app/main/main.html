@@ -21,7 +21,8 @@
 
 <footer></footer>
  -->
-<input type="text" ng-model="userselection">
-<pie-status userselection="{{userselection}}" bind-polymer></pie-status>
+<input type="text" ng-model="main.userselection">
+<pie-status userselection="{{main.userselection}}" bind-polymer></pie-status>
+<input type="submit" ng-click="main.go()">
 <link rel="import" href="elements/main-app/main-app.html">
 <main-app></main-app>

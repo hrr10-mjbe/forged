@@ -4,10 +4,12 @@
 
 class MainController {
 
-  constructor($http) {
+  constructor($http, $state, Problems) {
     this.$http = $http;
+    this.$state = $state;
+    this.Problems = Problems;
     this.awesomeThings = [];
-
+    
     $http.get('/api/things').then(response => {
       this.awesomeThings = response.data;
     });
@@ -23,9 +25,16 @@ class MainController {
   deleteThing(thing) {
     this.$http.delete('/api/things/' + thing._id);
   }
+
+  go() {
+    console.log('testing');
+    this.Problems.setCurrentProblemSet(1);
+    console.log(this.Problems.currentProblemSet(1));
+    //this.$state.go('s');
+  }
 }
 
 angular.module('hrr10MjbeApp')
   .controller('MainController', MainController);
-
+    
 })();
