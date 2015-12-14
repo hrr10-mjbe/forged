@@ -51,10 +51,10 @@ mpgen.getProblem(gen)
    */
   function XorShift(seed) {
     // uint64_t s = [seed ...]
-    this._state0U = seed[0] | 0;
-    this._state0L = seed[1] | 0;
-    this._state1U = seed[2] | 0;
-    this._state1L = seed[3] | 0;
+    this._state0U = 0;
+    this._state0L = seed / 65535;
+    this._state1U = 0;
+    this._state1L = seed % 65536;
   }
 
   /**
@@ -140,10 +140,7 @@ mpgen.getProblem(gen)
   //Begin problem generator code
 
   function prepareRNG(seed) {
-    seed = seed || [
-      0, Date.now() / 65536,
-      0, Date.now() % 65536
-    ];
+    seed = seed || Date.now();
     var random = new XorShift(seed);
     random.seed = seed;
     for (var i = 0; i < 20; i++) {
