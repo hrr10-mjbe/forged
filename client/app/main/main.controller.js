@@ -28,10 +28,11 @@ class MainController {
 
   go() {
     console.log('testing');
-    this.Problems.setCurrentProblemSet(1);
+    this.Problems.setCurrentProblemSet(this.userselection);
     console.log(this.Problems.currentProblemSet(1));
-    //this.$state.go('s');
+    this.$state.go('s');
   }
+
 }
 
 angular.module('hrr10MjbeApp')
