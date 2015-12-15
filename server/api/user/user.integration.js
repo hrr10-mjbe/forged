@@ -105,20 +105,29 @@ after(function() {
 });*/
 
 describe('Student info API:', function() {
-  var user, token, userClient;
+  var user, token, userClient, badges = [];
 
   // Clear users before testing
-  before(function() {
-    return User.removeAsync().then(function() {
-      user = new User({
-        name: 'Fake User',
-        email: 'test@example.com',
-        type: 'student',
-        password: 'password'
-      });
-
-      return user.saveAsync();
-    });
+   before(function(done) {
+    Badge.removeAsync().then(function() {
+        badges[0] = new Badge({
+          name: 'Fake Badge 1'
+        });
+        badges[1] = new Badge({
+          name: 'Fake Badge 2'
+        });
+      })
+      .then(function() {
+        User.removeAsync().then(function() {
+          user = new User({
+            name: 'Fake User',
+            email: 'test@example.com',
+            type: 'student',
+            password: 'password'
+          });
+          user.saveAsync().then(function() {done()});
+        });
+      });    
   });
 
   // Clear users after testing
