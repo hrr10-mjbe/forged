@@ -33,7 +33,10 @@ angular.module('hrr10MjbeApp')
     }
 
     this.completeSkill = function() {
-      
+      this.activeSkill = undefined;
+      User.update({}, {type: 'done a skill!'}, function() {
+        console.log(User.get());
+      });
     }
 
     this.setActiveSkill = function(skillID) {

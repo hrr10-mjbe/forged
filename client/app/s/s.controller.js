@@ -3,14 +3,18 @@
 (function() {
 
   class SController {
-    constructor(Problems) {
+    constructor(Problems, Skills) {
       this.complete = 'false';
       this.type = Problems.currentProblemSet();
+      this.Skills = Skills;
     }
 
     finish() {
       console.log(this.correct);
       console.log(this.complete);
+      if (this.complete === 'true') {
+        this.Skills.completeSkill();
+      }
     }
   }
 
