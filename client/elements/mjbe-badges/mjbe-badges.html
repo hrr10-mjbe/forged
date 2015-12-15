@@ -54,8 +54,7 @@
     <paper-material elevation="1" id="badge-holder">
 
       <paper-toolbar class="cardheader"><div class="headertitle">Badges</div></paper-toolbar>
-      {{badges}}
-        <template is="dom-repeat" items="{{badgesDisp}}">
+        <template is="dom-repeat" items="{{badges}}">
             <paper-card animatedShadow="true" elevation="1" id="badgecard" on-mouseover="raise" on-mouseout="lower">
               <paper-icon-button icon="{{item.image}}" style="color: blue"></paper-icon-button>
               <paper-tooltip position="top" offset="-5" delay="0">{{item.name}}</paper-tooltip>
@@ -66,7 +65,6 @@
     </paper-material>
 
     </template>
-  <!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
   <script>
     /*var userBadges = [{name:'addition',
                       image:'add',
@@ -100,24 +98,24 @@
           type: Number,
           value: 0
         },
-        badges: {
+        loadbadges: {
           type: String
         },
-        badgesDisp: {
-          computed: 'compute(badges)'
+        badges: {
+          computed: 'parseBadges(loadbadges)'
         },
       },
       ready: function() {
-
-        this.badges = userBadges;
-        this.badges.forEach(function(badge){
-          console.log(badge);
-        });
+        //this.badges = userBadges;
+       // this.badges.forEach(function(badge){
+        //  console.log(badge);
+        //});
       },
 
-      compute: function() {
+      parseBadges: function() {
+        //try catch because polymer loads before angular has updated the attribute, and JSON.parse is trying to parse a {{}}
         try {
-          return JSON.parse(this.badges);
+          return JSON.parse(this.loadbadges);
         } catch (e) {
           return [];
         }
