@@ -32,12 +32,13 @@
      <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="bower_components/polymer/polymer.html">
     <link rel="import" href="bower_components/iron-icons/iron-icons.html">
+    <link rel="import" href="bower_components/paper-input/paper-input.html">
 
     <!-- CUSTOM ELEMENTS -->
     <link rel="import" href="elements/elements.html">
   </head>
   <body ng-app="hrr10MjbeApp" unresolved class="fullbleed layout vertical">
- 
+
     <!--[if lt IE 7]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -50,10 +51,10 @@
           <div class="title top">Adapt Academy</div>
           <div class="horizontal layout">
             <paper-tabs>
-              <paper-tab>Home</paper-tab>
+              <paper-tab ui-sref="main">Home</paper-tab>
               <paper-tab ui-sref="profile">Profile</paper-tab>
               <paper-tab ui-sref="about">About</paper-tab>
-              <paper-tab>Badges</paper-tab>
+              <paper-tab ui-sref="badges">Badges</paper-tab>
               <paper-tab>Sign Out</paper-tab>
             </paper-tabs>
           </div>
@@ -93,6 +94,7 @@
       <script src="bower_components/angular-validation-match/dist/angular-validation-match.min.js"></script>
       <script src="bower_components/fabric.js/dist/fabric.min.js"></script>
       <script src="bower_components/promise-polyfill/Promise.js"></script>
+      <script src="bower_components/web-animations-js/web-animations.min.js"></script>
       <!-- endbower -->
     <!-- endbuild -->
     <!-- build:js(.tmp) app/app.js -->
@@ -101,20 +103,22 @@
       <script src="app/admin/admin.module.js"></script>
       <script src="components/auth/auth.module.js"></script>
       <script src="components/util/util.module.js"></script>
-      <script src="app/s/s.js"></script>
+      <script src="app/profile/profile.js"></script>
       <script src="app/account/settings/settings.controller.js"></script>
       <script src="app/account/signup/signup.controller.js"></script>
       <script src="app/admin/admin.controller.js"></script>
       <script src="app/about/about.controller.js"></script>
       <script src="app/admin/admin.router.js"></script>
       <script src="app/app.constant.js"></script>
+      <script src="app/badges/badges.controller.js"></script>
+      <script src="app/badges/badges.js"></script>
       <script src="app/directives/bindPolymer/bindPolymer.directive.js"></script>
       <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
       <script src="app/profile/profile.controller.js"></script>
-      <script src="app/profile/profile.js"></script>
-      <script src="app/s/s.controller.js"></script>
       <script src="app/about/about.js"></script>
+      <script src="app/s/s.controller.js"></script>
+      <script src="app/s/s.js"></script>
       <script src="app/services/problems/problems.service.js"></script>
       <script src="app/services/skills/skills.service.js"></script>
       <script src="app/account/account.js"></script>
