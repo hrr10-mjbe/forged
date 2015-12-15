@@ -31,7 +31,9 @@ var UserSchema = new Schema({
     badges: [Schema.Types.ObjectId]
   },
   //teacher properties
-  teacherData: Object,
+  teacherData: {
+    students: [Schema.Types.ObjectId]
+  }
 });
 
 /**
