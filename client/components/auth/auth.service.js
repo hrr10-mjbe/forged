@@ -134,6 +134,17 @@
           });
       },
 
+      updateUser: function() {
+        console.log(currentUser.studentData);
+        console.log(currentUser.teacherData);
+        User.update({}, {
+          studentData: currentUser.studentData,
+          teacherData: currentUser.teacherData
+        }, function() {
+          console.log(User.get());
+        }, function(err) {}).$promise;
+      },
+
       //ALL manipulation of user model must be done through these functions, to ensure that the model stays consistent
       //with the server
       //TODO probably put these in a new controller   
@@ -141,12 +152,12 @@
         currentUser.studentData = currentUser.studentData || {}; //TODO don't do this
         currentUser.studentData.skills = currentUser.studentData.skills || {};
         currentUser.studentData.skills[skillId] = status;
-        User.update({}, {
-          studentData: currentUser.studentData,
-          teacherData: {}
-        }, function() {
-          console.log(User.get());
-        }, function(err) {}).$promise;
+        Auth.updateUser();
+      },
+
+      awardBadges: function(badges) {
+        currentUser.studentData.badges = currentUser.studentData.badges.concat(badges);
+        Auth.updateUser();
       },
 
       //more mutator functions go here

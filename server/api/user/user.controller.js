@@ -114,6 +114,7 @@ exports.changePassword = function(req, res, next) {
 };
 
 exports.update = function(req, res, next) {
+  console.log(req.body);
   User.findByIdAsync(req.user._id)
     .then(function(user) {
       user.studentData = req.body.studentData;
