@@ -26,16 +26,23 @@ angular.module('hrr10MjbeApp')
     }
 
     this.getUserSkills = function(cb) {
-      var user = Auth.getCurrentUser();
-      console.log('got');
-      console.log(user);
-      var results = [];
-      user.studentData = user.studentData || {}; //TODO demo purposes only!
-      user.studentData.skills = user.studentData.skills || {};
-      console.log(user.studentData.skills);
-      for (var key in user.studentData.skills) {
-        results.push(this.getSkill(key));
-      }
+      Auth.getCurrentUser(function(user) {
+        console.log('got');
+        console.log(user);
+        var results = [];
+        user.studentData = user.studentData || {}; //TODO demo purposes only!
+        user.studentData.skills = user.studentData.skills || {};
+        console.log(user.studentData.skills);
+        this.getSkills(function() {
+          for (var key in user.studentData.skills) {
+            results.push(this.getSkill(key));
+            console.log(results);
+          }
+          cb(results);
+        }.bind(this))
+
+      }.bind(this));
+
     }
 
     //for now we assume this can be synchronous. might be dangerous

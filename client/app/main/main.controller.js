@@ -8,7 +8,10 @@
       this.$http = $http;
       this.$state = $state;
       this.Skills = Skills;
-      this.skills = Skills.getUserSkills();
+      Skills.getUserSkills(function(skills) {
+        this.skills = skills;
+        console.log(this.skills);
+      }.bind(this));
       this.awesomeThings = [];
 
       $http.get('/api/things').then(response => {
