@@ -1,4 +1,4 @@
-(function badgeDefs() {
+(function badgeDef() {
   var skillCompleteBadge = function(studentData) {
     return studentData.skills.length > 1;
   }
