@@ -13,6 +13,7 @@ describe('User API:', function() {
       user = new User({
         name: 'Fake User',
         email: 'test@example.com',
+        type: 'student',
         password: 'password'
       });
 
@@ -62,4 +63,6 @@ describe('User API:', function() {
         .end(done);
     });
   });
+
+
 });

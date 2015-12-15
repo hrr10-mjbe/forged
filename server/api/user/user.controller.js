@@ -146,6 +146,9 @@ exports.update = function(req, res, next) {
 //TODO use promises
 var denormalizeStudent = function(studentData, cb) {
   var badges = [];
+  if (!studentData.badges.length) {
+    cb(studentData);
+  }
   studentData.badges.forEach(function(badge, i) {
     Badge.findOneAsync({
         _id: studentData.badges[i]
@@ -174,6 +177,7 @@ exports.me = function(req, res, next) {
         return res.status(401).end();
       }
       if (user.type === 'student') {
+        console.log('responding');
         denormalizeStudent(user.studentData, function(studentData) {
           user.studentData = studentData;
           res.json(user);
