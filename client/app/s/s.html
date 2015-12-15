@@ -9,5 +9,5 @@
 <input type="submit" ng-click="go()">-->
 <!--<pie-status userselection="{{main.userselection}}" bind-polymer></pie-status>-->
 <input type="submit" ng-click="s.go()">
-<problems-addition problemtype="0" correctcount="{{s.correct}}" bind-polymer></problems-addition>
+<problems-addition problemtype="{{s.type}}" correctcount="{{s.correct}}" complete="{{s.complete}}" bind-polymer></problems-addition>
 <link rel="import" href="elements/main-app/main-app.html">
