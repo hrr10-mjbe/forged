@@ -133,12 +133,12 @@ var normalizeTeacher = function(teacherData) {
 
 //data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
-  console.log('heyyyyyy');
-  console.log(req.body);
+ 
   User.findByIdAsync(req.user._id)
     .then(function(user) {
       user.studentData = normalizeStudent(req.body.studentData);
       user.teacherData = normalizeTeacher(req.body.teacherData);
+      console.log(user.studentData);
       return user.saveAsync()
         .then(function() {
           res.status(204).end();

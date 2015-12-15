@@ -180,7 +180,8 @@ describe('Student info API:', function() {
               _id: user._id
             })
             .then(function(user) {
-              expect(user.studentInfo.badges[0]._id).to.equal(badges[0]._id);
+              console.log(user);
+              expect(user.studentData.badges[0].toString()).to.equal(badges[0]._id.toString());
               done();
             });
         });
