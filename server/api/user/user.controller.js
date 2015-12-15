@@ -138,7 +138,6 @@ exports.update = function(req, res, next) {
     .then(function(user) {
       user.studentData = normalizeStudent(req.body.studentData);
       user.teacherData = normalizeTeacher(req.body.teacherData);
-      console.log(user.studentData);
       return user.saveAsync()
         .then(function() {
           res.status(204).end();

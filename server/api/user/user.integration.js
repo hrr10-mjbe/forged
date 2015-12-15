@@ -167,7 +167,7 @@ describe('Student info API:', function() {
         });
     });
 
-    it('should add badges', function(done) {
+    it('should add and normalize badges', function(done) {
       userClient.studentData.badges.push(badges[0]);
       userClient.studentData.badges.push(badges[1]);
       request(app)
@@ -180,23 +180,15 @@ describe('Student info API:', function() {
               _id: user._id
             })
             .then(function(user) {
-              console.log(user);
               expect(user.studentData.badges[0].toString()).to.equal(badges[0]._id.toString());
+              expect(user.studentData.badges[1].toString()).to.equal(badges[1]._id.toString());
+              expect(user.studentData.badges[0]).to.not.have.property('name');
+              expect(user.studentData.badges[1]).to.not.have.property('name');
               done();
             });
         });
 
     });
-
-    it('should normalize before storing badges', function(done) {
-      User.findOneAsync({
-          _id: user._id
-        })
-        .then(function(user) {
-          expect(user.studentInfo.badges[0]).to.equal(undefined);
-          done();
-        });
-    })
 
   });
 
