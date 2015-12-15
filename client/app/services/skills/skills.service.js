@@ -26,23 +26,26 @@ angular.module('hrr10MjbeApp')
     }
 
     this.getUserSkills = function(cb) {
-      console.log(Auth.isLoggedIn());
-      if (!Auth.isLoggedIn()) {
-        return cb([]);
-      }
-      console.log('past');
-      Auth.getCurrentUser(function(user) {
-        var results = [];
-        user.studentData = user.studentData || {}; //TODO demo purposes only!
-        user.studentData.skills = user.studentData.skills || {};
-        this.getSkills(function() {
-          for (var key in user.studentData.skills) {
-            results.push(this.getSkill(key));
-          }
-          cb(results);
-        }.bind(this))
+      Auth.isLoggedIn(function(is) {
+        if (is) {
+          console.log('past');
+          Auth.getCurrentUser(function(user) {
+            var results = [];
+            user.studentData = user.studentData || {}; //TODO demo purposes only!
+            user.studentData.skills = user.studentData.skills || {};
+            this.getSkills(function() {
+              for (var key in user.studentData.skills) {
+                results.push(this.getSkill(key));
+              }
+              cb(results);
+            }.bind(this))
 
-      }.bind(this));
+          }.bind(this));
+        } else {
+          cb([]);
+        }
+      }.bind(this))
+
 
     }
 
