@@ -54,7 +54,8 @@
     <paper-material elevation="1" id="badge-holder">
 
       <paper-toolbar class="cardheader"><div class="headertitle">Badges</div></paper-toolbar>
-        <template is="dom-repeat" items="{{badges}}">
+      {{badges}}
+        <template is="dom-repeat" items="{{badgesDisp}}">
             <paper-card animatedShadow="true" elevation="1" id="badgecard" on-mouseover="raise" on-mouseout="lower">
               <paper-icon-button icon="{{item.image}}" style="color: blue"></paper-icon-button>
               <paper-tooltip position="top" offset="-5" delay="0">{{item.name}}</paper-tooltip>
@@ -67,7 +68,7 @@
     </template>
   <!--<script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>-->
   <script>
-    var userBadges = [{name:'addition',
+    /*var userBadges = [{name:'addition',
                       image:'add',
                       achieved: true},
                       {name:'subtraction',
@@ -90,7 +91,7 @@
                       achieved: false},
                       {name:'division',
                       image:'bookmark',
-                      achieved: false}];
+                      achieved: false}];*/
 
     Polymer({
       is: 'mjbe-badges',
@@ -98,13 +99,28 @@
         selected: {
           type: Number,
           value: 0
-        }
+        },
+        badges: {
+          type: String
+        },
+        badgesDisp: {
+          computed: 'compute(badges)'
+        },
       },
       ready: function() {
+
         this.badges = userBadges;
         this.badges.forEach(function(badge){
           console.log(badge);
         });
+      },
+
+      compute: function() {
+        try {
+          return JSON.parse(this.badges);
+        } catch (e) {
+          return [];
+        }
       },
       raise: function(){
         console.log('raise');
