@@ -8,6 +8,7 @@
       this.$http = $http;
       this.$state = $state;
       this.Skills = Skills;
+      this.skills = Skills.getUserSkills();
       this.awesomeThings = [];
 
       $http.get('/api/things').then(response => {
@@ -29,9 +30,8 @@
     }
 
     go() {
-      this.Skills.setActiveSkill(this.userselection);
-      console.log(this.correct);
       console.log(this.userselection);
+      this.Skills.setActiveSkill(this.userselection);
       this.$state.go('s');
     }
 

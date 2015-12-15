@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Skills', function($http, User, Auth, Problems) {
+  .service('Skills', function($http, Auth, Problems) {
     this.skills = undefined;
     this.activeSkill = undefined;
 
     function changeSkill(newSkill) {
       this.activeSkill = newSkill;
+      console.log(this.activeSkill);
       Problems.setCurrentProblemSet(newSkill.problemGenId);
     }
 
@@ -23,9 +24,32 @@ angular.module('hrr10MjbeApp')
       }
     }
 
+    this.getUserSkills = function(cb) {
+      var user = Auth.getCurrentUser();
+      console.log('got');
+      console.log(user);
+      var results = [];
+      user.studentData = user.studentData || {}; //TODO demo purposes only!
+      user.studentData.skills = user.studentData.skills || {};
+      console.log(user.studentData.skills);
+      for (var key in user.studentData.skills) {
+        results.push(this.getSkill(key));
+      }
+    }
+
+    //for now we assume this can be synchronous. might be dangerous
+    this.getSkill = function(skillID) {
+      for (var i = 0; i < this.skills.length; i++) {
+        if (this.skills[i]._id === skillID) {
+          return this.skills[i];
+        }
+      }
+    }
+
     this.completeSkill = function() {
+      console.log(this.activeSkill);
       Auth.updateSkill(this.activeSkill._id, 1);
-      this.activeSkill = undefined;
+      //this.activeSkill = undefined;
     }
 
     this.setActiveSkill = function(skillID) {
