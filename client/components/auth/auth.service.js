@@ -138,6 +138,12 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
       currentUser.studentData.skills = currentUser.studentData.skills || {};
       currentUser.studentData.skills[skillId] = status;
       console.log(currentUser);
+      User.update({}, {
+        studentData: currentUser.studentData,
+        teacherData: {}
+    }, function() {
+      console.log(User.get());
+    }, function(err) {}).$promise;
     },
 
      /**

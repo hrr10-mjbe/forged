@@ -116,7 +116,8 @@ exports.changePassword = function(req, res, next) {
 exports.update = function(req, res, next) {
   User.findByIdAsync(req.user._id)
     .then(function(user) {
-      _.merge(user, req.body);
+      user.studentData = req.body.studentData;
+      user.teacherData = req.body.teacherData;
       return user.saveAsync()
         .then(function() {
           res.status(204).end();
