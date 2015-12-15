@@ -132,9 +132,12 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
         });
     },
 
+    //ALL manipulation of user model must be done through these functions, to ensure that the model stays consistent
+    //with the server
+    //TODO probably put these in a new controller   
     updateSkill: function(skillId, status) {
       console.log(skillId);
-      currentUser.studentData = currentUser.studentData || {}; //TODO aaaaa
+      currentUser.studentData = currentUser.studentData || {}; //TODO don't do this
       currentUser.studentData.skills = currentUser.studentData.skills || {};
       currentUser.studentData.skills[skillId] = status;
       console.log(currentUser);
@@ -145,6 +148,8 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
       console.log(User.get());
     }, function(err) {}).$promise;
     },
+
+    //more mutator functions go here
 
      /**
       * Check if a user has a specified role or higher
