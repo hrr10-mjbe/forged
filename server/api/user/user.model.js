@@ -24,9 +24,12 @@ var UserSchema = new Schema({
   //start custom properties
   type: String,
   //student properties
-  points: Number,
-  skills: {},
-  badges: [Schema.Types.ObjectId]
+  //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
+  studentData: {
+    points: Number,
+    skills: {},
+    badges: [Schema.Types.ObjectId]
+  },
   //teacher properties
   teacherData: Object,
 });
