@@ -33,7 +33,10 @@ angular.module('hrr10MjbeApp')
     this.awardBadges = function() {
       var newBadges = [];
       for (var i = 0; i < this.badges.length; i++) {
-        if (checkBadge(this.badges.badgeDefId)) {
+        console.log(this.badges[i].badgeDefId);
+        if (checkBadge(this.badges[i].badgeDefId, Auth.getCurrentUser().studentData)) {
+          console.log('ifff');
+          console.log(this.badges[i]);
           newBadges.push(this.badges[i]);
         }
       }
@@ -42,5 +45,7 @@ angular.module('hrr10MjbeApp')
       return newBadges;
     }
 
-    this.getBadges();
+    this.getBadges(function(badges) {
+      this.badges = badges;
+    }.bind(this));
   });

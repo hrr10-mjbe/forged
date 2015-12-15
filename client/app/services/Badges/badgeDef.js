@@ -1,6 +1,11 @@
 (function badgeDef() {
   var skillCompleteBadge = function(studentData) {
-    return studentData.skills.length > 1;
+    console.log(studentData);
+    for (var key in studentData.skills) {
+      console.log('true');
+      return true;
+    }
+    return false;
   }
   
   var map = {
@@ -8,6 +13,10 @@
   }
 
   window.checkBadge = function(badgeDefId, studentData) {
+    console.log(studentData);
+    console.log(map);
+    console.log(badgeDefId);
+    console.log(map[badgeDefId]);
     return map[badgeDefId](studentData);
   }
 }());
