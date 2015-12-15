@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Badges', function(Auth) {
+  .service('Badges', function($http, Auth) {
     this.badges = undefined;
 
     this.getBadges = function(cb) {

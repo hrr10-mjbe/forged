@@ -79,7 +79,7 @@ Skill.find({}).removeAsync()
 
   Badge.find({}).removeAsync()
   .then(function() {
-    Skill.create({
+    Badge.create({
       name: 'WOO you passed a thing',
       info: 'Congrats',
       badgeDefId: 0
