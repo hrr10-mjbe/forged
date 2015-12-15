@@ -23,10 +23,12 @@ var UserSchema = new Schema({
   github: {},
   //start custom properties
   type: String,
+  //student properties
+  points: Number,
+  skills: {},
+  badges: [Schema.Types.ObjectId]
   //teacher properties
   teacherData: Object,
-  //student properties
-  studentData: Object
 });
 
 /**
