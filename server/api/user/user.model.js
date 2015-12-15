@@ -5,6 +5,8 @@ var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
+//Note: changes to the schema that rely on relational data will need to be reflected in the normalize and denormalize functions
+//in the user controller
 var UserSchema = new Schema({
   name: String,
   email: {

@@ -113,12 +113,28 @@ exports.changePassword = function(req, res, next) {
     });
 };
 
+//must be kept up to date with schema
+var normalizeStudent = function(studentData) {
+  studentData.badges = studentData.badges.map(function(badge) {
+    return badge._id;
+  });
+  return studentData;
+}
+
+var normalizeTeacher = function(teacherData) {
+  teacherData.students = teacherData.students.map(function(student) {
+    return student._id;
+  })
+  return teacherData;
+}
+
+//data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
   console.log(req.body);
   User.findByIdAsync(req.user._id)
     .then(function(user) {
-      user.studentData = req.body.studentData;
-      user.teacherData = req.body.teacherData;
+      user.studentData = normalizeStudent(req.body.studentData);
+      user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
           res.status(204).end();
@@ -126,6 +142,23 @@ exports.update = function(req, res, next) {
         .catch(validationError(res));
     });
 };
+
+//TODO use promises
+var denormalizeStudent = function(studentData, cb) {
+  var badges = [];
+  studentData.badges.forEach(function(badge, i) {
+    Badge.findOneAsync({
+        _id: studentData.badges[i]
+      })
+      .then(function(badge) {
+        badges.push(badge);
+        if (badges.length === studentData.badges.length) {
+          studentData.badges = badges;
+          cb(studentData);
+        }
+      });
+  });
+}
 
 /**
  * Get my info
@@ -140,7 +173,15 @@ exports.me = function(req, res, next) {
       if (!user) {
         return res.status(401).end();
       }
-      res.json(user);
+      if (user.type === 'student') {
+        denormalizeStudent(user.studentData, function(studentData) {
+          user.studentData = studentData;
+          res.json(user);
+        })
+      } else if (user.type === 'teacher') {
+        //TODO denormalize
+        res.json(user);
+      }
     })
     .catch(function(err) {
       return next(err);
