@@ -7,7 +7,7 @@ angular.module('hrr10MjbeApp')
         url: '/s',
         templateUrl: 'app/s/s.html',
         controller: 'SCtrl',
-        controllerAs: 'main'
+        controllerAs: 's'
       });
   });
 
