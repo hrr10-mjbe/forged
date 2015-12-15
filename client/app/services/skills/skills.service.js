@@ -10,13 +10,6 @@ angular.module('hrr10MjbeApp')
       Problems.setCurrentProblemSet(newSkill.problemGenId);
     }
 
-   /*User.update({}, {
-      type: 'hohoho',
-      teacherInfo: {test: 'hi'}
-    }, function() {
-      console.log(User.get());
-    }, function(err) {}).$promise;*/
-
     this.getSkills = function(cb) {
       if (this.skills) {
         cb(this.skills);
@@ -25,18 +18,13 @@ angular.module('hrr10MjbeApp')
           method: 'GET',
           url: '/api/skills'
         }).then(function(res) {
-          console.log(res);
           this.skills = res.data;
-          cb(this.skills);
         }.bind(this))
       }
     }
 
     this.completeSkill = function() {
-      Auth.updateSkill(this.activeSkill._id, 1);      
-      /*User.update({}, update, function() {
-        console.log(User.get());
-      });*/
+      Auth.updateSkill(this.activeSkill._id, 1);
       this.activeSkill = undefined;
     }
 
