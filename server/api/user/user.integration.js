@@ -157,17 +157,16 @@ describe('Student info API:', function() {
         });
     });
 
-    /*it ('should add badges', function(done) {
+    it ('should add badges', function(done) {
       request(app)
         .put('/api/users/me/update')
         .set('authorization', 'Bearer ' + token)
-        .send({studentInfo: {}})
+        .send(userClient)
         .expect(200)
         .end(function(err, res) {
-          console.log(res);
           done();
         })
-    })*/
+    })
 
   });
 
