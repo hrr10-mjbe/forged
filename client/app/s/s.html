@@ -3,4 +3,5 @@
 <!--<link rel="import" href="elements/mjbe-problem-view/mjbe-problem-view.html">-->
 <!--<mjbe-problem-view></mjbe-problem-view>-->
 <mjbe-drawing-canvas class="fit"></mjbe-drawing-canvas>
-<problems-addition problemtype={{type}}></problems-addition>
+<problems-addition problemtype={{type}} complete={{complete}} correctcount={{cor}} bindPolymer></problems-addition>
+<input type="submit" ng-click="finish()" style="position:absolute; top: 1000">
