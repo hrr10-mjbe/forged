@@ -19,7 +19,7 @@ function UserResource($resource) {
         id:'me'
       }
     },
-    changeType: {
+    update: {
       method: 'PUT',
       params: {
         id:'me',

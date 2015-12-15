@@ -3,8 +3,9 @@
 angular.module('hrr10MjbeApp')
   .service('Skills', function($http, User) {
 
-    User.changeType({}, {
-      type: 'hohoho'
+    User.update({}, {
+      type: 'hohoho',
+      teacherInfo: {test: 'hi'}
     }, function() {
       console.log(User.get());
     }, function(err) {}).$promise;
