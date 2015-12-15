@@ -33,15 +33,10 @@ angular.module('hrr10MjbeApp')
     this.awardBadges = function() {
       var newBadges = [];
       for (var i = 0; i < this.badges.length; i++) {
-        console.log(this.badges[i].badgeDefId);
         if (checkBadge(this.badges[i].badgeDefId, Auth.getCurrentUser().studentData)) {
-          console.log('ifff');
-          console.log(this.badges[i]);
           newBadges.push(this.badges[i]);
         }
       }
-      console.log("new badges: ");
-      console.log(newBadges);
       return newBadges;
     }
 
