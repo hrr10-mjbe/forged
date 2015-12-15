@@ -135,8 +135,6 @@
       },
 
       updateUser: function() {
-        console.log(currentUser.studentData);
-        console.log(currentUser.teacherData);
         User.update({}, {
           studentData: currentUser.studentData,
           teacherData: currentUser.teacherData
