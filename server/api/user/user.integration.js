@@ -187,7 +187,21 @@ describe('Student info API:', function() {
               done();
             });
         });
+    });
 
+    it('should correctly denormalize badges', function(done) {
+      request(app)
+        .get('/api/users/me')
+        .set('authorization', 'Bearer ' + token)
+        .expect(200)
+        .end(function(err, res) {
+          console.log(res.data);
+          /*expect(user.studentData.badges[0].toString()).to.equal(badges[0]._id.toString());
+          expect(user.studentData.badges[1].toString()).to.equal(badges[1]._id.toString());
+          expect(user.studentData.badges[0]).to.not.have.property('name');
+          expect(user.studentData.badges[1]).to.not.have.property('name');*/
+          done();
+        });
     });
 
   });

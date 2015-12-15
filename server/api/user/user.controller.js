@@ -119,8 +119,6 @@ var normalizeStudent = function(studentData) {
   studentData.badges = studentData.badges.map(function(badge) {
     return Mongoose.Types.ObjectId(badge._id);
   });
-  console.log('hello hello this is a test');
-  console.log(studentData);
   return studentData;
 }
 
@@ -133,7 +131,6 @@ var normalizeTeacher = function(teacherData) {
 
 //data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
- 
   User.findByIdAsync(req.user._id)
     .then(function(user) {
       user.studentData = normalizeStudent(req.body.studentData);
