@@ -28,7 +28,6 @@ angular.module('hrr10MjbeApp')
     this.getUserSkills = function(cb) {
       Auth.isLoggedIn(function(is) {
         if (is) {
-          console.log('past');
           Auth.getCurrentUser(function(user) {
             var results = [];
             user.studentData = user.studentData || {}; //TODO demo purposes only!

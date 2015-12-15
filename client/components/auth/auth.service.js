@@ -122,7 +122,6 @@
        * @return {Bool|Promise}
        */
       isLoggedIn: function(callback) {
-        console.log(currentUser);
         if (arguments.length === 0) {
           return currentUser.hasOwnProperty('role');
         }
