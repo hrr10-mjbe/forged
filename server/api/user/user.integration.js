@@ -108,11 +108,12 @@ describe('Student info API:', function() {
   var user, token, userClient, badges = [];
 
   // Clear users before testing
-   before(function(done) {
+  before(function(done) {
     Badge.removeAsync().then(function() {
         badges[0] = new Badge({
           name: 'Fake Badge 1'
         });
+        console.log(badges[0]);
         badges[1] = new Badge({
           name: 'Fake Badge 2'
         });
@@ -125,9 +126,11 @@ describe('Student info API:', function() {
             type: 'student',
             password: 'password'
           });
-          user.saveAsync().then(function() {done()});
+          user.saveAsync().then(function() {
+            done()
+          });
         });
-      });    
+      });
   });
 
   // Clear users after testing
@@ -166,15 +169,34 @@ describe('Student info API:', function() {
         });
     });
 
-    it ('should add badges', function(done) {
+    it('should add badges', function(done) {
+      userClient.studentData.badges.push(badges[0]);
+      userClient.studentData.badges.push(badges[1]);
       request(app)
         .put('/api/users/me/update')
         .set('authorization', 'Bearer ' + token)
         .send(userClient)
         .expect(200)
         .end(function(err, res) {
-          done();
+          User.findOneAsync({
+          _id: user._id
         })
+        .then(function(user) {
+          expect(user.studentInfo.badges[0]._id).to.equal(badges[0]._id);
+          done();
+        });
+      });
+       
+    });
+
+    it('should normalize before storing badges', function(done) {
+      User.findOneAsync({
+          _id: user._id
+        })
+        .then(function(user) {
+          expect(user.studentInfo.badges[0]).to.equal(undefined);
+          done();
+        });
     })
 
   });
@@ -248,52 +270,52 @@ describe('Student info API:', function() {
         expect(res.body._id.toString()).to.equal(user._id.toString());
         done();
       });*/
-    /*request(app)
-      .put('/api/users/me/update')
-      .set('authorization', 'Bearer ' + token)
+/*request(app)
+  .put('/api/users/me/update')
+  .set('authorization', 'Bearer ' + token)
+  .send({
+    studentInfo:
+  })
+  .expect(200)
+  .expect('Content-Type', /json/)
+  .end(function(err, res) {
+    expect(res.body._id.toString()).to.equal(user._id.toString());
+    done();
+  });*/
+
+/* describe('PUT /api/things/:id', function() {
+  var updatedThing
+
+  beforeEach(function(done) {
+    request(app)
+      .put('/api/things/' + newThing._id)
       .send({
-        studentInfo:
+        name: 'Updated Thing',
+        info: 'This is the updated thing!!!'
       })
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
-        expect(res.body._id.toString()).to.equal(user._id.toString());
+        if (err) {
+          return done(err);
+        }
+        updatedThing = res.body;
         done();
-      });*/
+      });
+  });
 
-  /* describe('PUT /api/things/:id', function() {
-    var updatedThing
+  afterEach(function() {
+    updatedThing = {};
+  });
 
-    beforeEach(function(done) {
-      request(app)
-        .put('/api/things/' + newThing._id)
-        .send({
-          name: 'Updated Thing',
-          info: 'This is the updated thing!!!'
-        })
-        .expect(200)
-        .expect('Content-Type', /json/)
-        .end(function(err, res) {
-          if (err) {
-            return done(err);
-          }
-          updatedThing = res.body;
-          done();
-        });
-    });
+  it('should respond with the updated thing', function() {
+    expect(updatedThing.name).to.equal('Updated Thing');
+    expect(updatedThing.info).to.equal('This is the updated thing!!!');
+  });
 
-    afterEach(function() {
-      updatedThing = {};
-    });
+});*/
 
-    it('should respond with the updated thing', function() {
-      expect(updatedThing.name).to.equal('Updated Thing');
-      expect(updatedThing.info).to.equal('This is the updated thing!!!');
-    });
-
-  });*/
-
- /* it('should respond with a 401 when not authenticated', function(done) {
+/* it('should respond with a 401 when not authenticated', function(done) {
     request(app)
       .get('/api/users/me')
       .expect(401)
