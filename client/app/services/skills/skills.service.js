@@ -1,27 +1,48 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Skills', function($http, User) {
+  .service('Skills', function($http, User, Problems) {
+    this.skills = undefined;
+    this.activeSkill = undefined;
 
-    User.update({}, {
+    function changeSkill(newSkill) {
+      this.activeSkill = newSkill;
+      Problems.setCurrentProblemSet(newSkill.problemGenId);
+    }
+
+   /*User.update({}, {
       type: 'hohoho',
       teacherInfo: {test: 'hi'}
     }, function() {
       console.log(User.get());
-    }, function(err) {}).$promise;
+    }, function(err) {}).$promise;*/
 
     this.getSkills = function(cb) {
-      if (skills) {
-        cb(skills);
+      if (this.skills) {
+        cb(this.skills);
       } else {
         $http({
           method: 'GET',
           url: '/api/skills'
         }).then(function(res) {
           console.log(res);
-          skills = res.data;
-          cb(skills);
-        })
+          this.skills = res.data;
+          cb(this.skills);
+        }.bind(this))
       }
+    }
+
+    this.completeSkill = function() {
+      
+    }
+
+    this.setActiveSkill = function(skillID) {
+      this.getSkills(function(skills) {
+        for (var i = 0; i < skills.length; i++) {
+          if (skills[i]._id === skillID) {
+            return changeSkill.call(this, skills[i]);
+          }
+        }
+      }.bind(this));
     }
   });
