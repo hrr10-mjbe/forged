@@ -113,7 +113,6 @@ describe('Student info API:', function() {
         badges[0] = new Badge({
           name: 'Fake Badge 1'
         });
-        console.log(badges[0]);
         badges[1] = new Badge({
           name: 'Fake Badge 2'
         });
@@ -163,7 +162,6 @@ describe('Student info API:', function() {
         .expect('Content-Type', /json/)
         .end(function(err, res) {
           userClient = res.body;
-          console.log(userClient);
           expect(res.body._id.toString()).to.equal(user._id.toString());
           done();
         });
@@ -179,14 +177,14 @@ describe('Student info API:', function() {
         .expect(200)
         .end(function(err, res) {
           User.findOneAsync({
-          _id: user._id
-        })
-        .then(function(user) {
-          expect(user.studentInfo.badges[0]._id).to.equal(badges[0]._id);
-          done();
+              _id: user._id
+            })
+            .then(function(user) {
+              expect(user.studentInfo.badges[0]._id).to.equal(badges[0]._id);
+              done();
+            });
         });
-      });
-       
+
     });
 
     it('should normalize before storing badges', function(done) {
