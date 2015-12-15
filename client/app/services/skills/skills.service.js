@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Skills', function($http) {
+  .service('Skills', function($http, Auth) {
     var skills;
+    console.log(Auth.getCurrentUser());
     this.getSkills = function(cb) {
       if (skills) {
         cb(skills);
