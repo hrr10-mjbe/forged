@@ -20,6 +20,7 @@ angular.module('hrr10MjbeApp')
           url: '/api/skills'
         }).then(function(res) {
           this.skills = res.data;
+          cb(this.skills);
         }.bind(this))
       }
     }
