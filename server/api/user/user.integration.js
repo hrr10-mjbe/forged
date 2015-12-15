@@ -68,81 +68,184 @@ describe('User API:', function() {
 
 });
 
-describe('Student info API', function() {
+/*describe('Student info API', function() {
   var user;
   var badges = [];
 
   // Clear users before testing
   before(function() {
     Badge.removeAsync().then(function() {
-      badges[0] = new Badge({
-        name: 'Fake Badge 1'
-      });
-      badges[1] = new Badge({
-        name: 'Fake Badge 2'
-      });
-
-      return User.removeAsync().then(function() {
-        user = new User({
-          name: 'Fake User',
-          email: 'test@example.com',
-          type: 'student',
-          password: 'password'
+        badges[0] = new Badge({
+          name: 'Fake Badge 1'
         });
-
-        return user.saveAsync();
-      });
-    });
-
-    // Clear users after testing
-    after(function() {
-      return User.removeAsync();
-      return Badge.removeAsync();
-    });
-
-    describe('PUT /api/users/me/update', function() {
-      var token;
-
-      before(function(done) {
-        request(app)
-          .post('/auth/local')
-          .send({
+        badges[1] = new Badge({
+          name: 'Fake Badge 2'
+        });
+      })
+      .then(function() {
+        User.removeAsync().then(function() {
+          user = new User({
+            name: 'Fake User',
             email: 'test@example.com',
+            type: 'student',
             password: 'password'
-          })
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            token = res.body.token;
-            done();
           });
+          return user.saveAsync();
+        });
       });
 
-      it('should add badges', function(done) {
-        request(app)
-          .get('/api/users/me')
+    
+  });
+});
+
+// Clear users after testing
+after(function() {
+  User.removeAsync();
+  return Badge.removeAsync();
+});*/
+
+describe('Student info API:', function() {
+  var user, token;
+
+  // Clear users before testing
+  before(function() {
+    return User.removeAsync().then(function() {
+      user = new User({
+        name: 'Fake User',
+        email: 'test@example.com',
+        type: 'student',
+        password: 'password'
+      });
+
+      return user.saveAsync();
+    });
+  });
+
+  // Clear users after testing
+  after(function() {
+    return User.removeAsync();
+  });
+
+  describe('GET /api/users/me', function() {
+
+    before(function(done) {
+      request(app)
+        .post('/auth/local')
+        .send({
+          email: 'test@example.com',
+          password: 'password'
+        })
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res) {
+          token = res.body.token;
+          done();
+        });
+    });
+
+    it('should respond with a user profile when authenticated', function(done) {
+      request(app)
+        .get('/api/users/me')
+        .set('authorization', 'Bearer ' + token)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res) {
+          expect(res.body._id.toString()).to.equal(user._id.toString());
+          done();
+        });
+    });
+
+    it('should respond with a 401 when not authenticated', function(done) {
+      request(app)
+        .get('/api/users/me')
+        .expect(401)
+        .end(done);
+    });
+  });
+
+
+});
+
+
+
+/*describe('PUT /api/users/me/update', function() {
+  var token;
+
+   before(function(done) {
+      request(app)
+        .post('/auth/local')
+        .send({
+          email: 'test@example.com',
+          password: 'password'
+        })
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res) {
+          token = res.body.token;
+          done();
+        });
+    });
+
+  it('should respond with a user profile when authenticated', function(done) {
+      request(app)
+        .get('/api/users/me')
+        .set('authorization', 'Bearer ' + token)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res) {
+          expect(res.body._id.toString()).to.equal(user._id.toString());
+          done();
+        });
+    });
+
+  /*before(function(done) {
+    request(app)
+      .post('/auth/local')
+      .send({
+        email: 'test@example.com',
+        password: 'password'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        token = res.body.token;
+        request(app).get('/api/users/me')
           .set('authorization', 'Bearer ' + token)
           .expect(200)
           .expect('Content-Type', /json/)
           .end(function(err, res) {
+            console.log(res);
             expect(res.body._id.toString()).to.equal(user._id.toString());
             done();
           });
-        /*request(app)
-          .put('/api/users/me/update')
-          .set('authorization', 'Bearer ' + token)
-          .send({
-            studentInfo:
-          })
-          .expect(200)
-          .expect('Content-Type', /json/)
-          .end(function(err, res) {
-            expect(res.body._id.toString()).to.equal(user._id.toString());
-            done();
-          });*/
-      });
+      })
 
-      /* describe('PUT /api/things/:id', function() {
+  });
+
+  it('should add badges', function(done) {
+    request(app)
+      .get('/api/users/me')
+      .set('authorization', 'Bearer ' + token)
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        expect(res.body._id.toString()).to.equal(user._id.toString());
+        done();
+      });*/
+    /*request(app)
+      .put('/api/users/me/update')
+      .set('authorization', 'Bearer ' + token)
+      .send({
+        studentInfo:
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        expect(res.body._id.toString()).to.equal(user._id.toString());
+        done();
+      });*/
+
+  /* describe('PUT /api/things/:id', function() {
     var updatedThing
 
     beforeEach(function(done) {
@@ -174,14 +277,10 @@ describe('Student info API', function() {
 
   });*/
 
-      it('should respond with a 401 when not authenticated', function(done) {
-        request(app)
-          .get('/api/users/me')
-          .expect(401)
-          .end(done);
-      });
-    });
-
-
+ /* it('should respond with a 401 when not authenticated', function(done) {
+    request(app)
+      .get('/api/users/me')
+      .expect(401)
+      .end(done);
   });
-});
+});*/
