@@ -10,7 +10,6 @@
       this.Skills = Skills;
       Skills.getUserSkills(function(skills) {
         this.skills = skills;
-        console.log(this.skills);
       }.bind(this));
       this.awesomeThings = [];
 
@@ -33,7 +32,6 @@
     }
 
     go() {
-      console.log(this.userselection);
       this.Skills.setActiveSkill(this.userselection);
       this.$state.go('s');
     }
