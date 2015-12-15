@@ -22,6 +22,7 @@ function UserResource($resource) {
     changeType: {
       method: 'PUT',
       params: {
+        id:'me',
         controller:'update'
       }
     }

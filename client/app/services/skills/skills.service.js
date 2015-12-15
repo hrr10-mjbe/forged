@@ -30,7 +30,7 @@ Auth.getCurrentUser(null)
         //return safeCb(callback)(err);
       }).$promise;*/
 
-  User.changeType({ id: user._id }, {
+  User.changeType({}, {
         type: 'bar'
       }, function() {
         console.log(User.get());
