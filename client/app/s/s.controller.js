@@ -7,7 +7,8 @@
       this.complete = 'false';
       this.type = Problems.currentProblemSet();
     }
-    go() {
+
+    finish() {
       console.log(this.correct);
       console.log(this.complete);
     }
