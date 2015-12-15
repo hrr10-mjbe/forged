@@ -105,7 +105,7 @@ after(function() {
 });*/
 
 describe('Student info API:', function() {
-  var user, token;
+  var user, token, userClient;
 
   // Clear users before testing
   before(function() {
@@ -150,17 +150,25 @@ describe('Student info API:', function() {
         .expect(200)
         .expect('Content-Type', /json/)
         .end(function(err, res) {
+          userClient = res.body;
+          console.log(userClient);
           expect(res.body._id.toString()).to.equal(user._id.toString());
           done();
         });
     });
 
-    it('should respond with a 401 when not authenticated', function(done) {
+    /*it ('should add badges', function(done) {
       request(app)
-        .get('/api/users/me')
-        .expect(401)
-        .end(done);
-    });
+        .put('/api/users/me/update')
+        .set('authorization', 'Bearer ' + token)
+        .send({studentInfo: {}})
+        .expect(200)
+        .end(function(err, res) {
+          console.log(res);
+          done();
+        })
+    })*/
+
   });
 
 
