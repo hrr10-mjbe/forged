@@ -31,6 +31,16 @@ angular.module('hrr10MjbeApp')
     }
 
     this.awardBadges = function() {
-      
+      var newBadges = [];
+      for (var i = 0; i < this.badges.length; i++) {
+        if (checkBadge(this.badges.badgeDefId)) {
+          newBadges.push(this.badges[i]);
+        }
+      }
+      console.log("new badges: ");
+      console.log(newBadges);
+      return newBadges;
     }
+
+    this.getBadges();
   });
