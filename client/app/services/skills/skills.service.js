@@ -21,22 +21,20 @@ Auth.getCurrentUser(null)
           console.log(user);
   console.log(user._id);
 
-  User.changePassword({ id: user._id }, {
+ /* User.changePassword({ id: user._id }, {
         oldPassword: 'nothing',
         newPassword: 'morenothing'
       }, function() {
         //return safeCb(callback)(null);
       }, function(err) {
         //return safeCb(callback)(err);
-      }).$promise;
+      }).$promise;*/
 
   User.changeType({ id: user._id }, {
-        type: 'fooo'
+        type: 'bar'
       }, function() {
         console.log(User.get());
-        return safeCb(callback)(null);
       }, function(err) {
-        return safeCb(callback)(err);
       }).$promise;
         });
 
