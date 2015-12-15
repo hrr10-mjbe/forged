@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Skills', function($http, User, Problems) {
+  .service('Skills', function($http, User, Auth, Problems) {
     this.skills = undefined;
     this.activeSkill = undefined;
 
@@ -33,10 +33,11 @@ angular.module('hrr10MjbeApp')
     }
 
     this.completeSkill = function() {
-      this.activeSkill = undefined;
-      User.update({}, {type: 'done a skill!'}, function() {
+      Auth.updateSkill(this.activeSkill._id, 1);      
+      /*User.update({}, update, function() {
         console.log(User.get());
-      });
+      });*/
+      this.activeSkill = undefined;
     }
 
     this.setActiveSkill = function(skillID) {

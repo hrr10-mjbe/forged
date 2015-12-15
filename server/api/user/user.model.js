@@ -24,9 +24,9 @@ var UserSchema = new Schema({
   //start custom properties
   type: String,
   //teacher properties
-  teacherInfo: Object,
+  teacherData: Object,
   //student properties
-  studentInfo: Object
+  studentData: Object
 });
 
 /**

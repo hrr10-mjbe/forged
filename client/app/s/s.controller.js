@@ -3,10 +3,11 @@
 (function() {
 
   class SController {
-    constructor(Problems, Skills) {
+    constructor(Problems, Skills, Auth) {
       this.complete = 'false';
       this.type = Problems.currentProblemSet();
       this.Skills = Skills;
+      this.Auth = Auth;
     }
 
     finish() {

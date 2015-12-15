@@ -132,6 +132,14 @@ function AuthService($location, $http, $cookies, $q, appConfig, Util, User) {
         });
     },
 
+    updateSkill: function(skillId, status) {
+      console.log(skillId);
+      currentUser.studentData = currentUser.studentData || {}; //TODO aaaaa
+      currentUser.studentData.skills = currentUser.studentData.skills || {};
+      currentUser.studentData.skills[skillId] = status;
+      console.log(currentUser);
+    },
+
      /**
       * Check if a user has a specified role or higher
       *   (synchronous|asynchronous)
