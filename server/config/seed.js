@@ -7,6 +7,7 @@
 import Thing from '../api/thing/thing.model';
 import User from '../api/user/user.model';
 import Skill from '../api/skill/skill.model';
+import Badge from '../api/badge/badge.model';
 
 Thing.find({}).removeAsync()
   .then(function() {
@@ -73,5 +74,13 @@ Skill.find({}).removeAsync()
        name: 'Simple Subtraction',
       info: 'Practice subtraction with problems within 10',
       problemGenId: 2
+    });
+  });
+
+  Badge.find({}).removeAsync()
+  .then(function() {
+    Skill.create({
+      name: 'WOO you passed a thing',
+      info: 'Congrats',
     });
   });
