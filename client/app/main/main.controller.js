@@ -30,6 +30,8 @@
 
     go() {
       this.Problems.setCurrentProblemSet(this.userselection);
+      console.log(this.correct);
+      console.log(this.userselection);
       this.$state.go('s');
     }
 
