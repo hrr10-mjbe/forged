@@ -22,7 +22,8 @@ angular.module('hrr10MjbeApp')
       Auth.isLoggedIn(function(is) {
         if (is) {
           Auth.getCurrentUser(function(user) {
-            cb(user.badges);
+            console.log(user.studentData.badges);
+            cb(user.studentData.badges);
           });
         } else {
           cb([]);
