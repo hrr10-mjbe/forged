@@ -82,6 +82,7 @@ Skill.find({}).removeAsync()
     Badge.create({
       name: 'WOO you passed a thing',
       info: 'Congrats',
-      badgeDefId: 0
+      badgeDefId: 0,
+      image: 'add'
     });
   });

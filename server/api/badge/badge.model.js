@@ -7,7 +7,8 @@ var BadgeSchema = new Schema({
   name: String,
   info: String,
   active: Boolean,
-  badgeDefId: Number
+  badgeDefId: Number,
+  image: String
 });
 
 module.exports = mongoose.model('Badge', BadgeSchema);
