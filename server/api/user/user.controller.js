@@ -108,6 +108,21 @@ exports.changePassword = function(req, res, next) {
     });
 };
 
+exports.update = function(req, res, next) {
+  var userId = req.user._id;
+  var newPass = String(req.body.type);
+
+  User.findByIdAsync(userId)
+    .then(function(user) {
+        user.type = newPass;
+        return user.saveAsync()
+          .then(function() {
+            res.status(204).end();
+          })
+          .catch(validationError(res));
+     });
+};
+
 /**
  * Get my info
  */

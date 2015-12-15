@@ -18,6 +18,12 @@ function UserResource($resource) {
       params: {
         id:'me'
       }
+    },
+    changeType: {
+      method: 'PUT',
+      params: {
+        controller:'update'
+      }
     }
   });
 }
