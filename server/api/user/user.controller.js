@@ -110,7 +110,6 @@ exports.changePassword = function(req, res, next) {
     });
 };
 
-<<<<<<< 30d6d7bfdbc8800c2a3aa8e75dae24e303d3cece
 //must be kept up to date with schema
 var normalizeStudent = function(studentData) {
   studentData.badges = studentData.badges.map(function(badge) {
