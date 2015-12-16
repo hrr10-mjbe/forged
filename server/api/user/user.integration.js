@@ -8,6 +8,11 @@ import request from 'supertest';
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema
 
+console.log('AAAAAAAAAAAAAAAAAAAAAA');
+console.log(Schema.Types.ObjectId);
+console.log(mongoose.Types.ObjectId);
+console.log(Schema.ObjectId);
+
 var personSchema = Schema({
   name: String,
   stuff: [{type: Schema.Types.ObjectId, ref: 'Stuff'}]

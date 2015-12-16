@@ -142,7 +142,7 @@ exports.update = function(req, res, next) {
       console.log(user);
       //user.studentData = normalizeStudent(req.body.studentData);
       var test = normalizeStudent(req.body.studentData);
-      //user.studentData = test;
+      user.studentData = test;
       user.studentData.badges = test.badges;
       console.log('testing');
       console.log(test);
@@ -151,7 +151,8 @@ exports.update = function(req, res, next) {
       for (var i = 0; i < user.studentData.badges.length; i++) {
         user.studentData.badges[i] = Mongoose.Types.ObjectId(user.studentData.badges[i]);
       }
-      console.log(user.studentData.badges);
+      console.log(user);
+
       user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
@@ -191,10 +192,22 @@ exports.update = function(req, res, next) {
 exports.me = function(req, res, next) {
   var userId = req.user._id;
 
-  User.findOne({
+  User.findById(userId, function (err, user) {
+  var opts = [
+      { path: 'studentData.badges' }
+  ]
+
+  User.populate(user, opts, function (err, user) {
+    console.log(user);
+    res.json(user);
+  })
+
+})
+
+  /*User.findOne({
       _id: userId
     }, '-salt -hashedPassword')
-    .populate('badges')
+    .populate('studenData.badges')
     .exec(function(err, user) { // don't ever give out the password or salt
       console.log(user);
       if (!user) {
@@ -216,7 +229,7 @@ exports.me = function(req, res, next) {
         //TODO denormalize
         res.json(user);
       }*/
-    })
+    /*})*/
     /*.catch(function(err) {
       return next(err);
     });*/
