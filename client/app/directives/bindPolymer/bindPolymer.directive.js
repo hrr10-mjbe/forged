@@ -20,14 +20,10 @@ angular.module('bindPolymer', [])
           Object.keys(attrMap).forEach(function(key) {
             element.on(key + '-changed', function(event) {
               scope.$evalAsync(function() {
-                console.log(scope);
-                console.log(element);
-                console.log(attrs);
                 if (attrMap[key](scope) === event.detail.value) return;
                 attrMap[key].assign(scope, event.detail.value);
-                console.log(typeof scope[attrs.namespace]);
-                if (attrs.namespace && typeof scope[attrs.namespace].polymerChange === 'function') {
-                  scope[attrs.namespace].polymerChange();
+                if (attrs.eventNamespace && typeof scope[attrs.eventNamespace].polymerChange === 'function') {
+                  scope[attrs.eventNamespace].polymerChange();
                 }
               });
             });
