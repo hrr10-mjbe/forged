@@ -24,11 +24,11 @@ var storySchema = Schema({
 var Story  = mongoose.model('Story', storySchema);
 var Person = mongoose.model('Person', personSchema);
 
-var aaron = new Person({ _id: 0, name: 'Aaron', age: 100 });
+var aaron = new Person({ _id: 0, name: 'Aaron', age: 100, stories: [] });
 
-aaron.save(function (err) {
-  if (err) return handleError(err);
-  
+var story3 = new Story({title: 'another story'});
+
+
   var story1 = new Story({
     title: "Once upon a timex.",
     _creator: aaron._id    // assign the _id from the person
@@ -36,8 +36,24 @@ aaron.save(function (err) {
   
   story1.save(function (err) {
     if (err) return handleError(err);
+    var story2 = new Story({title: 'a story'});
+    story2.save(function(err) {
+      console.log('idddddddddddddd');
+      console.log(story1._id);
+      aaron.stories.push(story1._id);
+      aaron.stories.push(story2._id);
+      console.log(aaron);
+      //aaron.stories = [story1._id, story2._id];
+      console.log(aaron.stories);
+      aaron.save(function(err) {
+        Person.findOne({name: 'Aaron'}).exec(function(err, person) {
+  console.log('found %s', person);
+  console.log(person.stories);
+})
+      })
+    })
     // thats it!
-  });
+
 });
 console.log('hi');
 
@@ -47,9 +63,12 @@ Story
 .exec(function (err, story) {
   if (err) return handleError(err);
   console.log('yo');
-  console.log('The creator is %s', story._creator.name);
+  console.log(story._id);
+  console.log('The creator is %s', story.title);
   // prints "The creator is Aaron"
 });
+
+
 
 describe('User API:', function() {
   var user;
