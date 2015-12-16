@@ -157,8 +157,7 @@ exports.me = function(req, res, next) {
   var opts = [
       { path: 'studentData.badges' }
   ]
-  User.populate(user, opts, function (err, user) {
-    console.log(user);
+  User.populate(user, {path: 'studentData.badges'}, function (err, user) {
     res.json(user);
   })
 
