@@ -118,12 +118,8 @@ exports.changePassword = function(req, res, next) {
 //must be kept up to date with schema
 var normalizeStudent = function(studentData) {
   studentData.badges = studentData.badges.map(function(badge) {
-    console.log('normalizing');
-    console.log(badge._id);
-    console.log(Mongoose.Types.ObjectId(badge._id));
     return Mongoose.Types.ObjectId(badge._id);
   });
-  console.log(studentData.badges);
   return studentData;
 }
 
@@ -137,8 +133,8 @@ var normalizeTeacher = function(teacherData) {
 //data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
   User.findByIdAsync(req.user._id)
-    .then(function(user) {   
-      user.studentData = normalizeStudent(req.body.studentData);     
+    .then(function(user) {
+      user.studentData = normalizeStudent(req.body.studentData);
       user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
@@ -152,46 +148,22 @@ exports.update = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
+  //TODO promises
   var userId = req.user._id;
-  User.findById(userId, '-salt -hashedPassword', function (err, user) {
-  var opts = [
-      { path: 'studentData.badges' }
-  ]
-  User.populate(user, {path: 'studentData.badges'}, function (err, user) {
-    res.json(user);
-  })
-
-})
-
-  /*User.findOne({
-      _id: userId
-    }, '-salt -hashedPassword')
-    .populate('studenData.badges')
-    .exec(function(err, user) { // don't ever give out the password or salt
-      console.log(user);
-      if (!user) {
-        return res.status(401).end();
-      }
-      Badge.findOne({_id: user.studentData.badges[0]}).exec(function(err, badge) {
-        console.log('found badge');
-        console.log(badge);
-      })
-      res.json(user);
-     /*if (user.type === 'student') {
-        console.log('responding');
-        denormalizeStudent(user.studentData, function(studentData) {
-          user.studentData = studentData;
-          //console.log(user.studentData);
-          res.json(user);
-        })
-      } else if (user.type === 'teacher') {
-        //TODO denormalize
-        res.json(user);
-      }*/
-    /*})*/
-    /*.catch(function(err) {
+  User.findById(userId, '-salt -hashedPassword', function(err, user) {
+    if (err) {
       return next(err);
-    });*/
+    }
+    
+    User.populate(user, {
+      path: 'studentData.badges'
+    }, function(err, user) {
+      if (err) {
+        return next(err);
+      }
+      res.json(user);
+    })
+  });
 };
 
 /**
