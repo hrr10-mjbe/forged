@@ -145,7 +145,7 @@
 
       //ALL manipulation of user model must be done through these functions, to ensure that the model stays consistent
       //with the server
-      //TODO probably put these in a new controller   
+      //TODO probably put these in a new service 
       updateSkill: function(skillId, status) {
         currentUser.studentData = currentUser.studentData || {}; //TODO don't do this
         currentUser.studentData.skills = currentUser.studentData.skills || {};
