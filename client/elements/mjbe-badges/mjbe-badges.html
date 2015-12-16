@@ -66,31 +66,6 @@
 
     </template>
   <script>
-    /*var userBadges = [{name:'addition',
-                      image:'add',
-                      achieved: true},
-                      {name:'subtraction',
-                      image:'build',
-                      achieved: true},
-                      {name:'multiplication',
-                      image:'favorite',
-                      achieved: false},
-                      {name:'division',
-                      image:'account-balance',
-                      achieved: false},
-                      {name:'addition',
-                      image:'polymer',
-                      achieved: true},
-                      {name:'subtraction',
-                      image:'accessibility',
-                      achieved: true},
-                      {name:'multiplication',
-                      image:'assessment',
-                      achieved: false},
-                      {name:'division',
-                      image:'bookmark',
-                      achieved: false}];*/
-
     Polymer({
       is: 'mjbe-badges',
       properties: {
@@ -105,13 +80,7 @@
           computed: 'parseBadges(loadbadges)'
         },
       },
-      ready: function() {
-        //this.badges = userBadges;
-       // this.badges.forEach(function(badge){
-        //  console.log(badge);
-        //});
-      },
-
+      
       parseBadges: function() {
         //try catch because polymer loads before angular has updated the attribute, and JSON.parse is trying to parse a {{}}
         try {
