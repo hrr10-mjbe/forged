@@ -5,6 +5,52 @@ import User from './user.model';
 import Badge from '../badge/badge.model';
 import request from 'supertest';
 
+var mongoose = require('mongoose');
+var Schema = mongoose.Schema
+  
+var personSchema = Schema({
+  _id     : Number,
+  name    : String,
+  age     : Number,
+  stories : [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+});
+
+var storySchema = Schema({
+  _creator : { type: Number, ref: 'Person' },
+  title    : String,
+  fans     : [{ type: Number, ref: 'Person' }]
+});
+
+var Story  = mongoose.model('Story', storySchema);
+var Person = mongoose.model('Person', personSchema);
+
+var aaron = new Person({ _id: 0, name: 'Aaron', age: 100 });
+
+aaron.save(function (err) {
+  if (err) return handleError(err);
+  
+  var story1 = new Story({
+    title: "Once upon a timex.",
+    _creator: aaron._id    // assign the _id from the person
+  });
+  
+  story1.save(function (err) {
+    if (err) return handleError(err);
+    // thats it!
+  });
+});
+console.log('hi');
+
+Story
+.findOne({ title: 'Once upon a timex.' })
+.populate('_creator')
+.exec(function (err, story) {
+  if (err) return handleError(err);
+  console.log('yo');
+  console.log('The creator is %s', story._creator.name);
+  // prints "The creator is Aaron"
+});
+
 describe('User API:', function() {
   var user;
 
@@ -202,8 +248,9 @@ describe('Student info API:', function() {
         .end(function(err, res) {
           console.log(res.body);
           //they might not come back in the same order
-          expect (res.body.studentData.badges[0].name === badges[0].name || res.body.studentData.badges[1].name === badges[0].name).to.be.true;
+          //expect (res.body.studentData.badges[0].name === badges[0].name || res.body.studentData.badges[1].name === badges[0].name).to.be.true;
           //expect(res.data.badges[0].toString()).to.equal(badges[0]._id.toString());
+          expect(res.body.studentData.badges[0].name).to.equal(badges[0].name);
           /*expect(user.studentData.badges[0].toString()).to.equal(badges[0]._id.toString());
           expect(user.studentData.badges[1].toString()).to.equal(badges[1]._id.toString());
           expect(user.studentData.badges[0]).to.not.have.property('name');

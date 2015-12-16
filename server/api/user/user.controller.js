@@ -145,7 +145,7 @@ exports.update = function(req, res, next) {
 };
 
 //TODO use promises
-var denormalizeStudent = function(studentData, cb) {
+/*var denormalizeStudent = function(studentData, cb) {
   var denormalized = studentData;
   var badges = [];
   if (!studentData.badges.length) {
@@ -166,7 +166,7 @@ var denormalizeStudent = function(studentData, cb) {
         }
       });
   });
-}
+}*/
 
 /**
  * Get my info
@@ -174,14 +174,17 @@ var denormalizeStudent = function(studentData, cb) {
 exports.me = function(req, res, next) {
   var userId = req.user._id;
 
-  User.findOneAsync({
+  User.findOne({
       _id: userId
     }, '-salt -hashedPassword')
-    .then(function(user) { // don't ever give out the password or salt
+    .populate('badges')
+    .exec(function(err, user) { // don't ever give out the password or salt
+      console.log(user);
       if (!user) {
         return res.status(401).end();
       }
-      if (user.type === 'student') {
+      res.json(user);
+     /*if (user.type === 'student') {
         console.log('responding');
         denormalizeStudent(user.studentData, function(studentData) {
           user.studentData = studentData;
@@ -191,11 +194,11 @@ exports.me = function(req, res, next) {
       } else if (user.type === 'teacher') {
         //TODO denormalize
         res.json(user);
-      }
+      }*/
     })
-    .catch(function(err) {
+    /*.catch(function(err) {
       return next(err);
-    });
+    });*/
 };
 
 /**

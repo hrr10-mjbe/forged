@@ -1,6 +1,7 @@
 'use strict';
 
 import crypto from 'crypto';
+import Badge from '../badge/badge.model'
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
@@ -30,11 +31,11 @@ var UserSchema = new Schema({
   studentData: {
     points: Number,
     skills: {},
-    badges: [Schema.Types.ObjectId]
+    badges: [{type: Schema.Types.ObjectId, ref: 'Badges'}]
   },
   //teacher properties
   teacherData: {
-    students: [Schema.Types.ObjectId]
+    students: [{type: Schema.Types.ObjectId, ref: 'User'}]
   }
 });
 
