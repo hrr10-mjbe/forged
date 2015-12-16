@@ -14,7 +14,10 @@
       console.log(this.correct);
       console.log(this.complete);
       if (this.complete === 'true') {
-        this.Skills.completeSkill();
+        var newBadges = this.Skills.completeSkill();
+        if (newBadges.length) {
+          //show them
+        }
       }
     }
   }
