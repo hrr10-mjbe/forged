@@ -65,46 +65,29 @@
     </paper-material>
 
     </template>
-  <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
   <script>
-    var userBadges = [{name:'addition',
-                      image:'add',
-                      achieved: true},
-                      {name:'subtraction',
-                      image:'build',
-                      achieved: true},
-                      {name:'multiplication',
-                      image:'favorite',
-                      achieved: false},
-                      {name:'division',
-                      image:'account-balance',
-                      achieved: false},
-                      {name:'addition',
-                      image:'polymer',
-                      achieved: true},
-                      {name:'subtraction',
-                      image:'accessibility',
-                      achieved: true},
-                      {name:'multiplication',
-                      image:'assessment',
-                      achieved: false},
-                      {name:'division',
-                      image:'bookmark',
-                      achieved: false}];
-
     Polymer({
       is: 'mjbe-badges',
       properties: {
         selected: {
           type: Number,
           value: 0
-        }
+        },
+        loadbadges: {
+          type: String
+        },
+        badges: {
+          computed: 'parseBadges(loadbadges)'
+        },
       },
-      ready: function() {
-        this.badges = userBadges;
-        this.badges.forEach(function(badge){
-          console.log(badge);
-        });
+      
+      parseBadges: function() {
+        //try catch because polymer loads before angular has updated the attribute, and JSON.parse is trying to parse a {{}}
+        try {
+          return JSON.parse(this.loadbadges);
+        } catch (e) {
+          return [];
+        }
       },
       raise: function(){
         console.log('raise');

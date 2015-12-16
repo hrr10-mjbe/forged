@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Skills', function($http, Auth, Problems) {
+  .service('Skills', function($http, Auth, Problems, Badges) {
     this.skills = undefined;
     this.activeSkill = undefined;
 
@@ -60,6 +60,8 @@ angular.module('hrr10MjbeApp')
     this.completeSkill = function() {
       console.log(this.activeSkill);
       Auth.updateSkill(this.activeSkill._id, 1);
+      var newBadges = Badges.awardBadges();
+      Auth.awardBadges(newBadges);
       //this.activeSkill = undefined;
     }
 

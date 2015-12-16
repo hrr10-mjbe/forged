@@ -1,10 +1,13 @@
 'use strict';
 
 import crypto from 'crypto';
+import Badge from '../badge/badge.model'
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
+//Note: changes to the schema that rely on relational data will need to be reflected in the normalize and denormalize functions
+//in the user controller
 var UserSchema = new Schema({
   name: String,
   email: {
@@ -23,10 +26,17 @@ var UserSchema = new Schema({
   github: {},
   //start custom properties
   type: String,
-  //teacher properties
-  teacherData: Object,
   //student properties
-  studentData: Object
+  //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
+  studentData: {
+    points: Number,
+    skills: {},
+    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}]
+  },
+  //teacher properties
+  teacherData: {
+    students: [{type: Schema.Types.ObjectId, ref: 'User'}]
+  }
 });
 
 /**

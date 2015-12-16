@@ -1,6 +1,8 @@
 'use strict';
 
 import User from './user.model';
+import Badge from '../badge/badge.model';
+import Mongoose from 'mongoose';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
@@ -113,11 +115,27 @@ exports.changePassword = function(req, res, next) {
     });
 };
 
+//must be kept up to date with schema
+var normalizeStudent = function(studentData) {
+  studentData.badges = studentData.badges.map(function(badge) {
+    return Mongoose.Types.ObjectId(badge._id);
+  });
+  return studentData;
+}
+
+var normalizeTeacher = function(teacherData) {
+  teacherData.students = teacherData.students.map(function(student) {
+    return student._id;
+  })
+  return teacherData;
+}
+
+//data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
   User.findByIdAsync(req.user._id)
     .then(function(user) {
-      user.studentData = req.body.studentData;
-      user.teacherData = req.body.teacherData;
+      user.studentData = normalizeStudent(req.body.studentData);
+      user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
           res.status(204).end();
@@ -130,20 +148,22 @@ exports.update = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
+  //TODO promises
   var userId = req.user._id;
-
-  User.findOneAsync({
-      _id: userId
-    }, '-salt -hashedPassword')
-    .then(function(user) { // don't ever give out the password or salt
-      if (!user) {
-        return res.status(401).end();
+  User.findById(userId, '-salt -hashedPassword', function(err, user) {
+    if (err) {
+      return next(err);
+    }
+    
+    User.populate(user, {
+      path: 'studentData.badges'
+    }, function(err, user) {
+      if (err) {
+        return next(err);
       }
       res.json(user);
     })
-    .catch(function(err) {
-      return next(err);
-    });
+  });
 };
 
 /**
