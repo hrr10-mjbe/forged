@@ -32,8 +32,14 @@
     }
 
     go() {
+      console.log('going');
+      console.log(this.inputtest);
       this.Skills.setActiveSkill(this.userselection);
-      this.$state.go('s');
+      //this.$state.go('s');
+    }
+
+    polymerChange() {
+      console.log('changing');
     }
 
   }
