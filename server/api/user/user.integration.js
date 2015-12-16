@@ -13,12 +13,23 @@ var personSchema = Schema({
   stuff: [{type: String}]
 })
 
+var stuffSchema = Schema({
+  name: String
+})
+
 var Person = mongoose.model('Person', personSchema);
-var person = new Person({name: 'johnny', stuff:['test', 'test2']});
+var Stuff = mongoose.model('Stuff', stuffSchema);
+var stuff = new Stuff({name: 'hi'});
+stuff.save(function() {
+  console.log(stuff.name);
+var person = new Person({name: 'johnny2', stuff:[stuff.name, 'test2']});
+//person.stuff = ['test2', 'test2'];
+person.markModified('stuff');
 person.save(function() {
-  Person.findOne({name: 'johnny'}).exec(function(err, person) {
+  Person.findOne({name: 'johnny2'}).exec(function(err, person) {
     console.log(person);
   })
+})
 })
   
 /*var personSchema = Schema({
