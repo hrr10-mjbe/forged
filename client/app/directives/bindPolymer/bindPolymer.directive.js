@@ -22,6 +22,9 @@ angular.module('bindPolymer', [])
               scope.$evalAsync(function() {
                 if (attrMap[key](scope) === event.detail.value) return;
                 attrMap[key].assign(scope, event.detail.value);
+                if (attrs.eventNamespace && typeof scope[attrs.eventNamespace].polymerChange === 'function') {
+                  scope[attrs.eventNamespace].polymerChange();
+                }
               });
             });
           });
