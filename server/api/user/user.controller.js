@@ -1,6 +1,7 @@
 'use strict';
 
 import User from './user.model';
+import Badge from '../badge/badge.model';
 import Mongoose from 'mongoose';
 import passport from 'passport';
 import config from '../../config/environment';
@@ -145,19 +146,23 @@ exports.update = function(req, res, next) {
 
 //TODO use promises
 var denormalizeStudent = function(studentData, cb) {
+  var denormalized = studentData;
   var badges = [];
   if (!studentData.badges.length) {
-    cb(studentData);
+    cb(denormalized);
   }
-  studentData.badges.forEach(function(badge, i) {
+  studentData.badges.forEach(function(badge) {
     Badge.findOneAsync({
-        _id: studentData.badges[i]
+        _id: badge
       })
-      .then(function(badge) {
-        badges.push(badge);
+      .then(function(foundBadge) {
+        badges.push(foundBadge);
         if (badges.length === studentData.badges.length) {
-          studentData.badges = badges;
-          cb(studentData);
+          console.log(badges);
+          denormalized.badges = badges;
+          //console.log(badges);
+          console.log(denormalized.badges);
+          cb(denormalized);
         }
       });
   });
@@ -180,6 +185,7 @@ exports.me = function(req, res, next) {
         console.log('responding');
         denormalizeStudent(user.studentData, function(studentData) {
           user.studentData = studentData;
+          //console.log(user.studentData);
           res.json(user);
         })
       } else if (user.type === 'teacher') {

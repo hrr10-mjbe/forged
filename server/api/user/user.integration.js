@@ -118,6 +118,11 @@ describe('Student info API:', function() {
         });
       })
       .then(function() {
+        badges[0].saveAsync();
+      }).then(function() {
+        badges[1].saveAsync();
+      })
+      .then(function() {
         User.removeAsync().then(function() {
           user = new User({
             name: 'Fake User',
@@ -195,7 +200,10 @@ describe('Student info API:', function() {
         .set('authorization', 'Bearer ' + token)
         .expect(200)
         .end(function(err, res) {
-          console.log(res.data);
+          console.log(res.body);
+          //they might not come back in the same order
+          expect (res.body.studentData.badges[0].name === badges[0].name || res.body.studentData.badges[1].name === badges[0].name).to.be.true;
+          //expect(res.data.badges[0].toString()).to.equal(badges[0]._id.toString());
           /*expect(user.studentData.badges[0].toString()).to.equal(badges[0]._id.toString());
           expect(user.studentData.badges[1].toString()).to.equal(badges[1]._id.toString());
           expect(user.studentData.badges[0]).to.not.have.property('name');
