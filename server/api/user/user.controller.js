@@ -155,11 +155,6 @@ exports.me = function(req, res, next) {
     }, function(err, user) {
       if (err) {
         return next(err);
-
-  User.findOneAsync({ _id: userId }, '-salt -hashedPassword')
-    .then(function(user) { // don't ever give out the password or salt
-      if (!user) {
-        return res.status(401).end();
       }
       res.json(user);
     })
