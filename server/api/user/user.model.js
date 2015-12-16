@@ -31,11 +31,13 @@ var UserSchema = new Schema({
   studentData: {
     points: Number,
     skills: {},
-    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}]
+    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
+    requests: {type: Schema.Types.ObjectId, ref: 'User'}]
   },
   //teacher properties
   teacherData: {
-    students: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    students: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    pendingStudents: [{type: Schema.Types.ObjectId, ref: 'User'}]
   }
 });
 
