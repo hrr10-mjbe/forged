@@ -6,6 +6,7 @@ import Mongoose from 'mongoose';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
+import _ from 'lodash';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -49,10 +50,14 @@ exports.create = function(req, res, next) {
   newUser.role = 'user';
   newUser.saveAsync()
     .spread(function(user) {
-      var token = jwt.sign({ _id: user._id }, config.secrets.session, {
+      var token = jwt.sign({
+        _id: user._id
+      }, config.secrets.session, {
         expiresInMinutes: 60 * 5
       });
-      res.json({ token: token });
+      res.json({
+        token: token
+      });
     })
     .catch(validationError(res));
 };

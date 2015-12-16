@@ -29,6 +29,7 @@
       <input value="{{studentAnswer::input}}">
       <paper-fab icon="send" on-tap="evaluate"></paper-fab>
       <p>{{message}}</p>
+      <p>{{correctcount}} correct</p>
     </paper-material>
   </template>
   <script src="../../lib/mpgen.js"></script>
@@ -49,43 +50,50 @@
   
   Polymer({
     is: 'problems-addition',
-
     properties: {
       question: {
         type: Object,
         computed: 'getProblem(problemtype, changed)',
         notify: true
       },
-
       studentAnswer: {
         type: Number,
         notify: true
       },
-
       message: {
         type: String
       },
-
       problemtype: {
         type: Number
       },
-
       changed: {
         type: Number,
         value: 0,
         notify: true
+      },
+      correctcount: {
+        type: Number,
+        value: 0,
+        notify: true
+      },
+      complete: {
+        type: String,
+        notify: true
       }
     },
-
     getProblem: function() {
       return getProblemBySetId(this.problemtype);
     },
-
     evaluate: function() {
       if (this.studentAnswer == this.question.answer) {
         this.message = 'Correct!';
+        this.correctcount++;
+        if (this.correctcount > 4) {
+          this.complete = 'true';
+        }
       } else {
         this.message = 'Incorrect. :(';
+        this.correctcount = 0;
       }
       this.studentAnswer = '';
       this.changed++;
