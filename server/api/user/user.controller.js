@@ -137,22 +137,8 @@ var normalizeTeacher = function(teacherData) {
 //data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
   User.findByIdAsync(req.user._id)
-    .then(function(user) {
-      console.log('before we start')
-      console.log(user);
-      //user.studentData = normalizeStudent(req.body.studentData);
-      var test = normalizeStudent(req.body.studentData);
-      user.studentData = test;
-      user.studentData.badges = test.badges;
-      console.log('testing');
-      console.log(test);
-      console.log('data in update:')
-      console.log(user.studentData.badges);
-      for (var i = 0; i < user.studentData.badges.length; i++) {
-        user.studentData.badges[i] = Mongoose.Types.ObjectId(user.studentData.badges[i]);
-      }
-      console.log(user);
-
+    .then(function(user) {   
+      user.studentData = normalizeStudent(req.body.studentData);     
       user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
@@ -162,41 +148,15 @@ exports.update = function(req, res, next) {
     });
 };
 
-//TODO use promises
-/*var denormalizeStudent = function(studentData, cb) {
-  var denormalized = studentData;
-  var badges = [];
-  if (!studentData.badges.length) {
-    cb(denormalized);
-  }
-  studentData.badges.forEach(function(badge) {
-    Badge.findOneAsync({
-        _id: badge
-      })
-      .then(function(foundBadge) {
-        badges.push(foundBadge);
-        if (badges.length === studentData.badges.length) {
-          console.log(badges);
-          denormalized.badges = badges;
-          //console.log(badges);
-          console.log(denormalized.badges);
-          cb(denormalized);
-        }
-      });
-  });
-}*/
-
 /**
  * Get my info
  */
 exports.me = function(req, res, next) {
   var userId = req.user._id;
-
-  User.findById(userId, function (err, user) {
+  User.findById(userId, '-salt -hashedPassword', function (err, user) {
   var opts = [
       { path: 'studentData.badges' }
   ]
-
   User.populate(user, opts, function (err, user) {
     console.log(user);
     res.json(user);
