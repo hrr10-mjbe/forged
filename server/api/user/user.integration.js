@@ -10,7 +10,7 @@ var Schema = mongoose.Schema
 
 var personSchema = Schema({
   name: String,
-  stuff: [{type: String}]
+  stuff: [{type: Schema.Types.ObjectId, ref: 'Stuff'}]
 })
 
 var stuffSchema = Schema({
@@ -22,11 +22,13 @@ var Stuff = mongoose.model('Stuff', stuffSchema);
 var stuff = new Stuff({name: 'hi'});
 stuff.save(function() {
   console.log(stuff.name);
-var person = new Person({name: 'johnny2', stuff:[stuff.name, 'test2']});
+var person = new Person({name: 'johnny5', stuff:[stuff._id]});
 //person.stuff = ['test2', 'test2'];
 person.markModified('stuff');
 person.save(function() {
-  Person.findOne({name: 'johnny2'}).exec(function(err, person) {
+  Person.findOne({name: 'johnny5'})
+  .populate('stuff')
+  .exec(function(err, person) {
     console.log(person);
   })
 })
