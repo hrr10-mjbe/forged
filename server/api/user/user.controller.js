@@ -118,8 +118,12 @@ exports.changePassword = function(req, res, next) {
 //must be kept up to date with schema
 var normalizeStudent = function(studentData) {
   studentData.badges = studentData.badges.map(function(badge) {
+    console.log('normalizing');
+    console.log(badge._id);
+    console.log(Mongoose.Types.ObjectId(badge._id));
     return Mongoose.Types.ObjectId(badge._id);
   });
+  console.log(studentData.badges);
   return studentData;
 }
 
@@ -134,7 +138,20 @@ var normalizeTeacher = function(teacherData) {
 exports.update = function(req, res, next) {
   User.findByIdAsync(req.user._id)
     .then(function(user) {
-      user.studentData = normalizeStudent(req.body.studentData);
+      console.log('before we start')
+      console.log(user);
+      //user.studentData = normalizeStudent(req.body.studentData);
+      var test = normalizeStudent(req.body.studentData);
+      //user.studentData = test;
+      user.studentData.badges = test.badges;
+      console.log('testing');
+      console.log(test);
+      console.log('data in update:')
+      console.log(user.studentData.badges);
+      for (var i = 0; i < user.studentData.badges.length; i++) {
+        user.studentData.badges[i] = Mongoose.Types.ObjectId(user.studentData.badges[i]);
+      }
+      console.log(user.studentData.badges);
       user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
@@ -183,6 +200,10 @@ exports.me = function(req, res, next) {
       if (!user) {
         return res.status(401).end();
       }
+      Badge.findOne({_id: user.studentData.badges[0]}).exec(function(err, badge) {
+        console.log('found badge');
+        console.log(badge);
+      })
       res.json(user);
      /*if (user.type === 'student') {
         console.log('responding');

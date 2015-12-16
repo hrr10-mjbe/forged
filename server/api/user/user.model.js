@@ -31,7 +31,7 @@ var UserSchema = new Schema({
   studentData: {
     points: Number,
     skills: {},
-    badges: [{type: Schema.Types.ObjectId, ref: 'Badges'}]
+    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}]
   },
   //teacher properties
   teacherData: {

@@ -21,9 +21,8 @@ var Person = mongoose.model('Person', personSchema);
 var Stuff = mongoose.model('Stuff', stuffSchema);
 var stuff = new Stuff({name: 'hi'});
 stuff.save(function() {
-  console.log(stuff.name);
+ 
 var person = new Person({name: 'johnny5', stuff:[stuff._id]});
-//person.stuff = ['test2', 'test2'];
 person.markModified('stuff');
 person.save(function() {
   Person.findOne({name: 'johnny5'})
