@@ -50,49 +50,40 @@
   
   Polymer({
     is: 'problems-addition',
-
     properties: {
       question: {
         type: Object,
         computed: 'getProblem(problemtype, changed)',
         notify: true
       },
-
       studentAnswer: {
         type: Number,
         notify: true
       },
-
       message: {
         type: String
       },
-
       problemtype: {
         type: Number
       },
-
       changed: {
         type: Number,
         value: 0,
         notify: true
       },
-
       correctcount: {
         type: Number,
         value: 0,
         notify: true
       },
-
       complete: {
         type: String,
         notify: true
       }
     },
-
     getProblem: function() {
       return getProblemBySetId(this.problemtype);
     },
-
     evaluate: function() {
       if (this.studentAnswer == this.question.answer) {
         this.message = 'Correct!';
