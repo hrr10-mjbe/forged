@@ -7,12 +7,26 @@ import request from 'supertest';
 
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema
-  
+
 var personSchema = Schema({
+  name: String,
+  stuff: [{type: String}]
+})
+
+var Person = mongoose.model('Person', personSchema);
+var person = new Person({name: 'johnny', stuff:['test', 'test2']});
+person.save(function() {
+  Person.findOne({name: 'johnny'}).exec(function(err, person) {
+    console.log(person);
+  })
+})
+  
+/*var personSchema = Schema({
   _id     : Number,
   name    : String,
   age     : Number,
-  stories : [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+ // stories : [{ type: Schema.Types.ObjectId, ref: 'Story' }]
+ stories: [{type: String}]
 });
 
 var storySchema = Schema({
@@ -24,14 +38,14 @@ var storySchema = Schema({
 var Story  = mongoose.model('Story', storySchema);
 var Person = mongoose.model('Person', personSchema);
 
-var aaron = new Person({ _id: 0, name: 'Aaron', age: 100, stories: [] });
+
 
 var story3 = new Story({title: 'another story'});
 
 
   var story1 = new Story({
-    title: "Once upon a timex.",
-    _creator: aaron._id    // assign the _id from the person
+    title: "Once upon a timex."
+   // assign the _id from the person
   });
   
   story1.save(function (err) {
@@ -40,8 +54,9 @@ var story3 = new Story({title: 'another story'});
     story2.save(function(err) {
       console.log('idddddddddddddd');
       console.log(story1._id);
-      aaron.stories.push(story1._id);
-      aaron.stories.push(story2._id);
+      var aaron = new Person({ _id: 0, name: 'Aaron', age: 100, stories: ['hhi', 'hello'] });
+      //aaron.stories.push(story1._id);
+     // aaron.stories.push(story2._id);
       console.log(aaron);
       //aaron.stories = [story1._id, story2._id];
       console.log(aaron.stories);
@@ -66,7 +81,7 @@ Story
   console.log(story._id);
   console.log('The creator is %s', story.title);
   // prints "The creator is Aaron"
-});
+});*/
 
 
 
