@@ -6,17 +6,19 @@ angular.module('hrr10MjbeApp')
     var user = Auth.getCurrentUser();
     var activeClassId;
 
-    var update = function() {
-      Auth.getCurrentUser().then(function(user) {
-         data = user.teacherData;
-      })
-    } 
+    this.save = function() {
+      User.update({}, user, function(res) {
+        user.teacherData = res.teacherData;
+      }, function(err) {
+        console.log('Error updating user');
+      });
+    }
 
     this.setClass = function(id) {
       activeClassId = id;
     }
 
-    this.getCLass = function() {
+    this.getClass = function() {
       for (var i = 0; i < data.)
     }
 
