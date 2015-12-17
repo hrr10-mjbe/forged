@@ -1,19 +1,37 @@
 <dom-module id="mjbe-dashboard-classprogress">
   <template>
     <style>
-
+      paper-card {
+        width: 200px;
+        height: 200px;
+        text-align: center;
+      }
     </style>
     <paper-icon-button icon="arrow-back" style="color: blue" ui-sref="dashboard"></paper-icon-button>
-    <div>
-    this is student progress
-    </div>
+
+    <template is="dom-repeat" items="{{classes}}">
+        <paper-card animatedShadow="true" elevation="1">
+          <div>{{item.classNumber}}</div>
+          <div>{{item.students}}</div>
+        </paper-card>
+    </template>
 
   </template>
 
 </dom-module>
 
 <script>
+  var classes = [{classNumber: 1, students: ['jeff', 'eric', 'mike', 'ben']},
+                 {classNumber: 2, students: ['2eff', '2ric', '2ike', '2en']},
+                 {classNumber: 3, students: ['3eff', '3ric', '3ike', '3en']},
+                 {classNumber: 4, students: ['4eff', '4ric', '4ike', '4en']},]
   Polymer({
-    is: 'mjbe-dashboard-classprogress'
+    is: 'mjbe-dashboard-classprogress',
+    properties: {
+      classNumber: Number,
+    },
+    ready: function() {
+      this.classes = classes;
+    }
   });
 </script>

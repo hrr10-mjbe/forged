@@ -35,9 +35,8 @@
 
     <paper-dialog id="modal" modal>
       <template is="dom-repeat" items="{{classes}}">
-            <paper-card animatedShadow="true" elevation="1" on-mouseover="raise" on-mouseout="lower">
-              <paper-icon-button style="color: blue"></paper-icon-button>
-              <div>{{item}}</div>
+            <paper-card animatedShadow="true" elevation="1">
+             <a href="/classprogress"><paper-button style="color: blue">{{item}}</paper-button></a>
             </paper-card>
         </template>
       <div class="buttons">

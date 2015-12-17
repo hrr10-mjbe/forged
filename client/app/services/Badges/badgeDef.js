@@ -1,3 +1,5 @@
+'use strict';
+
 (function badgeDef() {
   var skillCompleteBadge = function(studentData) {
     for (var key in studentData.skills) {
