@@ -135,10 +135,7 @@
       },
 
       updateUser: function() {
-        User.update({}, {
-          studentData: currentUser.studentData,
-          teacherData: currentUser.teacherData
-        }, function(res) {
+        User.update({}, currentUser, function(res) {
           currentUser.studentData = res.studentData;
           currentUser.teacherData = res.teacherData;
         }, function(err) {}).$promise;
