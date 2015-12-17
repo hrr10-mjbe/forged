@@ -6,6 +6,7 @@ angular.module('hrr10MjbeApp')
 
     Auth.getCurrentUser(function(user) {
       $scope.invitations = user.teacherData.pendingStudents;
+      $scope.students = user.teacherData.students;
       console.log(user);
     })
     $scope.submit = function() {
