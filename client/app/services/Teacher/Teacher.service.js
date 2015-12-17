@@ -8,10 +8,9 @@ angular.module('hrr10MjbeApp')
         url: '/api/users/invite',
         data: {email: email}
       }).then(function successCallback(response) {
-        console.log(response.data);
-        cb(response.data);
+        cb(response.status);
       }, function errorCallback(response) {
-        console.log(response);
+        cb(response.status);
       });
     }
   });
