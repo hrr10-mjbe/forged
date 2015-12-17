@@ -4,7 +4,7 @@ class LoginController {
   //start-non-standard
   user = {};
   errors = {};
-  submitted = false;
+  submitted = 'false';
   //end-non-standard
 
   constructor(Auth, $state) {
@@ -28,6 +28,28 @@ class LoginController {
         this.errors.other = err.message;
       });
     }
+  }
+
+  polymerChange = function() {
+    if (this.submitted === 'true') {
+      this.loginPolymer();
+    }
+  }
+
+  loginPolymer = function() {
+    this.Auth.login({
+      email: this.user.email,
+      password: this.user.password
+    })
+    .then(() => {
+      this.$state.go('main');
+    })
+    .catch(err => {
+      this.user.email = '';
+      this.user.password = '';
+      this.submitted = 'false';
+      console.log(err.message);
+    });
   }
 }
 
