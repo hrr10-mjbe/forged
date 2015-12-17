@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('ProfileCtrl', function ($scope, Auth) {
+  .controller('ProfileCtrl', function ($scope, Auth, Student) {
     $scope.message = 'Hello';
 
     Auth.getCurrentUser(function(user) {
@@ -12,5 +12,8 @@ angular.module('hrr10MjbeApp')
 
     $scope.accept = function() {
       console.log('accepting');
+      Student.acceptRequest($scope.requests[0], function(res) {
+        console.log(res);
+      });
     }
   });

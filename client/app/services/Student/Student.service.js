@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Student', function (Auth) {
-    this.acceptRequest = function(req) {
+  .service('Student', function ($http, Auth) {
+    this.acceptRequest = function(req, cb) {
       console.log(req);
       $http({
         method: 'POST',
