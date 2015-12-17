@@ -153,9 +153,9 @@ exports.me = function(req, res, next) {
     if (err) {
       return next(err);
     }
-    
+
     User.populate(user, {
-      path: 'studentData.badges'
+      path: 'studentData.badges studentData.requests studentData.teachers teacherData.students teacherData.pendingStudents'
     }, function(err, user) {
       if (err) {
         return next(err);
@@ -167,46 +167,50 @@ exports.me = function(req, res, next) {
 
 exports.invite = function(req, res, next) {
   console.log(req.body);
-  User.findOneAsync({email: req.body.email.toLowerCase()})
-  .then(function(user) {
-    if (!user) {
-      return res.status(404).end();
-    }
-    user.studentData.requests.push(req.user._id);
-    user.saveAsync()
-    .then(function() {
-      User.findByIdAsync(req.user._id).then(function(me) {
-        me.teacherData.pendingStudents.push(user._id);
-        me.saveAsync().then(function() {
-res.status(200).end();
+  User.findOneAsync({
+      email: req.body.email.toLowerCase()
+    })
+    .then(function(user) {
+      if (!user) {
+        return res.status(404).end();
+      }
+      user.studentData.requests.push(req.user._id);
+      user.saveAsync()
+        .then(function() {
+          User.findByIdAsync(req.user._id).then(function(me) {
+            me.teacherData.pendingStudents.push(user._id);
+            me.saveAsync().then(function() {
+              res.status(200).end();
+            })
+          })
         })
-      })
-         })
-  })
+    })
 }
 
 exports.accept = function(req, res, next) {
   console.log(req.body);
-  User.findOneAsync({_id: req.body._id})
-  .then(function(teacher) {
-    if (!teacher) {
-      return res.status(404).end();
-    }
-    teacher.teacherData.students.push(req.user._id);
-    teacher.teacherData.pendingStudents.pull(req.user._id);
-    //TODO pending students
-    teacher.saveAsync()
-    .then(function() {
-      User.findByIdAsync(req.user._id).then(function(student) {
-        student.studentData.teachers.push(req.body._id);
-        student.studentData.requests.pull(req.body._id);
-        student.saveAsync()
-        .then(function() {
-          res.status(200).end();
-        })
-      })
+  User.findOneAsync({
+      _id: req.body._id
     })
-  })
+    .then(function(teacher) {
+      if (!teacher) {
+        return res.status(404).end();
+      }
+      teacher.teacherData.students.push(req.user._id);
+      teacher.teacherData.pendingStudents.pull(req.user._id);
+      //TODO pending students
+      teacher.saveAsync()
+        .then(function() {
+          User.findByIdAsync(req.user._id).then(function(student) {
+            student.studentData.teachers.push(req.body._id);
+            student.studentData.requests.pull(req.body._id);
+            student.saveAsync()
+              .then(function() {
+                res.status(200).end();
+              })
+          })
+        })
+    })
 }
 
 /**
