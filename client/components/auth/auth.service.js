@@ -138,8 +138,9 @@
         User.update({}, {
           studentData: currentUser.studentData,
           teacherData: currentUser.teacherData
-        }, function() {
-          console.log(User.get());
+        }, function(res) {
+          currentUser.studentData = res.studentData;
+          currentUser.teacherData = res.teacherData;
         }, function(err) {}).$promise;
       },
 

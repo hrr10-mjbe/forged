@@ -63,6 +63,7 @@ angular.module('hrr10MjbeApp')
       var newBadges = Badges.awardBadges();
       Auth.awardBadges(newBadges);
       //this.activeSkill = undefined;
+      return newBadges;
     }
 
     this.setActiveSkill = function(skillID) {

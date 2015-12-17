@@ -137,7 +137,7 @@ exports.update = function(req, res, next) {
       user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
-          res.status(204).end();
+          res.status(204).json(user);
         })
         .catch(validationError(res));
     });
@@ -166,7 +166,6 @@ exports.me = function(req, res, next) {
 };
 
 exports.invite = function(req, res, next) {
-  console.log(req.body);
   User.findOneAsync({
       email: req.body.email.toLowerCase()
     })
@@ -188,7 +187,6 @@ exports.invite = function(req, res, next) {
 }
 
 exports.accept = function(req, res, next) {
-  console.log(req.body);
   User.findOneAsync({
       _id: req.body._id
     })
@@ -198,7 +196,6 @@ exports.accept = function(req, res, next) {
       }
       teacher.teacherData.students.push(req.user._id);
       teacher.teacherData.pendingStudents.pull(req.user._id);
-      //TODO pending students
       teacher.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(student) {
