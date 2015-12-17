@@ -3,16 +3,22 @@
 angular.module('hrr10MjbeApp')
   .service('Teacher', function($http, Auth) {
 
-    //this object will always be a fully sane resource
-    //All the asynchronous messiness involved is taken care of
-    //in this service, and it can be used synchronously
-    var data;
+    var user = Auth.getCurrentUser();
+    var activeClassId;
 
     var update = function() {
       Auth.getCurrentUser().then(function(user) {
          data = user.teacherData;
       })
     } 
+
+    this.setClass = function(id) {
+      activeClassId = id;
+    }
+
+    this.getCLass = function() {
+      for (var i = 0; i < data.)
+    }
 
     this.sendInvite = function(email, cb) {
       $http({
