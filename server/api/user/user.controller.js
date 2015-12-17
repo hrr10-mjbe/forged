@@ -165,6 +165,21 @@ exports.me = function(req, res, next) {
   });
 };
 
+exports.invite = function(req, res, next) {
+  console.log(req.body);
+  User.findOneAsync({email: req.body.email.toLowerCase()})
+  .then(function(user) {
+    if (!user) {
+      res.status(404).end();
+    }
+    user.studentData.requests.push(req.user._id);
+    user.saveAsync()
+    .then(function() {
+      res.status(200).end();
+    })
+  })
+}
+
 /**
  * Authentication callback
  */
