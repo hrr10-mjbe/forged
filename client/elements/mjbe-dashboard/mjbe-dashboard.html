@@ -27,58 +27,42 @@
     <div id="header" class="header">Welcome back, Mr. Roboto</div>
 
     <div class="body">
-      <div class="square" ui-sref="classprogress">Class Progress</div>
+      <div class="square" on-tap="openModal" entry-animation="scale-up-animation" exit-animation="fade-out-animation">Class Progress</div>
       <div class="square" ui-sref="modifications">Modifications</div>
       <div class="square">Gradebook</div>
       <div class="square">My Content</div>
     </div>
+
+    <paper-dialog id="modal" modal>
+      <template is="dom-repeat" items="{{classes}}">
+            <paper-card animatedShadow="true" elevation="1" on-mouseover="raise" on-mouseout="lower">
+              <paper-icon-button style="color: blue"></paper-icon-button>
+              <div>{{item}}</div>
+            </paper-card>
+        </template>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+      </div>
+    </paper-dialog>
 
   </template>
 
 </dom-module>
 
 <script>
+  var classes = [1, 2, 3, 4];
+
   Polymer({
     is: 'mjbe-dashboard',
+    ready: function() {
+      this.classes = classes;
+    },
     behaviors: [
       Polymer.NeonSharedElementAnimatableBehavior
     ],
-    //Unnecessary. Putting it back if animation becomes necessary or desired later. 
-    // properties: {
-    //   sharedElements: {
-    //     value: function() {
-    //       return {
-    //         'hero': this.$.header
-    //       }
-    //     }
-    //   },
-    //   animationConfig: {
-    //     value: function() {
-    //       var squares = Polymer.dom(this.root).querySelectorAll('.square');
-    //       var squaresArray = Array.prototype.slice.call(squares);
-    //       return {
-    //         'entry': [{
-    //           name: 'hero-animation',
-    //           id: 'hero',
-    //           toPage: this
-    //         }, {
-    //           name: 'cascaded-animation',
-    //           animation: 'transform-animation',
-    //           transformFrom: 'translateY(100%)',
-    //           nodes: squaresArray
-    //         }],
-    //         'exit': [{
-    //           name: 'slide-up-animation',
-    //           node: this.$.header
-    //         }, {
-    //           name: 'cascaded-animation',
-    //           animation: 'transform-animation',
-    //           transformTo: 'translateY(60vh)',
-    //           nodes: squaresArray
-    //         }]
-    //       };
-    //     }
-    //   }
-    // }
+    openModal: function() {
+      this.$.modal.open();
+    }
+    
   });
 </script>
