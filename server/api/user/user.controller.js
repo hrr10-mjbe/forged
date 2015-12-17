@@ -180,6 +180,28 @@ exports.invite = function(req, res, next) {
   })
 }
 
+exports.accept = function(req, res, next) {
+  console.log(req.body);
+  User.findOneAsync({_id: req.body._id})
+  .then(function(teacher) {
+    if (!teacher) {
+      return res.status(404).end();
+    }
+    teacher.teacherData.students.push(req.user._id);
+    //TODO pending students
+    teacher.saveAsync()
+    .then(function() {
+      User.findByIdAsync(req.user._id).then(function(student) {
+        student.studentData.teachers.push(req.body._id);
+        teacher.saveAsync()
+        .then(function() {
+          res.status(200).end();
+        })
+      })
+    })
+  })
+}
+
 /**
  * Authentication callback
  */

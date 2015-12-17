@@ -14,5 +14,4 @@ angular.module('hrr10MjbeApp')
         cb(response.status);
       });
     }
-    // AngularJS will instantiate a singleton by calling "new" on this function
   });
