@@ -193,6 +193,7 @@ exports.accept = function(req, res, next) {
     .then(function() {
       User.findByIdAsync(req.user._id).then(function(student) {
         student.studentData.teachers.push(req.body._id);
+        student.studentData.requests.pull(req.body._id);
         student.saveAsync()
         .then(function() {
           res.status(200).end();
