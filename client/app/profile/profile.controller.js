@@ -6,6 +6,7 @@ angular.module('hrr10MjbeApp')
 
     Auth.getCurrentUser(function(user) {
       $scope.requests = user.studentData.requests;
+      $scope.teachers = user.studentData.teachers;
       console.log(user);
     })
 
