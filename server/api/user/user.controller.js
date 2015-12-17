@@ -175,8 +175,13 @@ exports.invite = function(req, res, next) {
     user.studentData.requests.push(req.user._id);
     user.saveAsync()
     .then(function() {
-      res.status(200).end();
-    })
+      Teacher.findByIdAsync(req.user._id).then(function(me) {
+        me.teacherData.pendingStudents.push(user._id);
+        me.saveAsync().then(function() {
+res.status(200).end();
+        })
+      })
+         })
   })
 }
 
@@ -188,6 +193,7 @@ exports.accept = function(req, res, next) {
       return res.status(404).end();
     }
     teacher.teacherData.students.push(req.user._id);
+    teacher.teacherData.pendingStudents.pull(req.user._id);
     //TODO pending students
     teacher.saveAsync()
     .then(function() {
