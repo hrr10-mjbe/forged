@@ -4,34 +4,44 @@
       paper-card {
         width: 200px;
         height: 200px;
+        margin: 10px;
         text-align: center;
       }
     </style>
     <paper-icon-button icon="arrow-back" style="color: blue" ui-sref="dashboard"></paper-icon-button>
-
-    <template is="dom-repeat" items="{{classes}}">
-        <paper-card animatedShadow="true" elevation="1">
-          <div>{{item.classNumber}}</div>
-          <div>{{item.students}}</div>
-        </paper-card>
-    </template>
+    
+    <div class="layout horizontal wrap center-justified">
+      <template is="dom-repeat" items="{{students}}">
+          <paper-card animatedShadow="true" elevation="1">
+            <div>{{item.name}}</div>
+          </paper-card>
+      </template>
+    </div>
 
   </template>
 
 </dom-module>
 
 <script>
-  var classes = [{classNumber: 1, students: ['jeff', 'eric', 'mike', 'ben']},
-                 {classNumber: 2, students: ['2eff', '2ric', '2ike', '2en']},
-                 {classNumber: 3, students: ['3eff', '3ric', '3ike', '3en']},
-                 {classNumber: 4, students: ['4eff', '4ric', '4ike', '4en']},]
+  var studentsClass1 = [{name: 'Ben', studentData: {  points: 983712,
+                                                      skills: ['Addition', 'Subtraction']}},
+                        {name: 'Eric', studentData: {
+                                                      points: 321332,
+                                                      skills: ['Division']}},
+                        {name: 'Jeff', studentData: {
+                                                      points: 321412,
+                                                      skills: ['Addition']}},
+                        {name: 'Mike', studentData: {
+                                                      points: 123123,
+                                                      skills: ['Subtraction']}
+}]
   Polymer({
     is: 'mjbe-dashboard-classprogress',
     properties: {
       classNumber: Number,
     },
     ready: function() {
-      this.classes = classes;
+      this.students = studentsClass1;
     }
   });
 </script>

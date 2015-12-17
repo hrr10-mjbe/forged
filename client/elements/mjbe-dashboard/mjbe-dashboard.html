@@ -14,7 +14,7 @@
         display: inline-block;
         width: 150px;
         height: 150px;
-        margin: 8px;
+        margin: 20px;
         background: #FFA82F;
       }
 
@@ -22,21 +22,29 @@
         cursor: pointer;
         background: #60C4DE;
       }
+
+      paper-card {
+        margin: 20px;
+      }
+
+      paper-card:hover {
+        background: #7DA6FF;
+      }
     </style>
     
     <div id="header" class="header">Welcome back, Mr. Roboto</div>
 
-    <div class="body">
-      <div class="square" on-tap="openModal" entry-animation="scale-up-animation" exit-animation="fade-out-animation">Class Progress</div>
-      <div class="square" ui-sref="modifications">Modifications</div>
-      <div class="square">Gradebook</div>
-      <div class="square">My Content</div>
+    <div class="body horizontal center-justified layout" >
+      <paper-card class="square" on-tap="openModal" entry-animation="scale-up-animation" exit-animation="fade-out-animation">Class Progress</paper-card>
+      <paper-card class="square" ui-sref="modifications">Modifications</paper-card>
+      <paper-card class="square">Gradebook</paper-card>
+      <paper-card class="square">My Content</paper-card>
     </div>
 
     <paper-dialog id="modal" modal>
       <template is="dom-repeat" items="{{classes}}">
             <paper-card animatedShadow="true" elevation="1">
-             <a href="/classprogress"><paper-button style="color: blue">{{item}}</paper-button></a>
+             <a href="/classprogress"><paper-button style="color: blue">Class {{item}}</paper-button></a>
             </paper-card>
         </template>
       <div class="buttons">
@@ -49,12 +57,12 @@
 </dom-module>
 
 <script>
-  var classes = [1, 2, 3, 4];
+  var classlist = [1, 2, 3, 4];
 
   Polymer({
     is: 'mjbe-dashboard',
     ready: function() {
-      this.classes = classes;
+      this.classes = classlist;
     },
     behaviors: [
       Polymer.NeonSharedElementAnimatableBehavior
