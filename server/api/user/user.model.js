@@ -32,7 +32,7 @@ var UserSchema = new Schema({
     points: Number,
     skills: {},
     badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
-    requests: {type: Schema.Types.ObjectId, ref: 'User'}]
+    requests: [{type: Schema.Types.ObjectId, ref: 'User'}]
   },
   //teacher properties
   teacherData: {

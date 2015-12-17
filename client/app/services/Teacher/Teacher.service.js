@@ -6,7 +6,7 @@ angular.module('hrr10MjbeApp')
       $http({
         method: 'POST',
         url: '/api/users/invite',
-        data: email
+        data: {email: email}
       }).then(function successCallback(response) {
         console.log(response.data);
         cb(response.data);

@@ -170,7 +170,7 @@ exports.invite = function(req, res, next) {
   User.findOneAsync({email: req.body.email.toLowerCase()})
   .then(function(user) {
     if (!user) {
-      res.status(404).end();
+      return res.status(404).end();
     }
     user.studentData.requests.push(req.user._id);
     user.saveAsync()
