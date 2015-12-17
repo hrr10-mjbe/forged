@@ -7,8 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <base href="/">
-    <title></title>
-    <meta name="description" content="">
+    <title></title     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
@@ -34,6 +33,7 @@
 
     <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="bower_components/polymer/polymer.html">
+    <link rel="import" href="bower_components/iron-icons/iron-icons.html">
 
     <!-- CUSTOM ELEMENTS -->
     <link rel="import" href="elements/elements.html">
@@ -49,7 +49,7 @@
         <!-- Main Toolbar -->
 
         <paper-toolbar>
-          <div class="title top">Adapt Academy</div>
+          <div class="title top">Thesis Academy</div>
           <div class="horizontal layout">
             <paper-tabs>
               <paper-tab ui-sref="main">Home</paper-tab>
@@ -57,7 +57,7 @@
               <paper-tab ui-sref="about">About</paper-tab>
               <paper-tab ui-sref="badges">Badges</paper-tab>
               <paper-tab ui-sref="dashboard">Dashboard</paper-tab>
-              <paper-tab>Sign Out</paper-tab>
+              <paper-tab ui-sref="login">Sign Out</paper-tab>
             </paper-tabs>
           </div>
         </paper-toolbar>
