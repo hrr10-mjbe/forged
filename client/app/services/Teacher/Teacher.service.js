@@ -44,9 +44,5 @@ angular.module('hrr10MjbeApp')
       });
     }
 
-    this.getStudents = function() {
-      return user.teacherData.students;
-    }
-
     this.refresh();
   });

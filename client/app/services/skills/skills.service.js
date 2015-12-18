@@ -7,7 +7,6 @@ angular.module('hrr10MjbeApp')
 
     function changeSkill(newSkill) {
       active = newSkill;
-      console.log(active);
       Problems.setCurrentProblemSet(newSkill.problemGenId);
     }
 
