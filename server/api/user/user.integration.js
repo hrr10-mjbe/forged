@@ -278,7 +278,7 @@ describe('Invitation API:', function() {
         type: 'student',
         password: 'password'
       });
-      user.saveAsync().then(function() {
+      student.saveAsync().then(function() {
         teacher = new User({
           name: 'Teacher',
           email: 'teacher@example.com',
@@ -291,7 +291,7 @@ describe('Invitation API:', function() {
       });
     });
   });
-});
+
 
 // Clear users after testing
 after(function() {
@@ -310,41 +310,38 @@ describe('GET /api/users/me', function() {
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
-        token = res.body.token;
+        teacherToken = res.body.token;
         done();
       });
   });
 
-  it('should respond with a user profile when authenticated', function(done) {
+  it('should log in the teacher', function(done) {
     request(app)
-      .get('/api/users/me')
-      .set('authorization', 'Bearer ' + token)
+      .post('/auth/local')
+      .send({
+        email: 'teacher@example.com',
+        password: 'password'
+      })
       .expect(200)
       .expect('Content-Type', /json/)
       .end(function(err, res) {
-        userClient = res.body;
-        expect(res.body._id.toString()).to.equal(user._id.toString());
+        teacherToken = res.body.token;
         done();
-      });
+      });    
   });
 
-  it('should add and normalize badges', function(done) {
-    userClient.studentData.badges.push(badges[0]);
-    userClient.studentData.badges.push(badges[1]);
+  it('should send invitations', function(done) {
     request(app)
-      .put('/api/users/me/update')
-      .set('authorization', 'Bearer ' + token)
-      .send(userClient)
+      .post('/api/users/invite')
+      .set('authorization', 'Bearer ' + teacherToken)
+      .send({email: student.email})
       .expect(200)
       .end(function(err, res) {
         User.findOneAsync({
-            _id: user._id
+            email: student.email
           })
           .then(function(user) {
-            expect(user.studentData.badges[0].toString()).to.equal(badges[0]._id.toString());
-            expect(user.studentData.badges[1].toString()).to.equal(badges[1]._id.toString());
-            expect(user.studentData.badges[0]).to.not.have.property('name');
-            expect(user.studentData.badges[1]).to.not.have.property('name');
+            expect(user.studentData.requests[0].toString()).to.equal(teacher._id.toString());
             done();
           });
       });
@@ -361,4 +358,5 @@ describe('GET /api/users/me', function() {
         done();
       });
   });
+});
 });
