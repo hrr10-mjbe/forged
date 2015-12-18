@@ -503,3 +503,4 @@ describe('Invitation API:', function() {
 
 //more tests:
 //normalization/denormalization checking on adding student to classes
+//individual skills and badges tests

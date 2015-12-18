@@ -31,6 +31,7 @@
             return currentUser.$promise;
           })
           .then(function(user) {
+            console.log(user);
             safeCb(callback)(null, user);
             return user;
           })

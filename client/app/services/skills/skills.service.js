@@ -25,29 +25,6 @@ angular.module('hrr10MjbeApp')
       }
     }
 
-    this.getUserSkills = function(cb) {
-      Auth.isLoggedIn(function(is) {
-        if (is) {
-          Auth.getCurrentUser(function(user) {
-            var results = [];
-            user.studentData = user.studentData || {}; //TODO demo purposes only!
-            user.studentData.skills = user.studentData.skills || {};
-            this.getSkills(function() {
-              for (var key in user.studentData.skills) {
-                results.push(this.getSkill(key));
-              }
-              cb(results);
-            }.bind(this))
-
-          }.bind(this));
-        } else {
-          cb([]);
-        }
-      }.bind(this))
-
-
-    }
-
     //for now we assume this can be synchronous. might be dangerous
     this.getSkill = function(skillID) {
       for (var i = 0; i < this.skills.length; i++) {

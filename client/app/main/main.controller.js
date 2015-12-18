@@ -4,12 +4,13 @@
 
   class MainController {
 
-    constructor($http, $state, Skills) {
+    constructor($http, $state, Skills, Student) {
       this.$http = $http;
       this.$state = $state;
       this.Skills = Skills;
-      Skills.getUserSkills(function(skills) {
+      Student.getSkills(function(skills) {
         this.skills = skills;
+        console.log(skills);
       }.bind(this));
       this.awesomeThings = [];
 

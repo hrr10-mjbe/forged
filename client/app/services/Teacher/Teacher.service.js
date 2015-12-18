@@ -4,7 +4,7 @@ angular.module('hrr10MjbeApp')
   .service('Teacher', function($http, Auth) {
 
     var user;
-    Auth.getCurrentUser().then(function(res) {
+    Auth.getCurrentUser(null).then(function(res) {
       user = res;
     });
     
