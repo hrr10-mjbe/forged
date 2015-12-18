@@ -329,7 +329,7 @@ after(function() {
     request(app)
       .post('/api/users/invite')
       .set('authorization', 'Bearer ' + teacherToken)
-      .send({email: student.email})
+      .send({email: student.email, class: {name: 'a test class', students: []}})
       .expect(200)
       .end(function(err, res) {
         User.findOneAsync({
@@ -338,7 +338,7 @@ after(function() {
           .then(function(user) {
             expect(user.studentData.requests[0].toString()).to.equal(teacher._id.toString());
             User.findByIdAsync(teacher._id).then(function(user) {
-              expect(user.teacherData.pendingStudents[0].toString()).to.equal(student._id.toString());
+              expect(user.teacherData.pendingStudents[0].student._id.toString()).to.equal(student._id.toString());
               done();
             })            
           });
