@@ -202,16 +202,17 @@ exports.accept = function(req, res, next) {
       }
       teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);       
       //remove from pending students
-      teacher.teacherData.pendingStudents.pull(req.user._id);
+      teacher.teacherData.pendingStudents.pull(req.request);
       teacher.saveAsync()
         .then(function() {
           console.log('id');
           console.log(req.user._id);
           User.findByIdAsync(req.user._id).then(function(student) {
             console.log('user');
-            console.log(req.body);
-            student.studentData.teacher = req.body.request.teacher._id;
-            student.studentData.requests.pull(req.body._id);
+            //console.log(req.body);
+            student.studentData.teacher = req.body.request.teacher;
+            student.studentData.requests.pull(req.body.request._id);
+            console.log(student);
             student.saveAsync()
               .then(function() {
                 res.status(200).end();

@@ -379,8 +379,11 @@ describe('Invitation API:', function() {
             User.findByIdAsync(student._id).then(function(user) {
               console.log(user);
               expect(user.studentData.teacher.toString()).to.equal(teacher._id.toString());
+              expect(user.studentData.requests.length).to.equal(0);
               User.findByIdAsync(teacher._id).then(function(user) {
-                expect(user.teacherData.classes.id(classId).students[0]._id.toString()).to.equal(student._id.toString());
+                console.log(user.teacherData);
+                expect(user.teacherData.classes.id(newClass._id).students[0].toString()).to.equal(student._id.toString());
+                expect(user.teacherData.pendingStudents.length).to.equal(0);
                 done();
               })
             })
