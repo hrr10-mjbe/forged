@@ -64,11 +64,6 @@ angular.module('hrr10MjbeApp')
       })
     }
 
-    this.updateCurrentSkill = function(status) {
-      console.log(Skills);
-      this.addOrUpdateSkill(Skills.activeSkill()._id, status);
-    }
-
     this.awardBadges = function(cb) {
       getUser(function(user) {
         console.log(user);
