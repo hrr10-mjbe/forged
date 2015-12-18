@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Badges', function($http, Auth) {
+  .service('Badges', function($http, Student) {
     var badges;
 
     var getBadges = function(cb) {
@@ -15,32 +15,24 @@ angular.module('hrr10MjbeApp')
       });
     }
 
-
     this.getBadges = function(cb) {
-      if (this.badges) {
-        cb(this.badges);
-      } else {
-        $http({
-          method: 'GET',
-          url: '/api/badges'
-        }).then(function(res) {
-          this.badges = res.data;
-          cb(this.badges);
-        }.bind(this))
-      }
+      getBadges(function(badges) {
+        cb(badges);
+      });
     }
 
-    this.awardBadges = function(studentData) {
+    this.awardBadges = function(studentData, cb) {
       var newBadges = [];
-      for (var i = 0; i < this.badges.length; i++) {
-        if (checkBadge(this.badges[i].badgeDefId, studentData)) {
-          newBadges.push(this.badges[i]);
+      getBadges(function(badges) {
+        for (var i = 0; i < badges.length; i++) {
+          if (checkBadge(badges[i].badgeDefId, studentData)) {
+            Student.hasBadge(function(res) {
+              if (!res) newBadges.push(badges[i]);
+            });
+          }
         }
-      }
-      return newBadges;
+        cb(newBadges);
+      })
     }
 
-    this.getBadges(function(badges) {
-      this.badges = badges;
-    }.bind(this));
   });
