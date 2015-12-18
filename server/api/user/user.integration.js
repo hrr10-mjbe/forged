@@ -243,8 +243,8 @@ describe('Student info API: Skills', function() {
     });
 
     it('should add and normalize skills', function(done) {
-      userClient.studentData.skills.push(skills[0]);
-      userClient.studentData.skills.push(skills[1]);
+      userClient.studentData.skills.push({skill: skills[0], status: 2});
+      userClient.studentData.skills.push({skill: skills[1], status: 1});
       request(app)
         .put('/api/users/me/update')
         .set('authorization', 'Bearer ' + token)
@@ -255,12 +255,14 @@ describe('Student info API: Skills', function() {
               _id: user._id
             })
             .then(function(user) {
-              expect(user.studentData.skills[0].toString()).to.equal(skills[0]._id.toString());
-              expect(user.studentData.skills[1].toString()).to.equal(skills[1]._id.toString());
+              expect(user.studentData.skills[0].skill.toString()).to.equal(skills[0]._id.toString());
+              expect(user.studentData.skills[1].skill.toString()).to.equal(skills[1]._id.toString());
               Skill.findByIdAsync(skills[1]._id)
                 .then(function(skill) {
-                  expect(user.studentData.skills[0]).to.not.have.property('name');
-                  expect(user.studentData.skills[1]).to.not.have.property('name');
+                  console.log('her');
+                  console.log(user.studentData.skills);
+                  expect(user.studentData.skills[0].skill).to.not.have.property('name');
+                  expect(user.studentData.skills[1].skill).to.not.have.property('name');
                   done();
                 });
             });
@@ -274,8 +276,8 @@ describe('Student info API: Skills', function() {
         .expect(200)
         .end(function(err, res) {
           console.log(res.body.studentData);
-          expect(res.body.studentData.skills[0].name).to.equal(skills[0].name);
-          expect(res.body.studentData.skills[1].name).to.equal(skills[1].name);
+          expect(res.body.studentData.skills[0].skill.name).to.equal(skills[0].name);
+          expect(res.body.studentData.skills[1].skill.name).to.equal(skills[1].name);
           done();
         });
     });

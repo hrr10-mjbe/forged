@@ -116,6 +116,7 @@ exports.changePassword = function(req, res, next) {
 };
 
 //must be kept up to date with schema
+//TODO it looks like some normalization happens automatically?
 var normalizeStudent = function(studentData) {
   studentData.badges = studentData.badges.map(function(badge) {
     return Mongoose.Types.ObjectId(badge._id);
@@ -153,9 +154,15 @@ exports.me = function(req, res, next) {
   var userId = req.user._id;
   User.findById(userId, '-salt -hashedPassword')
     .populate({
-      path: 'studentData.skills studentData.badges teacherData.classes',
+      path: 'studentData.badges teacherData.classes',
       populate: {
         path: 'students'
+      }
+    })
+    .populate({
+      path: 'studentData.skills',
+      populate: {
+        path: 'skill'
       }
     })
     .populate('studentData.teacher', 'name email')
