@@ -57,10 +57,10 @@ angular.module('hrr10MjbeApp')
     }
 
     this.getStudent = function(classId, studentId, cb) {
-      this.getClass(classId, function(class) {
-        for (var i = 0; i < class.students.length; i++) {
-          if (class.students[i]._id === studentId) {
-            return cb(class.students[i]);
+      this.getClass(classId, function(theClass) {
+        for (var i = 0; i < theClass.students.length; i++) {
+          if (theClass.students[i]._id === studentId) {
+            return cb(theClass.students[i]);
           }
         }
         cb(null);

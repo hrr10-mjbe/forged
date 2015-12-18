@@ -4,7 +4,7 @@ angular.module('hrr10MjbeApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('classprogress', {
-        url: '/classprogress',
+        url: '/classprogress/',
         templateUrl: 'app/classprogress/classprogress.html',
         controller: 'ClassprogressCtrl'
       });

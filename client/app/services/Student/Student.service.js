@@ -31,7 +31,7 @@ angular.module('hrr10MjbeApp')
         method: 'POST',
         url: '/api/users/accept',
         data: {
-          _id: req
+          _id: req._id
         }
       }).then(function successCallback(response) {
         cb(response.status);
@@ -84,5 +84,36 @@ angular.module('hrr10MjbeApp')
         }
         cb(false);
       });
+    }
+
+    this.getPoints = function(cb) {
+      getUser(function(user) {
+        cb(user.studentData.points);
+      })
+    }
+
+    this.addPoints = function(num) {
+      getUser(function(user) {
+        user.studentData.points += num;
+        save();
+      })
+    }
+
+    this.getBadges = function(cb) {
+      getUser(function(user) {
+        cb(user.studentData.badges);
+      })
+    }
+
+    this.getRequests = function(cb) {
+      getUser(function(user) {
+        cb(user.studentData.requests);
+      })
+    }
+
+    this.getTeacher = function(cb) {
+      getUser(function(user) {
+        cb(user.studentData.teacher);
+      })
     }
   });
