@@ -7,10 +7,8 @@
       this.complete = 'false';
       Skills.getSkill($stateParams.id, function(skill) {
         this.type = skill.problemGenId;
-        console.log(this.type);
       }.bind(this));      
       this.Student = Student;
-      this.$state = $state;
     }
 
     finish() {

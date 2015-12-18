@@ -35,8 +35,6 @@
     }
 
     go() {
-      console.log('going');
-      console.log(this.inputtest);
       this.$state.go('s', {id: this.userselection});
     }
 
@@ -45,7 +43,6 @@
         this.go();
       }
     }
-
   }
 
   angular.module('hrr10MjbeApp')
