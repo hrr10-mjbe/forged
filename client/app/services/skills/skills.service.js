@@ -25,13 +25,14 @@ angular.module('hrr10MjbeApp')
       }
     }
 
-    //for now we assume this can be synchronous. might be dangerous
-    this.getSkill = function(skillID) {
-      for (var i = 0; i < this.skills.length; i++) {
-        if (this.skills[i]._id === skillID) {
-          return this.skills[i];
+    this.getSkill = function(skillID, cb) {
+      this.getSkills(function(skills) {
+        for (var i = 0; i < skills.length; i++) {
+          if (skills[i]._id === skillID) {
+            return cb(skills[i]);
+          }
         }
-      }
+      })
     }
 
     this.completeSkill = function() {
