@@ -195,17 +195,14 @@ exports.accept = function(req, res, next) {
       if (!teacher) {
         return res.status(404).end();
       }
-      for (var i = 0; i < teacher.teacherData.pendingStudents.length; i++) {
-        if (teacher.teacherData.pendingStudents[i]._id === req.user._id) {
-          for (var j = 0; j < teacher.teacherData.classes)
-        }
-      }
-      teacher.teacherData.students.push(req.user._id);
+      //add student to teacher's class
+      teacher.teacherData.classes.id(req.body.class._id).students.push(req.user._id);       
+      //remove from pending students
       teacher.teacherData.pendingStudents.pull(req.user._id);
       teacher.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(student) {
-            student.studentData.teachers.push(req.body._id);
+            student.studentData.teacher = req.body._id;
             student.studentData.requests.pull(req.body._id);
             student.saveAsync()
               .then(function() {
