@@ -5,11 +5,12 @@ angular.module('hrr10MjbeApp')
     $scope.message = 'Hello';
     $scope.selected = "";
 
-    Auth.getCurrentUser(function(user) {
-      //$scope.invitations = user.teacherData.pendingStudents;
-      //$scope.students = user.teacherData.students;
-      console.log(user);
+    Teacher.getClasses(function(classes) {
+      $scope.classes = JSON.stringify(classes.map(function(val) {
+        return {id: val._id, name: val.name};
+      }));
     })
+
     $scope.submit = function() {
       console.log($scope.add);
       Teacher.sendInvite($scope.add, function(result) {

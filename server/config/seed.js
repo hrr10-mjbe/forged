@@ -60,11 +60,13 @@ User.find({}).removeAsync()
       name: 'A Teacher',
       email: 'teacher@example.com',
       password: 'test',
-      classes: [{
+      teacherData: {
+        classes: [{
         name: 'Math'
       }, {
         name: 'Algebra'
       }]
+    }      
     })
     .then(function() {
       console.log('finished populating users');

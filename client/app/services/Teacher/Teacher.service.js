@@ -56,6 +56,13 @@ angular.module('hrr10MjbeApp')
       })
     }
 
+    this.getClasses = function(cb) {
+      getUser(function(teacher) {
+        console.log(teacher.teacherData);
+        cb(teacher.teacherData.classes);
+      })
+    }
+
     this.getStudent = function(classId, studentId, cb) {
       this.getClass(classId, function(theClass) {
         for (var i = 0; i < theClass.students.length; i++) {

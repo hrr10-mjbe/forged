@@ -44,7 +44,7 @@
     <paper-dialog id="modal" modal>
       <template is="dom-repeat" items="{{classes}}">
             <paper-card animatedShadow="true" elevation="1">
-             <paper-button style="color: blue" on-tap="selectClass">Class {{item}}</paper-button></a>
+             <paper-button style="color: blue" on-tap="selectClass">{{item.name}}</paper-button></a>
             </paper-card>
         </template>
       <div class="buttons">
@@ -62,12 +62,19 @@
   Polymer({
     is: 'mjbe-dashboard',
     ready: function() {
-      this.classes = classlist;
+      //this.classes = classlist;
     },
     properties: {
       selected: {
         type: String,
         notify: true
+      },
+      loadclasses: {
+        type: String,
+        notify: true
+      },      
+      classes: {
+          computed: 'parseClasses(loadclasses)'
       }
     },
     behaviors: [
@@ -79,6 +86,9 @@
     selectClass: function(e) {
       selected = e.model.item;
       console.log(item);
+    },
+    parseClasses: function(classes) {
+      return JSON.parse(classes);
     }
     
   });
