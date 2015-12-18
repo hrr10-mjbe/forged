@@ -3,7 +3,11 @@
 angular.module('hrr10MjbeApp')
   .service('Teacher', function($http, Auth) {
 
-    var user = Auth.getCurrentUser();
+    var user;
+    Auth.getCurrentUser().then(function(res) {
+      user = res;
+    });
+    
     var activeClassId;
 
     this.save = function() {
@@ -34,6 +38,10 @@ angular.module('hrr10MjbeApp')
       }, function errorCallback(response) {
         cb(response.status);
       });
+    }
+
+    this.getStudents = function() {
+      return user.teacherData.students;
     }
 
     this.refresh();
