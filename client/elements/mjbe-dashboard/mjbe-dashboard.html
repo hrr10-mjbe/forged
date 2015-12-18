@@ -64,6 +64,12 @@
     ready: function() {
       this.classes = classlist;
     },
+    properties: {
+      selected: {
+        type: String,
+        notify: true
+      }
+    },
     behaviors: [
       Polymer.NeonSharedElementAnimatableBehavior
     ],

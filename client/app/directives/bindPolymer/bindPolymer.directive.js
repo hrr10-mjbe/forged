@@ -22,8 +22,10 @@ angular.module('bindPolymer', [])
               scope.$evalAsync(function() {
                 if (attrMap[key](scope) === event.detail.value) return;
                 attrMap[key].assign(scope, event.detail.value);
-                if (attrs.eventNamespace && typeof scope[attrs.eventNamespace].polymerChange === 'function') {
-                  scope[attrs.eventNamespace].polymerChange();
+                var handler = attrs.eventNamespace ? scope[attrs.eventNamespace].polymerChange : scope.polymerChange;
+                var context = attrs.eventNamespace ? scope[attrs.eventNamespace] : scope;
+                if (typeof handler === 'function') {
+                  handler.call(context);
                 }
               });
             });
