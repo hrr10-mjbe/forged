@@ -342,7 +342,10 @@ describe('GET /api/users/me', function() {
           })
           .then(function(user) {
             expect(user.studentData.requests[0].toString()).to.equal(teacher._id.toString());
-            done();
+            User.findByIdAsync(teacher._id).then(function(user) {
+              expect(user.teacherData.pendingStudents[0].toString()).to.equal(student._id.toString());
+              done();
+            })            
           });
       });
   });
