@@ -1,5 +1,6 @@
 'use strict';
 import User from './user.model';
+import Class from './class.model';
 import Badge from '../badge/badge.model';
 import Mongoose from 'mongoose';
 import passport from 'passport';
@@ -174,11 +175,12 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
-      user.studentData.requests.push(req.user._id);
+      var newClass = new Class({name: req.body.class, students: []});
+      user.studentData.requests.push({teacher: req.user._id, student: req.body._id, class: newClass));
       user.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(me) {
-            me.teacherData.pendingStudents.push({student: user._id, class: req.body.class});
+            me.teacherData.pendingStudents.push({student: user._id, class: newClass});
             me.saveAsync().then(function() {
               res.status(200).end();
             })
@@ -188,6 +190,7 @@ exports.invite = function(req, res, next) {
 }
 
 exports.accept = function(req, res, next) {
+  console.log(req);
   User.findOneAsync({
       _id: req.body.request.teacher._id
     })

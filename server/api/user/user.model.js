@@ -1,18 +1,14 @@
 'use strict';
 
 import crypto from 'crypto';
-import Badge from '../badge/badge.model'
+import Badge from '../badge/badge.model';
+import Class from '/class.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 //Note: changes to the schema that rely on relational data will need to be reflected in the normalize and denormalize functions
 //in the user controller
-
-var ClassSchema = new Schema({
-  name: String,
-  students: [{type: Schema.Types.ObjectId, ref: 'User'}]
-});
 
 var RequestSchema = new Schema({
   student: {type: Schema.Types.ObjectId, ref: 'User'},
