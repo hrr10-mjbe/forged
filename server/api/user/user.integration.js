@@ -185,28 +185,27 @@ describe('Student info API: Skills', function() {
         skills[0] = new Skill({
           name: 'Fake Skill 1'
         });
-        skills[1] = new Badge({
+        skills[1] = new Skill({
           name: 'Fake Skill 2'
         });
       })
       .then(function() {
-        skills[0].saveAsync();
-      }).then(function() {
-        skills[1].saveAsync();
+        skills[0].saveAsync().then(function() {
+          skills[1].saveAsync().then(function() {
+            User.removeAsync().then(function() {
+              user = new User({
+                name: 'Fake User',
+                email: 'test@example.com',
+                type: 'student',
+                password: 'password'
+              });
+              user.saveAsync().then(function() {
+                done()
+              });
+            });
+          })
+        })
       })
-      .then(function() {
-        User.removeAsync().then(function() {
-          user = new User({
-            name: 'Fake User',
-            email: 'test@example.com',
-            type: 'student',
-            password: 'password'
-          });
-          user.saveAsync().then(function() {
-            done()
-          });
-        });
-      });
   });
 
   // Clear users after testing
@@ -261,14 +260,14 @@ describe('Student info API: Skills', function() {
               expect(user.studentData.skills[0].toString()).to.equal(skills[0]._id.toString());
               expect(user.studentData.skills[1].toString()).to.equal(skills[1]._id.toString());
               Skill.findByIdAsync(skills[1]._id)
-              .then(function(skill) {
-                console.log('one skill');
-                console.log(skill);
-                expect(user.studentData.skills[0]).to.not.have.property('name');
-              expect(user.studentData.skills[1]).to.not.have.property('name');
-              done();
-              });
-              
+                .then(function(skill) {
+                  console.log('one skill');
+                  console.log(skill);
+                  expect(user.studentData.skills[0]).to.not.have.property('name');
+                  expect(user.studentData.skills[1]).to.not.have.property('name');
+                  done();
+                });
+
             });
         });
     });
