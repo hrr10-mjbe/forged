@@ -1,5 +1,4 @@
 'use strict';
-
 import User from './user.model';
 import Badge from '../badge/badge.model';
 import Mongoose from 'mongoose';
