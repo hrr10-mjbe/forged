@@ -51,11 +51,13 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         Skills.getSkill(skillId, function(skill) {
           for (var i = 0; i < user.studentData.skills.length; i++) {
-            if (user.studentData.skills[i]._id === skillId) {
+            console.log('looking for ' + skillId + ' , at ' + user.studentData.skills[i].skill._id)
+            if (user.studentData.skills[i].skill._id === skillId) {
               user.studentData.skills[i].status = status;
               return save();
             }
           }
+          console.log('adding' + skill);
           user.studentData.skills.push({
             skill: skill,
             status: status
