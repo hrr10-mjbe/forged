@@ -8,7 +8,7 @@ angular.module('hrr10MjbeApp')
       user = res;
     });
     
-    var activeClassId;
+    var activeClass;
 
     this.save = function() {
       User.update({}, user, function(res) {
@@ -19,11 +19,15 @@ angular.module('hrr10MjbeApp')
     }
 
     this.setClass = function(id) {
-      activeClassId = id;
+      for (var i = 0; i < user.teacherData.classes.length; i++) {
+        if (user.teacherData.classes[i]._id === id) {
+          return activeClass = user.teacherData.classes[i];
+        }
+      }
     }
 
-    this.getClass = function() {
-      for (var i = 0; i < data.)
+    this.getActiveClass = function() {
+      return activeClass;
     }
 
     this.sendInvite = function(email, cb) {
