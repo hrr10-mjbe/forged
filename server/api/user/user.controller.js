@@ -189,20 +189,21 @@ exports.invite = function(req, res, next) {
 
 exports.accept = function(req, res, next) {
   User.findOneAsync({
-      _id: req.body._id
+      _id: req.body.request.teacher._id
     })
     .then(function(teacher) {
       if (!teacher) {
         return res.status(404).end();
       }
       //add student to teacher's class
-      teacher.teacherData.classes.id(req.body.class._id).students.push(req.user._id);       
+      teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);       
       //remove from pending students
       teacher.teacherData.pendingStudents.pull(req.user._id);
       teacher.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(student) {
-            student.studentData.teacher = req.body._id;
+            console.log(req)
+            student.studentData.teacher = req.body.request.teacher._id;
             student.studentData.requests.pull(req.body._id);
             student.saveAsync()
               .then(function() {

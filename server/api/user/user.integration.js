@@ -267,7 +267,8 @@ describe('Class API:', function() {
 });
 
 describe('Invitation API:', function() {
-  var student, studentToken, teacher, teacherToken, className = 'a test class';
+  var student, studentToken, teacher, teacherToken, className = 'a test class',
+    classId;
 
   // Clear users before testing
   before(function(done) {
@@ -293,10 +294,10 @@ describe('Invitation API:', function() {
   });
 
 
-// Clear users after testing
-after(function() {
-  return User.removeAsync();
-});
+  // Clear users after testing
+  after(function() {
+    return User.removeAsync();
+  });
 
   it('should log in users', function(done) {
     request(app)
@@ -310,26 +311,31 @@ after(function() {
       .end(function(err, res) {
         teacherToken = res.body.token;
         request(app)
-      .post('/auth/local')
-      .send({
-        email: 'student@example.com',
-        password: 'password'
-      })
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end(function(err, res) {
-        studentToken = res.body.token;
-        done();
-      });    
-       
-      });    
+          .post('/auth/local')
+          .send({
+            email: 'student@example.com',
+            password: 'password'
+          })
+          .expect(200)
+          .expect('Content-Type', /json/)
+          .end(function(err, res) {
+            studentToken = res.body.token;
+            done();
+          });
+
+      });
   });
 
   it('should allow users to send invitations', function(done) {
     request(app)
       .post('/api/users/invite')
       .set('authorization', 'Bearer ' + teacherToken)
-      .send({email: student.email, class: {name: className, students: []}})
+      .send({
+        email: student.email,
+        class: {
+          name: className, students: []
+        }
+      })
       .expect(200)
       .end(function(err, res) {
         User.findOneAsync({
@@ -341,27 +347,41 @@ after(function() {
             User.findByIdAsync(teacher._id).then(function(user) {
               expect(user.teacherData.pendingStudents[0].student.toString()).to.equal(student._id.toString());
               expect(user.teacherData.pendingStudents[0].class.name.toString()).to.equal(className);
+              classId = user.teacherData.pendingStudents[0].class._id;
               done();
-            })            
+            })
           });
       });
   });
 
-  /*it('should allow users to accept invitations', function(done) {
+  it('should allow users to accept invitations', function(done) {
+    var userClient;
     request(app)
-      .post('/api/users/accept')
+      .get('/api/users/me')
       .set('authorization', 'Bearer ' + studentToken)
-      .send({_id: teacher._id})
+      .send()
       .expect(200)
+      .expect('Content-Type', /json/)
       .end(function(err, res) {
-        User.findByIdAsync(student._id).then(function(user) {
-          expect(user.studentData.teacher.toString()).to.equal(teacher._id.toString());
-          User.findByIdAsync(teacher._id).then(function(user) {
-            teacher.pendingStudents
-            expect(user.teacherData.)
+        userClient = res.body;
+        request(app)
+          .post('/api/users/accept')
+          .set('authorization', 'Bearer ' + studentToken)
+          .send({
+            request: userClient.studentData.requests[0]
           })
-        }
-        done();
+          .expect(200)
+          .end(function(err, res) {
+            User.findByIdAsync(student._id).then(function(user) {
+              console.log(user);
+              expect(user.studentData.teacher.toString()).to.equal(teacher._id.toString());
+              User.findByIdAsync(teacher._id).then(function(user) {
+                expect(user.teacherData.classes.id(classId).students[0]._id.toString()).to.equal(student._id.toString());
+                done();
+              })
+            })
+          });
       });
-  });*/
+
+  });
 });
