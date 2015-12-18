@@ -255,18 +255,14 @@ describe('Student info API: Skills', function() {
               _id: user._id
             })
             .then(function(user) {
-              console.log(user.studentData.skills);
               expect(user.studentData.skills[0].toString()).to.equal(skills[0]._id.toString());
               expect(user.studentData.skills[1].toString()).to.equal(skills[1]._id.toString());
               Skill.findByIdAsync(skills[1]._id)
                 .then(function(skill) {
-                  console.log('one skill');
-                  console.log(skill);
                   expect(user.studentData.skills[0]).to.not.have.property('name');
                   expect(user.studentData.skills[1]).to.not.have.property('name');
                   done();
                 });
-
             });
         });
     });
