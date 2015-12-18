@@ -3,12 +3,10 @@
 angular.module('hrr10MjbeApp')
   .service('Teacher', function($http, Auth) {
 
-    var user;
+    var user, activeClass;
     Auth.getCurrentUser(null).then(function(res) {
       user = res;
     });
-    
-    var activeClass;
 
     this.save = function() {
       User.update({}, user, function(res) {
@@ -37,6 +35,12 @@ angular.module('hrr10MjbeApp')
     this.removeClass = function() {
 
     }
+
+    this.getStudent = function(id) {
+
+    }
+
+    this.get
 
     this.sendInvite = function(email, classId, cb) {
       $http({
