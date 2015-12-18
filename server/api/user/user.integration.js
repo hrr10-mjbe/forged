@@ -86,23 +86,22 @@ describe('Student info API: Badges', function() {
         });
       })
       .then(function() {
-        badges[0].saveAsync();
-      }).then(function() {
-        badges[1].saveAsync();
+        badges[0].saveAsync().then(function() {
+          badges[1].saveAsync().then(function() {
+            User.removeAsync().then(function() {
+              user = new User({
+                name: 'Fake User',
+                email: 'test@example.com',
+                type: 'student',
+                password: 'password'
+              });
+              user.saveAsync().then(function() {
+                done()
+              });
+            });
+          })
+        })
       })
-      .then(function() {
-        User.removeAsync().then(function() {
-          user = new User({
-            name: 'Fake User',
-            email: 'test@example.com',
-            type: 'student',
-            password: 'password'
-          });
-          user.saveAsync().then(function() {
-            done()
-          });
-        });
-      });
   });
 
   // Clear users after testing
