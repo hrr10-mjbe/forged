@@ -30,12 +30,21 @@ angular.module('hrr10MjbeApp')
       return activeClass;
     }
 
-    this.sendInvite = function(email, cb) {
+    this.addClass = function() {
+
+    }
+
+    this.removeClass = function() {
+
+    }
+
+    this.sendInvite = function(email, classId, cb) {
       $http({
         method: 'POST',
         url: '/api/users/invite',
         data: {
-          email: email
+          email: email,
+          class: classId
         }
       }).then(function successCallback(response) {
         cb(response.status);
