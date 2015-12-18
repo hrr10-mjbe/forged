@@ -149,7 +149,6 @@ exports.update = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
-  //TODO promises
   var userId = req.user._id;
   User.findById(userId, '-salt -hashedPassword', function(err, user) {
     if (err) {
@@ -179,7 +178,7 @@ exports.invite = function(req, res, next) {
       user.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(me) {
-            me.teacherData.pendingStudents.push(user._id);
+            me.teacherData.pendingStudents.push({student: user._id, class: req.body.class);
             me.saveAsync().then(function() {
               res.status(200).end();
             })
@@ -195,6 +194,11 @@ exports.accept = function(req, res, next) {
     .then(function(teacher) {
       if (!teacher) {
         return res.status(404).end();
+      }
+      for (var i = 0; i < teacher.teacherData.pendingStudents.length; i++) {
+        if (teacher.teacherData.pendingStudents[i]._id === req.user._id) {
+          for (var j = 0; j < teacher.teacherData.classes)
+        }
       }
       teacher.teacherData.students.push(req.user._id);
       teacher.teacherData.pendingStudents.pull(req.user._id);
