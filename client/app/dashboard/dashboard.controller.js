@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('DashboardCtrl', function ($scope, Teacher, Auth) {
+  .controller('DashboardCtrl', function ($scope, $state, Teacher) {
     $scope.message = 'Hello';
-    $scope.selected = "";
+    $scope.selectedClass = "";
 
     Teacher.getClasses(function(classes) {
       $scope.classes = JSON.stringify(classes.map(function(val) {
@@ -18,8 +18,11 @@ angular.module('hrr10MjbeApp')
       })
     }
 
-    $scope.bindPolymer = function() {
+    $scope.polymerChange = function() {
       console.log('triggered with');
-      console.log($scope.selected);
+      console.log($scope.selectedClass);
+      if ($scope.selectedClass) {
+        $state.go('classprogress', {id: $scope.selectedClass});
+      }      
     }
   });
