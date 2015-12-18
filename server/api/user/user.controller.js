@@ -123,11 +123,11 @@ var normalizeStudent = function(studentData) {
 }
 
 var normalizeTeacher = function(teacherData) {
-  teacherData.students = teacherData.students.map(function(student) {
+  for (var i = 0; i < teacherData.classes.length; i++) {
+    teacherData.classes[i].students = teacherData.classes[i].students.map(function(student) {
     return student._id;
-  })
-  return teacherData;
-}
+  });
+ }
 
 //data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
