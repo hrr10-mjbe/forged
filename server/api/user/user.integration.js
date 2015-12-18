@@ -287,7 +287,10 @@ describe('Invitation API:', function() {
           type: 'teacher',
           password: 'password',
           teacherData: {
-            classes: [newClass = new Class({name: className, students: []})]
+            classes: [newClass = new Class({
+              name: className,
+              students: []
+            })]
           }
         });
         teacher.saveAsync().then(function() {
@@ -351,7 +354,7 @@ describe('Invitation API:', function() {
             User.findByIdAsync(teacher._id).then(function(user) {
               console.log(user.teacherData.pendingStudents);
               expect(user.teacherData.pendingStudents[0].student.toString()).to.equal(student._id.toString());
-              expect(user.teacherData.pendingStudents[0].class._id.toString()).to.equal(newClass._id.toString());              
+              expect(user.teacherData.pendingStudents[0].class._id.toString()).to.equal(newClass._id.toString());
               done();
             })
           });
@@ -377,11 +380,9 @@ describe('Invitation API:', function() {
           .expect(200)
           .end(function(err, res) {
             User.findByIdAsync(student._id).then(function(user) {
-              console.log(user);
               expect(user.studentData.teacher.toString()).to.equal(teacher._id.toString());
               expect(user.studentData.requests.length).to.equal(0);
               User.findByIdAsync(teacher._id).then(function(user) {
-                console.log(user.teacherData);
                 expect(user.teacherData.classes.id(newClass._id).students[0].toString()).to.equal(student._id.toString());
                 expect(user.teacherData.pendingStudents.length).to.equal(0);
                 done();

@@ -130,7 +130,7 @@ var normalizeTeacher = function(teacherData) {
     });
   }
   return teacherData;
- }
+}
 
 //data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
@@ -175,11 +175,18 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
-      user.studentData.requests.push({teacher: req.user._id, student: req.body._id, class: req.body.class});
+      user.studentData.requests.push({
+        teacher: req.user._id,
+        student: req.body._id,
+        class: req.body.class
+      });
       user.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(me) {
-            me.teacherData.pendingStudents.push({student: user._id, class: req.body.class});
+            me.teacherData.pendingStudents.push({
+              student: user._id,
+              class: req.body.class
+            });
             me.saveAsync().then(function() {
               res.status(200).end();
             })
@@ -200,19 +207,14 @@ exports.accept = function(req, res, next) {
       if (!teacher.teacherData.classes.id(req.body.request.class._id)) {
         return res.status(404).end();
       }
-      teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);       
+      teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);
       //remove from pending students
       teacher.teacherData.pendingStudents.pull(req.request);
       teacher.saveAsync()
         .then(function() {
-          console.log('id');
-          console.log(req.user._id);
           User.findByIdAsync(req.user._id).then(function(student) {
-            console.log('user');
-            //console.log(req.body);
             student.studentData.teacher = req.body.request.teacher;
             student.studentData.requests.pull(req.body.request._id);
-            console.log(student);
             student.saveAsync()
               .then(function() {
                 res.status(200).end();
