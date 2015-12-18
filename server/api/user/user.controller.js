@@ -155,7 +155,7 @@ exports.me = function(req, res, next) {
     }
 
     User.populate(user, {
-      path: 'studentData.badges studentData.requests studentData.teachers teacherData.students teacherData.pendingStudents'
+      path: 'studentData.badges studentData.requests studentData.teachers teacherData.classes teacherData.pendingStudents'
     }, function(err, user) {
       if (err) {
         return next(err);
