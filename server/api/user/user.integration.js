@@ -4,6 +4,7 @@ import app from '../..';
 import User from './user.model';
 import Class from './class.model';
 import Badge from '../badge/badge.model';
+import Skill from '../skill/skill.model';
 import request from 'supertest';
 
 //TODO: should PUT requests return the new object, like api/thing?
@@ -71,7 +72,7 @@ describe('User API:', function() {
 
 });
 
-describe('Student info API:', function() {
+describe('Student info API: Badges', function() {
   var user, token, userClient, badges = [];
 
   // Clear users before testing
@@ -169,6 +170,110 @@ describe('Student info API:', function() {
         .end(function(err, res) {
           expect(res.body.studentData.badges[0].name).to.equal(badges[0].name);
           expect(res.body.studentData.badges[1].name).to.equal(badges[1].name);
+          done();
+        });
+    });
+  });
+});
+
+describe('Student info API: Skills', function() {
+  var user, token, userClient, skills = [];
+
+  // Clear users before testing
+  before(function(done) {
+    Skill.removeAsync().then(function() {
+        skills[0] = new Skill({
+          name: 'Fake Skill 1'
+        });
+        skills[1] = new Badge({
+          name: 'Fake Skill 2'
+        });
+      })
+      .then(function() {
+        skills[0].saveAsync();
+      }).then(function() {
+        skills[1].saveAsync();
+      })
+      .then(function() {
+        User.removeAsync().then(function() {
+          user = new User({
+            name: 'Fake User',
+            email: 'test@example.com',
+            type: 'student',
+            password: 'password'
+          });
+          user.saveAsync().then(function() {
+            done()
+          });
+        });
+      });
+  });
+
+  // Clear users after testing
+  after(function() {
+    return User.removeAsync();
+  });
+
+  describe('GET /api/users/me', function() {
+
+    before(function(done) {
+      request(app)
+        .post('/auth/local')
+        .send({
+          email: 'test@example.com',
+          password: 'password'
+        })
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res) {
+          token = res.body.token;
+          done();
+        });
+    });
+
+    it('should respond with a user profile when authenticated', function(done) {
+      request(app)
+        .get('/api/users/me')
+        .set('authorization', 'Bearer ' + token)
+        .expect(200)
+        .expect('Content-Type', /json/)
+        .end(function(err, res) {
+          userClient = res.body;
+          expect(res.body._id.toString()).to.equal(user._id.toString());
+          done();
+        });
+    });
+
+    it('should add and normalize skills', function(done) {
+      userClient.studentData.skills.push(badges[0]);
+      userClient.studentData.skills.push(badges[1]);
+      request(app)
+        .put('/api/users/me/update')
+        .set('authorization', 'Bearer ' + token)
+        .send(userClient)
+        .expect(200)
+        .end(function(err, res) {
+          User.findOneAsync({
+              _id: user._id
+            })
+            .then(function(user) {
+              expect(user.studentData.skills[0].toString()).to.equal(skills[0]._id.toString());
+              expect(user.studentData.skills[1].toString()).to.equal(skills[1]._id.toString());
+              expect(user.studentData.badges[0]).to.not.have.property('name');
+              expect(user.studentData.badges[1]).to.not.have.property('name');
+              done();
+            });
+        });
+    });
+
+    it('should correctly denormalize badges', function(done) {
+      request(app)
+        .get('/api/users/me')
+        .set('authorization', 'Bearer ' + token)
+        .expect(200)
+        .end(function(err, res) {
+          expect(res.body.studentData.skills[0].name).to.equal(skills[0].name);
+          expect(res.body.studentData.skills[1].name).to.equal(skillss[1].name);
           done();
         });
     });
@@ -393,3 +498,6 @@ describe('Invitation API:', function() {
 
   });
 });
+
+//more tests:
+//normalization/denormalization checking on adding student to classes

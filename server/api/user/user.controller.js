@@ -151,20 +151,20 @@ exports.update = function(req, res, next) {
  */
 exports.me = function(req, res, next) {
   var userId = req.user._id;
-  User.findById(userId, '-salt -hashedPassword', function(err, user) {
-    if (err) {
-      return next(err);
-    }
-
-    User.populate(user, {
-      path: 'studentData.badges studentData.requests studentData.teachers teacherData.classes teacherData.pendingStudents'
-    }, function(err, user) {
+  User.findById(userId, '-salt -hashedPassword')
+    .populate({
+      path: 'studentData.skills studentData.badges teacherData.classes',
+      populate: {
+        path: 'students'
+      }
+    })
+    .populate('studentData.teacher', 'name email')
+    .exec(function(err, user) {
       if (err) {
         return next(err);
       }
       res.json(user);
     })
-  });
 };
 
 exports.invite = function(req, res, next) {
