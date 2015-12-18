@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Student', function ($http, Auth) {
+  .service('Student', function ($http, Auth, Skills) {
     var user;    
 
     var getUser = function(cb) {
@@ -14,7 +14,6 @@ angular.module('hrr10MjbeApp')
     }
 
     this.acceptRequest = function(req, cb) {
-      console.log(req);
       $http({
         method: 'POST',
         url: '/api/users/accept',
@@ -30,6 +29,12 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         console.log('getting');
         cb(user.studentData.skills);
+      })
+    }
+
+    this.addSkill = function(skillId, status) {
+      getUser(function(user) {
+        user.studentData.skills.push
       })
     }
   });

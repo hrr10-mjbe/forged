@@ -17,6 +17,11 @@ var RequestSchema = new Schema({
   class: Class.schema
 });
 
+var SkillStatusSchema = new Schema({
+  skill: {type: Schema.Types.ObjectId, ref: 'Skill'},
+  status: Number
+})
+
 var UserSchema = new Schema({
   name: String,
   email: {
@@ -39,7 +44,7 @@ var UserSchema = new Schema({
   //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
   studentData: {
     points: Number,
-    skills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
+    skills: [SkillStatusSchema],
     badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
     requests: [RequestSchema],
     teacher: {type: Schema.Types.ObjectId, ref: 'User'}
