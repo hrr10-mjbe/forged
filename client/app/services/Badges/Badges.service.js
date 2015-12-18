@@ -1,8 +1,17 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Badges', function($http, Student) {
+  .service('Badges', function($http) {
     var badges;
+
+    var hasBadge = function(studentData, badgeId) {
+      for (var i = 0; i < studentData.badges.length; i++) {
+        if (studentData.badges[i]._id === badgeId) {
+          return true;
+        }
+      }
+      return false;
+    }
 
     var getBadges = function(cb) {
       if (badges) return cb(badges);
@@ -25,10 +34,8 @@ angular.module('hrr10MjbeApp')
       var newBadges = [];
       getBadges(function(badges) {
         for (var i = 0; i < badges.length; i++) {
-          if (checkBadge(badges[i].badgeDefId, studentData)) {
-            Student.hasBadge(function(res) {
-              if (!res) newBadges.push(badges[i]);
-            });
+          if (checkBadge(badges[i].badgeDefId, studentData) && !hasBadge(studentData, badges[i]._id)) {
+            newBadges.push(badges[i]);
           }
         }
         cb(newBadges);

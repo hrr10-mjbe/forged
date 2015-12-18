@@ -10,7 +10,7 @@
       this.Skills = Skills;
       Skills.getSkills(function(skills) {
         this.skills = skills;
-        Student.addSkill(skills[0]._id, 4);
+        Student.addOrUpdateSkill(skills[0]._id, 4);
         console.log(skills);
       }.bind(this));
       this.awesomeThings = [];
