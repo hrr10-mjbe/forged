@@ -2,7 +2,19 @@
 
 angular.module('hrr10MjbeApp')
   .service('Badges', function($http, Auth) {
-    this.badges = undefined;
+    var badges;
+
+    var getBadges = function(cb) {
+      if (badges) return cb(badges);
+      $http({
+        method: 'GET',
+        url: '/api/badges'
+      }).then(function(res) {
+        badges = res.data;
+        cb(badges);
+      });
+    }
+
 
     this.getBadges = function(cb) {
       if (this.badges) {
@@ -18,23 +30,10 @@ angular.module('hrr10MjbeApp')
       }
     }
 
-    this.getUserBadges = function(cb) {
-      Auth.isLoggedIn(function(is) {
-        if (is) {
-          Auth.getCurrentUser(function(user) {
-            console.log(user.studentData.badges);
-            cb(user.studentData.badges);
-          });
-        } else {
-          cb([]);
-        }
-      });
-    }
-
-    this.awardBadges = function() {
+    this.awardBadges = function(studentData) {
       var newBadges = [];
       for (var i = 0; i < this.badges.length; i++) {
-        if (checkBadge(this.badges[i].badgeDefId, Auth.getCurrentUser().studentData)) {
+        if (checkBadge(this.badges[i].badgeDefId, studentData)) {
           newBadges.push(this.badges[i]);
         }
       }

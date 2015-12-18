@@ -7,8 +7,6 @@ angular.module('hrr10MjbeApp')
     var getUser = function(cb) {
       if (user) return cb(user);
       Auth.getCurrentUser(null).then(function(res) {
-        console.log('set');
-        console.log(res);
         user = res;
         cb(user);
       });
@@ -43,7 +41,6 @@ angular.module('hrr10MjbeApp')
 
     this.getSkills = function(cb) {
       getUser(function(user) {
-        console.log('getting');
         cb(user.studentData.skills);
       })
     }
