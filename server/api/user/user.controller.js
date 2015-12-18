@@ -175,12 +175,11 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
-      var newClass = new Class({name: req.body.class, students: []});
-      user.studentData.requests.push({teacher: req.user._id, student: req.body._id, class: newClass});
+      user.studentData.requests.push({teacher: req.user._id, student: req.body._id, class: req.body.class});
       user.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(me) {
-            me.teacherData.pendingStudents.push({student: user._id, class: newClass});
+            me.teacherData.pendingStudents.push({student: user._id, class: req.body.class});
             me.saveAsync().then(function() {
               res.status(200).end();
             })

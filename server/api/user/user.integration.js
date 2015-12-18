@@ -2,6 +2,7 @@
 
 import app from '../..';
 import User from './user.model';
+import Class from './class.model';
 import Badge from '../badge/badge.model';
 import request from 'supertest';
 
@@ -268,7 +269,7 @@ describe('Class API:', function() {
 
 describe('Invitation API:', function() {
   var student, studentToken, teacher, teacherToken, className = 'a test class',
-    classId;
+    newClass;
 
   // Clear users before testing
   before(function(done) {
@@ -284,7 +285,10 @@ describe('Invitation API:', function() {
           name: 'Teacher',
           email: 'teacher@example.com',
           type: 'teacher',
-          password: 'password'
+          password: 'password',
+          teacherData: {
+            classes: [newClass = new Class({name: className, students: []})]
+          }
         });
         teacher.saveAsync().then(function() {
           done()
@@ -332,9 +336,7 @@ describe('Invitation API:', function() {
       .set('authorization', 'Bearer ' + teacherToken)
       .send({
         email: student.email,
-        class: {
-          name: className, students: []
-        }
+        class: newClass
       })
       .expect(200)
       .end(function(err, res) {
@@ -342,13 +344,14 @@ describe('Invitation API:', function() {
             email: student.email
           })
           .then(function(user) {
+            console.log('newClass')
+            console.log(newClass);
             console.log(user.studentData.requests);
             expect(user.studentData.requests[0].teacher.toString()).to.equal(teacher._id.toString());
-            classId = user.studentData.requests[0].class._id;
             User.findByIdAsync(teacher._id).then(function(user) {
               console.log(user.teacherData.pendingStudents);
               expect(user.teacherData.pendingStudents[0].student.toString()).to.equal(student._id.toString());
-              expect(user.teacherData.pendingStudents[0].class._id.toString()).to.equal(classId.toString());              
+              expect(user.teacherData.pendingStudents[0].class._id.toString()).to.equal(newClass._id.toString());              
               done();
             })
           });
