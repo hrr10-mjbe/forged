@@ -27,18 +27,6 @@ angular.module('hrr10MjbeApp')
       })
     }
 
-    this.setActiveClass = function(id) {
-      for (var i = 0; i < user.teacherData.classes.length; i++) {
-        if (user.teacherData.classes[i]._id === id) {
-          return activeClass = user.teacherData.classes[i];
-        }
-      }
-    }
-
-    this.getActiveClass = function() {
-      return activeClass;
-    }
-
     this.addClass = function(name) {
       getUser(function(teacher) {
         teacher.classes.push({name: name, students: []});
@@ -50,11 +38,9 @@ angular.module('hrr10MjbeApp')
       
     }
 
-    this.getStudent = function(id) {
+    this.getStudent = function(classId, studentId) {
 
     }
-
-    this.get
 
     this.sendInvite = function(email, classId, cb) {
       $http({
@@ -70,6 +56,4 @@ angular.module('hrr10MjbeApp')
         cb(response.status);
       });
     }
-
-    this.refresh();
   });
