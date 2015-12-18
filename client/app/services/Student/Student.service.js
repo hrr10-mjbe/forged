@@ -51,13 +51,11 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         Skills.getSkill(skillId, function(skill) {
           for (var i = 0; i < user.studentData.skills.length; i++) {
-            console.log('looking for ' + skillId + ' , at ' + user.studentData.skills[i].skill._id)
             if (user.studentData.skills[i].skill._id === skillId) {
               user.studentData.skills[i].status = status;
               return save();
             }
           }
-          console.log('adding' + skill);
           user.studentData.skills.push({
             skill: skill,
             status: status
@@ -67,8 +65,14 @@ angular.module('hrr10MjbeApp')
       })
     }
 
+    this.updateCurrentSkill = function(status) {
+      console.log(Skills);
+      this.addOrUpdateSkill(Skills.activeSkill()._id, status);
+    }
+
     this.awardBadges = function(cb) {
       getUser(function(user) {
+        console.log(user);
         Badges.awardBadges(user.studentData, function(newBadges) {
           [].push.apply(user.studentData.badges, newBadges);
           save();

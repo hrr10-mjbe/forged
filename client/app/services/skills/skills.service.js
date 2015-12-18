@@ -1,26 +1,26 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Skills', function($http, Auth, Problems) {
-    this.skills = undefined;
-    this.activeSkill = undefined;
+  .service('Skills', function($http, Problems) {
+    var skills = undefined;
+    var active = undefined;
 
     function changeSkill(newSkill) {
-      this.activeSkill = newSkill;
-      console.log(this.activeSkill);
+      active = newSkill;
+      console.log(active);
       Problems.setCurrentProblemSet(newSkill.problemGenId);
     }
 
     this.getSkills = function(cb) {
-      if (this.skills) {
-        cb(this.skills);
+      if (skills) {
+        cb(skills);
       } else {
         $http({
           method: 'GET',
           url: '/api/skills'
         }).then(function(res) {
-          this.skills = res.data;
-          cb(this.skills);
+          skills = res.data;
+          cb(skills);
         }.bind(this))
       }
     }
@@ -33,6 +33,10 @@ angular.module('hrr10MjbeApp')
           }
         }
       })
+    }
+
+    this.activeSkill = function() {
+      return active;
     }
 
     this.setActiveSkill = function(skillID) {
