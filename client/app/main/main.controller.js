@@ -11,6 +11,7 @@
       Skills.getSkills(function(skills) {
         this.skills = skills;
         Student.addOrUpdateSkill(skills[0]._id, 4);
+        Student.awardBadges();
         console.log(skills);
       }.bind(this));
       this.awesomeThings = [];

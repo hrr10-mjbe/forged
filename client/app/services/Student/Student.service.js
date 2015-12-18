@@ -70,7 +70,7 @@ angular.module('hrr10MjbeApp')
         Badges.awardBadges(user.studentData, function(newBadges) {
           [].push.apply(user.studentData.badges, newBadges);
           save();
-          cb(newBadges);
+          if (cb) cb(newBadges);
         })
       })
     }
