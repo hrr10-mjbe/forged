@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Student', function($http, Auth, Skills) {
+  .service('Student', function($http, Auth, Skills, Badges) {
     var user;
+
+    //TODO indexOf _id helper method
 
     var getUser = function(cb) {
       if (user) return cb(user);
@@ -59,6 +61,16 @@ angular.module('hrr10MjbeApp')
             status: status
           });
           save();
+        })
+      })
+    }
+
+    this.awardBadges = function(cb) {
+      getUser(function(user) {
+        Badges.awardBadges(user.studentData, function(newBadges) {
+          [].push.apply(user.studentData.badges, newBadges);
+          save();
+          cb(newBadges);
         })
       })
     }
