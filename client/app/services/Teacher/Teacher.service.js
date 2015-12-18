@@ -35,11 +35,36 @@ angular.module('hrr10MjbeApp')
     }
 
     this.removeClass = function(id) {
-      
+      getUser(function(teacher) {
+        for (var i = 0; i < teacher.classes.length; i++) {
+          if (teacher.classes[i]._id === classId) {
+            teacher.classes.splice(i, 1);
+            return save();
+          }
+        }
+      })
     }
 
-    this.getStudent = function(classId, studentId) {
+    this.getClass = function(classId, cb) {
+      getUser(function(teacher) {
+        for (var i = 0; i < teacher.classes.length; i++) {
+          if (teacher.classes[i]._id === classId) {
+            return cb(teacher.classes[i]);
+          }
+        }
+        cb(null);
+      })
+    }
 
+    this.getStudent = function(classId, studentId, cb) {
+      this.getClass(classId, function(class) {
+        for (var i = 0; i < class.students.length; i++) {
+          if (class.students[i]._id === studentId) {
+            return cb(class.students[i]);
+          }
+        }
+        cb(null);
+      })
     }
 
     this.sendInvite = function(email, classId, cb) {
