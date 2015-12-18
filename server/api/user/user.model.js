@@ -3,6 +3,7 @@
 import crypto from 'crypto';
 import Badge from '../badge/badge.model';
 import Class from './class.model';
+import Skill from '../skill/skill.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
@@ -11,14 +12,8 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 //in the user controller
 
 var RequestSchema = new Schema({
-  student: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  teacher: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
+  student: {type: Schema.Types.ObjectId, ref: 'User'},
+  teacher: {type: Schema.Types.ObjectId, ref: 'User'},
   class: Class.schema
 });
 
@@ -44,16 +39,10 @@ var UserSchema = new Schema({
   //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
   studentData: {
     points: Number,
-    skills: {},
-    badges: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Badge'
-    }],
+    skills: [{type: Schema.Types.ObjectId, ref: 'Skill'}],
+    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
     requests: [RequestSchema],
-    teacher: {
-      type: Schema.Types.ObjectId,
-      ref: 'User'
-    }
+    teacher: {type: Schema.Types.ObjectId, ref: 'User'}
   },
   //teacher properties
   teacherData: {
@@ -115,9 +104,7 @@ UserSchema
   .path('email')
   .validate(function(value, respond) {
     var self = this;
-    return this.constructor.findOneAsync({
-        email: value
-      })
+    return this.constructor.findOneAsync({ email: value })
       .then(function(user) {
         if (user) {
           if (self.id === user.id) {
@@ -193,7 +180,8 @@ UserSchema.methods = {
 
       if (_this.password === pwdGen) {
         callback(null, true);
-      } else {
+      }
+      else {
         callback(null, false);
       }
     });
@@ -213,7 +201,8 @@ UserSchema.methods = {
     if (typeof arguments[0] === 'function') {
       callback = arguments[0];
       byteSize = defaultByteSize;
-    } else if (typeof arguments[1] === 'function') {
+    }
+    else if (typeof arguments[1] === 'function') {
       callback = arguments[1];
     }
 
@@ -252,7 +241,7 @@ UserSchema.methods = {
 
     if (!callback) {
       return crypto.pbkdf2Sync(password, salt, defaultIterations, defaultKeyLength)
-        .toString('base64');
+                   .toString('base64');
     }
 
     return crypto.pbkdf2(password, salt, defaultIterations, defaultKeyLength, function(err, key) {
