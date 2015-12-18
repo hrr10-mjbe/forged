@@ -45,9 +45,15 @@ angular.module('hrr10MjbeApp')
       })
     }
 
-    this.addSkill = function(skillId, status) {
+    this.addOrUpdateSkill = function(skillId, status) {
       getUser(function(user) {
         Skills.getSkill(skillId, function(skill) {
+          for (var i = 0; i < user.studentData.skills.length; i++) {
+            if (user.studentData.skills[i]._id === skillId) {
+              user.studentData.skills[i].status = status;
+              return save();
+            }
+          }
           user.studentData.skills.push({
             skill: skill,
             status: status
