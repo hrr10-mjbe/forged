@@ -8,8 +8,9 @@
       this.$http = $http;
       this.$state = $state;
       this.Skills = Skills;
-      Student.getSkills(function(skills) {
+      Skills.getSkills(function(skills) {
         this.skills = skills;
+        Student.addSkill(skills[0]._id, 4);
         console.log(skills);
       }.bind(this));
       this.awesomeThings = [];
