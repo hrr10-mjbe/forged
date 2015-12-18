@@ -3,8 +3,9 @@
 (function() {
 
   class SController {
-    constructor(Problems, Skills, Student, $state) {
+    constructor(Problems, Skills, Student, $state, $stateParams) {
       this.complete = 'false';
+      console.log($stateParams.id);
       this.type = Problems.currentProblemSet();
       this.Student = Student;
       this.$state = $state;
