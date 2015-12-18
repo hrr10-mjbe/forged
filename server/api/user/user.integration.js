@@ -298,23 +298,6 @@ after(function() {
   return User.removeAsync();
 });
 
-describe('GET /api/users/me', function() {
-
-  before(function(done) {
-    request(app)
-      .post('/auth/local')
-      .send({
-        email: 'test@example.com',
-        password: 'password'
-      })
-      .expect(200)
-      .expect('Content-Type', /json/)
-      .end(function(err, res) {
-        teacherToken = res.body.token;
-        done();
-      });
-  });
-
   it('should log in the teacher', function(done) {
     request(app)
       .post('/auth/local')
@@ -330,7 +313,7 @@ describe('GET /api/users/me', function() {
       });    
   });
 
-  it('should send invitations', function(done) {
+  it('should allow users to send invitations', function(done) {
     request(app)
       .post('/api/users/invite')
       .set('authorization', 'Bearer ' + teacherToken)
@@ -350,16 +333,14 @@ describe('GET /api/users/me', function() {
       });
   });
 
-  it('should correctly denormalize badges', function(done) {
+  it('should allow users to accept invitations', function(done) {
     request(app)
-      .get('/api/users/me')
-      .set('authorization', 'Bearer ' + token)
+      .post('/api/users/accept')
+      .set('authorization', 'Bearer ' + studentToken)
       .expect(200)
       .end(function(err, res) {
-        expect(res.body.studentData.badges[0].name).to.equal(badges[0].name);
-        expect(res.body.studentData.badges[1].name).to.equal(badges[1].name);
+        
         done();
       });
   });
-});
 });
