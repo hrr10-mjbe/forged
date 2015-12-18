@@ -267,7 +267,7 @@ describe('Class API:', function() {
 });
 
 describe('Invitation API:', function() {
-  var student, studentToken, teacher, teacherToken;
+  var student, studentToken, teacher, teacherToken, className = 'a test class';
 
   // Clear users before testing
   before(function(done) {
@@ -329,7 +329,7 @@ after(function() {
     request(app)
       .post('/api/users/invite')
       .set('authorization', 'Bearer ' + teacherToken)
-      .send({email: student.email, class: {name: 'a test class', students: []}})
+      .send({email: student.email, class: {name: className, students: []}})
       .expect(200)
       .end(function(err, res) {
         User.findOneAsync({
@@ -337,10 +337,10 @@ after(function() {
           })
           .then(function(user) {
             console.log(user.studentData.requests);
-            expect(user.studentData.requests[0].toString()).to.equal(teacher._id.toString());
+            expect(user.studentData.requests[0]._id.toString()).to.equal(teacher._id.toString());
             User.findByIdAsync(teacher._id).then(function(user) {
               expect(user.teacherData.pendingStudents[0].student.toString()).to.equal(student._id.toString());
-              expect(user.teacherData.pendingStudents[0].class.name.toString()).to.equal('a test class');
+              expect(user.teacherData.pendingStudents[0].class.name.toString()).to.equal(className);
               done();
             })            
           });
@@ -357,6 +357,7 @@ after(function() {
         User.findByIdAsync(student._id).then(function(user) {
           expect(user.studentData.teacher.toString()).to.equal(teacher._id.toString());
           User.findByIdAsync(teacher._id).then(function(user) {
+            teacher.pendingStudents
             expect(user.teacherData.)
           })
         }

@@ -14,8 +14,9 @@ var ClassSchema = new Schema({
   students: [{type: Schema.Types.ObjectId, ref: 'User'}]
 });
 
-var PendingStudentSchema = new Schema({
+var RequestSchema = new Schema({
   student: {type: Schema.Types.ObjectId, ref: 'User'},
+  teacher: {type: Schema.Types.ObjectId, ref: 'User'},
   class: ClassSchema
 });
 
@@ -43,13 +44,13 @@ var UserSchema = new Schema({
     points: Number,
     skills: {},
     badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
-    requests: [{type: Schema.Types.ObjectId, ref: 'User'}],
+    requests: [RequestSchema],
     teacher: {type: Schema.Types.ObjectId, ref: 'User'}
   },
   //teacher properties
   teacherData: {
     classes: [ClassSchema],
-    pendingStudents: [PendingStudentSchema]
+    pendingStudents: [RequestSchema]
   }
 });
 
