@@ -309,7 +309,19 @@ after(function() {
       .expect('Content-Type', /json/)
       .end(function(err, res) {
         teacherToken = res.body.token;
+        request(app)
+      .post('/auth/local')
+      .send({
+        email: 'student@example.com',
+        password: 'password'
+      })
+      .expect(200)
+      .expect('Content-Type', /json/)
+      .end(function(err, res) {
+        studentToken = res.body.token;
         done();
+      });    
+       
       });    
   });
 
