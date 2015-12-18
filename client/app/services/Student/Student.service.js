@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Student', function($http, Auth, Skills, User) {
+  .service('Student', function($http, Auth, Skills) {
     var user;
 
     var getUser = function(cb) {
@@ -16,14 +16,14 @@ angular.module('hrr10MjbeApp')
 
     var save = function() {
       getUser(function(student) {
-        User.update({}, student, function(res) {
+        student.$update({}, function(res) {
           console.log('Saved and got: ');
           console.log(res.studentData);
           user.studentData = res.studentData;
           user.teacherData = res.teacherData;
         }, function(err) {
           console.log(err);
-        });
+        })
       })
     }
 
