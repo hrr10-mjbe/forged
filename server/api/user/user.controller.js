@@ -150,19 +150,26 @@ exports.update = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
+   /*User.findById(req.user._id)
+            .then(function(user) {
+              console.log('orig user: ');
+              console.log(user);
+            });*/
   var userId = req.user._id;
   User.findById(userId, '-salt -hashedPassword')
     .populate({
       path: 'studentData.skills studentData.badges teacherData.classes',
-      populate: {
+      /*populate: {
         path: 'students'
-      }
+      }*/
     })
-    .populate('studentData.teacher', 'name email')
+   // .populate('studentData.teacher', 'name email')
     .exec(function(err, user) {
       if (err) {
         return next(err);
       }
+      console.log('user: ')
+      console.log(user);
       res.json(user);
     })
 };

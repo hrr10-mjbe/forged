@@ -245,8 +245,8 @@ describe('Student info API: Skills', function() {
     });
 
     it('should add and normalize skills', function(done) {
-      userClient.studentData.skills.push(badges[0]);
-      userClient.studentData.skills.push(badges[1]);
+      userClient.studentData.skills.push(skills[0]);
+      userClient.studentData.skills.push(skills[1]);
       request(app)
         .put('/api/users/me/update')
         .set('authorization', 'Bearer ' + token)
@@ -257,23 +257,31 @@ describe('Student info API: Skills', function() {
               _id: user._id
             })
             .then(function(user) {
+              console.log(user.studentData.skills);
               expect(user.studentData.skills[0].toString()).to.equal(skills[0]._id.toString());
               expect(user.studentData.skills[1].toString()).to.equal(skills[1]._id.toString());
-              expect(user.studentData.badges[0]).to.not.have.property('name');
-              expect(user.studentData.badges[1]).to.not.have.property('name');
+              Skill.findByIdAsync(skills[1]._id)
+              .then(function(skill) {
+                console.log('one skill');
+                console.log(skill);
+                expect(user.studentData.skills[0]).to.not.have.property('name');
+              expect(user.studentData.skills[1]).to.not.have.property('name');
               done();
+              });
+              
             });
         });
     });
 
-    it('should correctly denormalize badges', function(done) {
+    it('should correctly denormalize skills', function(done) {
       request(app)
         .get('/api/users/me')
         .set('authorization', 'Bearer ' + token)
         .expect(200)
         .end(function(err, res) {
+          console.log(res.body.studentData);
           expect(res.body.studentData.skills[0].name).to.equal(skills[0].name);
-          expect(res.body.studentData.skills[1].name).to.equal(skillss[1].name);
+          expect(res.body.studentData.skills[1].name).to.equal(skills[1].name);
           done();
         });
     });
