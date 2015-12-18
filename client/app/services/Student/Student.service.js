@@ -56,4 +56,15 @@ angular.module('hrr10MjbeApp')
         })
       })
     }
+
+    this.hasBadge = function(badgeId, cb) {
+      getUser(function(user) {
+        for (var i = 0; i < user.studentData.badges.length; i++) {
+          if (user.studentData.badges[i]._id === badgeId) {
+            cb(true);
+          }
+        }
+        cb(false);
+      });
+    }
   });
