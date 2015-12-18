@@ -20,7 +20,6 @@ angular.module('hrr10MjbeApp')
           console.log('Saved and got: ');
           console.log(res.studentData);
           user.studentData = res.studentData;
-          user.teacherData = res.teacherData;
         }, function(err) {
           console.log(err);
         })

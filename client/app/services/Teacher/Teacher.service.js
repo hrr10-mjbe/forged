@@ -1,22 +1,33 @@
 'use strict';
 
+//TODO refactor to save current class/problem set on refresh
+
 angular.module('hrr10MjbeApp')
   .service('Teacher', function($http, Auth) {
 
     var user, activeClass;
-    Auth.getCurrentUser(null).then(function(res) {
-      user = res;
-    });
-
-    this.save = function() {
-      User.update({}, user, function(res) {
-        user.teacherData = res.teacherData;
-      }, function(err) {
-        console.log('Error updating user');
+    
+    var getUser = function(cb) {
+      if (user) return cb(user);
+      Auth.getCurrentUser(null).then(function(res) {
+        user = res;
+        cb(user);
       });
     }
 
-    this.setClass = function(id) {
+    var save = function() {
+      getUser(function(teacher) {
+        teacher.$update({}, function(res) {
+          console.log('Saved and got: ');
+          console.log(res.studentData);
+          user.teacherData = res.teacherData;
+        }, function(err) {
+          console.log(err);
+        })
+      })
+    }
+
+    this.setActiveClass = function(id) {
       for (var i = 0; i < user.teacherData.classes.length; i++) {
         if (user.teacherData.classes[i]._id === id) {
           return activeClass = user.teacherData.classes[i];
@@ -28,12 +39,15 @@ angular.module('hrr10MjbeApp')
       return activeClass;
     }
 
-    this.addClass = function() {
-
+    this.addClass = function(name) {
+      getUser(function(teacher) {
+        teacher.classes.push({name: name, students: []});
+        save();
+      })
     }
 
-    this.removeClass = function() {
-
+    this.removeClass = function(id) {
+      
     }
 
     this.getStudent = function(id) {
