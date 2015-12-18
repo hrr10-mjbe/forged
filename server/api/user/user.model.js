@@ -9,14 +9,14 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 //Note: changes to the schema that rely on relational data will need to be reflected in the normalize and denormalize functions
 //in the user controller
 
-var PendingStudentSchema = new Schema({
-  student: {type: Schema.Types.ObjectId, ref: 'User'},
-  class: ClassSchema
-});
-
 var ClassSchema = new Schema({
   name: String,
   students: [{type: Schema.Types.ObjectId, ref: 'User'}]
+});
+
+var PendingStudentSchema = new Schema({
+  student: {type: Schema.Types.ObjectId, ref: 'User'},
+  class: ClassSchema
 });
 
 var UserSchema = new Schema({
