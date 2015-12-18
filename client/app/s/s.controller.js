@@ -3,15 +3,18 @@
 (function() {
 
   class SController {
-    constructor(Problems, Student) {
+    constructor(Problems, Skills, Student, $state) {
       this.complete = 'false';
       this.type = Problems.currentProblemSet();
       this.Student = Student;
+      this.$state = $state;
+      if (!Skills.activeSkill()) {
+        this.$state.go('main');
+      }
+
     }
 
     finish() {
-      console.log(this.correct);
-      console.log(this.complete);
       if (this.complete === 'true') {
         this.Student.updateCurrentSkill(1);
         this.Student.awardBadges(function(badges) {
