@@ -76,8 +76,8 @@ Polymer({
     this.$.modal.open();
   },
   selectClass: function(e) {
-    selected = e.model.item;
-    console.log(item);
+    selected = e.model.item._id;
+    console.log(selected);
   },
   parseClasses: function(classes) {
     return JSON.parse(classes);
