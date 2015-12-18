@@ -16,4 +16,9 @@ angular.module('hrr10MjbeApp')
         console.log(result);
       })
     }
+
+    $scope.bindPolymer = function() {
+      console.log('triggered with');
+      console.log($scope.selected);
+    }
   });

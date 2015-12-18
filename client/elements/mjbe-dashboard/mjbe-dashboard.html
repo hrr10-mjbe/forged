@@ -44,7 +44,7 @@
     <paper-dialog id="modal" modal>
       <template is="dom-repeat" items="{{classes}}">
             <paper-card animatedShadow="true" elevation="1">
-             <a href="/classprogress"><paper-button style="color: blue">Class {{item}}</paper-button></a>
+             <paper-button style="color: blue" on-tap="selectClass">Class {{item}}</paper-button></a>
             </paper-card>
         </template>
       <div class="buttons">
@@ -75,6 +75,10 @@
     ],
     openModal: function() {
       this.$.modal.open();
+    },
+    selectClass: function(e) {
+      selected = e.model.item;
+      console.log(item);
     }
     
   });
