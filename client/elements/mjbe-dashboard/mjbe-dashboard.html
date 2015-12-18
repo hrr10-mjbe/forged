@@ -80,7 +80,11 @@ Polymer({
     console.log(selected);
   },
   parseClasses: function(classes) {
-    return JSON.parse(classes);
+    try {
+      return JSON.parse(classes);
+    } catch (e) {
+      return [];
+    }
   }
 });
 </script>
