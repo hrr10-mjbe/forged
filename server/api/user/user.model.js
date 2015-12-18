@@ -11,7 +11,7 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 var ClassSchema = new Schema({
   name: String,
-  students [{type: Schema.Types.ObjectId, ref: 'User'}]
+  students: [{type: Schema.Types.ObjectId, ref: 'User'}]
 })
 
 var UserSchema = new Schema({

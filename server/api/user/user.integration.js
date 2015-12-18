@@ -226,7 +226,7 @@ describe('Class API:', function() {
         });
     });
 
-    it('should add and normalize badges', function(done) {
+    it('should add classes', function(done) {
       userClient.teacherData.classes.push({name: 'test 1', students: []});
       userClient.teacherData.classes.push({name: 'test 2', students: []});
       request(app)
@@ -239,16 +239,14 @@ describe('Class API:', function() {
               _id: user._id
             })
             .then(function(user) {
-              expect(user.studentData.badges[0].toString()).to.equal(badges[0]._id.toString());
-              expect(user.studentData.badges[1].toString()).to.equal(badges[1]._id.toString());
-              expect(user.studentData.badges[0]).to.not.have.property('name');
-              expect(user.studentData.badges[1]).to.not.have.property('name');
+              expect(user.teacherData.classes[0].name).to.equal(userClient.teacherData.classes[0].name);
+              expect(user.teacherData.classes[1].name).to.equal(userClient.teacherData.classes[1].name);
               done();
             });
         });
     });
 
-    it('should correctly denormalize badges', function(done) {
+    /*it('should correctly denormalize badges', function(done) {
       request(app)
         .get('/api/users/me')
         .set('authorization', 'Bearer ' + token)
@@ -258,7 +256,7 @@ describe('Class API:', function() {
           expect(res.body.studentData.badges[1].name).to.equal(badges[1].name);
           done();
         });
-    });
+    });*/
   });
 });
 
