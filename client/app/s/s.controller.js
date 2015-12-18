@@ -3,16 +3,14 @@
 (function() {
 
   class SController {
-    constructor(Problems, Skills, Student, $state, $stateParams) {
+    constructor(Skills, Student, $state, $stateParams) {
       this.complete = 'false';
-      console.log($stateParams.id);
-      this.type = Problems.currentProblemSet();
+      Skills.getSkill($stateParams.id, function(skill) {
+        this.type = skill.problemGenId;
+        console.log(this.type);
+      }.bind(this));      
       this.Student = Student;
       this.$state = $state;
-      if (!Skills.activeSkill()) {
-        this.$state.go('main');
-      }
-
     }
 
     finish() {
@@ -20,7 +18,7 @@
         this.Student.updateCurrentSkill(1);
         this.Student.awardBadges(function(badges) {
           console.log('new badges ' + badges);
-        })
+        });
       }
     }
   }
