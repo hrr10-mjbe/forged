@@ -298,7 +298,7 @@ after(function() {
   return User.removeAsync();
 });
 
-  it('should log in the teacher', function(done) {
+  it('should log in users', function(done) {
     request(app)
       .post('/auth/local')
       .send({
@@ -349,9 +349,15 @@ after(function() {
     request(app)
       .post('/api/users/accept')
       .set('authorization', 'Bearer ' + studentToken)
+      .send(_id: teacher._id)
       .expect(200)
       .end(function(err, res) {
-        
+        User.findByIdAsync(student._id).then(function(user) {
+          expect(user.studentData.teacher.toString()).to.equal(teacher._id.toString());
+          User.findByIdAsync(teacher._id).then(function(user) {
+            expect(user.teacherData.)
+          })
+        }
         done();
       });
   });

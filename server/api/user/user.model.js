@@ -39,12 +39,15 @@ var UserSchema = new Schema({
     skills: {},
     badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
     requests: [{type: Schema.Types.ObjectId, ref: 'User'}],
-    teachers: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    teacher: {type: Schema.Types.ObjectId, ref: 'User'}
   },
   //teacher properties
   teacherData: {
     classes: [ClassSchema],
-    pendingStudents: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    pendingStudents: [{
+      student: {type: Schema.Types.ObjectId, ref: 'User'},
+      class: ClassSchema
+    }]
   }
 });
 
