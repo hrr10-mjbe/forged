@@ -2,7 +2,7 @@
 
 import crypto from 'crypto';
 import Badge from '../badge/badge.model';
-import Class from '/class.model';
+import Class from './class.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
@@ -13,7 +13,7 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var RequestSchema = new Schema({
   student: {type: Schema.Types.ObjectId, ref: 'User'},
   teacher: {type: Schema.Types.ObjectId, ref: 'User'},
-  class: ClassSchema
+  class: Class.schema
 });
 
 var UserSchema = new Schema({
@@ -45,7 +45,7 @@ var UserSchema = new Schema({
   },
   //teacher properties
   teacherData: {
-    classes: [ClassSchema],
+    classes: [Class.schema],
     pendingStudents: [RequestSchema]
   }
 });

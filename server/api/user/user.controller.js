@@ -176,7 +176,7 @@ exports.invite = function(req, res, next) {
         return res.status(404).end();
       }
       var newClass = new Class({name: req.body.class, students: []});
-      user.studentData.requests.push({teacher: req.user._id, student: req.body._id, class: newClass));
+      user.studentData.requests.push({teacher: req.user._id, student: req.body._id, class: newClass});
       user.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(me) {

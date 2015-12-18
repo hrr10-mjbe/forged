@@ -343,11 +343,12 @@ describe('Invitation API:', function() {
           })
           .then(function(user) {
             console.log(user.studentData.requests);
-            expect(user.studentData.requests[0]._id.toString()).to.equal(teacher._id.toString());
+            expect(user.studentData.requests[0].teacher.toString()).to.equal(teacher._id.toString());
+            classId = user.studentData.requests[0].class._id;
             User.findByIdAsync(teacher._id).then(function(user) {
+              console.log(user.teacherData.pendingStudents);
               expect(user.teacherData.pendingStudents[0].student.toString()).to.equal(student._id.toString());
-              expect(user.teacherData.pendingStudents[0].class.name.toString()).to.equal(className);
-              classId = user.teacherData.pendingStudents[0].class._id;
+              expect(user.teacherData.pendingStudents[0].class._id.toString()).to.equal(classId.toString());              
               done();
             })
           });
