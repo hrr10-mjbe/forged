@@ -5,6 +5,8 @@ angular.module('hrr10MjbeApp')
     $scope.message = 'Hello';
     Teacher.getClass($stateParams.id, function(theClass) {
       $scope.name = theClass.name;
+      $scope.data = theClass.students;
+      console.log($scope.data);
       console.log(theClass);
     })
   });

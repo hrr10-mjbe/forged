@@ -89,7 +89,7 @@
         }
       }
     </style>
-    <iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>
+    <!--<iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>-->
       <paper-toolbar>
         <paper-icon-button icon="arrow-back" alt="Back" ui-sref="dashboard"></paper-icon-button>
         <div class="spacer"></div>
@@ -101,13 +101,14 @@
         <template>
           <div on-tap="_collapseExpand">
             <div class$="[[getClassForItem(item, item.expanded)]]" tabindex="0">
-              <img class="avatar" src="[[item.image]]">
+              <!--<img class="avatar" src="[[item.image]]">-->
+              <iron-icon icon="accessibility"></iron-icon>
               <div class="pad">
                 <div class="primary">[[item.name]]</div>
-                <div class="shortText">[[item.shortText]]</div>
-                <div class="longText">[[item.longText]]</div>
+                <div class="shortText">[[item.email]]</div>
+                <div class="longText">We should put some stuff here</div>
               </div>
-              <iron-icon icon$="[[iconForItem(item)]]"></iron-icon>
+              <!--<iron-icon icon$="[[iconForItem(item)]]"></iron-icon>-->
             </div>
           </div>
         </template>
@@ -119,9 +120,14 @@
         is: 'mjbe-collapse-list',
         properties: {
           items: {
-            type: Array
+            type: Array,
+            computed: 'parseData(data)'
           },
           name: {
+            type: String,
+            notify: true
+          },
+          data: {
             type: String,
             notify: true
           }
@@ -138,6 +144,18 @@
         },
         getClassForItem: function(item, expanded) {
           return expanded ? 'item expanded' : 'item';
+        },
+        parseData: function(data) {
+          try {
+            var result = JSON.parse(data);
+            for (var i = 0; i < result.length; i++) {
+              result[i].expanded = false;
+            }
+            return result;
+          }          
+          catch (e) {
+            return [];
+          }
         }
       });
     });
