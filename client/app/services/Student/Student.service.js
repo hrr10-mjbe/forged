@@ -38,7 +38,7 @@ angular.module('hrr10MjbeApp')
         method: 'POST',
         url: '/api/users/accept',
         data: {
-          _id: req._id
+          request: req
         }
       }).then(function successCallback(response) {
         cb(response.status);

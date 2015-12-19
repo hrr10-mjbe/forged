@@ -192,6 +192,7 @@ exports.invite = function(req, res, next) {
           User.findByIdAsync(req.user._id).then(function(me) {
             me.teacherData.pendingStudents.push({
               student: user._id,
+              teacher: req.user._id,
               class: req.body.class
             });
             me.saveAsync().then(function() {
