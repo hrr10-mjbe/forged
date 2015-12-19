@@ -1,9 +1,7 @@
 'use strict';
 
-//TODO refactor to save current class/problem set on refresh
-
 angular.module('hrr10MjbeApp')
-  .service('Teacher', function($http, Auth) {
+  .service('Teacher', function($http, Auth, Util) {
 
     var user, activeClass;
 
@@ -15,25 +13,27 @@ angular.module('hrr10MjbeApp')
       });
     }
 
-    var save = function() {
+    var save = function(cb) {
       getUser(function(teacher) {
         teacher.$update({}, function(res) {
           console.log('Saved and got: ');
           console.log(res.teacherData);
           user.teacherData = res.teacherData;
+          Util.safeCb(cb);
         }, function(err) {
           console.log(err);
+          Util.safeCb(cb);
         })
       })
     }
 
-    this.addClass = function(name) {
+    this.addClass = function(name, cb) {
       getUser(function(teacher) {
         teacher.teacherData.classes.push({
           name: name,
           students: []
         });
-        save();
+        save(cb);
       })
     }
 

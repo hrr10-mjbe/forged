@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .service('Student', function($http, Auth, Skills, Badges) {
+  .service('Student', function($http, Auth, Skills, Badges, Util) {
     var user;
 
     //TODO indexOf _id helper method
