@@ -95,7 +95,7 @@
         <div class="spacer"></div>
         <paper-icon-button icon="search" alt="Search"></paper-icon-button>
         <paper-icon-button icon="image:view-comfy" alt="Grid view"></paper-icon-button>
-        <div class="bottom title">Class Name</div>
+        <div class="bottom title">{{name}}</div>
       </paper-toolbar>
       <iron-list id="list" items="[[items]]" as="item">
         <template>
@@ -120,6 +120,10 @@
         properties: {
           items: {
             type: Array
+          },
+          name: {
+            type: String,
+            notify: true
           }
         },
         _collapseExpand: function(e) {

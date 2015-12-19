@@ -29,16 +29,16 @@ angular.module('hrr10MjbeApp')
 
     this.addClass = function(name) {
       getUser(function(teacher) {
-        teacher.classes.push({name: name, students: []});
+        teacher.teacherData.classes.push({name: name, students: []});
         save();
       })
     }
 
     this.removeClass = function(id) {
       getUser(function(teacher) {
-        for (var i = 0; i < teacher.classes.length; i++) {
-          if (teacher.classes[i]._id === classId) {
-            teacher.classes.splice(i, 1);
+        for (var i = 0; i < teacher.teacherData.classes.length; i++) {
+          if (teacher.teacherData.classes[i]._id === classId) {
+            teacher.teacherData.classes.splice(i, 1);
             return save();
           }
         }
@@ -47,9 +47,9 @@ angular.module('hrr10MjbeApp')
 
     this.getClass = function(classId, cb) {
       getUser(function(teacher) {
-        for (var i = 0; i < teacher.classes.length; i++) {
-          if (teacher.classes[i]._id === classId) {
-            return cb(teacher.classes[i]);
+        for (var i = 0; i < teacher.teacherData.classes.length; i++) {
+          if (teacher.teacherData.classes[i]._id === classId) {
+            return cb(teacher.teacherData.classes[i]);
           }
         }
         cb(null);
