@@ -195,15 +195,27 @@ exports.invite = function(req, res, next) {
           name: user.name,
           email: user.email
         },
-        class: req.body.theClass
+        class: {
+          _id: req.body.theClass
+        }
       });
       user.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(me) {
             me.teacherData.pendingStudents.push({
-              student: user._id,
-              teacher: req.user._id,
-              class: req.body.class
+              teacher: {
+                _id: req.user._id,
+                name: req.user.name,
+                email: req.user.email
+              },
+              student: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+              },
+              class: {
+                _id: req.body.theClass
+              }
             });
             me.saveAsync().then(function() {
               res.status(200).end();

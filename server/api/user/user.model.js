@@ -14,7 +14,10 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 var RequestSchema = new Schema({
   student: {type: Schema.Types.ObjectId, ref: 'User'},
   teacher: {type: Schema.Types.ObjectId, ref: 'User'},
-  class: Class.schema
+  class: {
+    name: String,
+    _id: Schema.Types.ObjectId
+  }
 });
 
 var SkillStatusSchema = new Schema({
