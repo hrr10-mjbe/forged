@@ -20,6 +20,7 @@ angular.module('hrr10MjbeApp')
     })
 
     $scope.submit = function() {
+      console.log($scope.addSelected);
       Teacher.sendInvite($scope.add, $scope.addSelected, function(result) {
         if (result === 200) {
           Teacher.getRequests(function(requests) {
@@ -34,7 +35,19 @@ angular.module('hrr10MjbeApp')
     }
 
     $scope.submitClass = function() {
-      Teacher.addClass($scope.addClass);
+      Teacher.addClass($scope.addClass, function() {
+        console.log('returning');
+        Teacher.getClasses(function(classes) {
+          $scope.listedClasses = classes;
+          $scope.classes = JSON.stringify(classes.map(function(val) {
+            return {
+              id: val._id,
+              name: val.name
+            };
+          }));
+          console.log($scope.listedClasses);
+        });
+      });
     }
 
     $scope.polymerChange = function() {

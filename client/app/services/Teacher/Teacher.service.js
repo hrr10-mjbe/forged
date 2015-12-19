@@ -19,10 +19,11 @@ angular.module('hrr10MjbeApp')
           console.log('Saved and got: ');
           console.log(res.teacherData);
           user.teacherData = res.teacherData;
-          Util.safeCb(cb);
+          console.log(cb);
+          Util.safeCb(cb)();
         }, function(err) {
           console.log(err);
-          Util.safeCb(cb);
+          Util.safeCb(cb)();
         })
       })
     }
@@ -78,6 +79,8 @@ angular.module('hrr10MjbeApp')
     }
 
     this.sendInvite = function(email, classId, cb) {
+      console.log('sending classid');
+      console.log(classId);
       $http({
         method: 'POST',
         url: '/api/users/invite',
@@ -87,6 +90,8 @@ angular.module('hrr10MjbeApp')
         }
       }).then(function successCallback(response) {
         getUser(function(user) {
+          console.log('invite responded with');
+          console.log(response.data.teacherData);
           user.teacherData = response.data.teacherData;
           cb(response.status);
         })
