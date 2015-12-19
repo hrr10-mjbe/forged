@@ -21,6 +21,10 @@
         });
       }
     }
+
+    polymerChange() {
+      this.finish();
+    }
   }
 
   angular.module('hrr10MjbeApp')
