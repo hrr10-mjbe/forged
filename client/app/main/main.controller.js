@@ -8,8 +8,9 @@
       this.$http = $http;
       this.$state = $state;
       this.Skills = Skills;
-      Skills.getSkills(function(skills) {
+      Student.getSkills(function(skills) {
         this.skills = skills;
+        console.log(skills);
         //Student.addOrUpdateSkill(skills[0]._id, 4);
         //Student.awardBadges();
         //console.log(skills);
