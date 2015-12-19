@@ -53,12 +53,12 @@
           <div class="horizontal layout">
             <paper-tabs>
               <paper-tab ui-sref="main">Home</paper-tab>
-              <paper-tab ui-sref="profile">Profile</paper-tab>
+              <paper-tab ui-sref="profile" ng-show="loggedIn">Profile</paper-tab>
               <paper-tab ui-sref="about">About</paper-tab>
-              <paper-tab ui-sref="badges">Badges</paper-tab>
+              <paper-tab ui-sref="badges" ng-show="loggedIn">Badges</paper-tab>
               <paper-tab ui-sref="dashboard" ng-show="isTeacher">Dashboard</paper-tab>
               <paper-tab ui-sref="login" ng-show="!loggedIn">Sign in</paper-tab>
-              <paper-tab ui-sref="login" ng-show="loggedIn">Sign Out</paper-tab>
+              <paper-tab ui-sref="logout" ng-show="loggedIn">Sign Out</paper-tab>
             </paper-tabs>
           </div>
         </paper-toolbar>
