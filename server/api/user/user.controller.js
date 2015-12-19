@@ -177,7 +177,7 @@ exports.me = function(req, res, next) {
     .populate({
       path: 'teacherData.pendingStudents',
       populate: {
-        path: 'student teacher',
+        path: 'student teacher class',
         select: 'name email'
       }
     })
