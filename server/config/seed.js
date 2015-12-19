@@ -55,6 +55,18 @@ User.find({}).removeAsync()
       name: 'Admin',
       email: 'admin@example.com',
       password: 'admin'
+    }, {
+      provider: 'local',
+      name: 'A Teacher',
+      email: 'teacher@example.com',
+      password: 'test',
+      teacherData: {
+        classes: [{
+        name: 'Math'
+      }, {
+        name: 'Algebra'
+      }]
+    }      
     })
     .then(function() {
       console.log('finished populating users');

@@ -1,13 +1,30 @@
 'use strict';
 
 import crypto from 'crypto';
-import Badge from '../badge/badge.model'
+import Badge from '../badge/badge.model';
+import Class from './class.model';
+import Skill from '../skill/skill.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 //Note: changes to the schema that rely on relational data will need to be reflected in the normalize and denormalize functions
 //in the user controller
+
+var RequestSchema = new Schema({
+  student: {type: Schema.Types.ObjectId, ref: 'User'},
+  teacher: {type: Schema.Types.ObjectId, ref: 'User'},
+  class: {
+    name: String,
+    _id: Schema.Types.ObjectId
+  }
+});
+
+var SkillStatusSchema = new Schema({
+  skill: {type: Schema.Types.ObjectId, ref: 'Skill'},
+  status: Number
+})
+
 var UserSchema = new Schema({
   name: String,
   email: {
@@ -30,12 +47,15 @@ var UserSchema = new Schema({
   //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
   studentData: {
     points: Number,
-    skills: {},
-    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}]
+    skills: [SkillStatusSchema],
+    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
+    requests: [RequestSchema],
+    teacher: {type: Schema.Types.ObjectId, ref: 'User'}
   },
   //teacher properties
   teacherData: {
-    students: [{type: Schema.Types.ObjectId, ref: 'User'}]
+    classes: [Class.schema],
+    pendingStudents: [RequestSchema]
   }
 });
 
@@ -142,6 +162,7 @@ UserSchema
     }
   });
 
+//TODO: probably a lot of the controller logic should go here?
 /**
  * Methods
  */

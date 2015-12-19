@@ -2,6 +2,7 @@
 //based on binding implementation by Josh Crowther
 angular.module('bindPolymer', [])
   .directive('bindPolymer', ['$parse', function($parse) {
+    var handler, context;
     return {
       restrict: 'A',
       scope: false,
@@ -17,13 +18,15 @@ angular.module('bindPolymer', [])
           }
         }
         return function bindPolymerLink(scope, element, attrs) {
+          handler = attrs.eventNamespace ? scope[attrs.eventNamespace].polymerChange : scope.polymerChange;
+          context = attrs.eventNamespace ? scope[attrs.eventNamespace] : scope;
           Object.keys(attrMap).forEach(function(key) {
             element.on(key + '-changed', function(event) {
               scope.$evalAsync(function() {
                 if (attrMap[key](scope) === event.detail.value) return;
                 attrMap[key].assign(scope, event.detail.value);
-                if (attrs.eventNamespace && typeof scope[attrs.eventNamespace].polymerChange === 'function') {
-                  scope[attrs.eventNamespace].polymerChange();
+                if (typeof handler === 'function') {
+                  handler.call(context);
                 }
               });
             });

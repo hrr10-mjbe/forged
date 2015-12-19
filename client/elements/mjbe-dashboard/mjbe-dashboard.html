@@ -1,75 +1,90 @@
 <dom-module id="mjbe-dashboard">
   <template>
     <style>
-      .header {
-        height: 20%;
-        background: #60C4DE;
-        text-align: center;
-      }
-      .body {
-        text-align: center;
-        padding: 8px;
-      }
-      .square {
-        display: inline-block;
-        width: 150px;
-        height: 150px;
-        margin: 20px;
-        background: #FFA82F;
-      }
-
-      .square:hover {
-        cursor: pointer;
-        background: #60C4DE;
-      }
-
-      paper-card {
-        margin: 20px;
-      }
-
-      paper-card:hover {
-        background: #7DA6FF;
-      }
-    </style>
+    .header {
+      height: 20%;
+      background: #60C4DE;
+      text-align: center;
+    }
     
+    .body {
+      text-align: center;
+      padding: 8px;
+    }
+    
+    .square {
+      display: inline-block;
+      width: 150px;
+      height: 150px;
+      margin: 20px;
+      background: #FFA82F;
+    }
+    
+    .square:hover {
+      cursor: pointer;
+      background: #60C4DE;
+    }
+    
+    paper-card {
+      margin: 20px;
+    }
+    
+    paper-card:hover {
+      background: #7DA6FF;
+    }
+    </style>
     <div id="header" class="header">Welcome back, Mr. Roboto</div>
-
-    <div class="body horizontal center-justified layout" >
+    <div class="body horizontal center-justified layout">
       <paper-card class="square" on-tap="openModal" entry-animation="scale-up-animation" exit-animation="fade-out-animation">Class Progress</paper-card>
       <paper-card class="square" ui-sref="modifications">Modifications</paper-card>
       <paper-card class="square">Gradebook</paper-card>
       <paper-card class="square">My Content</paper-card>
     </div>
-
     <paper-dialog id="modal" modal>
       <template is="dom-repeat" items="{{classes}}">
-            <paper-card animatedShadow="true" elevation="1">
-             <a href="/classprogress"><paper-button style="color: blue">Class {{item}}</paper-button></a>
-            </paper-card>
-        </template>
+        <paper-card animatedShadow="true" elevation="1">
+          <paper-button style="color: blue" on-tap="selectClass">{{item.name}}</paper-button>
+          </a>
+        </paper-card>
+      </template>
       <div class="buttons">
         <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
       </div>
     </paper-dialog>
-
   </template>
-
 </dom-module>
-
 <script>
-  var classlist = [1, 2, 3, 4];
-
-  Polymer({
-    is: 'mjbe-dashboard',
-    ready: function() {
-      this.classes = classlist;
+Polymer({
+  is: 'mjbe-dashboard',
+  properties: {
+    selected: {
+      type: String,
+      notify: true
     },
-    behaviors: [
-      Polymer.NeonSharedElementAnimatableBehavior
-    ],
-    openModal: function() {
-      this.$.modal.open();
+    loadclasses: {
+      type: String,
+      notify: true
+    },
+    classes: {
+      computed: 'parseClasses(loadclasses)'
     }
-    
-  });
+  },
+  behaviors: [
+    Polymer.NeonSharedElementAnimatableBehavior
+  ],
+  openModal: function() {
+    this.$.modal.open();
+  },
+  selectClass: function(e) {
+    this.selected = e.model.item.id.toString();
+    console.log(this.selected);
+  },
+  parseClasses: function(classes) {
+    try {
+      return JSON.parse(classes);
+    } catch (e) {
+      return [];
+    }
+  }
+});
 </script>

@@ -4,12 +4,16 @@
 
   class MainController {
 
-    constructor($http, $state, Skills) {
+    constructor($http, $state, Skills, Student) {
       this.$http = $http;
       this.$state = $state;
       this.Skills = Skills;
-      Skills.getUserSkills(function(skills) {
+      Student.getSkills(function(skills) {
         this.skills = skills;
+        console.log(skills);
+        //Student.addOrUpdateSkill(skills[0]._id, 4);
+        //Student.awardBadges();
+        //console.log(skills);
       }.bind(this));
       this.awesomeThings = [];
 
@@ -32,10 +36,7 @@
     }
 
     go() {
-      console.log('going');
-      console.log(this.inputtest);
-      this.Skills.setActiveSkill(this.userselection);
-      this.$state.go('s');
+      this.$state.go('s', {id: this.userselection});
     }
 
     polymerChange() {
@@ -43,7 +44,6 @@
         this.go();
       }
     }
-
   }
 
   angular.module('hrr10MjbeApp')
