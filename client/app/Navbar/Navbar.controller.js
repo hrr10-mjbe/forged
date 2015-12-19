@@ -7,9 +7,16 @@ angular.module('hrr10MjbeApp')
       $scope.loggedIn = is;
     })
 
+    Auth.isTeacher(function(is) {
+      $scope.isTeacher = is;
+    })
+
     $rootScope.$on('$stateChangeStart', function() {
       Auth.isLoggedIn(function(is) {
         $scope.loggedIn = is;
       })
+      Auth.isTeacher(function(is) {
+      $scope.isTeacher = is;
+    })
     })
   });
