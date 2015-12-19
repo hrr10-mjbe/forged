@@ -448,7 +448,7 @@ describe('Invitation API:', function() {
       .set('authorization', 'Bearer ' + teacherToken)
       .send({
         email: student.email,
-        class: newClass
+        theClass: newClass._id
       })
       .expect(200)
       .end(function(err, res) {
