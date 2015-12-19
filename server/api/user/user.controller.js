@@ -182,10 +182,20 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
+      console.log('got class');
+      console.log(req.body.theClass);
       user.studentData.requests.push({
-        teacher: req.user._id,
-        student: req.body._id,
-        class: req.body.class
+        teacher: {
+          _id: req.user._id,
+          name: req.user.name,
+          email: req.user.email
+        },
+        student: {
+          _id: user._id,
+          name: user.name,
+          email: user.email
+        },
+        class: req.body.theClass
       });
       user.saveAsync()
         .then(function() {
@@ -204,15 +214,18 @@ exports.invite = function(req, res, next) {
 }
 
 exports.accept = function(req, res, next) {
-  User.findOneAsync({
-      _id: req.body.request.teacher
-    })
+  console.log('received')
+  console.log(req.body);
+  User.findByIdAsync(req.body.request.teacher)
     .then(function(teacher) {
       if (!teacher) {
+        console.log('couldnt find teacher');
         return res.status(404).end();
       }
       //add student to teacher's class
+      console.log(teacher.teacherData.classes);
       if (!teacher.teacherData.classes.id(req.body.request.class._id)) {
+        console.log('didnt find class');
         return res.status(404).end();
       }
       teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);
@@ -221,7 +234,7 @@ exports.accept = function(req, res, next) {
       teacher.saveAsync()
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(student) {
-            student.studentData.teacher = req.body.request.teacher;
+            student.studentData.teacher = req.body.request.teacher._id;
             student.studentData.requests.pull(req.body.request._id);
             student.saveAsync()
               .then(function() {

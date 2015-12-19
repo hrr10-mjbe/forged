@@ -6,6 +6,7 @@ angular.module('hrr10MjbeApp')
 
     Student.getRequests(function(requests) {
       $scope.requests = requests;
+      console.log(requests);
     });
 
     Student.getTeacher(function(teacher) {

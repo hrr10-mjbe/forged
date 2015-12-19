@@ -80,7 +80,7 @@ angular.module('hrr10MjbeApp')
         url: '/api/users/invite',
         data: {
           email: email,
-          class: classId
+          theClass: classId
         }
       }).then(function successCallback(response) {
         cb(response.status);

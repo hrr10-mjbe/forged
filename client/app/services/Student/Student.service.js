@@ -34,6 +34,8 @@ angular.module('hrr10MjbeApp')
     }
 
     this.acceptRequest = function(req, cb) {
+      console.log('accepting');
+      console.log(req);
       $http({
         method: 'POST',
         url: '/api/users/accept',
