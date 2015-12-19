@@ -32,13 +32,12 @@
       --paper-progress-container-color: #6EB2E9;
       --paper-progress-height: 10px;
       --paper-progress-width: 400px;
-
     }
     </style>
     <paper-material elevation="1" horizontal layout>
       <div class="container">What is <span><strong>{{question.nums.0}} {{question.operator}} {{question.nums.1}}</strong></span> ?</div>
       <paper-input placeholder="Type your answer here" value="{{studentAnswer::input}}" on-keypress="_keyPressed">
-        <<paper-icon-button suffix icon="send" on-tap="evaluate"></paper-icon-button>
+        <paper-icon-button suffix icon="send" on-tap="evaluate"></paper-icon-button>
       </paper-input>
 
       <p>{{message}}</p>
