@@ -1,5 +1,6 @@
 'use strict';
 import User from './user.model';
+import Class from './class.model';
 import Badge from '../badge/badge.model';
 import Mongoose from 'mongoose';
 import passport from 'passport';
@@ -115,6 +116,7 @@ exports.changePassword = function(req, res, next) {
 };
 
 //must be kept up to date with schema
+//TODO it looks like some normalization happens automatically?
 var normalizeStudent = function(studentData) {
   studentData.badges = studentData.badges.map(function(badge) {
     return Mongoose.Types.ObjectId(badge._id);
@@ -123,9 +125,11 @@ var normalizeStudent = function(studentData) {
 }
 
 var normalizeTeacher = function(teacherData) {
-  teacherData.students = teacherData.students.map(function(student) {
-    return student._id;
-  })
+  for (var i = 0; i < teacherData.classes.length; i++) {
+    teacherData.classes[i].students = teacherData.classes[i].students.map(function(student) {
+      return student._id;
+    });
+  }
   return teacherData;
 }
 
@@ -137,7 +141,8 @@ exports.update = function(req, res, next) {
       user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
-          res.status(204).end();
+          //res.status(204).json(user);
+          exports.me(req, res, next);
         })
         .catch(validationError(res));
     });
@@ -147,23 +152,128 @@ exports.update = function(req, res, next) {
  * Get my info
  */
 exports.me = function(req, res, next) {
-  //TODO promises
   var userId = req.user._id;
-  User.findById(userId, '-salt -hashedPassword', function(err, user) {
-    if (err) {
-      return next(err);
-    }
-    
-    User.populate(user, {
-      path: 'studentData.badges'
-    }, function(err, user) {
+  User.findById(userId, '-salt -hashedPassword')
+    .populate('studentData.badges')
+    .populate({
+      path: 'teacherData.classes',
+      populate: {
+        path: 'students'
+      }
+    })
+    .populate({
+      path: 'studentData.skills',
+      populate: {
+        path: 'skill'
+      }
+    })
+    .populate('studentData.teacher', 'name email')
+    .populate({
+      path: 'studentData.requests',
+      populate: {
+        path: 'student teacher',
+        select: 'name email'
+      }
+    })
+    .populate({
+      path: 'teacherData.pendingStudents',
+      populate: {
+        path: 'student teacher class',
+        select: 'name email'
+      }
+    })
+    .exec(function(err, user) {
       if (err) {
         return next(err);
       }
       res.json(user);
     })
-  });
 };
+
+exports.invite = function(req, res, next) {
+  User.findOneAsync({
+      email: req.body.email.toLowerCase()
+    })
+    .then(function(user) {
+      if (!user) {
+        return res.status(404).end();
+      }
+      console.log('got class');
+      console.log(req.body.theClass);
+      user.studentData.requests.push({
+        teacher: {
+          _id: req.user._id,
+          name: req.user.name,
+          email: req.user.email
+        },
+        student: {
+          _id: user._id,
+          name: user.name,
+          email: user.email
+        },
+        class: {
+          _id: req.body.theClass
+        }
+      });
+      user.saveAsync()
+        .then(function() {
+          User.findByIdAsync(req.user._id).then(function(me) {
+            me.teacherData.pendingStudents.push({
+              teacher: {
+                _id: req.user._id,
+                name: req.user.name,
+                email: req.user.email
+              },
+              student: {
+                _id: user._id,
+                name: user.name,
+                email: user.email
+              },
+              class: {
+                _id: req.body.theClass
+              }
+            });
+            console.log('saving');
+            console.log(me.teacherData);
+            me.saveAsync().then(function() {
+              res.json(me);
+            })
+          })
+        })
+    })
+}
+
+exports.accept = function(req, res, next) {
+  console.log('received')
+  console.log(req.body);
+  User.findByIdAsync(req.body.request.teacher)
+    .then(function(teacher) {
+      if (!teacher) {
+        console.log('couldnt find teacher');
+        return res.status(404).end();
+      }
+      //add student to teacher's class
+      console.log(teacher.teacherData.classes);
+      if (!teacher.teacherData.classes.id(req.body.request.class._id)) {
+        console.log('didnt find class');
+        return res.status(404).end();
+      }
+      teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);
+      //remove from pending students
+      teacher.teacherData.pendingStudents.pull(req.request);
+      teacher.saveAsync()
+        .then(function() {
+          User.findByIdAsync(req.user._id).then(function(student) {
+            student.studentData.teacher = req.body.request.teacher._id;
+            student.studentData.requests.pull(req.body.request._id);
+            student.saveAsync()
+              .then(function() {
+                res.json(student);
+              })
+          })
+        })
+    })
+}
 
 /**
  * Authentication callback
