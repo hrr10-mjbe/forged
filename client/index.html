@@ -50,6 +50,7 @@
 
         <paper-toolbar ng-controller="NavbarCtrl">
           <div class="title top">Thesis Academy</div>
+          <div class="top" ng-show="loggedIn">Hello {{name}}</div>
           <div class="horizontal layout">
             <paper-tabs>
               <paper-tab ui-sref="main">Home</paper-tab>

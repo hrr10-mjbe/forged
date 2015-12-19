@@ -5,6 +5,11 @@ angular.module('hrr10MjbeApp')
     $scope.message = 'Hello';
     Auth.isLoggedIn(function(is) {
       $scope.loggedIn = is;
+     Auth.getCurrentUser();
+    })
+
+    Auth.getCurrentUser(function(user) {
+      $scope.name = user.name;
     })
 
     Auth.isTeacher(function(is) {
@@ -18,5 +23,9 @@ angular.module('hrr10MjbeApp')
       Auth.isTeacher(function(is) {
       $scope.isTeacher = is;
     })
+       Auth.getCurrentUser(function(user) {
+      $scope.name = user.name;
+    })
+
     })
   });
