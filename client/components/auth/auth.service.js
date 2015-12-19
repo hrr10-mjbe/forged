@@ -27,17 +27,10 @@
           })
           .then(function(res) {
             $cookies.put('token', res.data.token);
-            currentUser = User.get(function(user) {
-              console.log('in login');
-              console.log(user.studentData);
-              safeCb(callback)(null, user);
-              return user;
-            });
-            //return currentUser.$promise;
+            currentUser = User.get();
+            return currentUser.$promise;
           })
-          /*.then(function(user) {
-            console.log('in login');
-            console.log(user);
+          .then(function(user) {
             safeCb(callback)(null, user);
             return user;
           })
@@ -45,7 +38,7 @@
             Auth.logout();
             safeCb(callback)(err.data);
             return $q.reject(err.data);
-          });*/
+          });
       },
 
       /**
@@ -105,8 +98,6 @@
        * @return {Object|Promise}
        */
       getCurrentUser: function(callback) {
-        console.log('getting');
-        console.log(currentUser.$promise);
         if (arguments.length === 0) {
           return currentUser;
         }
@@ -141,28 +132,6 @@
             safeCb(callback)(is);
             return is;
           });
-      },
-
-      updateUser: function() {
-        User.update({}, currentUser, function(res) {
-          currentUser.studentData = res.studentData;
-          currentUser.teacherData = res.teacherData;
-        }, function(err) {}).$promise;
-      },
-
-      //ALL manipulation of user model must be done through these functions, to ensure that the model stays consistent
-      //with the server
-      //TODO probably put these in a new service 
-      updateSkill: function(skillId, status) {
-        currentUser.studentData = currentUser.studentData || {}; //TODO don't do this
-        currentUser.studentData.skills = currentUser.studentData.skills || {};
-        currentUser.studentData.skills[skillId] = status;
-        Auth.updateUser();
-      },
-
-      awardBadges: function(badges) {
-        currentUser.studentData.badges = currentUser.studentData.badges.concat(badges);
-        Auth.updateUser();
       },
 
       //more mutator functions go here

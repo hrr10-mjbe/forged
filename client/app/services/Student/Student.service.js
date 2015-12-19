@@ -7,28 +7,18 @@ angular.module('hrr10MjbeApp')
     //TODO indexOf _id helper method
 
     var getUser = function(cb) {
-      console.log('user on start');
-      console.log(user);
       if (user) return cb(user);
       Auth.isLoggedIn(function(is) {
         if (is) {
-          Auth.getCurrentUser(null).then(function(res) {
-              console.log('response');
-              console.log(user);
-              console.log('response was')
-              console.log(res);
+          Auth.getCurrentUser(function(res) {           
               user = res;
               cb(user);
             })
-            .catch(function(err) {
-              console.log(err);
-            });
-        }
+          }
         else {
           cb(null);
         }
       })
-
     }
 
     var save = function() {
@@ -59,9 +49,9 @@ angular.module('hrr10MjbeApp')
 
     this.getSkills = function(cb) {
       getUser(function(user) {
+        console.log('skills');
         console.log(user);
-        console.log(user.studentData);
-        cb(user.studentData.skills);
+        cb(user === null ? [] : user.studentData.skills);
       })
     }
 
@@ -85,7 +75,6 @@ angular.module('hrr10MjbeApp')
 
     this.awardBadges = function(cb) {
       getUser(function(user) {
-        console.log(user);
         Badges.awardBadges(user.studentData, function(newBadges) {
           [].push.apply(user.studentData.badges, newBadges);
           save();
