@@ -58,6 +58,7 @@ User.find({}).removeAsync()
     }, {
       provider: 'local',
       name: 'A Teacher',
+      type: 'teacher',
       email: 'teacher@example.com',
       password: 'test',
       teacherData: {

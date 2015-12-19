@@ -48,16 +48,18 @@
       <paper-header-panel class="flex" main mode="waterfall">
         <!-- Main Toolbar -->
 
-        <paper-toolbar>
+        <paper-toolbar ng-controller="NavbarCtrl">
           <div class="title top">Thesis Academy</div>
+          <div class="top" ng-show="loggedIn">Hello {{name}}</div>
           <div class="horizontal layout">
             <paper-tabs>
               <paper-tab ui-sref="main">Home</paper-tab>
-              <paper-tab ui-sref="profile">Profile</paper-tab>
+              <paper-tab ui-sref="profile" ng-show="loggedIn">Profile</paper-tab>
               <paper-tab ui-sref="about">About</paper-tab>
-              <paper-tab ui-sref="badges">Badges</paper-tab>
-              <paper-tab ui-sref="dashboard">Dashboard</paper-tab>
-              <paper-tab ui-sref="login">Sign Out</paper-tab>
+              <paper-tab ui-sref="badges" ng-show="loggedIn">Badges</paper-tab>
+              <paper-tab ui-sref="dashboard" ng-show="isTeacher">Dashboard</paper-tab>
+              <paper-tab ui-sref="login" ng-show="!loggedIn">Sign in</paper-tab>
+              <paper-tab ui-sref="logout" ng-show="loggedIn">Sign Out</paper-tab>
             </paper-tabs>
           </div>
         </paper-toolbar>
@@ -105,11 +107,12 @@
       <script src="app/admin/admin.module.js"></script>
       <script src="components/auth/auth.module.js"></script>
       <script src="components/util/util.module.js"></script>
-      <script src="app/profile/profile.js"></script>
+      <script src="app/profile/profile.controller.js"></script>
+      <script src="app/account/login/login.controller.js"></script>
       <script src="app/account/settings/settings.controller.js"></script>
       <script src="app/account/signup/signup.controller.js"></script>
       <script src="app/admin/admin.controller.js"></script>
-      <script src="app/about/about.controller.js"></script>
+      <script src="app/Navbar/Navbar.controller.js"></script>
       <script src="app/admin/admin.router.js"></script>
       <script src="app/app.constant.js"></script>
       <script src="app/badges/badges.controller.js"></script>
@@ -123,17 +126,16 @@
       <script src="app/main/main.js"></script>
       <script src="app/modifications/modifications.controller.js"></script>
       <script src="app/modifications/modifications.js"></script>
-      <script src="app/profile/profile.controller.js"></script>
-      <script src="app/about/about.js"></script>
+      <script src="app/about/about.controller.js"></script>
+      <script src="app/profile/profile.js"></script>
       <script src="app/s/s.controller.js"></script>
       <script src="app/s/s.js"></script>
       <script src="app/services/Badges/Badges.service.js"></script>
       <script src="app/services/Badges/badgeDef.js"></script>
       <script src="app/services/Student/Student.service.js"></script>
       <script src="app/services/Teacher/Teacher.service.js"></script>
-      <script src="app/services/problems/problems.service.js"></script>
       <script src="app/services/skills/skills.service.js"></script>
-      <script src="app/account/account.js"></script>
+      <script src="app/about/about.js"></script>
       <script src="components/auth/auth.service.js"></script>
       <script src="components/auth/interceptor.service.js"></script>
       <script src="components/auth/router.decorator.js"></script>
@@ -144,7 +146,7 @@
       <script src="components/navbar/navbar.directive.js"></script>
       <script src="components/oauth-buttons/oauth-buttons.controller.js"></script>
       <script src="components/oauth-buttons/oauth-buttons.directive.js"></script>
-      <script src="app/account/login/login.controller.js"></script>
+      <script src="app/account/account.js"></script>
       <script src="components/util/util.service.js"></script>
       <!-- endinjector -->
     <!-- endbuild -->
