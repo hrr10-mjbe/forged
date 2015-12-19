@@ -1,6 +1,6 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('NavbarCtrlCtrl', function ($scope) {
+  .controller('NavbarCtrl', function ($scope) {
     $scope.message = 'Hello';
   });

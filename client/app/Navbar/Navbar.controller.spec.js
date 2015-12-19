@@ -1,16 +1,16 @@
 'use strict';
 
-describe('Controller: NavbarCtrlCtrl', function () {
+describe('Controller: NavbarCtrl', function () {
 
   // load the controller's module
   beforeEach(module('hrr10MjbeApp'));
 
-  var NavbarCtrlCtrl, scope;
+  var NavbarCtrl, scope;
 
   // Initialize the controller and a mock scope
   beforeEach(inject(function ($controller, $rootScope) {
     scope = $rootScope.$new();
-    NavbarCtrlCtrl = $controller('NavbarCtrlCtrl', {
+    NavbarCtrl = $controller('NavbarCtrl', {
       $scope: scope
     });
   }));
