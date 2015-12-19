@@ -40,16 +40,16 @@ class LoginController {
     this.Auth.login({
       email: this.user.email,
       password: this.user.password
-    })
-    .then(() => {
+    }, function() {
       this.$state.go('main');
-    })
+    }.bind(this))
+    /*
     .catch(err => {
       this.user.email = '';
       this.user.password = '';
       this.submitted = 'false';
       console.log(err.message);
-    });
+    });*/
   }
 }
 

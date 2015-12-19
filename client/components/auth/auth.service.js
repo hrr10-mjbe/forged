@@ -27,10 +27,16 @@
           })
           .then(function(res) {
             $cookies.put('token', res.data.token);
-            currentUser = User.get();
-            return currentUser.$promise;
+            currentUser = User.get(function(user) {
+              console.log('in login');
+              console.log(user.studentData);
+              safeCb(callback)(null, user);
+              return user;
+            });
+            //return currentUser.$promise;
           })
-          .then(function(user) {
+          /*.then(function(user) {
+            console.log('in login');
             console.log(user);
             safeCb(callback)(null, user);
             return user;
@@ -39,7 +45,7 @@
             Auth.logout();
             safeCb(callback)(err.data);
             return $q.reject(err.data);
-          });
+          });*/
       },
 
       /**
@@ -99,6 +105,8 @@
        * @return {Object|Promise}
        */
       getCurrentUser: function(callback) {
+        console.log('getting');
+        console.log(currentUser.$promise);
         if (arguments.length === 0) {
           return currentUser;
         }
