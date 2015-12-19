@@ -19,7 +19,7 @@ angular.module('hrr10MjbeApp')
       getUser(function(teacher) {
         teacher.$update({}, function(res) {
           console.log('Saved and got: ');
-          console.log(res.studentData);
+          console.log(res.teacherData);
           user.teacherData = res.teacherData;
         }, function(err) {
           console.log(err);

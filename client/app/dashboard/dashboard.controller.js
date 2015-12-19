@@ -18,6 +18,10 @@ angular.module('hrr10MjbeApp')
       })
     }
 
+    $scope.submitClass = function() {
+      Teacher.addClass($scope.addClass);
+    }
+
     $scope.polymerChange = function() {
       console.log('triggered with');
       console.log($scope.selectedClass);
