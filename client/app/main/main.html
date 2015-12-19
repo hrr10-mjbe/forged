@@ -21,8 +21,34 @@
 
 <footer></footer>
  -->
-<pie-status userselection="{{main.userselection}}" event-namespace="main" bind-polymer></pie-status>
+
+ <paper-header-panel class="flex" main mode="waterfall">
+        <!-- Main Toolbar -->
+
+        <paper-toolbar>
+          <div class="title top">Thesis Academy</div>
+          <div class="horizontal layout">
+            <paper-tabs>
+              <paper-tab ui-sref="main">Home</paper-tab>
+              <paper-tab ui-sref="profile">Profile</paper-tab>
+              <paper-tab ui-sref="about">About</paper-tab>
+              <paper-tab ui-sref="badges">Badges</paper-tab>
+              <paper-tab ui-sref="dashboard">Dashboard</paper-tab>
+              <paper-tab ui-sref="login">Sign Out</paper-tab>
+            </paper-tabs>
+          </div>
+        </paper-toolbar>
+        <!--<div class="fit">
+        <paper-material flex elevation = "1" class="fit" style="background-color: #000;"></paper-material>
+        </div>-->
+       <div class="content fit">
+        <pie-status userselection="{{main.userselection}}" event-namespace="main" bind-polymer></pie-status>
 <div class="removethis">Skills complete:</div>
 <div ng-repeat="skill in main.skills">{{skill.skill.name}}</div>
 <link rel="import" href="elements/main-app/main-app.html">
+    
+    </div>
+
+     </paper-header-panel>
+
 <!--<main-app></main-app>-->

@@ -1,6 +1,32 @@
 <link rel="import" href="elements/mjbe-drawing-canvas/mjbe-drawing-canvas.html">
 <link rel="import" href="elements/problems-addition/problems-addition.html">
 
+<paper-header-panel class="flex" main mode="waterfall">
+        <!-- Main Toolbar -->
+
+        <paper-toolbar>
+          <div class="title top">Thesis Academy</div>
+          <div class="horizontal layout">
+            <paper-tabs>
+              <paper-tab ui-sref="main">Home</paper-tab>
+              <paper-tab ui-sref="profile">Profile</paper-tab>
+              <paper-tab ui-sref="about">About</paper-tab>
+              <paper-tab ui-sref="badges">Badges</paper-tab>
+              <paper-tab ui-sref="dashboard">Dashboard</paper-tab>
+              <paper-tab ui-sref="login">Sign Out</paper-tab>
+            </paper-tabs>
+          </div>
+        </paper-toolbar>
+        <!--<div class="fit">
+        <paper-material flex elevation = "1" class="fit" style="background-color: #000;"></paper-material>
+        </div>-->
+       <div class="content fit">
+        </paper-header-panel>
 <mjbe-drawing-canvas class="fit"></mjbe-drawing-canvas>
 <problems-addition problemtype="{{s.type}}" complete="{{s.complete}}" bind-polymer></problems-addition>
 <input type="submit" ng-click="s.finish()" style="position:absolute">
+    
+    </div>
+    </paper-header-panel>
+
+   
