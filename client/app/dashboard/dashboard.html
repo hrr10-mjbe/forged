@@ -1,10 +1,13 @@
 <mjbe-dashboard loadclasses="{{classes}}" selected="{{selectedClass}}" bind-polymer></mjbe-dashboard>
 <div>Invite students:</div>
 <input type="text" ng-model="add">
+<select ng-model="addSelected">
+<option ng-repeat="theClass in listedClasses" value="{{theClass._id}}">{{theClass.name}}</option>
+</select>
 <input type="submit" ng-click="submit()">
 
 <div>Pending invitations:</div>
-<div>{{invitations[0]}}</div>
+<div ng-repeat="invite in invitations">{{invite.student}}</div>
 
 <div>Students:</div>
 <div>{{students[0]}}</div>

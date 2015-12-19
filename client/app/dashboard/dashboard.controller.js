@@ -6,14 +6,19 @@ angular.module('hrr10MjbeApp')
     $scope.selectedClass = "";
 
     Teacher.getClasses(function(classes) {
+      $scope.listedClasses = classes;
       $scope.classes = JSON.stringify(classes.map(function(val) {
         return {id: val._id, name: val.name};
       }));
+    });
+
+    Teacher.getRequests(function(requests) {
+      $scope.invitations = requests;
     })
 
     $scope.submit = function() {
-      console.log($scope.add);
-      Teacher.sendInvite($scope.add, function(result) {
+      console.log($scope.addSelected);
+      Teacher.sendInvite($scope.add, $scope.addSelected, function(result) {
         console.log(result);
       })
     }

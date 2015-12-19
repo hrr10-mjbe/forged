@@ -1,13 +1,15 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('ProfileCtrl', function ($scope, Auth, Student) {
+  .controller('ProfileCtrl', function ($scope, Student) {
     $scope.message = 'Hello';
 
-    Auth.getCurrentUser(function(user) {
-      $scope.requests = user.studentData.requests;
-      $scope.teachers = user.studentData.teachers;
-      console.log(user);
+    Student.getRequests(function(requests) {
+      $scope.requests = requests;
+    });
+
+    Student.getTeacher(function(teacher) {
+      $scope.teacher = teacher;
     })
 
     $scope.accept = function() {

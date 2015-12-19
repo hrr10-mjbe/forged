@@ -88,4 +88,10 @@ angular.module('hrr10MjbeApp')
         cb(response.status);
       });
     }
+
+    this.getRequests = function(cb) {
+      getUser(function(user) {
+        cb(user.teacherData.pendingStudents);
+      })
+    }
   });
