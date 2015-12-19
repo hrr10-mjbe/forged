@@ -32,19 +32,47 @@
       --paper-progress-container-color: #6EB2E9;
       --paper-progress-height: 10px;
       --paper-progress-width: 400px;
+    }
 
+    paper-dialog {
+      background-color: #9BD16D;
+      color: #881FD1;
+      font-size: 20px;
+      width: 600px;
+      height: 400px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .backbutton {
+      text-align: left;
+    }
+
+    .practice {
+      postiion: absolute;
+      text-align: right;
+      right: 0;
     }
     </style>
     <paper-material elevation="1" horizontal layout>
       <div class="container">What is <span><strong>{{question.nums.0}} {{question.operator}} {{question.nums.1}}</strong></span> ?</div>
       <paper-input placeholder="Type your answer here" value="{{studentAnswer::input}}" on-keypress="_keyPressed">
-        <<paper-icon-button suffix icon="send" on-tap="evaluate"></paper-icon-button>
+        <paper-icon-button suffix icon="send" on-tap="evaluate"></paper-icon-button>
       </paper-input>
 
       <p>{{message}}</p>
-      <p>{{correctcount}} correct</p>
-    <paper-progress max="5" value="{{correctcount}}"></paper-progress>
+      <p>[[correctcount]] correct</p>
+    <paper-progress max="5" value="[[correctcount]]"></paper-progress>
     </paper-material>
+
+    <paper-dialog id="dialog">
+      Congratulations! You passed this module.
+      <paper-button class="backbutton" ui-sref="">
+        <paper-icon-button mini icon="arrow-back" ui-sref=""></paper-icon-button> Go back to Dashboard 
+      </paper-button>
+      <paper-button dialog-confirm class="practice">Keep Practicing</paper-button>
+    </paper-dialog>
+
   </template>
   <script src="../../lib/mpgen.js"></script>
   <script>
@@ -105,12 +133,18 @@
         if (this.correctcount > 4) {
           this.complete = 'true';
         }
+        if (this.correctcount === 5) {
+          this.openModal();
+        }
       } else {
         this.message = 'Incorrect. :(';
         this.correctcount = 0;
       }
       this.studentAnswer = '';
       this.changed++;
+    },
+    openModal: function() {
+      this.$.dialog.open();
     },
     _keyPressed: function(e) {
       if (e.charCode === 13) {
