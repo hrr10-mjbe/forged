@@ -49,7 +49,7 @@
         <!-- Main Toolbar -->
 
         <paper-toolbar ng-controller="NavbarCtrl">
-          <div class="title top">Thesis Academy{{message}}</div>
+          <div class="title top">Thesis Academy</div>
           <div class="horizontal layout">
             <paper-tabs>
               <paper-tab ui-sref="main">Home</paper-tab>
@@ -57,7 +57,7 @@
               <paper-tab ui-sref="about">About</paper-tab>
               <paper-tab ui-sref="badges">Badges</paper-tab>
               <paper-tab ui-sref="dashboard">Dashboard</paper-tab>
-              <paper-tab ui-sref="login">Sign Out</paper-tab>
+              <paper-tab ui-sref="login" ng-show="loggedIn">Sign Out</paper-tab>
             </paper-tabs>
           </div>
         </paper-toolbar>
