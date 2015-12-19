@@ -10,6 +10,7 @@ angular.module('hrr10MjbeApp')
     });
 
     Student.getTeacher(function(teacher) {
+      console.log(teacher);
       $scope.teacher = teacher;
     })
 

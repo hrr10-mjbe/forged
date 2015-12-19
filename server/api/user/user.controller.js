@@ -153,8 +153,9 @@ exports.update = function(req, res, next) {
 exports.me = function(req, res, next) {
   var userId = req.user._id;
   User.findById(userId, '-salt -hashedPassword')
+    .populate('studentData.badges')
     .populate({
-      path: 'studentData.badges teacherData.classes',
+      path: 'teacherData.classes',
       populate: {
         path: 'students'
       }

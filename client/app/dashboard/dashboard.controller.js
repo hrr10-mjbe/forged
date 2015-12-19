@@ -7,6 +7,8 @@ angular.module('hrr10MjbeApp')
 
     Teacher.getClasses(function(classes) {
       $scope.listedClasses = classes;
+      console.log('classes:');
+      console.log(classes);
       $scope.classes = JSON.stringify(classes.map(function(val) {
         return {id: val._id, name: val.name};
       }));
