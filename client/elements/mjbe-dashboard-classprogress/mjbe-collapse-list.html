@@ -1,163 +1,181 @@
 <dom-module id="mjbe-collapse-list">
   <template>
     <style>
-      :host {
-        @apply(--layout-fit);
-        @apply(--layout-vertical);
-        @apply(--paper-font-common-base);
-        background-color: var(--paper-grey-200, #eee);
+    :host {
+      @apply(--layout-fit);
+      @apply(--layout-vertical);
+      @apply(--paper-font-common-base);
+      background-color: var(--paper-grey-200, #eee);
+    }
+    
+    paper-toolbar {
+      background: var(--google-green-700);
+      box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
+      font-weight: bold;
+      z-index: 1;
+      --paper-toolbar-title: {
+        overflow: visible;
       }
-      paper-toolbar {
-        background: var(--google-green-700);
-        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.3);
-        font-weight: bold;
-        z-index: 1;
-        --paper-toolbar-title: {
-          overflow: visible;
-        };
+      ;
+    }
+    
+    paper-toolbar paper-icon-button {
+      --paper-icon-button-ink-color: white;
+    }
+    
+    iron-list {
+      padding-top: 1px;
+      padding-bottom: 16px;
+      -webkit-flex: 1 1;
+      flex: 1 1;
+      --iron-list-items-container: {
+        max-width: 800px;
+        margin: auto;
+        margin-top: 60px;
+        margin-bottom: 60px;
+        border-bottom: 1px solid #ddd;
       }
-      paper-toolbar paper-icon-button {
-        --paper-icon-button-ink-color: white;
-      }
-      iron-list {
-        padding-top: 1px;
-        padding-bottom: 16px;
-        -webkit-flex: 1 1;
-        flex: 1 1;
-        --iron-list-items-container: {
-          max-width: 800px;
-          margin: auto;
-          margin-top: 60px;
-          margin-bottom: 60px;
-          border-bottom: 1px solid #ddd;
-        };
-      }
-      .item {
-        @apply(--layout-horizontal);
-        padding: 20px;
-        background-color: white;
-        border: 1px solid #ddd;
-        cursor: pointer;
-        margin-bottom: 10px;
-      }
-      .item:focus {
-        outline: 0;
-        border-color: #666;
-      }
-      .avatar {
-        height: 40px;
-        width: 40px;
-        border-radius: 20px;
-        box-sizing: border-box;
-        background-color: #DDD;
-      }
-      .pad {
-        padding: 0 16px;
-        @apply(--layout-flex);
-        @apply(--layout-vertical);
-      }
-      .primary {
-        font-size: 16px;
-        font-weight: bold;
-      }
-      .shortText, .longText {
+      ;
+    }
+    
+    .item {
+      @apply(--layout-horizontal);
+      padding: 20px;
+      background-color: white;
+      border: 1px solid #ddd;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+    
+    .item:focus {
+      outline: 0;
+      border-color: #666;
+    }
+    
+    .avatar {
+      height: 40px;
+      width: 40px;
+      border-radius: 20px;
+      box-sizing: border-box;
+      background-color: #DDD;
+    }
+    
+    .pad {
+      padding: 0 16px;
+      @apply(--layout-flex);
+      @apply(--layout-vertical);
+    }
+    
+    .primary {
+      font-size: 16px;
+      font-weight: bold;
+    }
+    
+    .shortText,
+    .longText {
+      font-size: 14px;
+    }
+    
+    .longText {
+      color: gray;
+      display: none;
+    }
+    
+    .item:hover .shortText::after {
+      content: ' [+]';
+      color: gray;
+    }
+    
+    .item.expanded:hover .shortText::after {
+      content: '';
+    }
+    
+    .item.expanded .longText {
+      display: block;
+    }
+    
+    .item.expanded:hover .longText::after {
+      content: ' [–]';
+    }
+    
+    .spacer {
+      @apply(--layout-flex);
+    }
+    
+    @media (max-width: 460px) {
+      paper-toolbar .bottom.title {
         font-size: 14px;
       }
-      .longText {
-        color: gray;
-        display: none;
-      }
-      .item:hover .shortText::after {
-        content: ' [+]';
-        color: gray;
-      }
-      .item.expanded:hover .shortText::after {
-        content: '';
-      }
-      .item.expanded .longText {
-        display: block;
-      }
-      .item.expanded:hover .longText::after {
-        content: ' [–]';
-      }
-      .spacer {
-        @apply(--layout-flex);
-      }
-      @media (max-width: 460px) {
-        paper-toolbar .bottom.title {
-          font-size: 14px;
-        }
-      }
+    }
     </style>
     <!--<iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>-->
-      <paper-toolbar>
-        <paper-icon-button icon="arrow-back" alt="Back" ui-sref="dashboard"></paper-icon-button>
-        <div class="spacer"></div>
-        <paper-icon-button icon="search" alt="Search"></paper-icon-button>
-        <paper-icon-button icon="image:view-comfy" alt="Grid view"></paper-icon-button>
-        <div class="bottom title">{{name}}</div>
-      </paper-toolbar>
-      <iron-list id="list" items="[[items]]" as="item">
-        <template>
-          <div on-tap="_collapseExpand">
-            <div class$="[[getClassForItem(item, item.expanded)]]" tabindex="0">
-              <!--<img class="avatar" src="[[item.image]]">-->
-              <iron-icon icon="accessibility"></iron-icon>
-              <div class="pad">
-                <div class="primary">[[item.name]]</div>
-                <div class="shortText">[[item.email]]</div>
-                <div class="longText">We should put some stuff here</div>
-              </div>
-              <!--<iron-icon icon$="[[iconForItem(item)]]"></iron-icon>-->
+    <paper-toolbar>
+      <paper-icon-button icon="arrow-back" alt="Back" ui-sref="dashboard"></paper-icon-button>
+      <div class="spacer"></div>
+      <paper-icon-button icon="search" alt="Search"></paper-icon-button>
+      <paper-icon-button icon="image:view-comfy" alt="Grid view"></paper-icon-button>
+      <div class="bottom title">{{name}}</div>
+    </paper-toolbar>
+    <iron-list id="list" items="[[items]]" as="item">
+      <template>
+        <div on-tap="_collapseExpand">
+          <div class$="[[getClassForItem(item, item.expanded)]]" tabindex="0">
+            <!--<img class="avatar" src="[[item.image]]">-->
+            <iron-icon icon="accessibility"></iron-icon>
+            <div class="pad">
+              <div class="primary">[[item.name]]</div>
+              <div class="shortText">[[item.email]]</div>
+              <div class="longText">We should put some stuff here</div>
             </div>
+            <!--<iron-icon icon$="[[iconForItem(item)]]"></iron-icon>-->
           </div>
-        </template>
-      </iron-list>
+        </div>
+      </template>
+    </iron-list>
   </template>
   <script>
   HTMLImports.whenReady(function() {
-      Polymer({
-        is: 'mjbe-collapse-list',
-        properties: {
-          items: {
-            type: Array,
-            computed: 'parseData(data)'
-          },
-          name: {
-            type: String,
-            notify: true
-          },
-          data: {
-            type: String,
-            notify: true
-          }
+    Polymer({
+      is: 'mjbe-collapse-list',
+      properties: {
+        items: {
+          type: Array,
+          computed: 'parseData(data)'
         },
-        _collapseExpand: function(e) {
-          var list = this.$.list;
-          var index = e.model.index;
-          var isExpanded = list.items[index].expanded;
-          list.set('items.' + index + '.expanded', !isExpanded);
-          list.updateSizeForItem(e.model.index);
+        name: {
+          type: String,
+          notify: true
         },
-        iconForItem: function(item) {
-          return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
-        },
-        getClassForItem: function(item, expanded) {
-          return expanded ? 'item expanded' : 'item';
-        },
-        parseData: function(data) {
-          try {
-            var result = JSON.parse(data);
-            for (var i = 0; i < result.length; i++) {
-              result[i].expanded = false;
-            }
-            return result;
-          }          
-          catch (e) {
-            return [];
-          }
+        data: {
+          type: String,
+          notify: true
         }
-      });
+      },
+      _collapseExpand: function(e) {
+        var list = this.$.list;
+        var index = e.model.index;
+        var isExpanded = list.items[index].expanded;
+        list.set('items.' + index + '.expanded', !isExpanded);
+        list.updateSizeForItem(e.model.index);
+      },
+      iconForItem: function(item) {
+        return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
+      },
+      getClassForItem: function(item, expanded) {
+        return expanded ? 'item expanded' : 'item';
+      },
+      parseData: function(data) {
+        try {
+          var result = JSON.parse(data);
+          for (var i = 0; i < result.length; i++) {
+            result[i].expanded = false;
+          }
+          return result;
+        } catch (e) {
+          return [];
+        }
+      }
     });
+  });
   </script>
 </dom-module>
