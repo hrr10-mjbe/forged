@@ -43,7 +43,10 @@ angular.module('hrr10MjbeApp')
           request: req
         }
       }).then(function successCallback(response) {
-        cb(response.status);
+        getUser(function(user) {
+          user.studentData = response.data.studentData;
+        })
+          cb(response.status);
       }, function errorCallback(response) {
         cb(response.status);
       });

@@ -6,7 +6,7 @@ angular.module('hrr10MjbeApp')
   .service('Teacher', function($http, Auth) {
 
     var user, activeClass;
-    
+
     var getUser = function(cb) {
       if (user) return cb(user);
       Auth.getCurrentUser(null).then(function(res) {
@@ -29,7 +29,10 @@ angular.module('hrr10MjbeApp')
 
     this.addClass = function(name) {
       getUser(function(teacher) {
-        teacher.teacherData.classes.push({name: name, students: []});
+        teacher.teacherData.classes.push({
+          name: name,
+          students: []
+        });
         save();
       })
     }
@@ -83,7 +86,10 @@ angular.module('hrr10MjbeApp')
           theClass: classId
         }
       }).then(function successCallback(response) {
-        cb(response.status);
+        getUser(function(user) {
+          user.teacherData = response.data.teacherData;
+          cb(response.status);
+        })
       }, function errorCallback(response) {
         cb(response.status);
       });

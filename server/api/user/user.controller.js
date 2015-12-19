@@ -233,7 +233,7 @@ exports.invite = function(req, res, next) {
               }
             });
             me.saveAsync().then(function() {
-              res.status(200).end();
+              res.json(me);
             })
           })
         })
@@ -265,7 +265,7 @@ exports.accept = function(req, res, next) {
             student.studentData.requests.pull(req.body.request._id);
             student.saveAsync()
               .then(function() {
-                res.status(200).end();
+                res.json(student);
               })
           })
         })
