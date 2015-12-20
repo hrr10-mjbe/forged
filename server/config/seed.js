@@ -87,11 +87,32 @@ var hardAddition = new Skill({
       problemGenId: 1
     })
 
+var multiplication1 = new Skill({
+  name: 'Multiplication by 0 or 1',
+  problemGenId: 0
+});
+
+var multiplication2 = new Skill({
+  name: 'Multiplication by 2',
+  problemGenId: 1
+});
+
+var multiplication3 = new Skill({
+  name: 'Multiplication by 3',
+  problemGenId: 2
+});
+
+var multiplication4 = new Skill({
+  name: 'Multiplication by 4',
+  problemGenId: 3
+});
+
 Skill.find({}).removeAsync()
 .then(function() {
-  simpleAddition.saveAsync().then(function() {
-    hardAddition.saveAsync();
-  })
+  multiplication1.saveAsync();
+  multiplication2.saveAsync();
+  multiplication3.saveAsync();
+  multiplication4.saveAsync();
 })
 
 /*Skill.find({}).removeAsync()
@@ -128,5 +149,8 @@ Skilltree.find({}).removeAsync()
     }, {
       name: 'Addition',
       skills: [simpleAddition._id, hardAddition._id]
+    }, {
+      name: 'Multiplication',
+      skills: [multiplication1._id, multiplication2._id, multiplication3._id, multiplication4._id]
     })
   })
