@@ -206,8 +206,9 @@ mpgen.getProblem(gen)
     return {
       num: num,
       round: round,
+      answer: answer,
       disp: 'Round ' + num + ' to the nearest ' + round + '.',
-      gen:[types.ROUNDING, min, max, roundTo, seed]
+      gen:[types.ROUNDING, min, max, roundTo, rand.seed]
     }
   }
 
