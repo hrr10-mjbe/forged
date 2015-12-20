@@ -12,6 +12,8 @@ angular.module('hrr10MjbeApp')
           method: 'GET',
           url: '/api/skills'
         }).then(function(res) {
+          console.log('in skills');
+          console.log(res.data);
           skills = res.data;
           cb(skills);
         }.bind(this))
