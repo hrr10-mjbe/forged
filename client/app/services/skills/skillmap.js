@@ -1,15 +1,12 @@
-var map = {
-  0: mpgen.simpleAddition.bind(null, 0, 10),
-}
-function getProblemBySetId(id) {
-    console.log(id);
-    if (id === 0) {
-      return mpgen.simpleAddition(0, 10);
-    }
-     else if (id === 1) {
-      return mpgen.simpleAddition(0, 1000);
-    }
-     if (id === 2) {
-      return mpgen.simpleSubtraction(0, 10);
-    }
+(function() {
+  var map = {
+    0: mpgen.fixedMultiplication.bind(null, 0, 11, 1),
+    1: mpgen.fixedMultiplication.bind(null, 0, 11, 2),
+    2: mpgen.fixedMultiplication.bind(null, 0, 11, 3),
+    3: mpgen.fixedMultiplication.bind(null, 0, 11, 4)
+  };
+
+  window.getProblemFunction = function(problemGenId) {
+    return map[problemGenId];
   }
+}());
