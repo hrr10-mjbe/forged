@@ -79,7 +79,9 @@
   <script src="../../lib/skillmap.js"></script>
   <script>
   function getProblemBySetId(id) {
-    return getProblemFunction(id)();
+    try {
+      return getProblemFunction(id)();
+    } catch (e) {}
   }
   
   Polymer({
