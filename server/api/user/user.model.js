@@ -50,7 +50,12 @@ var UserSchema = new Schema({
     skills: [SkillStatusSchema],
     badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
     requests: [RequestSchema],
-    teacher: {type: Schema.Types.ObjectId, ref: 'User'}
+    teacher: {type: Schema.Types.ObjectId, ref: 'User'},
+    modifications: {
+      showTimer: Boolean,
+      showWhiteboard: Boolean,
+      showLeaderboard: Boolean
+    }
   },
   //teacher properties
   teacherData: {
