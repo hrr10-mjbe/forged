@@ -114,6 +114,7 @@ angular.module('hrr10MjbeApp')
 
     this.getBadges = function(cb) {
       getUser(function(user) {
+        console.log(user);
         cb(user.studentData.badges);
       })
     }

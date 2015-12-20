@@ -12,17 +12,29 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 //in the user controller
 
 var RequestSchema = new Schema({
-  student: {type: Schema.Types.ObjectId, ref: 'User'},
-  teacher: {type: Schema.Types.ObjectId, ref: 'User'},
+  student: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  teacher: {
+    type: Schema.Types.ObjectId,
+    ref: 'User'
+  },
   class: {
     name: String,
-    _id: Schema.Types.ObjectId
+      _id: Schema.Types.ObjectId
   }
 });
 
 var SkillStatusSchema = new Schema({
-  skill: {type: Schema.Types.ObjectId, ref: 'Skill'},
-  status: Number
+  skill: {
+    type: Schema.Types.ObjectId,
+    ref: 'Skill'
+  },
+  status: {
+    type: Number,
+    default: 0
+  }
 })
 
 var UserSchema = new Schema({
@@ -46,15 +58,33 @@ var UserSchema = new Schema({
   //student properties
   //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
   studentData: {
-    points: Number,
+    points: {
+      type: Number,
+      default: 0
+    },
     skills: [SkillStatusSchema],
-    badges: [{type: Schema.Types.ObjectId, ref: 'Badge'}],
+    badges: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Badge'
+    }],
     requests: [RequestSchema],
-    teacher: {type: Schema.Types.ObjectId, ref: 'User'},
+    teacher: {
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    },
     modifications: {
-      showTimer: Boolean,
-      showWhiteboard: Boolean,
-      showLeaderboard: Boolean
+      showTimer: {
+        type: Boolean,
+        default: false
+      },
+      showWhiteboard: {
+        type: Boolean,
+        default: true
+      },
+      showLeaderboard: {
+        type: Boolean,
+        default: false
+      }
     }
   },
   //teacher properties
@@ -117,7 +147,9 @@ UserSchema
   .path('email')
   .validate(function(value, respond) {
     var self = this;
-    return this.constructor.findOneAsync({ email: value })
+    return this.constructor.findOneAsync({
+        email: value
+      })
       .then(function(user) {
         if (user) {
           if (self.id === user.id) {
@@ -193,8 +225,7 @@ UserSchema.methods = {
 
       if (_this.password === pwdGen) {
         callback(null, true);
-      }
-      else {
+      } else {
         callback(null, false);
       }
     });
@@ -214,8 +245,7 @@ UserSchema.methods = {
     if (typeof arguments[0] === 'function') {
       callback = arguments[0];
       byteSize = defaultByteSize;
-    }
-    else if (typeof arguments[1] === 'function') {
+    } else if (typeof arguments[1] === 'function') {
       callback = arguments[1];
     }
 
@@ -254,7 +284,7 @@ UserSchema.methods = {
 
     if (!callback) {
       return crypto.pbkdf2Sync(password, salt, defaultIterations, defaultKeyLength)
-                   .toString('base64');
+        .toString('base64');
     }
 
     return crypto.pbkdf2(password, salt, defaultIterations, defaultKeyLength, function(err, key) {
