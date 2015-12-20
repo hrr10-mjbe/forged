@@ -5,7 +5,7 @@ var controller = require('./defaultuser.controller');
 
 var router = express.Router();
 
-router.get('/', controller.index);
+router.get('/', controller.defaultUser);
 router.get('/:id', controller.show);
 router.post('/', controller.create);
 router.put('/:id', controller.update);

@@ -10,7 +10,7 @@
 'use strict';
 
 var _ = require('lodash');
-var Defaultuser = require('./defaultuser.model');
+var User = require('../user/user.model');
 
 function handleError(res, statusCode) {
   statusCode = statusCode || 500;
@@ -57,6 +57,12 @@ function removeEntity(res) {
         });
     }
   };
+}
+
+exports.defaultUser = function(req, res, next) {
+  console.log('in default user');
+  var user = new User();
+  res.json(user);
 }
 
 // Gets a list of Defaultusers

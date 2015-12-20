@@ -19,9 +19,10 @@ angular.module('hrr10MjbeApp')
         else {
           $http({
             method: 'GET',
-            url: '/api/users/default'
+            url: '/api/defaultuser'
           }).then(function(res) {
             defaultUser = res.data;
+            console.log(defaultUser);
           })
           cb(null);
         }

@@ -15,6 +15,5 @@ router.get('/:id', auth.isAuthenticated(), controller.show);
 router.post('/', controller.create);
 router.post('/invite', auth.isAuthenticated(), controller.invite);
 router.post('/accept', auth.isAuthenticated(), controller.accept);
-router.get('/default', controller.defaultUser);
 
 module.exports = router;
