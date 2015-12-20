@@ -197,14 +197,30 @@ mpgen.getProblem(gen)
     }
   };
 
+  env.rounding = function(min, max, roundTo, seed) {
+    //TODO: if you want this to handle decimals you'll need to account for bad decimal math
+    var rand = prepareRNG(seed);
+    var num = intRange(min, max, rand);
+    var round = Array.isArray(roundTo) ? roundTo[intRange(0, roundTo.length)] : roundTo;
+    var answer = Math.round(num / round) * round;
+    return {
+      num: num,
+      round: round,
+      disp: 'Round ' + num + ' to the nearest ' + round + '.',
+      gen:[types.ROUNDING, min, max, roundTo, seed]
+    }
+  }
+
   var types = {
     SIMPLE_ADDITION: 0,
     SIMPLE_SUBTRACTION: 1,
-    SIMPLE_MULTIPLICATION: 2
+    SIMPLE_MULTIPLICATION: 2,
+    ROUNDING: 3
   }
   var funcMap = {};
   funcMap[types.SIMPLE_ADDITION] = env.simpleAddition;
   funcMap[types.SIMPLE_SUBTRACTION] = env.simpleSubtraction;
   funcMap[types.SIMPLE_MULTIPLICATION] = env.simpleMultiplication;
+  funcMap[types.ROUNDING] = env.rounding;
 
 })(typeof exports === 'undefined' ? this['mpgen'] = {} : exports);
