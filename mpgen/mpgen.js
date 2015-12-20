@@ -157,6 +157,10 @@ mpgen.getProblem(gen)
     return funcMap[gen[0]].apply(this, gen.slice(1));
   }
 
+  var standardDisplay = function(nums, operator) {
+    return 'What is ' + nums[0] + ' ' + operator + ' ' + nums[1] + '?';
+  }
+
   env.simpleAddition = function(min, max, seed) {
     var rand = prepareRNG(seed);
     var answer = intRange(2 * min, max, rand);
@@ -166,6 +170,7 @@ mpgen.getProblem(gen)
       nums: [num1, num2],
       answer: answer,
       operator: '+',
+      disp: standardDisplay([num1, num2], '+'),
       gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
     }
   };
@@ -179,6 +184,7 @@ mpgen.getProblem(gen)
       nums: [num1, num2],
       answer: answer,
       operator: '-',
+      disp: standardDisplay([num1, num2], '-'),
       gen: [types.SIMPLE_SUBTRACTION, min, max, rand.seed]
     }
   };
@@ -193,6 +199,7 @@ mpgen.getProblem(gen)
       nums: [num1, num2],
       answer: answer,
       operator: '*',
+      disp: standardDisplay([num1, num2], '*'),
       gen: [types.SIMPLE_MULTIPLICATION, min, max, rand.seed]
     }
   };
