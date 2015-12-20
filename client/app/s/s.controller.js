@@ -10,6 +10,10 @@
         this.skill = skill;
         this.type = skill.problemGenId;
       }.bind(this));
+      Student.getModifications(function(mod) {
+        console.log(mod);
+        this.showCanvas = mod.showWhiteboard;
+      }.bind(this));
     }
 
     finish() {
