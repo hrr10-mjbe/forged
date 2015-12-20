@@ -101,7 +101,7 @@ angular.module('hrr10MjbeApp')
 
     this.getPoints = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.points);
+        cb(user === null ? 0 : user.studentData.points);
       })
     }
 
@@ -115,19 +115,19 @@ angular.module('hrr10MjbeApp')
     this.getBadges = function(cb) {
       getUser(function(user) {
         console.log(user);
-        cb(user.studentData.badges);
+        cb(user === null ? [] : user.studentData.badges);
       })
     }
 
     this.getRequests = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.requests);
+        cb(user === null ? [] : user.studentData.requests);
       })
     }
 
     this.getTeacher = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.teacher);
+        cb(user === null ? {} : user.studentData.teacher);
       })
     }
 
