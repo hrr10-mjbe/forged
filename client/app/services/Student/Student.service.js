@@ -3,6 +3,7 @@
 angular.module('hrr10MjbeApp')
   .service('Student', function($http, Auth, Skills, Badges, Util) {
     var user;
+    var defaultUser;
 
     //TODO indexOf _id helper method
 
@@ -16,6 +17,12 @@ angular.module('hrr10MjbeApp')
             })
           }
         else {
+          $http({
+            method: 'GET',
+            url: '/api/user/default'
+          }).then(function(res) {
+            defaultUser = res.data;
+          })
           cb(null);
         }
       })
@@ -133,7 +140,7 @@ angular.module('hrr10MjbeApp')
 
     this.getModifications = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.modifications);
+        cb(user === null ? defaultUser.studentData.modifications : user.studentData.modifications);
       });
     }
 
