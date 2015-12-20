@@ -2,6 +2,7 @@
 <dom-module id="pie-status">
   <template>
     <!--TODO this should maybe go through Angular to avoid multiple requests, but can't think of a good way to do that-->
+    <iron-ajax auto url="/api/skilltree" handle-as="json" on-response="handleResponse" last-response="{{treeResponse}}"></iron-ajax>
     <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>
     <div id="holder">
       <style include="shared-styles"></style>
@@ -27,10 +28,13 @@
       },
       userselection: {
         notify: true,
-      },
+      }
     },
     clickHandler: function(d) {
       this.userselection = d.data._id;
+    },
+    handleResponse: function() {
+      console.log(this.treeResponse);
     },
     drawPie: function() {
       console.log('got a response');

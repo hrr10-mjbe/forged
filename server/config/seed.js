@@ -123,17 +123,10 @@ Badge.find({}).removeAsync()
 
 Skilltree.find({}).removeAsync()
   .then(function() {
-
+    Skilltree.createAsync({
+      name: 'Beginning Math'
+    }, {
+      name: 'Addition',
+      skills: [simpleAddition._id, hardAddition._id]
+    })
   })
-
-/*----------------------------------------------------------
-Seed data:*/
-/*var beginningMath = new Skilltree({
-  name: 'Beginning Math'
-});
-var addition = new Skilltree({
-  name: 'Addition',
-  skills: []
-});*/
-
-//---------------------------------------------------*/
