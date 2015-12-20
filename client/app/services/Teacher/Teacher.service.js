@@ -5,6 +5,15 @@ angular.module('hrr10MjbeApp')
 
     var user, activeClass;
 
+    //var indexOfId(arr, )
+
+    var hasClass = function(classes, name) {
+      for (var i = 0; i < classes.length; i++) {
+        if (classes[i].name === name) return true;
+      }
+      return false;
+    }
+
     var getUser = function(cb) {
       if (user) return cb(user);
       Auth.getCurrentUser(null).then(function(res) {
@@ -30,6 +39,7 @@ angular.module('hrr10MjbeApp')
 
     this.addClass = function(name, cb) {
       getUser(function(teacher) {
+        if (hasClass(teacher.teacherData.classes, name)) return cb(-1);
         teacher.teacherData.classes.push({
           name: name,
           students: []
