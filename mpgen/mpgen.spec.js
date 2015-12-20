@@ -89,7 +89,6 @@ describe('Math Problem Generator', function() {
         var problem = mpgen.rounding(0, 100, 100);
         expect(problem.answer).to.equal(problem.num >= 50 ? 100 : 0);
         var problem = mpgen.rounding(0, 100, 10);
-        console.log(problem);
         expect(problem.answer).to.equal(problem.num % 10 >= 5 ? problem.num + (10 - problem.num % 10) : problem.num - (problem.num % 10));
       }
     });
@@ -97,7 +96,7 @@ describe('Math Problem Generator', function() {
       for (var i = 0; i < SAMPLE_SIZE; i++) {
         var problem = mpgen.rounding(100, 1000, [10, 100, 1000]);
         expect(problem.num).to.be.within(100, 999);
-        expect(problem.round === 10 || problem.round === 100 || problem.round === 1000).to.be(true);
+        expect(problem.round === 10 || problem.round === 100 || problem.round === 1000).to.be.true;
       }
     });
     it('should correctly retrieve previous problems', function() {

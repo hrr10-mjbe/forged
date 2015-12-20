@@ -201,7 +201,7 @@ mpgen.getProblem(gen)
     //TODO: if you want this to handle decimals you'll need to account for bad decimal math
     var rand = prepareRNG(seed);
     var num = intRange(min, max, rand);
-    var round = Array.isArray(roundTo) ? roundTo[intRange(0, roundTo.length)] : roundTo;
+    var round = Array.isArray(roundTo) ? roundTo[intRange(0, roundTo.length, rand)] : roundTo;
     var answer = Math.round(num / round) * round;
     return {
       num: num,
