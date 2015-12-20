@@ -129,4 +129,17 @@ angular.module('hrr10MjbeApp')
         cb(user.studentData.teacher);
       })
     }
+
+    this.getModifications = function(cb) {
+      getUser(function(user) {
+        cb(user.studentData.modifications);
+      });
+    }
+
+    this.setModification = function(mod, val) {
+      getUser(function(user) {
+        user.studentData.modifications[mod] = val;
+        save();
+      })
+    }
   });
