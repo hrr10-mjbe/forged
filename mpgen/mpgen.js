@@ -206,6 +206,19 @@ mpgen.getProblem(gen)
 
   env.fixedMultiplication = function(min, max, fixed, seed) {
     var rand = prepareRNG(seed);
+    var num1 = intRange(min, max, rand);
+    var num2 = fixed;
+    var answer = num1 * num2;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      disp: standardDisplay([num1, num2], '*'),
+      gen: [types.FIXED_MULTIPLICATION, min, max, fixed, rand.seed]
+    }
+  }
+
+  env.fixedDivision = function(min, max, fixed, seed) {
+    var rand = prepareRNG(seed);
     var num1 = intRange(Math.ceil(min / fixed), Math.floor(max / fixed), rand) * fixed;
     var num2 = fixed;
     var answer = num1 / num2;
@@ -236,12 +249,14 @@ mpgen.getProblem(gen)
     SIMPLE_ADDITION: 0,
     SIMPLE_SUBTRACTION: 1,
     SIMPLE_MULTIPLICATION: 2,
-    ROUNDING: 3
+    ROUNDING: 3,
+    FIXED_MULTIPLICATION: 4
   }
   var funcMap = {};
   funcMap[types.SIMPLE_ADDITION] = env.simpleAddition;
   funcMap[types.SIMPLE_SUBTRACTION] = env.simpleSubtraction;
   funcMap[types.SIMPLE_MULTIPLICATION] = env.simpleMultiplication;
   funcMap[types.ROUNDING] = env.rounding;
+  funcMap[types.FIXED_MULTIPLICATION] = env.fixedMultiplication;
 
 })(typeof exports === 'undefined' ? this['mpgen'] = {} : exports);
