@@ -31,7 +31,7 @@
       listeners: {
         'iron-resize': '_onIronResize'
       },
-      attached: function() {
+      ready: function() {
         this.fabricCanvas = new fabric.Canvas('canvas');
         this.fabricCanvas.isDrawingMode = true;
         this.async(this.notifyResize, 1);
