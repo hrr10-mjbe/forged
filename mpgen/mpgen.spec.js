@@ -138,20 +138,20 @@ describe('Math Problem Generator', function() {
   describe('Fixed division', function() {
      it('should generate correct problems', function() {
       for (var i = 0; i < SAMPLE_SIZE; i++) {
-        var problem = mpgen.fixedMultiplication(12, 145, 12);
-        expect(problem.answer).to.equal(problem.nums[0] * problem.nums[1]);
+        var problem = mpgen.fixedDivision(12, 145, 12);
+        expect(problem.answer).to.equal(problem.nums[0] / problem.nums[1]);
       }
     });
     it('should generate problems with all numbers within range', function() {
       for (var i = 0; i < SAMPLE_SIZE; i++) {
-        var problem = mpgen.fixedMultiplication(9, 82, 9);
+        var problem = mpgen.fixedDivision(9, 82, 9);
         expect(problem.nums[0]).to.be.within(9, 81);
         expect(problem.nums[1]).to.equal(9);
       }
     });
     it('should correctly retrieve previous problems', function() {
       for (var i = 0; i < SAMPLE_SIZE; i++) {
-        var problem = mpgen.fixedMultiplication(4, 49, 12);
+        var problem = mpgen.fixedDivision(4, 49, 12);
         var retrieval = mpgen.getProblem(problem.gen);
         expect(problem.answer).to.equal(retrieval.answer);
         expect(problem.disp).to.equal(retrieval.disp);

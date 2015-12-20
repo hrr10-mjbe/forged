@@ -225,8 +225,8 @@ mpgen.getProblem(gen)
     return {
       nums: [num1, num2],
       answer: answer,
-      disp: standardDisplay([num1, num2], '*'),
-      gen: [types.FIXED_MULTIPLICATION, min, max, fixed, rand.seed]
+      disp: standardDisplay([num1, num2], '/'),
+      gen: [types.FIXED_DIVISION, min, max, fixed, rand.seed]
     }
   }
 
@@ -250,7 +250,8 @@ mpgen.getProblem(gen)
     SIMPLE_SUBTRACTION: 1,
     SIMPLE_MULTIPLICATION: 2,
     ROUNDING: 3,
-    FIXED_MULTIPLICATION: 4
+    FIXED_MULTIPLICATION: 4,
+    FIXED_DIVISION: 5
   }
   var funcMap = {};
   funcMap[types.SIMPLE_ADDITION] = env.simpleAddition;
@@ -258,5 +259,6 @@ mpgen.getProblem(gen)
   funcMap[types.SIMPLE_MULTIPLICATION] = env.simpleMultiplication;
   funcMap[types.ROUNDING] = env.rounding;
   funcMap[types.FIXED_MULTIPLICATION] = env.fixedMultiplication;
+  funcMap[types.FIXED_DIVISION] = env.fixedDivision;
 
 })(typeof exports === 'undefined' ? this['mpgen'] = {} : exports);
