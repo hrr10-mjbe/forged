@@ -6,6 +6,7 @@ angular.module('hrr10MjbeApp')
       .state('profile', {
         url: '/profile',
         templateUrl: 'app/profile/profile.html',
-        controller: 'ProfileCtrl'
+        controller: 'ProfileCtrl',
+        authenticate: true
       });
   });
