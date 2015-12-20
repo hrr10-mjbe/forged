@@ -17,7 +17,7 @@ angular.module('hrr10MjbeApp')
             })
           }
         else {
-          if (defaultUser) cb(null);
+          if (defaultUser) return cb(null);
           $http({
             method: 'GET',
             url: '/api/defaultuser'
@@ -71,6 +71,7 @@ angular.module('hrr10MjbeApp')
 
     this.addOrUpdateSkill = function(skillId, status) {
       getUser(function(user) {
+        if (!user) return;
         Skills.getSkill(skillId, function(skill) {
           for (var i = 0; i < user.studentData.skills.length; i++) {
             if (user.studentData.skills[i].skill._id === skillId) {
@@ -89,6 +90,7 @@ angular.module('hrr10MjbeApp')
 
     this.awardBadges = function(cb) {
       getUser(function(user) {
+        if (!user) return cb([]);
         Badges.awardBadges(user.studentData, function(newBadges) {
           [].push.apply(user.studentData.badges, newBadges);
           save();
@@ -99,6 +101,7 @@ angular.module('hrr10MjbeApp')
 
     this.hasBadge = function(badgeId, cb) {
       getUser(function(user) {
+        if (!user) return cb(false);
         for (var i = 0; i < user.studentData.badges.length; i++) {
           if (user.studentData.badges[i]._id === badgeId) {
             cb(true);
@@ -116,6 +119,7 @@ angular.module('hrr10MjbeApp')
 
     this.addPoints = function(num) {
       getUser(function(user) {
+        if (!user) return;
         user.studentData.points += num;
         save();
       })
@@ -148,6 +152,7 @@ angular.module('hrr10MjbeApp')
 
     this.setModification = function(mod, val) {
       getUser(function(user) {
+        if (!user) return;
         user.studentData.modifications[mod] = val;
         save();
       })
