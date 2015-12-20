@@ -62,6 +62,11 @@ exports.create = function(req, res, next) {
     .catch(validationError(res));
 };
 
+exports.default = function(req, res, next) {
+  var user = new User();
+  res.json(user);
+}
+
 /**
  * Get a single user
  */
