@@ -6,7 +6,6 @@ angular.module('hrr10MjbeApp')
       .state('badges', {
         url: '/badges',
         templateUrl: 'app/badges/badges.html',
-        controller: 'BadgesCtrl',
-        auth: true
+        controller: 'BadgesCtrl'
       });
   });
