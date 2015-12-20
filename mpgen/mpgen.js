@@ -10,11 +10,12 @@ var sample = mpgen.simpleAddition(0, 1000);
 --------------------------------------------------------
 API:
 
-All methods return an object with the following properties:
-nums: An array (at the moment, always of length 2) with the component numbers of the problem
+All methods return an object with at least the following properties (some types of problems have additional properties):
+disp: A string representation of the problem
 answer: The integer answer to the problem
-operator: A string representation of the operator
 gen: An object which can be stored and used to regenerate the same problem in the future.
+
+All min-max ranges are inclusive for min, exclusive for max.
 
 mpgen.simpleAddition(min, max) 
   returns an integer addition problem with ALL values (including answer) between min and max.
@@ -26,6 +27,18 @@ mpgen.simpleSubtraction(min, max)
 
 mpgen.simpleMultiplication(min, max)
   returns an integer multiplication problem with multipliers between min and max (answer may be outside this range)
+
+mpgen.fixedMultiplication(min, max, fixed)
+  returns an integer multiplication problem with one multiplier fixed
+  So fixedMultiplication(1, 13, 12) returns a problem in the form [1-12] * 12 = 
+
+mpgen.fixedDivision(min, max, fixed)
+  returns an integer division problem with the divisor fixed
+  fixedDivision(4, 17, 4) will return either 4 / 4, 8 / 4, 12 / 4, or 16 / 4
+
+mpgen.rounding(min, max, roundTo)
+  returns an integer rounding problem. roundTo can be either a single number or an array of numbers, the place value to be rounded to
+  Ex. rounding(100, 700, [10, 100]) will return a problem asking the student to round a number between 100 and 700 to the nearest 10 or 100.
 
 mpgen.getProblem(gen)
   passing the gen object of a previously generated problem to this function will cause it to return an identical problem
