@@ -204,6 +204,19 @@ mpgen.getProblem(gen)
     }
   };
 
+  env.fixedMultiplication = function(min, max, fixed, seed) {
+    var rand = prepareRNG(seed);
+    var num1 = intRange(Math.ceil(min / fixed), Math.floor(max / fixed), rand) * fixed;
+    var num2 = fixed;
+    var answer = num1 / num2;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      disp: standardDisplay([num1, num2], '*'),
+      gen: [types.FIXED_MULTIPLICATION, min, max, fixed, rand.seed]
+    }
+  }
+
   env.rounding = function(min, max, roundTo, seed) {
     //TODO: if you want this to handle decimals you'll need to account for bad decimal math
     var rand = prepareRNG(seed);
