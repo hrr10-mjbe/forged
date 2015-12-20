@@ -1,7 +1,7 @@
 'use strict';
 
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
-var tree = require('mongoose-tree');
+var tree = require('mongoose-path-tree');
 var Schema = mongoose.Schema;
 
 var SkilltreeSchema = new Schema({
@@ -14,10 +14,3 @@ var SkilltreeSchema = new Schema({
 SkilltreeSchema.plugin(tree);
 
 module.exports = mongoose.model('Skilltree', SkilltreeSchema);
-
-/*----------------------------------------------------------
-Seed data:*/
-var beginningMath = new module.exports({name: beginningMath});
-
-
-//---------------------------------------------------*/
