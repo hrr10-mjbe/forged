@@ -17,14 +17,15 @@ angular.module('hrr10MjbeApp')
             })
           }
         else {
+          if (defaultUser) cb(null);
           $http({
             method: 'GET',
             url: '/api/defaultuser'
           }).then(function(res) {
             defaultUser = res.data;
             console.log(defaultUser);
-          })
-          cb(null);
+            cb(null);
+          })          
         }
       })
     }
