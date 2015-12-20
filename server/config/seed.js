@@ -75,17 +75,11 @@ User.find({}).removeAsync()
       });
   });
 
-var simpleAddition = new Skill({
+/*var simpleAddition = new Skill({
       name: 'Simple Addition',
       info: 'Practice addition with problems within 10',
       problemGenId: 0
-    });
-
-var hardAddition = new Skill({
-      name: 'Hard Addition',
-      info: 'Practice addition with problems within 1000',
-      problemGenId: 1
-    })
+    });*/
 
 var multiplication1 = new Skill({
   name: 'Multiplication by 0 or 1',
@@ -107,12 +101,61 @@ var multiplication4 = new Skill({
   problemGenId: 3
 });
 
+var division1 = new Skill({
+  name: 'Division by 0 or 1',
+  problemGenId: 4
+});
+
+var division2 = new Skill({
+  name: 'Division by 2',
+  problemGenId: 5
+});
+
+var division3 = new Skill({
+  name: 'Division by 3',
+  problemGenId: 6
+});
+
+var division4 = new Skill({
+  name: 'Division by 4',
+  problemGenId: 7
+});
+
+var hardAddition = new Skill({
+      name: 'Hard Addition',
+      info: 'Practice addition with problems within 1000',
+      problemGenId: 8
+    })
+
+var rounding1 = new Skill({
+  name: 'Rounding to the nearest 10',
+  problemGenId: 9
+});
+
+var rounding2 = new Skill({
+  name: 'Rounding to the nearest 100',
+  problemGenId: 10
+});
+
+var rounding3 = new Skill({
+  name: 'Rounding to the nearest 10 or 100',
+  problemGenId: 11
+});
+
 Skill.find({}).removeAsync()
 .then(function() {
   multiplication1.saveAsync();
   multiplication2.saveAsync();
   multiplication3.saveAsync();
   multiplication4.saveAsync();
+   division1.saveAsync();
+  division2.saveAsync();
+  division3.saveAsync();
+  division4.saveAsync();
+  hardAddition.saveAsync();
+  rounding1.saveAsync();
+  rounding2.saveAsync();
+  rounding3.saveAsync();
 })
 
 /*Skill.find({}).removeAsync()
@@ -148,9 +191,15 @@ Skilltree.find({}).removeAsync()
       name: 'Beginning Math'
     }, {
       name: 'Addition',
-      skills: [simpleAddition._id, hardAddition._id]
+      skills: [hardAddition._id]
     }, {
       name: 'Multiplication',
       skills: [multiplication1._id, multiplication2._id, multiplication3._id, multiplication4._id]
+    }, {
+      name: 'Division',
+      skills: [division1._id, division2._id, division3._id, division4._id]
+    }, {
+      name: 'Rounding',
+      skills: [rounding1._id, rounding2._id, rounding3._id]
     })
   })
