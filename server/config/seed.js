@@ -122,10 +122,10 @@ var division4 = new Skill({
 });
 
 var hardAddition = new Skill({
-      name: 'Hard Addition',
-      info: 'Practice addition with problems within 1000',
-      problemGenId: 8
-    })
+  name: 'Hard Addition',
+  info: 'Practice addition with problems within 1000',
+  problemGenId: 8
+})
 
 var rounding1 = new Skill({
   name: 'Rounding to the nearest 10',
@@ -143,20 +143,20 @@ var rounding3 = new Skill({
 });
 
 Skill.find({}).removeAsync()
-.then(function() {
-  multiplication1.saveAsync();
-  multiplication2.saveAsync();
-  multiplication3.saveAsync();
-  multiplication4.saveAsync();
-   division1.saveAsync();
-  division2.saveAsync();
-  division3.saveAsync();
-  division4.saveAsync();
-  hardAddition.saveAsync();
-  rounding1.saveAsync();
-  rounding2.saveAsync();
-  rounding3.saveAsync();
-})
+  .then(function() {
+    multiplication1.saveAsync();
+    multiplication2.saveAsync();
+    multiplication3.saveAsync();
+    multiplication4.saveAsync();
+    division1.saveAsync();
+    division2.saveAsync();
+    division3.saveAsync();
+    division4.saveAsync();
+    hardAddition.saveAsync();
+    rounding1.saveAsync();
+    rounding2.saveAsync();
+    rounding3.saveAsync();
+  })
 
 /*Skill.find({}).removeAsync()
   .then(function() {
