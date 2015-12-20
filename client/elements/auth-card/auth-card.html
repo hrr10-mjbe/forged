@@ -24,9 +24,9 @@
 
 
 
-    <paper-button raised on-tap="openDialog">Click to sign in.</paper-button>
+<!--     <paper-button raised on-tap="openDialog">Click to sign in.</paper-button>
     <paper-dialog id="authInput" entry-animation="scale-up-animation"
-      exit-animation="fade-out-animation" elevation="10" with-backdrop>
+      exit-animation="fade-out-animation" elevation="10" with-backdrop> -->
       <paper-material elevation="0">
         <h2>Sign In</h2>
         <div>
@@ -34,7 +34,7 @@
           <paper-input label="password" value="{{userpass::input}}" type="password">Password</paper-input>
           <br>
           <paper-button raised on-tap="authenticate">Enter</paper-button>
-          <paper-button raised on-tap="closeDialog">Cancel</paper-button>
+          <paper-button raised>Cancel</paper-button>
         </div>
       </paper-material>
     </paper-dialog>
@@ -53,15 +53,8 @@
           notify: true
         }
       },
-      openDialog: function() {
-        this.$.authInput.open();
-      },
-      closeDialog: function() {
-        this.$.authInput.close();
-      },
       authenticate: function() {
         this.submitted = 'true';
-        this.$.authInput.close();
       }
     });
   </script>
