@@ -48,17 +48,18 @@
       <paper-header-panel class="flex" main mode="waterfall">
         <!-- Main Toolbar -->
 
-        <paper-toolbar ng-controller="NavbarCtrl">
+        <paper-toolbar ng-controller="NavbarCtrl" style="background:#FF3B30">
           <div class="title top">Thesis Academy</div>
           <div class="top" ng-show="loggedIn">Hello {{name}}</div>
           <div class="horizontal layout">
             <paper-tabs>
-              <paper-tab ui-sref="main">Home</paper-tab>
+              <paper-tab ui-sref="main" ng-show="loggedIn">Home</paper-tab>
+              <paper-tab ui-sref="landing" ng-show="!loggedIn">Home</paper-tab>
               <paper-tab ui-sref="profile" ng-show="loggedIn">Profile</paper-tab>
               <paper-tab ui-sref="about">About</paper-tab>
               <paper-tab ui-sref="badges" ng-show="loggedIn">Badges</paper-tab>
               <paper-tab ui-sref="dashboard" ng-show="isTeacher">Dashboard</paper-tab>
-              <paper-tab ui-sref="login" ng-show="!loggedIn">Sign in</paper-tab>
+              <paper-tab ui-sref="login" ng-show="!loggedIn">Sign In</paper-tab>
               <paper-tab ui-sref="logout" ng-show="loggedIn">Sign Out</paper-tab>
             </paper-tabs>
           </div>
@@ -107,7 +108,7 @@
       <script src="app/admin/admin.module.js"></script>
       <script src="components/auth/auth.module.js"></script>
       <script src="components/util/util.module.js"></script>
-      <script src="app/profile/profile.controller.js"></script>
+      <script src="app/modifications/modifications.js"></script>
       <script src="app/account/login/login.controller.js"></script>
       <script src="app/account/settings/settings.controller.js"></script>
       <script src="app/account/signup/signup.controller.js"></script>
@@ -122,11 +123,13 @@
       <script src="app/dashboard/dashboard.controller.js"></script>
       <script src="app/dashboard/dashboard.js"></script>
       <script src="app/directives/bindPolymer/bindPolymer.directive.js"></script>
+      <script src="app/landing/landing.controller.js"></script>
+      <script src="app/landing/landing.js"></script>
       <script src="app/main/main.controller.js"></script>
       <script src="app/main/main.js"></script>
       <script src="app/modifications/modifications.controller.js"></script>
-      <script src="app/modifications/modifications.js"></script>
       <script src="app/about/about.controller.js"></script>
+      <script src="app/profile/profile.controller.js"></script>
       <script src="app/profile/profile.js"></script>
       <script src="app/s/s.controller.js"></script>
       <script src="app/s/s.js"></script>
