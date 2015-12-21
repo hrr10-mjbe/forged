@@ -2,7 +2,8 @@
 <dom-module id="pie-status">
   <template>
     <!--TODO this should maybe go through Angular to avoid multiple requests, but can't think of a good way to do that-->
-    <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>
+    <!--<iron-ajax auto url="/api/skilltree" handle-as="json" on-response="handleResponse" last-response="{{treeResponse}}"></iron-ajax>
+    <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>-->
     <div id="holder">
       <style include="shared-styles"></style>
       <style>
@@ -28,14 +29,31 @@
       userselection: {
         notify: true,
       },
+      skills: {
+        computed: 'parseSkills(loadskills)',
+        observer: 'drawPie'
+      },
+      loadskills: {
+        notify: true
+      }
     },
     clickHandler: function(d) {
       this.userselection = d.data._id;
     },
+    handleResponse: function() {
+      console.log(this.treeResponse);
+    },
+    parseSkills: function(loadskills) {
+      try {
+        console.log('loadskills');
+        console.log(loadskills);
+        return JSON.parse(loadskills);
+      } catch (e){}
+    },
     drawPie: function() {
       console.log('got a response');
-      console.log(this.ajaxResponse);
-      var data = this.ajaxResponse;
+      console.log(this.skills);
+      var data = this.skills;
 
       var width = 800,
         height = 400;
@@ -55,7 +73,7 @@
         .append("g")
         .attr("transform", "translate(" + width / 4 + "," + height / 2 + ")");
       svg.selectAll("path")
-        .data(pie(this.ajaxResponse))
+        .data(pie(data))
         .enter().append("path")
         .each(function(d) {
           d.outerRadius = outerRadius;

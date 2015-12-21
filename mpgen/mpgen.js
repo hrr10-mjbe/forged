@@ -10,11 +10,12 @@ var sample = mpgen.simpleAddition(0, 1000);
 --------------------------------------------------------
 API:
 
-All methods return an object with the following properties:
-nums: An array (at the moment, always of length 2) with the component numbers of the problem
+All methods return an object with at least the following properties (some types of problems have additional properties):
+disp: A string representation of the problem
 answer: The integer answer to the problem
-operator: A string representation of the operator
 gen: An object which can be stored and used to regenerate the same problem in the future.
+
+All min-max ranges are inclusive for min, exclusive for max.
 
 mpgen.simpleAddition(min, max) 
   returns an integer addition problem with ALL values (including answer) between min and max.
@@ -26,6 +27,18 @@ mpgen.simpleSubtraction(min, max)
 
 mpgen.simpleMultiplication(min, max)
   returns an integer multiplication problem with multipliers between min and max (answer may be outside this range)
+
+mpgen.fixedMultiplication(min, max, fixed)
+  returns an integer multiplication problem with one multiplier fixed
+  So fixedMultiplication(1, 13, 12) returns a problem in the form [1-12] * 12 = 
+
+mpgen.fixedDivision(min, max, fixed)
+  returns an integer division problem with the divisor fixed
+  fixedDivision(4, 17, 4) will return either 4 / 4, 8 / 4, 12 / 4, or 16 / 4
+
+mpgen.rounding(min, max, roundTo)
+  returns an integer rounding problem. roundTo can be either a single number or an array of numbers, the place value to be rounded to
+  Ex. rounding(100, 700, [10, 100]) will return a problem asking the student to round a number between 100 and 700 to the nearest 10 or 100.
 
 mpgen.getProblem(gen)
   passing the gen object of a previously generated problem to this function will cause it to return an identical problem
@@ -157,6 +170,10 @@ mpgen.getProblem(gen)
     return funcMap[gen[0]].apply(this, gen.slice(1));
   }
 
+  var standardDisplay = function(nums, operator) {
+    return 'What is ' + nums[0] + ' ' + operator + ' ' + nums[1] + '?';
+  }
+
   env.simpleAddition = function(min, max, seed) {
     var rand = prepareRNG(seed);
     var answer = intRange(2 * min, max, rand);
@@ -166,6 +183,7 @@ mpgen.getProblem(gen)
       nums: [num1, num2],
       answer: answer,
       operator: '+',
+      disp: standardDisplay([num1, num2], '+'),
       gen: [types.SIMPLE_ADDITION, min, max, rand.seed]
     }
   };
@@ -179,6 +197,7 @@ mpgen.getProblem(gen)
       nums: [num1, num2],
       answer: answer,
       operator: '-',
+      disp: standardDisplay([num1, num2], '-'),
       gen: [types.SIMPLE_SUBTRACTION, min, max, rand.seed]
     }
   };
@@ -193,18 +212,66 @@ mpgen.getProblem(gen)
       nums: [num1, num2],
       answer: answer,
       operator: '*',
+      disp: standardDisplay([num1, num2], '*'),
       gen: [types.SIMPLE_MULTIPLICATION, min, max, rand.seed]
     }
   };
 
+  env.fixedMultiplication = function(min, max, fixed, seed) {
+    var rand = prepareRNG(seed);
+    var num1 = intRange(min, max, rand);
+    var num2 = fixed;
+    var answer = num1 * num2;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      disp: standardDisplay([num1, num2], '*'),
+      gen: [types.FIXED_MULTIPLICATION, min, max, fixed, rand.seed]
+    }
+  }
+
+  env.fixedDivision = function(min, max, fixed, seed) {
+    var rand = prepareRNG(seed);
+    var num1 = intRange(Math.ceil(min / fixed), Math.floor(max / fixed), rand) * fixed;
+    var num2 = fixed;
+    var answer = num1 / num2;
+    return {
+      nums: [num1, num2],
+      answer: answer,
+      disp: standardDisplay([num1, num2], '/'),
+      gen: [types.FIXED_DIVISION, min, max, fixed, rand.seed]
+    }
+  }
+
+  env.rounding = function(min, max, roundTo, seed) {
+    //TODO: if you want this to handle decimals you'll need to account for bad decimal math
+    var rand = prepareRNG(seed);
+    var num = intRange(min, max, rand);
+    var round = Array.isArray(roundTo) ? roundTo[intRange(0, roundTo.length, rand)] : roundTo;
+    var answer = Math.round(num / round) * round;
+    return {
+      num: num,
+      round: round,
+      answer: answer,
+      disp: 'Round ' + num + ' to the nearest ' + round + '.',
+      gen: [types.ROUNDING, min, max, roundTo, rand.seed]
+    }
+  }
+
   var types = {
     SIMPLE_ADDITION: 0,
     SIMPLE_SUBTRACTION: 1,
-    SIMPLE_MULTIPLICATION: 2
+    SIMPLE_MULTIPLICATION: 2,
+    ROUNDING: 3,
+    FIXED_MULTIPLICATION: 4,
+    FIXED_DIVISION: 5
   }
   var funcMap = {};
   funcMap[types.SIMPLE_ADDITION] = env.simpleAddition;
   funcMap[types.SIMPLE_SUBTRACTION] = env.simpleSubtraction;
   funcMap[types.SIMPLE_MULTIPLICATION] = env.simpleMultiplication;
+  funcMap[types.ROUNDING] = env.rounding;
+  funcMap[types.FIXED_MULTIPLICATION] = env.fixedMultiplication;
+  funcMap[types.FIXED_DIVISION] = env.fixedDivision;
 
 })(typeof exports === 'undefined' ? this['mpgen'] = {} : exports);

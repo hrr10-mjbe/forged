@@ -22,7 +22,7 @@
 <footer></footer>
  -->
  
-<pie-status userselection="{{main.userselection}}" event-namespace="main" bind-polymer></pie-status>
+<pie-status userselection="{{main.userselection}}" loadskills="{{main.skillsData}}" event-namespace="main" bind-polymer></pie-status>
 <div class="removethis">Skills complete:</div>
 <div ng-repeat="skill in main.skills">{{skill.skill.name}}</div>
 <link rel="import" href="elements/main-app/main-app.html">

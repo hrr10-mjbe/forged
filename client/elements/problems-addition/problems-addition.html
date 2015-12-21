@@ -55,7 +55,7 @@
     }
     </style>
     <paper-material elevation="1" horizontal layout>
-      <div class="container">What is <span><strong>{{question.nums.0}} {{question.operator}} {{question.nums.1}}</strong></span> ?</div>
+      <div class="container">{{question.disp}}</div>
       <paper-input placeholder="Type your answer here" value="{{studentAnswer::input}}" on-keypress="_keyPressed">
         <paper-icon-button suffix icon="send" on-tap="evaluate"></paper-icon-button>
       </paper-input>
@@ -74,20 +74,12 @@
     </paper-dialog>
 
   </template>
+  <!--TODO put these in the regular build process-->
   <script src="../../lib/mpgen.js"></script>
+  <script src="../../lib/skillmap.js"></script>
   <script>
-  //TODO this should not go here
   function getProblemBySetId(id) {
-    console.log(id);
-    if (id === 0) {
-      return mpgen.simpleAddition(0, 10);
-    }
-     else if (id === 1) {
-      return mpgen.simpleAddition(0, 1000);
-    }
-     if (id === 2) {
-      return mpgen.simpleSubtraction(0, 10);
-    }
+    return getProblemFunction(id)();
   }
   
   Polymer({
