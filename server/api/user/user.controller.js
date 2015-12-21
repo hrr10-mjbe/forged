@@ -275,6 +275,27 @@ exports.accept = function(req, res, next) {
     })
 }
 
+exports.leaderboard = function(req, res, next) {
+  User.findById(req.body.teacherId)
+  .populate({
+      path: 'teacherData.classes',
+      populate: {
+        path: 'students'
+      }
+    })
+  .exec(function(err, teacher) {
+    var theClass = teacher.teacherData.classes.id(req.body.classId);
+    var result = [];
+    for (var i = 0; i < theClass.students.length; i++) {
+      result.push({name: theClass.students[i].name, points: theClass.students[i].points});
+    }
+    result.sort(function(a, b) {
+      return a.points - b.points;
+    })
+    res.json(result);
+  })
+}
+
 /**
  * Authentication callback
  */
