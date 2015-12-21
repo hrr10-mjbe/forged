@@ -70,6 +70,11 @@ exports.index = function(req, res) {
 exports.show = function(req, res) {
   Skilltree.findByIdAsync(req.params.id)
     .then(handleEntityNotFound(res))
+    .then(function(res) {
+      res.getChildrenTree(function(err, tree) {
+        console.log(tree);
+      });
+    })
     .then(responseWithResult(res))
     .catch(handleError(res));
 };
