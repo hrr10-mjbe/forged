@@ -35,6 +35,16 @@
       },
       loadskills: {
         notify: true
+      },
+      tree: {
+        computed: 'parseTree(loadtree)',
+        observer: 'drawPie'
+      },
+      loadtree: {
+        notify: true
+      },
+      active: {
+        notify: true
       }
     },
     clickHandler: function(d) {
@@ -48,7 +58,12 @@
         console.log('loadskills');
         console.log(loadskills);
         return JSON.parse(loadskills);
-      } catch (e){}
+      } catch (e) {}
+    },
+    parseTree: function(loadtree) {
+      try {       
+        return JSON.parse(loadtree);
+      } catch (e) {}
     },
     drawPie: function() {
       console.log('got a response');
