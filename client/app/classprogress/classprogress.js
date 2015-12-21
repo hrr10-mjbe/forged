@@ -6,6 +6,7 @@ angular.module('hrr10MjbeApp')
       .state('classprogress', {
         url: '/classprogress/:id',
         templateUrl: 'app/classprogress/classprogress.html',
-        controller: 'ClassprogressCtrl'
+        controller: 'ClassprogressCtrl',
+        authenticate: true
       });
   });
