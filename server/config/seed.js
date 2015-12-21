@@ -128,15 +128,18 @@ roundingSkill.parent = rootSkill;
 
 Skilltree.find({}).removeAsync()
   .then(function() {
-    additionSkill.saveAsync();
-    multiplicationSkill.saveAsync();
-    divisionSkill.saveAsync();
-    roundingSkill.saveAsync();
     rootSkill.saveAsync().then(function() {
-
+    additionSkill.saveAsync().then(function() {
+      multiplicationSkill.saveAsync().then(function() {
+        divisionSkill.saveAsync().then(function() {
+          roundingSkill.saveAsync()
+          })
+        })
+      })
     })
-  })
 
+  })
+/*
 User.find({}).removeAsync()
   .then(function() {
     User.createAsync({
@@ -171,4 +174,4 @@ User.find({}).removeAsync()
       .then(function() {
         console.log('finished populating users');
       });
-  });
+  });*/

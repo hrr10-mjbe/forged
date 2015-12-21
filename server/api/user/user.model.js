@@ -70,7 +70,7 @@ var UserSchema = new Schema({
     skillRoot: {
       type: Schema.Types.ObjectId,
       ref: 'Skilltree'
-    }
+    },
     requests: [RequestSchema],
     teacher: {
       type: Schema.Types.ObjectId,
