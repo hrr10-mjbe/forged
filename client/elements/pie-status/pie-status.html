@@ -50,9 +50,7 @@
     clickHandler: function(d) {
       this.userselection = d.data._id;
     },
-    handleResponse: function() {
-      console.log(this.treeResponse);
-    },
+   
     parseSkills: function(loadskills) {
       try {
         console.log('loadskills');
@@ -62,6 +60,8 @@
     },
     parseTree: function(loadtree) {
       try {       
+        console.log('in polymer');
+        console.log(loadtree);
         return JSON.parse(loadtree);
       } catch (e) {}
     },

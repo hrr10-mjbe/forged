@@ -23,12 +23,10 @@
       });
 
       Student.getSkillRoot(function(root) {
-         Skills.getSkillTree(root, function(tree) {
-        console.log(tree);
-      })
-      })
-
-     
+        Skills.getSkillTree(root, function(tree) {
+          this.treeData = tree;
+        }.bind(this));
+      }.bind(this))
     }
 
     addThing() {
@@ -45,7 +43,9 @@
     }
 
     go() {
-      this.$state.go('s', {id: this.userselection});
+      this.$state.go('s', {
+        id: this.userselection
+      });
     }
 
     polymerChange() {
