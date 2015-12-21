@@ -185,4 +185,20 @@ angular.module('hrr10MjbeApp')
         save();
       })
     }
+
+    this.getLeaderboard = function() {
+      getUser(function(user) {
+        $http({
+            method: 'GET',
+            url: '/api/users/leaderboard',
+            data: {
+              teacherId: user.studentData.teacher,
+              classId: user.studentData.class
+            }
+          }).then(function(res) {
+            defaultUser = res.data;
+            console.log(res);
+          })
+      })
+    }
   });
