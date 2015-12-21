@@ -76,6 +76,10 @@ var UserSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
+    class: {
+      name: String,
+        _id: Schema.Types.ObjectId
+    }
     modifications: {
       showTimer: {
         type: Boolean,

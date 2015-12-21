@@ -264,6 +264,7 @@ exports.accept = function(req, res, next) {
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(student) {
             student.studentData.teacher = req.body.request.teacher._id;
+            student.studentData.class = {_id: req.body.request.class._id, name: req.body.request.class.name};
             student.studentData.requests.pull(req.body.request._id);
             student.saveAsync()
               .then(function() {
