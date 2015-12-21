@@ -10,6 +10,60 @@ import Skill from '../api/skill/skill.model';
 import Badge from '../api/badge/badge.model';
 import Skilltree from '../api/skilltree/skilltree.model';
 
+
+User.find({}).removeAsync()
+  .then(function() {
+    var student1 = new User({
+      provider: 'local',
+      name: 'Test User',
+      type: 'student',
+      email: 'test@example.com',
+      password: 'test',
+      studentData: {
+        points: 50
+      }
+    })
+
+    var student2 = new User({
+      provider: 'local',
+      name: 'Test User 2',
+      type: 'student',
+      email: 'test2@example.com',
+      password: 'test',
+      studentData: {
+        points: 200
+      }
+    })
+
+    var teacher = new User({
+      provider: 'local',
+      name: 'A Teacher',
+      type: 'teacher',
+      email: 'teacher@example.com',
+      password: 'test',
+      teacherData: {
+        classes: [{
+          name: 'Math'
+          students: [student1._id, student2._id]
+        }, {
+          name: 'Algebra'
+        }]
+      }
+    })
+
+    student1.saveAsync();
+    student2.saveAsync();
+    teacher.saveAsync();
+  });
+
+
+
+/*var simpleAddition = new Skill({
+      name: 'Simple Addition',
+      info: 'Practice addition with problems within 10',
+      problemGenId: 0
+    });*/
+
 var multiplication1 = new Skill({
   name: 'Multiplication by 0 or 1',
   problemGenId: 0
