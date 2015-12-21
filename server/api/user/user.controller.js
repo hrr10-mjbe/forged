@@ -61,6 +61,7 @@ exports.create = function(req, res, next) {
   });
 };
 
+
 /**
  * Deletes a user
  * restriction: 'admin'
@@ -153,7 +154,7 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
-      
+
       //save the request in their requests array
       user.studentData.requests.push({
         teacher: {
@@ -172,7 +173,7 @@ exports.invite = function(req, res, next) {
       });
       user.saveAsync()
         .then(function() {
-          
+
           //next, find and update the teacher's pending students array
           User.findByIdAsync(req.user._id).then(function(me) {
             if (!me) {
@@ -211,19 +212,19 @@ exports.accept = function(req, res, next) {
       if (!teacher) {
         return res.status(404).end();
       }
-      
+
       //add student to teacher's class
       console.log(teacher.teacherData.classes);
       if (!teacher.teacherData.classes.id(req.body.request.class._id)) {
         return res.status(404).end();
       }
       teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);
-      
+
       //remove from pending students
       teacher.teacherData.pendingStudents.pull(req.request);
       teacher.saveAsync()
         .then(function() {
-          
+
           //find and update student with his new class information
           User.findByIdAsync(req.user._id).then(function(student) {
             if (!student) {
@@ -233,7 +234,7 @@ exports.accept = function(req, res, next) {
             student.studentData.class = {
               _id: req.body.request.class._id, name: req.body.request.class.name
             };
-            
+
             //and remove from requests
             student.studentData.requests.pull(req.body.request._id);
             student.saveAsync()
@@ -265,22 +266,22 @@ exports.leaderboard = function(req, res, next) {
       if (err || !teacher) {
         res.status(404).end();
       }
-     
+
       //look up the student's class
       var theClass = teacher.teacherData.classes.id(req.user.studentData.myClass._id);
       if (!theClass) {
         res.status(404).end();
       }
-     
+
       //generate list of students and points
-      var result = [];      
+      var result = [];
       for (var i = 0; i < theClass.students.length; i++) {
         result.push({
           name: theClass.students[i].name,
           points: theClass.students[i].studentData.points
         });
       }
-      
+
       //sort by points and return
       result.sort(function(a, b) {
         return b.points - a.points;

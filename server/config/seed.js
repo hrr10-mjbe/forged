@@ -43,7 +43,7 @@ User.find({}).removeAsync()
       password: 'test',
       teacherData: {
         classes: [{
-          name: 'Math'
+          name: 'Math',
           students: [student1._id, student2._id]
         }, {
           name: 'Algebra'
@@ -51,9 +51,18 @@ User.find({}).removeAsync()
       }
     })
 
+    teacher.saveAsync().then(function() {
+      student1.studentData.teacher = teacher;
+    student2.studentData.teacher = teacher;
+    student1.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+    student2.studentData.myClass._id = teacher.teacherData.classes[0]._id;
     student1.saveAsync();
     student2.saveAsync();
-    teacher.saveAsync();
+    })    
+
+    //student1.saveAsync();
+    //student2.saveAsync();
+    //teacher.saveAsync();
   });
 
 
