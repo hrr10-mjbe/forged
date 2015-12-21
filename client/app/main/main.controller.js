@@ -22,9 +22,13 @@
         this.awesomeThings = response.data;
       });
 
-      Skills.getSkillTree(function(tree) {
+      Student.getSkillRoot(function(root) {
+         Skills.getSkillTree(root, function(tree) {
         console.log(tree);
       })
+      })
+
+     
     }
 
     addThing() {

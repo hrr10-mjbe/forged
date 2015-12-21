@@ -139,7 +139,7 @@ Skilltree.find({}).removeAsync()
     })
 
   })
-/*
+
 User.find({}).removeAsync()
   .then(function() {
     User.createAsync({
@@ -174,4 +174,4 @@ User.find({}).removeAsync()
       .then(function() {
         console.log('finished populating users');
       });
-  });*/
+  });

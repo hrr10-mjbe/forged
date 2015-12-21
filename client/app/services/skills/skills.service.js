@@ -5,7 +5,7 @@ angular.module('hrr10MjbeApp')
     var skills;
     var tree = {};
 
-    this.getSkillTree = function(cb, root) {
+    this.getSkillTree = function(root, cb) {
       if (tree[root]) {
         return cb(tree[root]);
       }
