@@ -28,6 +28,15 @@ angular.module('hrr10MjbeApp')
       return false;
     }
 
+    var hasInvited = function(requests, email) {
+      for (var i = 0; i < requests.length; i++) {
+        if (requests[i].student.email === email.toLowerCase()) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     var getUser = function(cb) {
       if (user) return cb(user);
       Auth.getCurrentUser(null).then(function(res) {

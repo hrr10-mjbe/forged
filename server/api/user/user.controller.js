@@ -236,7 +236,7 @@ exports.invite = function(req, res, next) {
             console.log('saving');
             console.log(me.teacherData);
             me.saveAsync().then(function() {
-              res.json(me);
+              exports.me(req, res, next);
             })
           })
         })
