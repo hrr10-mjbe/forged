@@ -186,21 +186,14 @@ angular.module('hrr10MjbeApp')
       })
     }
 
-    this.getLeaderboard = function() {
+    this.getLeaderboard = function(cb) {
       getUser(function(user) {
-        console.log('user in leaderboard');
-        console.log(user);
+        if (!user) return cb(null);
         $http({
             method: 'GET',
-            url: '/api/users/leaderboard',
-            data: {
-              teacherId: user.studentData.teacher._id,
-              classId: user.studentData.myClass._id
-            }
+            url: '/api/users/leaderboard'            
           }).then(function(res) {
-            defaultUser = res.data;
-            console.log('leaderboard');
-            console.log(res.data);
+            cb(res.data);
           })
       })
     }

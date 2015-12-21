@@ -277,7 +277,6 @@ exports.accept = function(req, res, next) {
 
 exports.leaderboard = function(req, res, next) {
   console.log('got');
-  console.log(req);
   console.log(req.user.studentData.teacher);
   User.findById(req.user.studentData.teacher)
   .populate({
