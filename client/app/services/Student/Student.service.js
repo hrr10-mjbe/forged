@@ -3,6 +3,7 @@
 angular.module('hrr10MjbeApp')
   .service('Student', function($http, Auth, Skills, Badges, Util) {
     var user;
+    var defaultUser;
 
     //TODO indexOf _id helper method
 
@@ -16,7 +17,15 @@ angular.module('hrr10MjbeApp')
             })
           }
         else {
-          cb(null);
+          if (defaultUser) return cb(null);
+          $http({
+            method: 'GET',
+            url: '/api/defaultuser'
+          }).then(function(res) {
+            defaultUser = res.data;
+            console.log(defaultUser);
+            cb(null);
+          })          
         }
       })
     }
@@ -62,6 +71,7 @@ angular.module('hrr10MjbeApp')
 
     this.addOrUpdateSkill = function(skillId, status) {
       getUser(function(user) {
+        if (!user) return;
         Skills.getSkill(skillId, function(skill) {
           for (var i = 0; i < user.studentData.skills.length; i++) {
             if (user.studentData.skills[i].skill._id === skillId) {
@@ -80,6 +90,7 @@ angular.module('hrr10MjbeApp')
 
     this.awardBadges = function(cb) {
       getUser(function(user) {
+        if (!user) return cb([]);
         Badges.awardBadges(user.studentData, function(newBadges) {
           [].push.apply(user.studentData.badges, newBadges);
           save();
@@ -90,6 +101,7 @@ angular.module('hrr10MjbeApp')
 
     this.hasBadge = function(badgeId, cb) {
       getUser(function(user) {
+        if (!user) return cb(false);
         for (var i = 0; i < user.studentData.badges.length; i++) {
           if (user.studentData.badges[i]._id === badgeId) {
             cb(true);
@@ -101,12 +113,13 @@ angular.module('hrr10MjbeApp')
 
     this.getPoints = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.points);
+        cb(user === null ? 0 : user.studentData.points);
       })
     }
 
     this.addPoints = function(num) {
       getUser(function(user) {
+        if (!user) return;
         user.studentData.points += num;
         save();
       })
@@ -115,30 +128,31 @@ angular.module('hrr10MjbeApp')
     this.getBadges = function(cb) {
       getUser(function(user) {
         console.log(user);
-        cb(user.studentData.badges);
+        cb(user === null ? [] : user.studentData.badges);
       })
     }
 
     this.getRequests = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.requests);
+        cb(user === null ? [] : user.studentData.requests);
       })
     }
 
     this.getTeacher = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.teacher);
+        cb(user === null ? {} : user.studentData.teacher);
       })
     }
 
     this.getModifications = function(cb) {
       getUser(function(user) {
-        cb(user.studentData.modifications);
+        cb(user === null ? defaultUser.studentData.modifications : user.studentData.modifications);
       });
     }
 
     this.setModification = function(mod, val) {
       getUser(function(user) {
+        if (!user) return;
         user.studentData.modifications[mod] = val;
         save();
       })
