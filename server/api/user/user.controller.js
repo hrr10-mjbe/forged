@@ -65,7 +65,7 @@ exports.create = function(req, res, next) {
 /**
  * Get a single user
  */
-exports.show = function(req, res, next) {
+/*exports.show = function(req, res, next) {
   var userId = req.params.id;
 
   User.findByIdAsync(userId)
@@ -78,7 +78,7 @@ exports.show = function(req, res, next) {
     .catch(function(err) {
       return next(err);
     });
-};
+};*/
 
 /**
  * Deletes a user
@@ -276,7 +276,10 @@ exports.accept = function(req, res, next) {
 }
 
 exports.leaderboard = function(req, res, next) {
-  User.findById(req.body.teacherId)
+  console.log('got');
+  console.log(req);
+  console.log(req.user.studentData.teacher);
+  User.findById(req.user.studentData.teacher)
   .populate({
       path: 'teacherData.classes',
       populate: {
@@ -284,13 +287,17 @@ exports.leaderboard = function(req, res, next) {
       }
     })
   .exec(function(err, teacher) {
-    var theClass = teacher.teacherData.classes.id(req.body.classId);
+    if (err)
+      res.status(404).end();
+    var theClass = teacher.teacherData.classes.id(req.user.studentData.myClass._id);
+    console.log(theClass);
     var result = [];
     for (var i = 0; i < theClass.students.length; i++) {
-      result.push({name: theClass.students[i].name, points: theClass.students[i].points});
+      result.push({name: theClass.students[i].name, points: theClass.students[i].studentData.points});
     }
+    console.log(result);
     result.sort(function(a, b) {
-      return a.points - b.points;
+      return b.points - a.points;
     })
     res.json(result);
   })

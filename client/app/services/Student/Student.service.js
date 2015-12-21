@@ -188,16 +188,19 @@ angular.module('hrr10MjbeApp')
 
     this.getLeaderboard = function() {
       getUser(function(user) {
+        console.log('user in leaderboard');
+        console.log(user);
         $http({
             method: 'GET',
             url: '/api/users/leaderboard',
             data: {
-              teacherId: user.studentData.teacher,
-              classId: user.studentData.class
+              teacherId: user.studentData.teacher._id,
+              classId: user.studentData.myClass._id
             }
           }).then(function(res) {
             defaultUser = res.data;
-            console.log(res);
+            console.log('leaderboard');
+            console.log(res.data);
           })
       })
     }
