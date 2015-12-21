@@ -114,6 +114,7 @@ angular.module('hrr10MjbeApp')
 
     this.getBadges = function(cb) {
       getUser(function(user) {
+        console.log(user);
         cb(user.studentData.badges);
       })
     }
@@ -127,6 +128,19 @@ angular.module('hrr10MjbeApp')
     this.getTeacher = function(cb) {
       getUser(function(user) {
         cb(user.studentData.teacher);
+      })
+    }
+
+    this.getModifications = function(cb) {
+      getUser(function(user) {
+        cb(user.studentData.modifications);
+      });
+    }
+
+    this.setModification = function(mod, val) {
+      getUser(function(user) {
+        user.studentData.modifications[mod] = val;
+        save();
       })
     }
   });
