@@ -107,6 +107,7 @@ angular.module('hrr10MjbeApp')
       console.log(classId);
       getUser(function(user) {
         if (hasStudent(user.teacherData.classes, classId, email)) return cb(-1);
+        if (hasInvited(user.teacherData.pendingStudents, email)) return cb(-1);
         $http({
           method: 'POST',
           url: '/api/users/invite',
