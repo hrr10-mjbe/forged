@@ -35,7 +35,10 @@ angular.module('hrr10MjbeApp')
     }
 
     $scope.submitClass = function() {
-      Teacher.addClass($scope.addClass, function() {
+      Teacher.addClass($scope.addClass, function(res) {
+        if (res === -1) {
+          return alert('duplicate class');
+        }
         console.log('returning');
         Teacher.getClasses(function(classes) {
           $scope.listedClasses = classes;

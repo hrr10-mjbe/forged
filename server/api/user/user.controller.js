@@ -141,7 +141,6 @@ exports.update = function(req, res, next) {
       user.teacherData = normalizeTeacher(req.body.teacherData);
       return user.saveAsync()
         .then(function() {
-          //res.status(204).json(user);
           exports.me(req, res, next);
         })
         .catch(validationError(res));
@@ -236,7 +235,7 @@ exports.invite = function(req, res, next) {
             console.log('saving');
             console.log(me.teacherData);
             me.saveAsync().then(function() {
-              res.json(me);
+              exports.me(req, res, next);
             })
           })
         })
@@ -268,7 +267,7 @@ exports.accept = function(req, res, next) {
             student.studentData.requests.pull(req.body.request._id);
             student.saveAsync()
               .then(function() {
-                res.json(student);
+                exports.me(req, res, next);
               })
           })
         })

@@ -5,6 +5,38 @@ angular.module('hrr10MjbeApp')
 
     var user, activeClass;
 
+    //var indexOfId(arr, )
+
+    var hasClass = function(classes, name) {
+      for (var i = 0; i < classes.length; i++) {
+        if (classes[i].name.toLowerCase() === name.toLowerCase()) return true;
+      }
+      return false;
+    }
+
+    var hasStudent = function(classes, classId, studentEmail) {
+      for (var i = 0; i < classes.length; i++) {
+        if (classes[i]._id === classId) {
+          for (var j = 0; j < classes[i].students.length; j++) {
+            if (classes[i].students[j].email === studentEmail.toLowerCase()) {
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+      return false;
+    }
+
+    var hasInvited = function(requests, email) {
+      for (var i = 0; i < requests.length; i++) {
+        if (requests[i].student.email === email.toLowerCase()) {
+          return true;
+        }
+      }
+      return false;
+    }
+
     var getUser = function(cb) {
       if (user) return cb(user);
       Auth.getCurrentUser(null).then(function(res) {
@@ -30,6 +62,7 @@ angular.module('hrr10MjbeApp')
 
     this.addClass = function(name, cb) {
       getUser(function(teacher) {
+        if (hasClass(teacher.teacherData.classes, name)) return cb(-1);
         teacher.teacherData.classes.push({
           name: name,
           students: []
@@ -81,23 +114,27 @@ angular.module('hrr10MjbeApp')
     this.sendInvite = function(email, classId, cb) {
       console.log('sending classid');
       console.log(classId);
-      $http({
-        method: 'POST',
-        url: '/api/users/invite',
-        data: {
-          email: email,
-          theClass: classId
-        }
-      }).then(function successCallback(response) {
-        getUser(function(user) {
-          console.log('invite responded with');
-          console.log(response.data.teacherData);
-          user.teacherData = response.data.teacherData;
+      getUser(function(user) {
+        if (hasStudent(user.teacherData.classes, classId, email)) return cb(-1);
+        if (hasInvited(user.teacherData.pendingStudents, email)) return cb(-1);
+        $http({
+          method: 'POST',
+          url: '/api/users/invite',
+          data: {
+            email: email,
+            theClass: classId
+          }
+        }).then(function successCallback(response) {
+          getUser(function(user) {
+            console.log('invite responded with');
+            console.log(response.data.teacherData);
+            user.teacherData = response.data.teacherData;
+            cb(response.status);
+          })
+        }, function errorCallback(response) {
           cb(response.status);
-        })
-      }, function errorCallback(response) {
-        cb(response.status);
-      });
+        });
+      })
     }
 
     this.getRequests = function(cb) {
