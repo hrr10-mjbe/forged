@@ -21,6 +21,10 @@
       $http.get('/api/things').then(response => {
         this.awesomeThings = response.data;
       });
+
+      Skills.getSkillTree(function(tree) {
+        console.log(tree);
+      })
     }
 
     addThing() {
