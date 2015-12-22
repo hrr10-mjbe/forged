@@ -44,6 +44,12 @@
       padding: 20px;
     }
 
+    .timer {
+      position: absolute;
+      bottom:0;
+      right:0;
+    }
+
     .backbutton {
       text-align: left;
     }
@@ -65,10 +71,12 @@
     <paper-progress max="5" value="[[correctcount]]"></paper-progress>
     </paper-material>
 
-    <paper-dialog id="dialog">
+    <mjbe-timer class="timer"></mjbe-timer>
+
+    <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
       Congratulations! You passed this module.
       <paper-button class="backbutton" ui-sref="main">
-        <paper-icon-button mini icon="arrow-back" ui-sref="main"></paper-icon-button> Go back to Dashboard 
+        <paper-icon-button mini icon="arrow-back" ui-sref="main"></paper-icon-button> Go back to Main Page
       </paper-button>
       <paper-button dialog-confirm class="practice">Keep Practicing</paper-button>
     </paper-dialog>
