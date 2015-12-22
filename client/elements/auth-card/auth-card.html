@@ -7,18 +7,18 @@
       :host {
         display: block;
       }
-      paper-dialog {
-        background-color: #F2385A;
-      }
       paper-material {
         width: 250px;
-        height: 200px;
         padding: 30px;
         margin: 10px;
         background-color: white;
+        overflow: auto;
       }
       paper-button {
         background-color: white;
+      }
+      paper-input {
+
       }
     </style>
 
@@ -27,14 +27,25 @@
 <!--     <paper-button raised on-tap="openDialog">Click to sign in.</paper-button>
     <paper-dialog id="authInput" entry-animation="scale-up-animation"
       exit-animation="fade-out-animation" elevation="10" with-backdrop> -->
-      <paper-material elevation="0">
-        <h2>Sign In</h2>
+      <paper-material elevation="2">
+        <h2>{{header}}</h2>
         <div>
-          <paper-input label="username" value="{{useremail::input}}">Username</paper-input>
-          <paper-input label="password" value="{{userpass::input}}" type="password">Password</paper-input>
+
+          <div hidden$="{{isSignUpForm(header)}}">
+            <paper-radio-group id="radio">
+              <paper-radio-button name="student">Student</paper-radio-button>
+              <paper-radio-button name="teacher">Teacher</paper-radio-button>
+            </paper-radio-group>
+            <paper-input label="Full Name" value="{{username::input}}" type="text"></paper-input>
+          </div>
+
+          <paper-input label="Email Address" value="{{useremail::input}}" type="email"></paper-input>
+          <paper-input label="Password" value="{{userpass::input}}" type="password"></paper-input>
           <br>
-          <paper-button raised on-tap="authenticate">Enter</paper-button>
-          <paper-button raised>Cancel</paper-button>
+          <div class="flex horizontal center-justified layout">
+            <paper-button raised on-tap="authenticate">Enter</paper-button>
+            <paper-button raised ui-sref="landing">Cancel</paper-button>
+          </div>
         </div>
       </paper-material>
     </paper-dialog>
@@ -43,18 +54,46 @@
     Polymer({
       is: 'auth-card',
       properties: {
+        header: {
+          type: String
+        },
+        username: {
+          type: String
+        },
         useremail: {
           notify: true
         },
         userpass: {
           notify: true
         },
-        submitted: {
-          notify: true
+        usertype: {
+          type: String,
+          reflectToAttribute: true
+        },
+        signin: {
+          type: String,
+          notify: true,
+        },
+        signup: {
+          type: String,
+          notify: true,
+        },
+        errormessage: {
+          type: String
         }
       },
       authenticate: function() {
-        this.submitted = 'true';
+        if (this.header === 'Sign In') {
+          this.signin = 'true';
+        }
+
+        if (this.header === 'Sign Up') {
+          this.usertype = this.$.radio.selected;
+          this.signUp = 'true';
+        }
+      },
+      isSignUpForm: function(pageHeader) {
+        return pageHeader === 'Sign In';
       }
     });
   </script>
