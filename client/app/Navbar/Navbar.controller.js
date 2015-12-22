@@ -5,13 +5,10 @@ angular.module('hrr10MjbeApp')
     $rootScope.$on('$stateChangeStart', function() {
       Auth.isLoggedIn(function(is) {
         $scope.loggedIn = is;
-      })
-      /*Auth.isTeacher(function(is) {
-        $scope.isTeacher = is;
-      })*/
+      });
       Auth.getCurrentUser(function(user) {
         $scope.name = user.name;
         $scope.isTeacher = user.type === 'teacher';
-      })
-    })
+      });
+    });
   });
