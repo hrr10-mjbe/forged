@@ -10,77 +10,6 @@ import Skill from '../api/skill/skill.model';
 import Badge from '../api/badge/badge.model';
 import Skilltree from '../api/skilltree/skilltree.model';
 
-Thing.find({}).removeAsync()
-  .then(function() {
-    Thing.create({
-      name: 'Development Tools',
-      info: 'Integration with popular tools such as Bower, Grunt, Babel, Karma, ' +
-        'Mocha, JSHint, Node Inspector, Livereload, Protractor, Jade, ' +
-        'Stylus, Sass, and Less.'
-    }, {
-      name: 'Server and Client integration',
-      info: 'Built with a powerful and fun stack: MongoDB, Express, ' +
-        'AngularJS, and Node.'
-    }, {
-      name: 'Smart Build System',
-      info: 'Build system ignores `spec` files, allowing you to keep ' +
-        'tests alongside code. Automatic injection of scripts and ' +
-        'styles into your index.html'
-    }, {
-      name: 'Modular Structure',
-      info: 'Best practice client and server structures allow for more ' +
-        'code reusability and maximum scalability'
-    }, {
-      name: 'Optimized Build',
-      info: 'Build process packs up your templates as a single JavaScript ' +
-        'payload, minifies your scripts/css/images, and rewrites asset ' +
-        'names for caching.'
-    }, {
-      name: 'Deployment Ready',
-      info: 'Easily deploy your app to Heroku or Openshift with the heroku ' +
-        'and openshift subgenerators'
-    });
-  });
-
-User.find({}).removeAsync()
-  .then(function() {
-    User.createAsync({
-        provider: 'local',
-        name: 'Test User',
-        type: 'student',
-        email: 'test@example.com',
-        password: 'test'
-      }, {
-        provider: 'local',
-        role: 'admin',
-        name: 'Admin',
-        email: 'admin@example.com',
-        password: 'admin'
-      }, {
-        provider: 'local',
-        name: 'A Teacher',
-        type: 'teacher',
-        email: 'teacher@example.com',
-        password: 'test',
-        teacherData: {
-          classes: [{
-            name: 'Math'
-          }, {
-            name: 'Algebra'
-          }]
-        }
-      })
-      .then(function() {
-        console.log('finished populating users');
-      });
-  });
-
-/*var simpleAddition = new Skill({
-      name: 'Simple Addition',
-      info: 'Practice addition with problems within 10',
-      problemGenId: 0
-    });*/
-
 var multiplication1 = new Skill({
   name: 'Multiplication by 0 or 1',
   problemGenId: 0
@@ -158,23 +87,6 @@ Skill.find({}).removeAsync()
     rounding3.saveAsync();
   })
 
-/*Skill.find({}).removeAsync()
-  .then(function() {
-    Skill.create({
-      name: 'Simple Addition',
-      info: 'Practice addition with problems within 10',
-      problemGenId: 0
-    }, {
-      name: 'Hard Addition',
-      info: 'Practice addition with problems within 1000',
-      problemGenId: 1
-    }, {
-      name: 'Simple Subtraction',
-      info: 'Practice subtraction with problems within 10',
-      problemGenId: 2
-    });
-  });*/
-
 Badge.find({}).removeAsync()
   .then(function() {
     Badge.create({
@@ -185,21 +97,81 @@ Badge.find({}).removeAsync()
     });
   });
 
+var rootSkill = new Skilltree({
+  name: 'Math',
+  skills: []
+})
+
+var additionSkill = new Skilltree({
+  name: 'Addition',
+  skills: [hardAddition._id]
+})
+additionSkill.parent = rootSkill;
+
+var multiplicationSkill = new Skilltree({
+  name: 'Multiplication',
+  skills: [multiplication1._id, multiplication2._id, multiplication3._id, multiplication4._id]
+})
+multiplicationSkill.parent = rootSkill;
+
+var divisionSkill = new Skilltree({
+  name: 'Division',
+  skills: [division1._id, division2._id, division3._id, division4._id]
+})
+divisionSkill.parent = rootSkill;
+
+var roundingSkill = new Skilltree({
+  name: 'Rounding',
+  skills: [rounding1._id, rounding2._id, rounding3._id]
+})
+roundingSkill.parent = rootSkill;
+
 Skilltree.find({}).removeAsync()
   .then(function() {
-    Skilltree.createAsync({
-      name: 'Beginning Math'
-    }, {
-      name: 'Addition',
-      skills: [hardAddition._id]
-    }, {
-      name: 'Multiplication',
-      skills: [multiplication1._id, multiplication2._id, multiplication3._id, multiplication4._id]
-    }, {
-      name: 'Division',
-      skills: [division1._id, division2._id, division3._id, division4._id]
-    }, {
-      name: 'Rounding',
-      skills: [rounding1._id, rounding2._id, rounding3._id]
+    rootSkill.saveAsync().then(function() {
+    additionSkill.saveAsync().then(function() {
+      multiplicationSkill.saveAsync().then(function() {
+        divisionSkill.saveAsync().then(function() {
+          roundingSkill.saveAsync()
+          })
+        })
+      })
     })
+
   })
+
+User.find({}).removeAsync()
+  .then(function() {
+    User.createAsync({
+        provider: 'local',
+        name: 'Test User',
+        type: 'student',
+        email: 'test@example.com',
+        password: 'test',
+        studentData: {
+          skillRoot: rootSkill._id
+        }
+      }, {
+        provider: 'local',
+        role: 'admin',
+        name: 'Admin',
+        email: 'admin@example.com',
+        password: 'admin'
+      }, {
+        provider: 'local',
+        name: 'A Teacher',
+        type: 'teacher',
+        email: 'teacher@example.com',
+        password: 'test',
+        teacherData: {
+          classes: [{
+            name: 'Math'
+          }, {
+            name: 'Algebra'
+          }]
+        }
+      })
+      .then(function() {
+        console.log('finished populating users');
+      });
+  });

@@ -67,6 +67,10 @@ var UserSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Badge'
     }],
+    skillRoot: {
+      type: Schema.Types.ObjectId,
+      ref: 'Skilltree'
+    },
     requests: [RequestSchema],
     teacher: {
       type: Schema.Types.ObjectId,
