@@ -86,9 +86,8 @@
         var clock = this.$.clockdiv
         var minutesSpan = clock.querySelector('.minutes');
         var secondsSpan = clock.querySelector('.seconds');
-        var that = this;
         function updateClock() {
-          var t = that.getTimeRemaining(endtime);
+          var t = this.getTimeRemaining(endtime);
 
           minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
           secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
@@ -98,8 +97,8 @@
           }
         }
 
-        updateClock();
-        var timeinterval = setInterval(updateClock, 1000);
+        var clock = updateClock.bind(this);
+        var timeinterval = setInterval(clock, 1000);
       },
       ready: function() {
         this.initializeClock(10);
