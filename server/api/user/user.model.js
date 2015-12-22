@@ -93,7 +93,8 @@ var UserSchema = new Schema({
         type: Boolean,
         default: false
       }
-    }
+    },
+    times: {}
   },
   //teacher properties
   teacherData: {
