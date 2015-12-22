@@ -4,7 +4,8 @@ class LoginController {
   //start-non-standard
   user = {};
   errors = {};
-  submitted = 'false';
+  signin = 'false';
+  errormessage = '';
   //end-non-standard
 
   constructor(Auth, $state) {
@@ -31,7 +32,7 @@ class LoginController {
   }
 
   polymerChange = function() {
-    if (this.submitted === 'true') {
+    if (this.signin === 'true') {
       this.loginPolymer();
     }
   }
@@ -40,17 +41,18 @@ class LoginController {
     this.Auth.login({
       email: this.user.email,
       password: this.user.password
-    }, function() {
+    })
+    .then(() => {
+      // Logged in, redirect to home
       this.$state.go('main');
-    }.bind(this))
-    /*
+    })
     .catch(err => {
       this.user.email = '';
       this.user.password = '';
-      this.submitted = 'false';
-      console.log(err.message);
-    });*/
-  }
+      alert(err.message);
+      this.signin = 'false';
+    });
+  };
 }
 
 angular.module('hrr10MjbeApp')

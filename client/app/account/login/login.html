@@ -1,74 +1,18 @@
-<style>
-  .stretch-container {
-    width: 100%;
-    margin: 0 auto;
-    padding-top: 25px;
-    padding-bottom: 25px;
-    text-align: center;
-    background-color: #4AD9D9;
-    display: block;
-    overflow: auto;
-  }
-</style>
-<div class="stretch-container" style="background-color: #4AD9D9">
-  <h1>{{vm.user.email}}</h1>
-  <h1>Thesis Academy</h1>
-  <auth-card useremail="{{vm.user.email}}" userpass="{{vm.user.password}}" submitted="{{vm.submitted}}" event-namespace="vm" bind-polymer></auth-card>
-  <h1>{{vm.user.email}}</h1>
-
-  <p>This is some text. This is more text.</p>
-  <p>This is some text. This is more text.</p>
-  <p>This is some text. This is more text.</p>
-</div>
-<div class="stretch-container" style="background-color: #E9F1DF">
-  <h2>Not Your Ordinary Learning Experience</h2>
-  <p>We make Khan Academy</p>
-  <p>look like Yawn Academy</p>
-</div>
-
-
-<div class="stretch-container" style="background-color: #F5A503">
-  <h2>Battle-Tested Problems</h2>
-
-
-  <div class="horizontal around-justified layout">
-    <paper-card heading="Algebra 1" elevation="1" animated-shadow="false">
-      <div class="card-content">
-        <paper-button raised>Go</paper-button>
-      </div>
-    </paper-card>
-    <paper-card heading="Algebra 2" elevation="1" animated-shadow="false">
-      <div class="card-content">
-        <paper-button raised>Go</paper-button>
-      </div>
-    </paper-card>
-    <paper-card heading="Algebra X" elevation="1" animated-shadow="false">
-      <div class="card-content">
-        <paper-button raised>Go</paper-button>
-      </div>
-    </paper-card>
+<div class="flex horizontal center-justified layout">
+  <div style="margin-top: 50px">
+    <auth-card bind-polymer
+      header="Sign In" 
+      useremail="{{vm.user.email}}" 
+      userpass="{{vm.user.password}}" 
+      signin="{{vm.signin}}" 
+      errormessage="{{vm.errormessage}}"
+      event-namespace="vm">
+    </auth-card>
+    <p style="text-align: center"><a ui-sref="signup">Create an account.</a></p>
   </div>
-
-
-  <p><em>Algorithms concocted by Ben Pochily.</em></p>
 </div>
 
-
-<div class="stretch-container" style="background-color: #E9F1DF">
-  <h2>Team Thesis</h2>
-  <p>Mike.</p>
-  <p>Ben.</p>
-  <p>Eric.</p>
-  <p>Jeff.</p>
-  <p>Einstein.</p>
-</div>
-<div class="stretch-container"  style="background-color: #4AD9D9">
-  <h2>Now what?</h2>
-  <p>You should join.</p>
-</div>
-
-
-<!-- 
+<!--
 <div class="container">
   <div class="row">
     <div class="col-sm-12">
