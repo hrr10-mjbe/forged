@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <base href="/">
-    <title></title     <meta name="description" content="">
+    <title></title><meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(client) app/vendor.css -->
@@ -39,24 +39,25 @@
     <link rel="import" href="elements/elements.html">
   </head>
   <body ng-app="hrr10MjbeApp" unresolved class="fullbleed layout vertical">
-
+    <div ng-controller="NavbarCtrl" class="name-container" ng-show="loggedIn">
+      <p>Hello, {{name}}</p>
+    </div>
     <!--[if lt IE 7]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
-
     <!-- Add your site or application content here -->
       <paper-header-panel class="flex" main mode="waterfall">
         <!-- Main Toolbar -->
 
         <paper-toolbar ng-controller="NavbarCtrl" style="background:#FF3B30">
-          <div class="title top">Thesis Academy</div>
-          <div class="top" ng-show="loggedIn">Hello {{name}}</div>
+          <div class="title top">TORCHCADEMY</div>
+<!--           <div class="top" ng-show="loggedIn">Hello {{name}}</div> -->
           <div class="horizontal layout">
             <paper-tabs>
               <paper-tab ui-sref="main" ng-show="loggedIn">Home</paper-tab>
               <paper-tab ui-sref="landing" ng-show="!loggedIn">Home</paper-tab>
               <paper-tab ui-sref="profile" ng-show="loggedIn">Profile</paper-tab>
-              <paper-tab ui-sref="about">About</paper-tab>
+              <paper-tab ui-sref="about" ng-show="!loggedIn">About</paper-tab>
               <paper-tab ui-sref="badges" ng-show="loggedIn">Badges</paper-tab>
               <paper-tab ui-sref="dashboard" ng-show="isTeacher">Dashboard</paper-tab>
               <paper-tab ui-sref="login" ng-show="!loggedIn">Sign In</paper-tab>
