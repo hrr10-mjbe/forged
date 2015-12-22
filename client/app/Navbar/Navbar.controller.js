@@ -6,11 +6,12 @@ angular.module('hrr10MjbeApp')
       Auth.isLoggedIn(function(is) {
         $scope.loggedIn = is;
       })
-      Auth.isTeacher(function(is) {
+      /*Auth.isTeacher(function(is) {
         $scope.isTeacher = is;
-      })
+      })*/
       Auth.getCurrentUser(function(user) {
         $scope.name = user.name;
+        $scope.isTeacher = user.type === 'teacher';
       })
     })
   });

@@ -11,12 +11,11 @@ angular.module('hrr10MjbeApp')
       if (user) return cb(user);
       Auth.isLoggedIn(function(is) {
         if (is) {
-          Auth.getCurrentUser(function(res) {           
-              user = res;
-              cb(user);
-            })
-          }
-        else {
+          Auth.getCurrentUser(function(res) {
+            user = res;
+            cb(user);
+          })
+        } else {
           if (defaultUser) return cb(null);
           $http({
             method: 'GET',
@@ -25,18 +24,20 @@ angular.module('hrr10MjbeApp')
             defaultUser = res.data;
             console.log(defaultUser);
             cb(null);
-          })          
+          })
         }
       })
     }
 
-    var save = function() {
+    var save = function(cb) {
       getUser(function(student) {
         student.$update({}, function(res) {
           console.log('Saved and got: ');
           console.log(res.studentData);
           user.studentData = res.studentData;
+          Util.safeCb(cb)();
         }, function(err) {
+          Util.safeCb(cb)();
           console.log(err);
         })
       })
@@ -55,7 +56,7 @@ angular.module('hrr10MjbeApp')
         getUser(function(user) {
           user.studentData = response.data.studentData;
         })
-          cb(response.status);
+        cb(response.status);
       }, function errorCallback(response) {
         cb(response.status);
       });
@@ -70,20 +71,25 @@ angular.module('hrr10MjbeApp')
     }
 
     this.addOrUpdateSkill = function(skillId, status) {
-      getUser(function(user) {
-        if (!user) return;
-        Skills.getSkill(skillId, function(skill) {
-          for (var i = 0; i < user.studentData.skills.length; i++) {
-            if (user.studentData.skills[i].skill._id === skillId) {
-              user.studentData.skills[i].status = status;
-              return save();
+      this.addPointsForSkill(skillId, function() {
+        getUser(function(user) {
+          if (!user) return;
+          Skills.getSkill(skillId, function(skill) {
+            console.log('found skill');
+            for (var i = 0; i < user.studentData.skills.length; i++) {
+              if (user.studentData.skills[i].skill._id === skillId) {
+                console.log('has skill');
+                user.studentData.skills[i].status = status;
+                return save();
+              }
             }
-          }
-          user.studentData.skills.push({
-            skill: skill,
-            status: status
-          });
-          save();
+            console.log('pushing skill');
+            user.studentData.skills.push({
+              skill: skill,
+              status: status
+            });
+            save();
+          })
         })
       })
     }
@@ -134,6 +140,19 @@ angular.module('hrr10MjbeApp')
       })
     }
 
+    this.addPointsForSkill = function(skillId, cb) {
+      getUser(function(user) {
+        for (var i = 0; i < user.studentData.skills.length; i++) {
+          if (skillId === user.studentData.skills[i].skill._id) {
+            user.studentData.points += 50;
+            return save(cb);
+          }
+        }
+        user.studentData.points += 100;
+        save(cb);
+      })
+    }
+
     this.getBadges = function(cb) {
       getUser(function(user) {
         console.log(user);
@@ -164,6 +183,18 @@ angular.module('hrr10MjbeApp')
         if (!user) return;
         user.studentData.modifications[mod] = val;
         save();
+      })
+    }
+
+    this.getLeaderboard = function(cb) {
+      getUser(function(user) {
+        if (!user) return cb(null);
+        $http({
+            method: 'GET',
+            url: '/api/users/leaderboard'            
+          }).then(function(res) {
+            cb(res.data);
+          })
       })
     }
   });

@@ -65,7 +65,7 @@ exports.create = function(req, res, next) {
 /**
  * Get a single user
  */
-exports.show = function(req, res, next) {
+/*exports.show = function(req, res, next) {
   var userId = req.params.id;
 
   User.findByIdAsync(userId)
@@ -78,7 +78,7 @@ exports.show = function(req, res, next) {
     .catch(function(err) {
       return next(err);
     });
-};
+};*/
 
 /**
  * Deletes a user
@@ -264,6 +264,7 @@ exports.accept = function(req, res, next) {
         .then(function() {
           User.findByIdAsync(req.user._id).then(function(student) {
             student.studentData.teacher = req.body.request.teacher._id;
+            student.studentData.class = {_id: req.body.request.class._id, name: req.body.request.class.name};
             student.studentData.requests.pull(req.body.request._id);
             student.saveAsync()
               .then(function() {
@@ -272,6 +273,33 @@ exports.accept = function(req, res, next) {
           })
         })
     })
+}
+
+exports.leaderboard = function(req, res, next) {
+  console.log('got');
+  console.log(req.user.studentData.teacher);
+  User.findById(req.user.studentData.teacher)
+  .populate({
+      path: 'teacherData.classes',
+      populate: {
+        path: 'students'
+      }
+    })
+  .exec(function(err, teacher) {
+    if (err)
+      res.status(404).end();
+    var theClass = teacher.teacherData.classes.id(req.user.studentData.myClass._id);
+    console.log(theClass);
+    var result = [];
+    for (var i = 0; i < theClass.students.length; i++) {
+      result.push({name: theClass.students[i].name, points: theClass.students[i].studentData.points});
+    }
+    console.log(result);
+    result.sort(function(a, b) {
+      return b.points - a.points;
+    })
+    res.json(result);
+  })
 }
 
 /**
