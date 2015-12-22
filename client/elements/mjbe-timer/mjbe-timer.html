@@ -1,131 +1,109 @@
 <dom-module id="mjbe-timer">
-    <template>
-        <style>
+  <template>
+    <style>
+      :host {
+        text-align: center;
+        background: #00ECB9;
+        font-family: sans-serif;
+        font-weight: 100;
+      }
 
-        </style>
-        <div id="face">
-            <span id="minutes0">{{time}}</span>
-        </div>
-        <button class="btn timer-start" on-click="{{start}}" disabled?="{{active}}">Start</button>
-        <button class="btn timer-stop" on-click="{{stop}}">Stop</button>
-        <button class="btn timer-reset" on-click="{{reset}}">Reset</button>
-    </template>
-    <script>
+      h1 {
+        color: #396;
+        font-weight: 100;
+        font-size: 40px;
+        margin: 40px 0px 20px;
+      }
+
+      #clockdiv {
+        font-family: sans-serif;
+        color: #fff;
+        display: inline-block;
+        font-weight: 100;
+        text-align: center;
+        font-size: 30px;
+      }
+
+      #clockdiv > div {
+        padding: 10px;
+        background: #00BF96;
+        display: inline-block;
+      }
+
+      #clockdiv div > span {
+        padding: 15px;
+        background: #00816A;
+        display: inline-block;
+      }
+
+      .smalltext {
+        padding-top: 5px;
+        font-size: 16px;
+      }
+    </style>
+    <div id="clockdiv">
+      <div>
+        <span class="minutes"></span>
+        <div class="smalltext">Minutes</div>
+      </div>
+      <div>
+        <span class="seconds"></span>
+        <div class="smalltext">Seconds</div>
+      </div>
+    </div>
+  </template>
+  <script>
+
     Polymer({
-    is: 'mjbe-timer',
-    properties: {
-        // mode: 'stopwatch', //'timer'
-      // mode: {
-      //   type: String,
-      //   value: 'stopwatch'
-      // },
-      // time: {
-      //   type: Number,
-      //   value: 0
-      // },
-      // offset: {
-      //   type: Number,
-      //   value: 0
-      // },
-      // autostart: {
-      //   type: Boolean,
-      //   value: true
-      // },
-      // active: {
-      //   type: Boolean,
-      //   value: true
-      // },
-      // timer: {
-      //   type: Boolean,
-      //   value: true
-      // }
-        // startTime: null,
-        // pauseTime: null,
-    },
+      is: 'mjbe-timer',
+      properties: {
+        time: {
+          type: Number,
+          value: 0
+        },
+        seconds: {
+          type: Number,
+          value: 0
+        },
+        minutes: {
+          type: Boolean,
+          value: false
+        }
+      },
+      getTimeRemaining: function(endtime) {
+        var t = Date.parse(endtime) - Date.now();
+        var seconds = Math.floor((t / 1000) % 60);
+        var minutes = Math.floor((t / 1000 / 60) % 60);
+        return {
+          'total': t,
+          'minutes': minutes,
+          'seconds': seconds
+        };
+      },
+      initializeClock: function(timeInMinutes) {
+        var endtime = new Date(Date.now() + timeInMinutes*60*1000);
+        // var clock = document.getElementById('clockdiv');
+        var clock = this.$.clockdiv
+        var minutesSpan = clock.querySelector('.minutes');
+        var secondsSpan = clock.querySelector('.seconds');
+        var that = this;
+        function updateClock() {
+          var t = that.getTimeRemaining(endtime);
 
-    start: function() {
-        this.active = true;
-        this.startTime = Date.now();
-        switch (this.mode) {
-            case 'stopwatch':
-                this.fire('onWatchStart', {
-                    startTime: this.startTime
-                });
-                this.uptick();
-                break;
-            case 'timer':
-                this.fire('onTimerStart', {
-                    startTime: this.startTime
-                });
-                this.downtick();
-                break;
-            default:
-                break;
-        }
-    },
-    stop: function() {
-        this.active = false;
-        return false;
-    },
-    uptick: function() {
-        var elapsed = Math.floor((Date.now() - this.startTime));
-        if (!this.active) {
-            this.fire('onWatchStop', {
-                duration: elapsed
-            })
-            return false;
-        }
-        this.fire("tick", {
-            elapsed: elapsed
-        });
-        this.time = this.setTime(elapsed + this.offset);
-        this.async(this.uptick, null, 10);
-    },
-    downtick: function() {
-        var elapsed = Math.floor((Date.now() - this.startTime)),
-            remaining = this.offset - elapsed;
+          minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+          secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
 
-        if (!this.active) {
-            this.fire('onTimerStop', {
-                duration: elapsed,
-                remaining: remaining
-            })
-            return false;
+          if (t.total <= 0) {
+            clearInterval(timeinterval);
+          }
         }
-        if (remaining <= 0) {
-            this.time = this.setTime(0);
-            this.stop();
-            return false;
-        } else {
-            this.time = this.setTime(remaining);
-            this.async(this.downtick, null, 100);
-        }
-    },
-    reset: function() {
-        this.fire('onReset');
-        this.active = false;
-        this.time = this.setTime(this.offset);
-    },
-    setTime: function(duration) {
-        try {
-            var s = parseInt((duration / 1000) % 60),
-                m = parseInt((duration / (1000 * 60)) % 60),
-                ms = String(duration).slice(-3);
 
-            m = (m < 10) ? "0" + m : m;
-            s = (s < 10) ? "0" + s : s;
-
-            return m + ":" + s + "." + ms;
-        } catch (e) {
-            alert(e);
-        }
-    },
-    ready: function() {
-        this.reset();
-        if (this.autostart === true) {
-            this.start();
-        }
-    }
+        updateClock();
+        var timeinterval = setInterval(updateClock, 1000);
+      },
+      ready: function() {
+        this.initializeClock(10);
+      }
     });
   </script>
 </dom-module>
