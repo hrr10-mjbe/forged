@@ -7,6 +7,7 @@ import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
+import DefaultUser from '../defaultuser/defaultuser.controller';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -45,21 +46,22 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function(req, res, next) {
-  var newUser = new User(req.body);
-  newUser.provider = 'local';
-  newUser.role = 'user';
-  newUser.saveAsync()
-    .spread(function(user) {
-      var token = jwt.sign({
-        _id: user._id
-      }, config.secrets.session, {
-        expiresInMinutes: 60 * 5
-      });
-      res.json({
-        token: token
-      });
-    })
-    .catch(validationError(res));
+  DefaultUser.makeUser(req.body, function(newUser) {
+    newUser.provider = 'local';
+    newUser.role = 'user';
+    newUser.saveAsync()
+      .spread(function(user) {
+        var token = jwt.sign({
+          _id: user._id
+        }, config.secrets.session, {
+          expiresInMinutes: 60 * 5
+        });
+        res.json({
+          token: token
+        });
+      })
+      .catch(validationError(res));
+  });
 };
 
 /**
