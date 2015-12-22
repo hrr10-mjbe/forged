@@ -5,6 +5,7 @@ class SignupController {
   user = {};
   errors = {};
   submitted = false;
+  signUp = 'false';
   //end-non-standard
 
   constructor(Auth, $state) {
@@ -37,6 +38,31 @@ class SignupController {
       });
     }
   }
+
+  polymerChange = function() {
+    console.log('polymerchange')
+    if (this.signUp === 'true') {
+      this.signUpPolymer();
+    }
+  }
+
+  signUpPolymer = function() {
+    this.Auth.login({
+      email: this.user.email,
+      password: this.user.password
+    })
+    .then(() => {
+      // Logged in, redirect to home
+      this.$state.go('main');
+    })
+    .catch(err => {
+      this.user.email = '';
+      this.user.password = '';
+      this.user.name = '';
+      this.signUp = 'false';
+      alert(err.message);
+    });
+  };
 }
 
 angular.module('hrr10MjbeApp')
