@@ -18,7 +18,7 @@ angular.module('hrr10MjbeApp')
                           $state.current.referrer ||
                           'main';
           Auth.logout();
-          $state.go('login');
+          $state.go('landing');
         }
       })
       .state('signup', {
