@@ -97,7 +97,7 @@ describe('User API Router:', function() {
 
   });
 
-   describe('POST /api/users/accept', function() {
+  describe('POST /api/users/accept', function() {
 
     it('should be authenticated and route to user.controller.accept', function() {
       expect(routerStub.post
@@ -107,7 +107,7 @@ describe('User API Router:', function() {
 
   });
 
-   describe('POST /api/users/invite', function() {
+  describe('POST /api/users/invite', function() {
 
     it('should be authenticated and route to user.controller.invite', function() {
       expect(routerStub.post
@@ -117,7 +117,7 @@ describe('User API Router:', function() {
 
   });
 
-   describe('GET /api/users/leaderboard', function() {
+  describe('GET /api/users/leaderboard', function() {
 
     it('should be authenticated and route to user.controller.leaderboard', function() {
       expect(routerStub.get
