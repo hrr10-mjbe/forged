@@ -51,7 +51,7 @@
       <template is="dom-repeat" items="{{classes}}">
         <paper-tab>{{item.name}}</paper-tab>
       </template>
-      <paper-tab>Add class...</paper-tab>
+      <paper-tab on-tap="openModal">Add class...</paper-tab>
     </paper-tabs>
     <div class="tile d3">
       <span>[[item.value]]</span>
@@ -62,6 +62,13 @@
     <div class="tile mod">
       <span>Modifications</span>
     </div>
+    <paper-dialog id="modal" modal>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <div class="buttons">
+        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
+      </div>
+    </paper-dialog>
+     <paper-button data-dialog="modal">modal dialog</paper-button>
   </template>
 </dom-module>
 <script>
@@ -133,6 +140,9 @@ Polymer({
     } catch (e) {
       return [];
     }
-  }
+  },
+  openModal: function() {
+    this.$.modal.open();
+  },
 });
 </script>
