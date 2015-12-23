@@ -74,7 +74,7 @@ exports.create = function(req, res, next) {
       res.json({
         token: token
       });
-    });
+    })
     .catch(validationError(res));
 >>>>>>> before refactor
 };
@@ -106,7 +106,7 @@ exports.changePassword = function(req, res, next) {
         return user.saveAsync()
           .then(function() {
             res.status(204).end();
-          });
+          })
           .catch(validationError(res));
       } else {
         return res.status(403).end();
@@ -185,6 +185,8 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
+      console.log('got class');
+      console.log(req.body.theClass);
       user.studentData.requests.push({
         teacher: {
           _id: req.user._id,
