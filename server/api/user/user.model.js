@@ -1,11 +1,9 @@
 'use strict';
 
 import crypto from 'crypto';
-import Badge from '../badge/badge.model';
 import Class from './class.model';
 import Request from './request.schema';
 import SkillStatus from './skillstatus.schema';
-import Skill from '../skill/skill.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
@@ -32,38 +30,38 @@ var UserSchema = new Schema({
   //student properties
   //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
   studentData: {
-    points: {
+    points: { //total earned points
       type: Number,
       default: 0
     },
-    skills: [SkillStatus],
-    badges: [{
+    skills: [SkillStatus], //array of SkillStatusSchemas, each containing a reference to a skill and the user's progress
+    badges: [{ //array of earned badges
       type: Schema.Types.ObjectId,
       ref: 'Badge'
     }],
-    skillRoot: {
+    skillRoot: { //the skilltree node from which skills should be displayed for this user
       type: Schema.Types.ObjectId,
       ref: 'Skilltree'
     },
-    requests: [Request],
-    teacher: {
+    requests: [Request], //array of requests from teachers
+    teacher: { //this student's teacher
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    myClass: {
+    myClass: { //this student's class
       name: String,
         _id: Schema.Types.ObjectId
     },
-    modifications: {
-      showTimer: {
+    modifications: { // UI/behavior modifications to apply to this student
+      showTimer: { //whether a timer should be shown on the problems page
         type: Boolean,
         default: false
       },
-      showWhiteboard: {
+      showWhiteboard: { //whether the student can use the whiteboard on the problems page
         type: Boolean,
         default: true
       },
-      showLeaderboard: {
+      showLeaderboard: { //whether to show the student a leaderboard of the points of other students in her class
         type: Boolean,
         default: false
       }
@@ -73,8 +71,8 @@ var UserSchema = new Schema({
   
   //teacher properties
   teacherData: {
-    classes: [Class.schema],
-    pendingStudents: [Request]
+    classes: [Class.schema], //list of the teachers classes, with student information for each
+    pendingStudents: [Request] //list of requests sent to students but not yet accepted
   }
 });
 
