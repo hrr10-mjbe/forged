@@ -62,14 +62,11 @@
     <div class="tile mod">
       <span>Modifications</span>
     </div>
-    <paper-dialog id="addClass" modal>          
-    <paper-input label="Class name" value="{{username::input}}" type="text" autofocus></paper-input>
-
-            <paper-button raised dialog-confirm autofocus on-tap="createClass">Enter</paper-button>
-            <paper-button dialog-confirm autofocus>Cancel</paper-button>
-
+    <paper-dialog id="addClass" modal>
+      <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus></paper-input>
+      <paper-button raised dialog-confirm on-tap="createClass">Enter</paper-button>
+      <paper-button dialog-confirm autofocus>Cancel</paper-button>
     </paper-dialog>
-     <paper-button data-dialog="modal">modal dialog</paper-button>
   </template>
 </dom-module>
 <script>
@@ -87,6 +84,12 @@ Polymer({
     },
     classes: {
       computed: 'parseClasses(loadclasses)'
+    },
+    submitclass: {
+      notify: true
+    },
+    classname: {
+      notify: true
     },
     config: {
       type: Array,
@@ -145,5 +148,10 @@ Polymer({
   openModal: function() {
     this.$.addClass.open();
   },
+  createClass: function() {
+    this.submitclass = true;
+    console.log('polymer');
+    console.log(this.classname);
+  }
 });
 </script>

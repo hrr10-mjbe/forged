@@ -54,10 +54,11 @@ angular.module('hrr10MjbeApp')
     }
 
     $scope.polymerChange = function() {
-      if ($scope.selectedClass) {
+      /*if ($scope.selectedClass) {
         $state.go('classprogress', {
           id: $scope.selectedClass
         });
-      }
-    }
+      }*/
+      console.log('change');
+      console.log(className);
   });
