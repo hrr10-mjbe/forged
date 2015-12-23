@@ -6,112 +6,156 @@ The complete set of contributors may be found at http://polymer.github.io/CONTRI
 Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
-
 <dom-module id="animated-grid">
   <template>
     <style>
-      :host {
-        display: block;
-        background: #000;
-      }
-      .tile {
-        display: inline-block;
-        float: left;
-        vertical-align: top;
-        @apply(--paper-font-title);
-        @apply(--layout-vertical);
-        @apply(--layout-center-center);
-      }
-      .d3 {
-        position:absolute;
-        background: var(--google-red-100);
-        height: 100%;
-        width: 50%;
-        color: red;        
-      }
-      .list {
-        position:absolute;
-        background: var(--google-green-100);
-        left: 50%;
-        height: 80%;
-        width: 60%;
-      }
-       .mod {
-        position: absolute;
-        background: var(--google-blue-100);
-        top: 80%;
-        left: 50%;
-        height: 20%;
-        width: 60%;
-      }
+    :host {
+      display: block;
+      background: #000;
+    }
+    
+    .tile {
+      display: inline-block;
+      float: left;
+      vertical-align: top;
+      @apply(--paper-font-title);
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+    }
+    
+    .d3 {
+      position: absolute;
+      background: var(--google-red-100);
+      height: 100%;
+      width: 50%;
+      color: red;
+    }
+    
+    .list {
+      position: absolute;
+      background: var(--google-green-100);
+      left: 50%;
+      height: 80%;
+      width: 60%;
+    }
+    
+    .mod {
+      position: absolute;
+      background: var(--google-blue-100);
+      top: 80%;
+      left: 50%;
+      height: 20%;
+      width: 60%;
+    }
     </style>
-    <paper-tabs selected="0" scrollable>
-        <paper-tab style="color: white;">NUMBER ONE ITEM</paper-tab>
-        <paper-tab>ITEM TWO</paper-tab>
-        <paper-tab>THE THIRD ITEM</paper-tab>
-        <paper-tab>THE ITEM FOUR</paper-tab>
-        <paper-tab>FIFTH</paper-tab>
-        <paper-tab>THE SIXTH TAB</paper-tab>
-        <paper-tab>NUMBER SEVEN</paper-tab>
-        <paper-tab>EIGHT</paper-tab>
-        <paper-tab>NUMBER NINE</paper-tab>
-        <paper-tab>THE TENTH</paper-tab>
-        <paper-tab>THE ITEM ELEVEN</paper-tab>
-        <paper-tab>TWELFTH ITEM</paper-tab>
-
-      </paper-tabs>
-
+    <paper-tabs selected="0" scrollable id="toolbar">
+      <paper-tab style="color: white;">NUMBER ONE ITEM</paper-tab>
+      <paper-tab>ITEM TWO</paper-tab>
+      <paper-tab>THE THIRD ITEM</paper-tab>
+      <paper-tab>THE ITEM FOUR</paper-tab>
+      <paper-tab>FIFTH</paper-tab>
+      <paper-tab>THE SIXTH TAB</paper-tab>
+      <paper-tab>NUMBER SEVEN</paper-tab>
+      <paper-tab>EIGHT</paper-tab>
+      <paper-tab>NUMBER NINE</paper-tab>
+      <paper-tab>THE TENTH</paper-tab>
+      <paper-tab>THE ITEM ELEVEN</paper-tab>
+      <paper-tab>TWELFTH ITEM</paper-tab>
+    </paper-tabs>
     <div class="tile d3">
-        <span>[[item.value]]</span>
-      </div>
-      <div class="tile  list">
-       <mjbe-collapse-list></mjbe-collapse-list> 
-      </div>
-      <div class="tile mod">
-        <span>Modifications</span>
-      </div>
+      <span>[[item.value]]</span>
+    </div>
+    <div class="tile  list">
+      <mjbe-collapse-list></mjbe-collapse-list>
+    </div>
+    <div class="tile mod">
+      <span>Modifications</span>
+    </div>
   </template>
 </dom-module>
-
 <script>
-  Polymer({
-    is: 'animated-grid',
-    behaviors: [
-      Polymer.NeonSharedElementAnimatableBehavior
-    ],
-    properties: {
-      config: {
-        type: Array,
-        value: function() {
-          return [
-            {value: 1, color: 'blue'},
-            {value: 2, color: 'red'},
-            {value: 3, color: 'blue'}            
-          ]
-        }
-      },
-      animationConfig: {
-        type: Object,
-        value: function() {
-          return {
-            'entry': [{
-              name: 'cascaded-animation',
-              animation: 'transform-animation',
-              transformFrom: 'translateY(100%)',
-              transformTo: 'none',
-              timing: {
-                delay: 50
-              }
-            }]
-          }
-        }
+Polymer({
+  is: 'animated-grid',
+  behaviors: [
+    Polymer.NeonSharedElementAnimatableBehavior,
+    Polymer.NeonAnimatableBehavior,
+    Polymer.NeonAnimationRunnerBehavior
+  ],
+  properties: {
+    config: {
+      type: Array,
+      value: function() {
+        return [{
+          value: 1,
+          color: 'blue'
+        }, {
+          value: 2,
+          color: 'red'
+        }, {
+          value: 3,
+          color: 'blue'
+        }]
       }
     },
-    attached: function() {
-      this.async(function() {
-        var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
-        this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
-      });
+    animationConfig: {
+      type: Object,
+      value: function() {
+        return {
+          'entry': [{
+            name: 'cascaded-animation',
+            animation: 'transform-animation',
+            transformFrom: 'translateY(100%)',
+            transformTo: 'none',
+            timing: {
+              delay: 50
+            }
+          }],
+          'toolbar': [{
+            name: 'slide-down-animation',
+            node: this.$.toolbar
+          }, {
+            animatable: this.$.grid,
+            type: 'entry'
+          }]
+        }
+      }
     }
-  });
+  },
+  attached: function() {
+    this.async(function() {
+      var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+      this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+      this.playAnimation('toolbar');
+    });
+  }
+});
+
+/*animationConfig: {
+  type: Object,
+  value: function() {
+    return {
+      'entry': [{
+        name: 'slide-down-animation',
+        node: this.$.toolbar
+      }, {
+        animatable: this.$.grid,
+        type: 'entry'
+      }]
+    };
+  }
+}
+},
+attached: function() {
+    setTimeout(function() {
+      console.log('playing')
+      this.style.visibility = 'visible';
+      this.playAnimation('entry');
+    }.bind(this), 0);
+  },
+  show: function() {
+    console.log('showing');
+    this.style.visibility = 'visible';
+    this.playAnimation('entry');
+  }
+});*/
 </script>
