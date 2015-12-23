@@ -151,20 +151,7 @@ exports.me = function(req, res, next) {
       }
     })
     .populate('studentData.teacher', 'name email')
-    .populate({
-      path: 'studentData.requests',
-      populate: {
-        path: 'student teacher',
-        select: 'name email'
-      }
-    })
-    .populate({
-      path: 'teacherData.pendingStudents',
-      populate: {
-        path: 'student teacher class',
-        select: 'name email'
-      }
-    })
+    
     .exec(function(err, user) {
       if (err) {
         return res.status(404).end();
