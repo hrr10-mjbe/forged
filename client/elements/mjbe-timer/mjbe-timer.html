@@ -76,10 +76,8 @@
         var secondsSpan = clock.querySelector('.seconds');
         var seconds = ~~secondsSpan.innerHTML;
         var minutes = ~~minutesSpan.innerHTML;
-        console.log(seconds, minutes);
 
         function updateClock() {
-
           seconds++
           if( seconds >= 60 ) {
             seconds = 0;
@@ -88,7 +86,6 @@
             minutesSpan.innerHTML = ('0' + minutes).slice(-2);
           }
           secondsSpan.innerHTML = ('0' + seconds).slice(-2);
-
         }
 
         var clock = updateClock.bind(this);
