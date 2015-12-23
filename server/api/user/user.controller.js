@@ -151,7 +151,6 @@ exports.me = function(req, res, next) {
       }
     })
     .populate('studentData.teacher', 'name email')
-    
     .exec(function(err, user) {
       if (err) {
         return res.status(404).end();
@@ -172,8 +171,6 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
-      console.log('got class');
-      console.log(req.body.theClass);
       user.studentData.requests.push({
         teacher: {
           _id: req.user._id,

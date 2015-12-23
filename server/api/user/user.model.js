@@ -8,9 +8,8 @@ var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
-//Note: changes to the schema that rely on relational data will need to be reflected in the normalize and denormalize functions
-//in the user controller
-
+//this schema obviously duplicates data from elsewhere
+//but it's immutable data so there's no harm in duplicating it and saving a populate()
 var RequestSchema = new Schema({
   student: {
     _id: Schema.Types.ObjectId,
@@ -55,6 +54,7 @@ var UserSchema = new Schema({
   facebook: {},
   google: {},
   github: {},
+
   //start custom properties
   type: String,
   //student properties
@@ -98,6 +98,7 @@ var UserSchema = new Schema({
     },
     times: {}
   },
+  
   //teacher properties
   teacherData: {
     classes: [Class.schema],
@@ -210,7 +211,6 @@ UserSchema
     }
   });
 
-//TODO: probably a lot of the controller logic should go here?
 /**
  * Methods
  */
