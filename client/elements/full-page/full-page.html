@@ -10,16 +10,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="full-page">
   <template>
     <style>
-      /*:host {
+      :host {
         background: black;
-        visibility: hidden;
+        /*visibility: hidden;*/
         @apply(--layout-vertical);
-      }*/
-           animated-grid {
+      }
+      animated-grid {
         height: calc(100% - 72px);
         @apply(--layout-flex);
       }
     </style>
+    <div id="toolbar" class="toolbar"></div>
 
     <animated-grid id="grid"></animated-grid>
 
@@ -27,10 +28,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 </dom-module>
 
 <script>
-console.log('loading full page');
 Polymer({
   is: 'full-page',
- /* behaviors: [
+  behaviors: [
     Polymer.NeonAnimatableBehavior,
     Polymer.NeonAnimationRunnerBehavior
   ],
@@ -50,9 +50,16 @@ Polymer({
       }
     }
   },
+  ready: function() {
+    setTimeout(function() {
+      console.log('playing')
+      this.playAnimation('entry');
+    }.bind(this), 2000);
+  },
   show: function() {
+    console.log('showing');
     this.style.visibility = 'visible';
-    this.playAnimation('entry');
-  }*/
+    this.playAnimation('entry');    
+  }
 });
 </script>
