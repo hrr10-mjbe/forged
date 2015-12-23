@@ -27,21 +27,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         position:absolute;
         background: var(--google-red-100);
         height: 100%;
-        width: 40%;
+        width: 50%;
         color: red;        
       }
       .list {
         position:absolute;
-        left: 40%;
+        background: var(--google-green-100);
+        left: 50%;
         height: 80%;
         width: 60%;
       }
        .mod {
         position: absolute;
+        background: var(--google-blue-100);
         top: 80%;
-        left: 40%;
+        left: 50%;
         height: 20%;
-        width: calc(60%);
+        width: 60%;
       }
     </style>
     <paper-tabs selected="0" scrollable>
@@ -63,11 +65,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="tile d3">
         <span>[[item.value]]</span>
       </div>
-      <div class="tile red-300 list">
+      <div class="tile  list">
         <span>[[item.value]]</span>
       </div>
-      <div class="tile blue-300 mod">
-        <span>[[item.value]]</span>
+      <div class="tile mod">
+        <span>Modifications</span>
       </div>
   </template>
 </dom-module>
