@@ -3,29 +3,11 @@
 import crypto from 'crypto';
 import Badge from '../badge/badge.model';
 import Class from './class.model';
+import RequestSchema from './request.schema';
 import Skill from '../skill/skill.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
-
-//this schema obviously duplicates data from elsewhere
-//but it's immutable data so there's no harm in duplicating it and saving a populate()
-var RequestSchema = new Schema({
-  student: {
-    _id: Schema.Types.ObjectId,
-    name: String,
-    email: String
-  },
-  teacher: {
-    _id: Schema.Types.ObjectId,
-    name: String,
-    email: String
-  },
-  class: {
-    name: String,
-      _id: Schema.Types.ObjectId
-  }
-});
 
 var SkillStatusSchema = new Schema({
   skill: {
