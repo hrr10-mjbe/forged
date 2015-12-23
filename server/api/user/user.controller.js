@@ -1,7 +1,5 @@
 'use strict';
 import User from './user.model';
-import Class from './class.model';
-import Badge from '../badge/badge.model';
 import Mongoose from 'mongoose';
 import passport from 'passport';
 import config from '../../config/environment';
@@ -117,30 +115,11 @@ exports.changePassword = function(req, res, next) {
     });
 };
 
-//must be kept up to date with schema
-//TODO it looks like some normalization happens automatically?
-var normalizeStudent = function(studentData) {
-  studentData.badges = studentData.badges.map(function(badge) {
-    return Mongoose.Types.ObjectId(badge._id);
-  });
-  return studentData;
-}
-
-var normalizeTeacher = function(teacherData) {
-  for (var i = 0; i < teacherData.classes.length; i++) {
-    teacherData.classes[i].students = teacherData.classes[i].students.map(function(student) {
-      return student._id;
-    });
-  }
-  return teacherData;
-}
-
-//data normalization in this and exports.me must be kept up to date
 exports.update = function(req, res, next) {
   User.findByIdAsync(req.user._id)
     .then(function(user) {
-      user.studentData = normalizeStudent(req.body.studentData);
-      user.teacherData = normalizeTeacher(req.body.teacherData);
+      user.studentData = req.body.studentData;
+      user.teacherData = req.body.teacherData;
       return user.saveAsync()
         .then(function() {
           exports.me(req, res, next);
