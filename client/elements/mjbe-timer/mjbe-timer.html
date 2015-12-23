@@ -76,8 +76,11 @@
         var secondsSpan = clock.querySelector('.seconds');
         var seconds = ~~secondsSpan.innerHTML;
         var minutes = ~~minutesSpan.innerHTML;
+        window.onblur = function() {window.blurred = true;};
+        window.onfocus = function() {window.blurred = false;};
 
         function updateClock() {
+          if( window.blurred ) { return; }
           seconds++
           if( seconds >= 60 ) {
             seconds = 0;
