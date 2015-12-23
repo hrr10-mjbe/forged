@@ -62,11 +62,12 @@
     <div class="tile mod">
       <span>Modifications</span>
     </div>
-    <paper-dialog id="modal" modal>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-      <div class="buttons">
-        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-      </div>
+    <paper-dialog id="addClass" modal>          
+    <paper-input label="Class name" value="{{username::input}}" type="text" autofocus></paper-input>
+
+            <paper-button raised dialog-confirm autofocus on-tap="createClass">Enter</paper-button>
+            <paper-button dialog-confirm autofocus>Cancel</paper-button>
+
     </paper-dialog>
      <paper-button data-dialog="modal">modal dialog</paper-button>
   </template>
@@ -142,7 +143,7 @@ Polymer({
     }
   },
   openModal: function() {
-    this.$.modal.open();
+    this.$.addClass.open();
   },
 });
 </script>
