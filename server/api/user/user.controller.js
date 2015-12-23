@@ -1,6 +1,5 @@
 'use strict';
 import User from './user.model';
-import Mongoose from 'mongoose';
 import passport from 'passport';
 import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
@@ -44,6 +43,7 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function(req, res, next) {
+<<<<<<< HEAD
   DefaultUser.makeUser(req.body, function(newUser) {
     newUser.provider = 'local';
     newUser.role = 'user';
@@ -60,25 +60,24 @@ exports.create = function(req, res, next) {
       })
       .catch(validationError(res));
   });
-};
-
-/**
- * Get a single user
- */
-/*exports.show = function(req, res, next) {
-  var userId = req.params.id;
-
-  User.findByIdAsync(userId)
-    .then(function(user) {
-      if (!user) {
-        return res.status(404).end();
-      }
-      res.json(user.profile);
-    })
-    .catch(function(err) {
-      return next(err);
+=======
+  var newUser = new User(req.body);
+  newUser.provider = 'local';
+  newUser.role = 'user';
+  newUser.saveAsync()
+    .spread(function(user) {
+      var token = jwt.sign({
+        _id: user._id
+      }, config.secrets.session, {
+        expiresInMinutes: 60 * 5
+      });
+      res.json({
+        token: token
+      });
     });
-};*/
+    .catch(validationError(res));
+>>>>>>> before refactor
+};
 
 /**
  * Deletes a user
@@ -93,7 +92,7 @@ exports.destroy = function(req, res) {
 };
 
 /**
- * Change a users password
+ * Change a user's password
  */
 exports.changePassword = function(req, res, next) {
   var userId = req.user._id;
@@ -107,7 +106,7 @@ exports.changePassword = function(req, res, next) {
         return user.saveAsync()
           .then(function() {
             res.status(204).end();
-          })
+          });
           .catch(validationError(res));
       } else {
         return res.status(403).end();
@@ -115,6 +114,9 @@ exports.changePassword = function(req, res, next) {
     });
 };
 
+/*
+ * Updates the logged-in user's student and teacher data
+ */
 exports.update = function(req, res, next) {
   User.findByIdAsync(req.user._id)
     .then(function(user) {
@@ -129,7 +131,7 @@ exports.update = function(req, res, next) {
 };
 
 /**
- * Get my info
+ * Get info for the logged-in user, populating relational data
  */
 exports.me = function(req, res, next) {
   var userId = req.user._id;
@@ -138,7 +140,8 @@ exports.me = function(req, res, next) {
     .populate({
       path: 'teacherData.classes',
       populate: {
-        path: 'students'
+        path: 'students',
+        select: '-salt -hashedPassword -studentData.requests'
       }
     })
     .populate({
@@ -164,13 +167,17 @@ exports.me = function(req, res, next) {
     })
     .exec(function(err, user) {
       if (err) {
-        return next(err);
+        return res.status(404).end();
       }
       res.json(user);
-    })
+    });
 };
 
+/**
+ * handles sending a stuent invitation to another user
+ */
 exports.invite = function(req, res, next) {
+  //first, look up the student we're inviting
   User.findOneAsync({
       email: req.body.email.toLowerCase()
     })
@@ -178,8 +185,6 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
-      console.log('got class');
-      console.log(req.body.theClass);
       user.studentData.requests.push({
         teacher: {
           _id: req.user._id,
