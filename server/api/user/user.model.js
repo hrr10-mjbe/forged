@@ -13,12 +13,14 @@ var authTypes = ['github', 'twitter', 'facebook', 'google'];
 
 var RequestSchema = new Schema({
   student: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    _id: Schema.Types.ObjectId,
+    name: String,
+    email: String
   },
   teacher: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
+    _id: Schema.Types.ObjectId,
+    name: String,
+    email: String
   },
   class: {
     name: String,
