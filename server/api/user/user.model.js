@@ -4,21 +4,11 @@ import crypto from 'crypto';
 import Badge from '../badge/badge.model';
 import Class from './class.model';
 import RequestSchema from './request.schema';
+import SkillStatus from './skillstatus.schema';
 import Skill from '../skill/skill.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
-
-var SkillStatusSchema = new Schema({
-  skill: {
-    type: Schema.Types.ObjectId,
-    ref: 'Skill'
-  },
-  status: {
-    type: Number,
-    default: 0
-  }
-})
 
 var UserSchema = new Schema({
   name: String,
@@ -46,7 +36,7 @@ var UserSchema = new Schema({
       type: Number,
       default: 0
     },
-    skills: [SkillStatusSchema],
+    skills: [SkillStatus],
     badges: [{
       type: Schema.Types.ObjectId,
       ref: 'Badge'
