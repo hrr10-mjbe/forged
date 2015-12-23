@@ -45,6 +45,12 @@
     }
     </style>
     <paper-tabs selected="0" scrollable id="classSelect">
+    <!--<template is="dom-repeat" items="{{classes}}">
+        <paper-card animatedShadow="true" elevation="1">
+          <paper-button style="color: blue" on-tap="selectClass">{{item.name}}</paper-button>
+          </a>
+        </paper-card>
+      </template>-->
       <paper-tab style="color: white;">NUMBER ONE ITEM</paper-tab>
       <paper-tab>ITEM TWO</paper-tab>
       <paper-tab>THE THIRD ITEM</paper-tab>
@@ -78,6 +84,13 @@ Polymer({
     Polymer.NeonAnimationRunnerBehavior
   ],
   properties: {
+    loadclasses: {
+      type: String,
+      notify: true
+    },
+    classes: {
+      computed: 'parseClasses(loadclasses)'
+    },
     config: {
       type: Array,
       value: function() {
@@ -124,6 +137,14 @@ Polymer({
       this.playAnimation('toolbar');
       this.playAnimation('entry');
     });
+  },
+  parseClasses: function(classes) {
+    try {
+      console.log(classes);
+      return JSON.parse(classes);
+    } catch (e) {
+      return [];
+    }
   }
 });
 </script>
