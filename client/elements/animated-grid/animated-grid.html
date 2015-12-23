@@ -5,10 +5,13 @@
       display: block;
       background: #000;
     }
-
     /*paper-tabs {
       height: 50px;
     }*/
+    
+    paper-tab {
+      color: white;
+    }
     
     .tile {
       display: inline-block;
@@ -45,24 +48,10 @@
     }
     </style>
     <paper-tabs selected="0" scrollable id="classSelect">
-    <!--<template is="dom-repeat" items="{{classes}}">
-        <paper-card animatedShadow="true" elevation="1">
-          <paper-button style="color: blue" on-tap="selectClass">{{item.name}}</paper-button>
-          </a>
-        </paper-card>
-      </template>-->
-      <paper-tab style="color: white;">NUMBER ONE ITEM</paper-tab>
-      <paper-tab>ITEM TWO</paper-tab>
-      <paper-tab>THE THIRD ITEM</paper-tab>
-      <paper-tab>THE ITEM FOUR</paper-tab>
-      <paper-tab>FIFTH</paper-tab>
-      <paper-tab>THE SIXTH TAB</paper-tab>
-      <paper-tab>NUMBER SEVEN</paper-tab>
-      <paper-tab>EIGHT</paper-tab>
-      <paper-tab>NUMBER NINE</paper-tab>
-      <paper-tab>THE TENTH</paper-tab>
-      <paper-tab>THE ITEM ELEVEN</paper-tab>
-      <paper-tab>TWELFTH ITEM</paper-tab>
+      <template is="dom-repeat" items="{{classes}}">
+        <paper-tab>{{item.name}}</paper-tab>
+      </template>
+      <paper-tab>Add class...</paper-tab>
     </paper-tabs>
     <div class="tile d3">
       <span>[[item.value]]</span>
@@ -140,7 +129,6 @@ Polymer({
   },
   parseClasses: function(classes) {
     try {
-      console.log(classes);
       return JSON.parse(classes);
     } catch (e) {
       return [];
