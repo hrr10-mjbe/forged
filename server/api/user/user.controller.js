@@ -276,8 +276,10 @@ exports.accept = function(req, res, next) {
 }
 
 exports.leaderboard = function(req, res, next) {
-  console.log('got');
-  console.log(req.user.studentData.teacher);
+  if (!req.user.studentData.teacher) {    
+    return res.status(400).end();
+  }  
+
   User.findById(req.user.studentData.teacher)
   .populate({
       path: 'teacherData.classes',
