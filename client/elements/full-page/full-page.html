@@ -12,7 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         background: black;
-        /*visibility: hidden;*/
+        visibility: hidden;
         @apply(--layout-vertical);
       }
       animated-grid {
@@ -50,12 +50,13 @@ Polymer({
       }
     }
   },
-  ready: function() {
-    setTimeout(function() {
+  attached: function() {
+      setTimeout(function() {
       console.log('playing')
+      this.style.visibility = 'visible';
       this.playAnimation('entry');
-    }.bind(this), 2000);
-  },
+    }.bind(this), 0);
+  },  
   show: function() {
     console.log('showing');
     this.style.visibility = 'visible';
