@@ -126,6 +126,7 @@ Polymer({
       var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
       this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
       this.playAnimation('toolbar');
+      this.playAnimation('entry');
     });
   }
 });
