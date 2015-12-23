@@ -108,7 +108,7 @@
       }
     }
     </style>
-    <!--<iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>-->
+    <iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>
     <paper-toolbar>
       <paper-icon-button icon="arrow-back" alt="Back" ui-sref="dashboard"></paper-icon-button>
       <div class="spacer"></div>
@@ -138,10 +138,10 @@
     Polymer({
       is: 'mjbe-collapse-list',
       properties: {
-        items: {
+        /*items: {
           type: Array,
           computed: 'parseData(data)'
-        },
+        },*/
         name: {
           type: String,
           notify: true
