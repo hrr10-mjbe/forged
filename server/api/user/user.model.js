@@ -3,7 +3,7 @@
 import crypto from 'crypto';
 import Badge from '../badge/badge.model';
 import Class from './class.model';
-import RequestSchema from './request.schema';
+import Request from './request.schema';
 import SkillStatus from './skillstatus.schema';
 import Skill from '../skill/skill.model';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
@@ -45,7 +45,7 @@ var UserSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: 'Skilltree'
     },
-    requests: [RequestSchema],
+    requests: [Request],
     teacher: {
       type: Schema.Types.ObjectId,
       ref: 'User'
@@ -74,7 +74,7 @@ var UserSchema = new Schema({
   //teacher properties
   teacherData: {
     classes: [Class.schema],
-    pendingStudents: [RequestSchema]
+    pendingStudents: [Request]
   }
 });
 
