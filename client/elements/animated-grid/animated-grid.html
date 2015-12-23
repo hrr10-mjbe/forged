@@ -5,6 +5,10 @@
       display: block;
       background: #000;
     }
+
+    paper-tabs {
+      height: 50px;
+    }
     
     .tile {
       display: inline-block;
@@ -18,7 +22,7 @@
     .d3 {
       position: absolute;
       background: var(--google-red-100);
-      height: 100%;
+      height: calc(100% - 50px);
       width: 50%;
       color: red;
     }
@@ -27,16 +31,16 @@
       position: absolute;
       background: var(--google-green-100);
       left: 50%;
-      height: 80%;
+      height: calc(80% - 50px);
       width: 60%;
     }
     
     .mod {
       position: absolute;
       background: var(--google-blue-100);
-      top: 80%;
+      top: calc(80% - 50px);
       left: 50%;
-      height: 20%;
+      height: calc(20% - 50px);
       width: 60%;
     }
     </style>
