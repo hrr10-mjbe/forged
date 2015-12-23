@@ -43,7 +43,6 @@ exports.index = function(req, res) {
  * Creates a new user
  */
 exports.create = function(req, res, next) {
-<<<<<<< HEAD
   DefaultUser.makeUser(req.body, function(newUser) {
     newUser.provider = 'local';
     newUser.role = 'user';
@@ -60,23 +59,6 @@ exports.create = function(req, res, next) {
       })
       .catch(validationError(res));
   });
-=======
-  var newUser = new User(req.body);
-  newUser.provider = 'local';
-  newUser.role = 'user';
-  newUser.saveAsync()
-    .spread(function(user) {
-      var token = jwt.sign({
-        _id: user._id
-      }, config.secrets.session, {
-        expiresInMinutes: 60 * 5
-      });
-      res.json({
-        token: token
-      });
-    })
-    .catch(validationError(res));
->>>>>>> before refactor
 };
 
 /**
@@ -160,7 +142,7 @@ exports.me = function(req, res, next) {
 };
 
 /**
- * handles sending a stuent invitation to another user
+ * handles sending a student invitation to another user
  */
 exports.invite = function(req, res, next) {
   //first, look up the student we're inviting
@@ -171,6 +153,8 @@ exports.invite = function(req, res, next) {
       if (!user) {
         return res.status(404).end();
       }
+      
+      //save the request in their requests array
       user.studentData.requests.push({
         teacher: {
           _id: req.user._id,
@@ -188,7 +172,12 @@ exports.invite = function(req, res, next) {
       });
       user.saveAsync()
         .then(function() {
+          
+          //next, find and update the teacher's pending students array
           User.findByIdAsync(req.user._id).then(function(me) {
+            if (!me) {
+              return res.status(404).end();
+            }
             me.teacherData.pendingStudents.push({
               teacher: {
                 _id: req.user._id,
@@ -204,8 +193,6 @@ exports.invite = function(req, res, next) {
                 _id: req.body.theClass
               }
             });
-            console.log('saving');
-            console.log(me.teacherData);
             me.saveAsync().then(function() {
               exports.me(req, res, next);
             })
@@ -214,31 +201,40 @@ exports.invite = function(req, res, next) {
     })
 }
 
+/**
+ * handles accepting an invitation from a teacher
+ */
 exports.accept = function(req, res, next) {
-  console.log('received')
-  console.log(req.body);
+  //look up the teacher in the database
   User.findByIdAsync(req.body.request.teacher)
     .then(function(teacher) {
       if (!teacher) {
-        console.log('couldnt find teacher');
         return res.status(404).end();
       }
+      
       //add student to teacher's class
       console.log(teacher.teacherData.classes);
       if (!teacher.teacherData.classes.id(req.body.request.class._id)) {
-        console.log('didnt find class');
         return res.status(404).end();
       }
       teacher.teacherData.classes.id(req.body.request.class._id).students.push(req.user._id);
+      
       //remove from pending students
       teacher.teacherData.pendingStudents.pull(req.request);
       teacher.saveAsync()
         .then(function() {
+          
+          //find and update student with his new class information
           User.findByIdAsync(req.user._id).then(function(student) {
+            if (!student) {
+              return res.status(404).end();
+            }
             student.studentData.teacher = req.body.request.teacher._id;
             student.studentData.class = {
               _id: req.body.request.class._id, name: req.body.request.class.name
             };
+            
+            //and remove from requests
             student.studentData.requests.pull(req.body.request._id);
             student.saveAsync()
               .then(function() {
@@ -249,11 +245,15 @@ exports.accept = function(req, res, next) {
     })
 }
 
+/**
+ * generates and returns a points leaderboard for the logged-in student's class
+ */
 exports.leaderboard = function(req, res, next) {
   if (!req.user.studentData.teacher) {
     return res.status(400).end();
   }
 
+  //first we find the student's teacher
   User.findById(req.user.studentData.teacher)
     .populate({
       path: 'teacherData.classes',
@@ -265,16 +265,23 @@ exports.leaderboard = function(req, res, next) {
       if (err || !teacher) {
         res.status(404).end();
       }
+     
+      //look up the student's class
       var theClass = teacher.teacherData.classes.id(req.user.studentData.myClass._id);
-      console.log(theClass);
-      var result = [];
+      if (!theClass) {
+        res.status(404).end();
+      }
+     
+      //generate list of students and points
+      var result = [];      
       for (var i = 0; i < theClass.students.length; i++) {
         result.push({
           name: theClass.students[i].name,
           points: theClass.students[i].studentData.points
         });
       }
-      console.log(result);
+      
+      //sort by points and return
       result.sort(function(a, b) {
         return b.points - a.points;
       })
