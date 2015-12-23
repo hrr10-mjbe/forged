@@ -112,10 +112,10 @@ Polymer({
           }],
           'toolbar': [{
             name: 'slide-down-animation',
-            node: this.$.toolbar
-          }, {
-            animatable: this.$.grid,
-            type: 'entry'
+            node: this.$.toolbar,
+            timing: {
+              delay: 50
+            }
           }]
         }
       }
@@ -130,33 +130,4 @@ Polymer({
     });
   }
 });
-
-/*animationConfig: {
-  type: Object,
-  value: function() {
-    return {
-      'entry': [{
-        name: 'slide-down-animation',
-        node: this.$.toolbar
-      }, {
-        animatable: this.$.grid,
-        type: 'entry'
-      }]
-    };
-  }
-}
-},
-attached: function() {
-    setTimeout(function() {
-      console.log('playing')
-      this.style.visibility = 'visible';
-      this.playAnimation('entry');
-    }.bind(this), 0);
-  },
-  show: function() {
-    console.log('showing');
-    this.style.visibility = 'visible';
-    this.playAnimation('entry');
-  }
-});*/
 </script>
