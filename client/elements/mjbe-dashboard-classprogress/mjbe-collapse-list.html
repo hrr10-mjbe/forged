@@ -116,7 +116,7 @@
       <!--<div class="spacer"></div>-->
       <!--<paper-icon-button icon="search" alt="Search"></paper-icon-button>
       <paper-icon-button icon="image:view-comfy" alt="Grid view"></paper-icon-button>-->
-      <div class="bottom title">{{name}}</div>
+      <!--<div class="bottom title">{{name}}</div>-->
     </paper-toolbar>
     <iron-list id="list" items="[[items]]" as="item">
       <template>
@@ -138,6 +138,7 @@
         </div>
       </template>
     </iron-list>
+    <!--modal to invite new students-->
     <paper-dialog id="inviteDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Student email" value="{{email::input}}" type="text" autofocus></paper-input>
       <paper-button raised dialog-confirm on-tap="invite">Invite</paper-button>
@@ -149,28 +150,39 @@
     Polymer({
       is: 'mjbe-collapse-list',
       properties: {
+        //list of students
         items: {
           type: Array,
           computed: 'parseData(data)'
         },
-        name: {
+
+        /*name: {
           type: String,
           notify: true
-        },
+        },*/
+
+        //raw stringified student data pulled from the dom
         data: {
           type: String,
           notify: true
         },
+
+        //email of student to invite
         email: {
           notify: true
         },
+
+        //count of number of invitations (see explanation in mjbe-dashboard)
         invitecount: {
           notify: true
         },
+
+        //class currently being viewed
         activeclass: {
           notify: true
         }
       },
+
       _collapseExpand: function(e) {
         var list = this.$.list;
         var index = e.model.index;
@@ -178,35 +190,32 @@
         list.set('items.' + index + '.expanded', !isExpanded);
         list.updateSizeForItem(e.model.index);
       },
+
       getClassForItem: function(item, expanded) {
         return expanded ? 'item expanded' : 'item';
       },
+
+      //converts raw string into real data and sets it up for the collapse list
       parseData: function(data) {
-        console.log('parsing');
-        console.log(data);
-        //try {
         var result = JSON.parse(data);
         for (var i = 0; i < result.length; i++) {
           result[i].expanded = false;
         }
-        console.log('got result');
-        console.log(result);
-        console.log(result.pending);
         return result;
-        //} catch (e) {
-        //  return [];
-        //}
       },
+
+      //opens the invite dialog
       inviteModal: function() {
         this.$.inviteDialog.open();
       },
+
+      //sends invite by incrementing invitecount and triggering Angular
       invite: function() {
-        this.inviteCount++;
         this.invitecount = '' + (Number.parseInt(this.invitecount) + 1);
       },
+
+      //check whether current student is pending or actual
       isPending: function(item) {
-        console.log('checking');
-        console.log(item);
         return item.status === 'pending';
       }
     });
