@@ -48,9 +48,9 @@
     }
     </style>
     <paper-tabs selected="{{selectedclass}}" scrollable id="classSelect" attr-for-selected="value">
-    <paper-icon-button icon="add" style="color:white;" alt="Add student" on-tap="openModal"></paper-icon-button>
+    <paper-icon-button icon="add" style="color:white;" alt="Add class" on-tap="openModal"></paper-icon-button>
       <template is="dom-repeat" items="{{classes}}">
-        <paper-tab value="{{item.id}}">{{item.name}}</paper-tab>
+        <paper-tab value="{{item._id}}">{{item.name}}</paper-tab>
       </template>
     </paper-tabs>
 
@@ -58,7 +58,7 @@
       <span>[[item.value]]</span>
     </div>
     <div class="tile list">
-      <mjbe-collapse-list email="{{email}}" invitecount="{{invitecount}}"></mjbe-collapse-list>
+      <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{loadclasses}}"></mjbe-collapse-list>
     </div>
     <div class="tile mod">
       <span>Modifications</span>

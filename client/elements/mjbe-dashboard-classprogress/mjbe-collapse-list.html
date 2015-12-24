@@ -148,6 +148,10 @@
       properties: {
         items: {
           type: Array,
+          computed: 'select(parsed)'
+        },
+        parsed: {
+          type: Array,
           computed: 'parseData(data)'
         },
         name: {
@@ -163,6 +167,9 @@
         },
         invitecount: {
           notify: true
+        },
+        activeclass: {
+          notify: true
         }
       },
       _collapseExpand: function(e) {
@@ -176,6 +183,7 @@
         return expanded ? 'item expanded' : 'item';
       },
       parseData: function(data) {
+        console.log(data);
         try {
           var result = JSON.parse(data);
           for (var i = 0; i < result.length; i++) {
@@ -192,6 +200,13 @@
       invite: function() {
         this.inviteCount++;
         this.invitecount = '' + (Number.parseInt(this.invitecount) + 1);
+      },
+      select: function(parsed) {
+        for (var i = 0; i < parsed.length; i++) {
+          if (parsed._id === this.activeclass) {
+            return parsed[i];
+          }
+        }
       }
     });
   });

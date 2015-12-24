@@ -11,12 +11,7 @@ angular.module('hrr10MjbeApp')
     var inviteCount = 0;
     Teacher.getClasses(function(classes) {
       $scope.listedClasses = classes;
-      $scope.classes = JSON.stringify(classes.map(function(val) {
-        return {
-          id: val._id,
-          name: val.name
-        };
-      }));
+      $scope.classes = JSON.stringify(classes);
     });
 
     Teacher.getRequests(function(requests) {
