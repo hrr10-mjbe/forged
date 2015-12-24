@@ -56,11 +56,6 @@ angular.module('hrr10MjbeApp')
     }
 
     $scope.polymerChange = function() {
-      /*if ($scope.selectedClass) {
-        $state.go('classprogress', {
-          id: $scope.selectedClass
-        });
-      }*/
       if (Number.parseInt($scope.addCount) > addCount) {
         $scope.submitClass();
         addCount++;
