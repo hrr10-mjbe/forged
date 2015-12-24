@@ -9,6 +9,7 @@ angular.module('hrr10MjbeApp')
     $scope.inviteCount = '0';
     var addCount = 0;
     var inviteCount = 0;
+    var first = true;
 
     //reloads stuff
     $scope.refresh = function() {
@@ -30,7 +31,10 @@ angular.module('hrr10MjbeApp')
           }
           $scope.classes = JSON.stringify(classes);
           //select first class as default
-          $scope.activeClass = classes[0]._id.toString();
+          if (first) {
+            $scope.activeClass = classes[0]._id.toString();
+            first = false;
+          }
         })
       });
     }
