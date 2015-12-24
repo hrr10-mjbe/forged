@@ -1,19 +1,73 @@
 <dom-module id="mjbe-leaderboard">
   <template>
     <style>
+      .board {
+        padding: 10px;
+        width: 145px;
+        border-style: solid;
+        border-color: #677A7D;
+        color: #677A7D;
+      }
 
+      h2 {
+        padding: 0;
+        margin: 0;
+        text-align: center;
+      }
+
+      li {
+        padding: 5px 5px;
+      }
+
+      li:nth-child(even) {
+        background-color: #D0F1F5
+      }
+
+      .student-name {
+        position: relative;
+        left: 5px;
+      }
+
+      .points {
+        position: absolute;
+        right: 20px;
+      }
     </style>
-    <paper-icon-button icon="arrow-back" style="color: blue" ui-sref="dashboard"></paper-icon-button>
-    <div>
-    this is leaderboard
-    </div>
+    <div class="board">
+      <h2>Leaderboard</h2>
 
+        <template is="dom-repeat" items="[[mockBoard]]">
+          <li><span class="student-name">[[item.name]]</span> <span class="points">[[item.points]]</span></li>
+        </template>
+
+    </div>
   </template>
 
 </dom-module>
 
 <script>
+
   Polymer({
-    is: 'mjbe-leaderboard'
+    is: 'mjbe-leaderboard',
+    properties: {
+      leaderboard: {
+        notify: true
+      },
+      mockBoard: {
+        value: [
+          {name: 'Ben', points: 1000},
+          {name: 'Ben2', points: 900},
+          {name: 'Ben3', points: 800},
+          {name: 'Ben4', points: 700},
+          {name: 'Ben5', points: 600},
+          {name: 'Ben6', points: 400},
+          {name: 'Ben7', points: 300},
+          {name: 'Ben8', points: 200},
+          {name: 'Ben9', points: 100},
+          {name: 'Ben10', points: 90},
+          {name: 'Ben11', points: 0},
+        ]
+      }
+    }
   });
 </script>
