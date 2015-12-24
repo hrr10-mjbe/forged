@@ -43,11 +43,11 @@
     </style>
     <div id="clockdiv">
       <div>
-        <span class="minutes"></span>
+        <span class="minutes">00</span>
         <div class="smalltext">Minutes</div>
       </div>
       <div>
-        <span class="seconds"></span>
+        <span class="seconds">00</span>
         <div class="smalltext">Seconds</div>
       </div>
     </div>
@@ -70,38 +70,32 @@
           value: false
         }
       },
-      getTimeRemaining: function(endtime) {
-        var t = Date.parse(endtime) - Date.now();
-        var seconds = Math.floor((t / 1000) % 60);
-        var minutes = Math.floor((t / 1000 / 60) % 60);
-        return {
-          'total': t,
-          'minutes': minutes,
-          'seconds': seconds
-        };
-      },
-      initializeClock: function(timeInMinutes) {
-        var endtime = new Date(Date.now() + timeInMinutes*60*1000);
-        // var clock = document.getElementById('clockdiv');
+      initializeClock: function() {
         var clock = this.$.clockdiv
         var minutesSpan = clock.querySelector('.minutes');
         var secondsSpan = clock.querySelector('.seconds');
+        var seconds = ~~secondsSpan.innerHTML;
+        var minutes = ~~minutesSpan.innerHTML;
+        window.onblur = function() {window.blurred = true;};
+        window.onfocus = function() {window.blurred = false;};
+
         function updateClock() {
-          var t = this.getTimeRemaining(endtime);
-
-          minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-          secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
-
-          if (t.total <= 0) {
-            clearInterval(timeinterval);
+          if( window.blurred ) { return; }
+          seconds++
+          if( seconds >= 60 ) {
+            seconds = 0;
+            secondsSpan.innerHTML = '00';
+            minutes++;
+            minutesSpan.innerHTML = ('0' + minutes).slice(-2);
           }
+          secondsSpan.innerHTML = ('0' + seconds).slice(-2);
         }
 
         var clock = updateClock.bind(this);
         var timeinterval = setInterval(clock, 1000);
       },
       ready: function() {
-        this.initializeClock(10);
+        this.initializeClock();
       }
     });
   </script>

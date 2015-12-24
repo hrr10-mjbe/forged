@@ -288,17 +288,19 @@ exports.leaderboard = function(req, res, next) {
   .exec(function(err, teacher) {
     if (err)
       res.status(404).end();
-    var theClass = teacher.teacherData.classes.id(req.user.studentData.myClass._id);
-    console.log(theClass);
-    var result = [];
-    for (var i = 0; i < theClass.students.length; i++) {
-      result.push({name: theClass.students[i].name, points: theClass.students[i].studentData.points});
+    if(teacher) { //added if statement to fix issue with server restart
+      var theClass = teacher.teacherData.classes.id(req.user.studentData.myClass._id);
+      console.log(theClass);
+      var result = [];
+      for (var i = 0; i < theClass.students.length; i++) {
+        result.push({name: theClass.students[i].name, points: theClass.students[i].studentData.points});
+      }
+      console.log(result);
+      result.sort(function(a, b) {
+        return b.points - a.points;
+      })
+      res.json(result);
     }
-    console.log(result);
-    result.sort(function(a, b) {
-      return b.points - a.points;
-    })
-    res.json(result);
   })
 }
 
