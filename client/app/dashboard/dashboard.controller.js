@@ -4,7 +4,8 @@ angular.module('hrr10MjbeApp')
   .controller('DashboardCtrl', function($scope, $state, Teacher) {
     $scope.message = 'Hello';
     $scope.selectedClass = "";
-
+    $scope.classname = "";
+    $scope.submitclass = 'false';
     Teacher.getClasses(function(classes) {
       $scope.listedClasses = classes;
       $scope.classes = JSON.stringify(classes.map(function(val) {
