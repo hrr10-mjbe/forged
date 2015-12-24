@@ -154,6 +154,8 @@ Polymer({
   },
   parseClasses: function(classes) {
     try {
+      console.log('parsing classes');
+      console.log(classes);
       return JSON.parse(classes);
     } catch (e) {
       return [];
@@ -163,9 +165,6 @@ Polymer({
     console.log(classes);
     console.log(selected);
     for (var i = 0; i < classes.length; i++) {
-      //console.log('comparing')
-      //console.log(classes[i]._id);
-      //console.log(selected);
       if (classes[i]._id === selected) {
         console.log('returning');
         return JSON.stringify(classes[i].students);

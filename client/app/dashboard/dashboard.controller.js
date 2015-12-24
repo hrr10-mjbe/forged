@@ -13,8 +13,9 @@ angular.module('hrr10MjbeApp')
     $scope.refresh = function() {
       Teacher.getClasses(function(classes) {
         $scope.listedClasses = classes;
+        console.log('refreshed and got classes');
+        console.log(classes);
         Teacher.getRequests(function(requests) {
-          console.log(requests);
           for (var i = 0; i < requests.length; i++) {
             for (var j = 0; j < classes.length; j++) {
               if (requests[i].class._id === classes[j]._id) {
@@ -60,7 +61,7 @@ angular.module('hrr10MjbeApp')
           $scope.listedClasses = classes;
           $scope.classes = JSON.stringify(classes.map(function(val) {
             return {
-              id: val._id,
+              _id: val._id,
               name: val.name
             };
           }));
