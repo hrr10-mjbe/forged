@@ -197,11 +197,13 @@
 
       //converts raw string into real data and sets it up for the collapse list
       parseData: function(data) {
+        try {
         var result = JSON.parse(data);
         for (var i = 0; i < result.length; i++) {
           result[i].expanded = false;
         }
         return result;
+      } catch (e) {}
       },
 
       //opens the invite dialog

@@ -1,89 +1,186 @@
 <dom-module id="mjbe-dashboard">
   <template>
     <style>
-    .header {
-      height: 20%;
-      background: #60C4DE;
-      text-align: center;
+    :host {
+      display: block;
+      background: #000;
+    }
+    /*paper-tabs {
+      height: 50px;
+    }*/
+    
+    paper-tab {
+      color: white;
     }
     
-    .body {
-      text-align: center;
-      padding: 8px;
-    }
-    
-    .square {
+    .tile {
       display: inline-block;
-      width: 150px;
-      height: 150px;
-      margin: 20px;
-      background: #FFA82F;
+      float: left;
+      vertical-align: top;
+      @apply(--paper-font-title);
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
     }
     
-    .square:hover {
-      cursor: pointer;
-      background: #60C4DE;
+    .d3 {
+      position: absolute;
+      background: var(--google-red-100);
+      height: calc(100% - 50px);
+      width: 50%;
+      color: red;
     }
     
-    paper-card {
-      margin: 20px;
+    .list {
+      position: absolute;
+      background: var(--google-green-100);
+      left: 50%;
+      height: 80%;
+      width: 60%;
     }
     
-    paper-card:hover {
-      background: #7DA6FF;
+    .mod {
+      position: absolute;
+      background: var(--google-blue-100);
+      top: 80%;
+      left: 50%;
+      bottom: 0px;
+      width: 60%;
     }
     </style>
-    <div id="header" class="header">Welcome back, Mr. Roboto</div>
-    <div class="body horizontal center-justified layout">
-      <paper-card class="square" on-tap="openModal" entry-animation="scale-up-animation" exit-animation="fade-out-animation">Class Progress</paper-card>
-      <paper-card class="square" ui-sref="modifications">Modifications</paper-card>
-      <paper-card class="square">Gradebook</paper-card>
-      <paper-card class="square">My Content</paper-card>
-    </div>
-    <paper-dialog id="modal" modal>
+    <paper-tabs selected="{{selectedclass}}" scrollable id="classSelect" attr-for-selected="value">
+      <paper-icon-button icon="add" style="color:white;" alt="Add class" on-tap="openModal"></paper-icon-button>
       <template is="dom-repeat" items="{{classes}}">
-        <paper-card animatedShadow="true" elevation="1">
-          <paper-button style="color: blue" on-tap="selectClass">{{item.name}}</paper-button>
-          </a>
-        </paper-card>
+        <paper-tab value="{{item._id}}">{{item.name}}</paper-tab>
       </template>
-      <div class="buttons">
-        <paper-button dialog-confirm autofocus>Tap me to close</paper-button>
-      </div>
+    </paper-tabs>
+    <div class="tile d3">
+      <span>[[item.value]]</span>
+    </div>
+    <div class="tile list">
+      <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}"></mjbe-collapse-list>
+    </div>
+    <div class="tile mod">
+      <span>Modifications</span>
+    </div>
+    <paper-dialog id="addClass" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>
+      <paper-button raised on-tap="createClass">Enter</paper-button>
+      <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
   </template>
 </dom-module>
 <script>
 Polymer({
   is: 'mjbe-dashboard',
+  behaviors: [
+    Polymer.NeonSharedElementAnimatableBehavior,
+    Polymer.NeonAnimatableBehavior,
+    Polymer.NeonAnimationRunnerBehavior
+  ],
   properties: {
-    selected: {
-      type: String,
-      notify: true
-    },
     loadclasses: {
       type: String,
       notify: true
     },
+    students: {
+      computed: 'getStudents(classes, selectedclass)'
+    },
     classes: {
       computed: 'parseClasses(loadclasses)'
+    },
+    addcount: {
+      notify: true,
+      value: '0'
+    },
+    invitecount: {
+      notify: true,
+      value: '0'
+    },
+    email: {
+      notify: true
+    },
+    classname: {
+      notify: true
+    },
+    selectedclass: {
+      notify: true
+    },
+    config: {
+      type: Array,
+      value: function() {
+        return [{
+          value: 1,
+          color: 'blue'
+        }, {
+          value: 2,
+          color: 'red'
+        }, {
+          value: 3,
+          color: 'blue'
+        }]
+      }
+    },
+    animationConfig: {
+      type: Object,
+      value: function() {
+        return {
+          'entry': [{
+            name: 'cascaded-animation',
+            animation: 'transform-animation',
+            transformFrom: 'translateY(100%)',
+            transformTo: 'none',
+            timing: {
+              delay: 50
+            }
+          }],
+          'toolbar': [{
+            name: 'slide-down-animation',
+            node: this.$.classSelect,
+            timing: {
+              delay: 50
+            }
+          }]
+        }
+      }
     }
   },
-  behaviors: [
-    Polymer.NeonSharedElementAnimatableBehavior
-  ],
-  openModal: function() {
-    this.$.modal.open();
-  },
-  selectClass: function(e) {
-    this.selected = e.model.item.id.toString();
-    console.log(this.selected);
+  attached: function() {
+    this.async(function() {
+      var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+      this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+      this.playAnimation('toolbar');
+      this.playAnimation('entry');
+    });
   },
   parseClasses: function(classes) {
     try {
       return JSON.parse(classes);
     } catch (e) {
       return [];
+    }
+  },
+  getStudents: function(classes, selected) {
+    console.log(classes);
+    console.log(selected);
+    for (var i = 0; i < classes.length; i++) {
+      //console.log('comparing')
+      //console.log(classes[i]._id);
+      //console.log(selected);
+      if (classes[i]._id === selected) {
+        console.log('returning');
+        return JSON.stringify(classes[i].students);
+      }
+    }
+  },
+  openModal: function() {
+    this.$.addClass.open();
+  },
+  createClass: function() {
+    console.log('polymer');
+    console.log(this.classname);
+    if (this.classname.length > 1) {
+      this.$.addClass.close();
+      this.addcount = '' + (Number.parseInt(this.addcount) + 1);
     }
   }
 });
