@@ -125,8 +125,8 @@
             <!--<img class="avatar" src="[[item.image]]">-->
             <iron-icon icon="accessibility"></iron-icon>
             <div class="pad">
-              <div class="primary">[[item.name]]
-                <template is="dom-if" if="item.pending">
+              <div class="primary">[[item.name]] [[item.pending]]
+                <template is="dom-if" if="{{isPending(item)}}">
                   (Invitation pending)
                 </template>
               </div>
@@ -190,6 +190,8 @@
           result[i].expanded = false;
         }
         console.log('got result');
+        console.log(result);
+        console.log(result.pending);
         return result;
         //} catch (e) {
         //  return [];
@@ -202,6 +204,11 @@
         this.inviteCount++;
         this.invitecount = '' + (Number.parseInt(this.invitecount) + 1);
       },
+      isPending: function(item) {
+        console.log('checking');
+        console.log(item);
+        return item.status === 'pending';
+      }
     });
   });
   </script>
