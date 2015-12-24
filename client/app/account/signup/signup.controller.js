@@ -4,8 +4,8 @@ class SignupController {
   //start-non-standard
   user = {};
   errors = {};
-  submitted = false;
-  signUp = 'false';
+  signup = 'false';
+  errormessage = '';
   //end-non-standard
 
   constructor(Auth, $state) {
@@ -41,26 +41,28 @@ class SignupController {
 
   polymerChange = function() {
     console.log('polymerchange')
-    if (this.signUp === 'true') {
+    console.log('this.signup is ... ' + this.signup)
+    if (this.signup === 'true') {
       this.signUpPolymer();
     }
   }
 
   signUpPolymer = function() {
-    this.Auth.login({
+    this.Auth.createUser({
+      name: this.user.name,
       email: this.user.email,
-      password: this.user.password
+      password: this.user.password,
+      type: this.user.type
     })
     .then(() => {
       // Logged in, redirect to home
       this.$state.go('main');
     })
     .catch(err => {
-      this.user.email = '';
-      this.user.password = '';
-      this.user.name = '';
-      this.signUp = 'false';
-      alert(err.message);
+      // TO-DO: err.data may have more specific error messages.
+      console.log(err.data);
+      this.errormessage = 'Error creating your account.';
+      this.signup = 'false';
     });
   };
 }
