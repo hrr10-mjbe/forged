@@ -125,7 +125,11 @@
             <!--<img class="avatar" src="[[item.image]]">-->
             <iron-icon icon="accessibility"></iron-icon>
             <div class="pad">
-              <div class="primary">[[item.name]]</div>
+              <div class="primary">[[item.name]]
+                <template is="dom-if" if="item.pending">
+                  (Invitation pending)
+                </template>
+              </div>
               <div class="shortText">[[item.email]]</div>
               <div class="longText">We should put some stuff here</div>
             </div>
@@ -181,12 +185,12 @@
         console.log('parsing');
         console.log(data);
         //try {
-          var result = JSON.parse(data);
-          for (var i = 0; i < result.length; i++) {
-            result[i].expanded = false;
-          }
-          console.log('got result');
-          return result;
+        var result = JSON.parse(data);
+        for (var i = 0; i < result.length; i++) {
+          result[i].expanded = false;
+        }
+        console.log('got result');
+        return result;
         //} catch (e) {
         //  return [];
         //}
