@@ -5,7 +5,8 @@ angular.module('hrr10MjbeApp')
     $scope.message = 'Hello';
     $scope.selectedClass = "";
     $scope.classname = "";
-    $scope.submitclass = 'false';
+    $scope.addCount = '0';
+    var addCount = 0;
     Teacher.getClasses(function(classes) {
       $scope.listedClasses = classes;
       $scope.classes = JSON.stringify(classes.map(function(val) {
@@ -36,7 +37,7 @@ angular.module('hrr10MjbeApp')
     }
 
     $scope.submitClass = function() {
-      Teacher.addClass($scope.addClass, function(res) {
+      Teacher.addClass($scope.classname, function(res) {
         if (res === -1) {
           return alert('duplicate class');
         }
@@ -60,6 +61,9 @@ angular.module('hrr10MjbeApp')
           id: $scope.selectedClass
         });
       }*/
-      console.log('change');
-      console.log(className);
+      if (Number.parseInt($scope.addCount) > addCount) {
+        $scope.submitClass();
+        addCount++;
+      }
+    }
   });

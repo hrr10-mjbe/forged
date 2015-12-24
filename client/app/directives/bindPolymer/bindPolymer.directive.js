@@ -18,12 +18,10 @@ angular.module('bindPolymer', [])
           }
         }
         return function bindPolymerLink(scope, element, attrs) {
-          console.log('setting up directive');
           handler = attrs.eventNamespace ? scope[attrs.eventNamespace].polymerChange : scope.polymerChange;
           context = attrs.eventNamespace ? scope[attrs.eventNamespace] : scope;
           Object.keys(attrMap).forEach(function(key) {
             element.on(key + '-changed', function(event) {
-              console.log('changed in directive');
               scope.$evalAsync(function() {
                 if (attrMap[key](scope) === event.detail.value) return;
                 attrMap[key].assign(scope, event.detail.value);

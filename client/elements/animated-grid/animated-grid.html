@@ -85,8 +85,9 @@ Polymer({
     classes: {
       computed: 'parseClasses(loadclasses)'
     },
-    submitclass: {
-      notify: true
+    addcount: {
+      notify: true,
+      value: '0'
     },
     classname: {
       notify: true
@@ -149,9 +150,9 @@ Polymer({
     this.$.addClass.open();
   },
   createClass: function() {
-    this.submitclass = 'true';
     console.log('polymer');
     console.log(this.classname);
+    this.addcount = '' + (Number.parseInt(this.addcount) + 1);
   }
 });
 </script>
