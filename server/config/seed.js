@@ -202,39 +202,3 @@ Skilltree.find({}).removeAsync()
     })
 
   })
-
-User.find({}).removeAsync()
-  .then(function() {
-    User.createAsync({
-        provider: 'local',
-        name: 'Test User',
-        type: 'student',
-        email: 'test@example.com',
-        password: 'test',
-        studentData: {
-          skillRoot: rootSkill._id
-        }
-      }, {
-        provider: 'local',
-        role: 'admin',
-        name: 'Admin',
-        email: 'admin@example.com',
-        password: 'admin'
-      }, {
-        provider: 'local',
-        name: 'A Teacher',
-        type: 'teacher',
-        email: 'teacher@example.com',
-        password: 'test',
-        teacherData: {
-          classes: [{
-            name: 'Math'
-          }, {
-            name: 'Algebra'
-          }]
-        }
-      })
-      .then(function() {
-        console.log('finished populating users');
-      });
-  });
