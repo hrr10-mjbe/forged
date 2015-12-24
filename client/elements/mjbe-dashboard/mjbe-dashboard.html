@@ -47,12 +47,14 @@
       width: 60%;
     }
     </style>
+    <!--Class selection tabs-->
     <paper-tabs selected="{{selectedclass}}" scrollable id="classSelect" attr-for-selected="value">
       <paper-icon-button icon="add" style="color:white;" alt="Add class" on-tap="openModal"></paper-icon-button>
       <template is="dom-repeat" items="{{classes}}">
         <paper-tab value="{{item._id}}">{{item.name}}</paper-tab>
       </template>
     </paper-tabs>
+    <!--dashboard content-->
     <div class="tile d3">
       <span>[[item.value]]</span>
     </div>
@@ -62,6 +64,7 @@
     <div class="tile mod">
       <span>Modifications</span>
     </div>
+    <!--add class modal-->
     <paper-dialog id="addClass" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>
       <paper-button raised on-tap="createClass">Enter</paper-button>
@@ -78,47 +81,50 @@ Polymer({
     Polymer.NeonAnimationRunnerBehavior
   ],
   properties: {
+    //stringified version of raw class data
     loadclasses: {
       type: String,
       notify: true
     },
+
+    //the array of students for the selected class which will be assigned to the mjbe-collapse-list
     students: {
       computed: 'getStudents(classes, selectedclass)'
     },
+
+    //array of classes
     classes: {
       computed: 'parseClasses(loadclasses)'
     },
+
+    //number of classes that have been added.
+    //since the user can add as many classes as they want, we can't just pass data up to angular by setting a boolean value
+    //it will stay true and Angular will catch intermediate edits. So the Angular controller maintains its own counter which
+    //is compared with this value
     addcount: {
       notify: true,
       value: '0'
     },
+
+    //same deal as above, this is just passing through from the collapse list
     invitecount: {
       notify: true,
       value: '0'
     },
+
+    //passing through from collapse list
     email: {
       notify: true
     },
+
+    //class name to add
     classname: {
       notify: true
     },
+
+    //currently displayed class
     selectedclass: {
       notify: true
-    },
-    config: {
-      type: Array,
-      value: function() {
-        return [{
-          value: 1,
-          color: 'blue'
-        }, {
-          value: 2,
-          color: 'red'
-        }, {
-          value: 3,
-          color: 'blue'
-        }]
-      }
     },
     animationConfig: {
       type: Object,
@@ -144,6 +150,7 @@ Polymer({
       }
     }
   },
+  
   attached: function() {
     this.async(function() {
       var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
@@ -152,18 +159,17 @@ Polymer({
       this.playAnimation('entry');
     });
   },
+  
   parseClasses: function(classes) {
     try {
-      console.log('parsing classes');
-      console.log(classes);
       return JSON.parse(classes);
     } catch (e) {
       return [];
     }
   },
+  
+  //gets the appropriate list of students for the current class
   getStudents: function(classes, selected) {
-    console.log(classes);
-    console.log(selected);
     for (var i = 0; i < classes.length; i++) {
       if (classes[i]._id === selected) {
         console.log('returning');
@@ -171,12 +177,14 @@ Polymer({
       }
     }
   },
+  
+  //add class modal
   openModal: function() {
     this.$.addClass.open();
   },
+  
+  //creates a new class
   createClass: function() {
-    console.log('polymer');
-    console.log(this.classname);
     if (this.classname.length > 1) {
       this.$.addClass.close();
       this.addcount = '' + (Number.parseInt(this.addcount) + 1);
