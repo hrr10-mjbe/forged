@@ -63,9 +63,8 @@
     <div class="tile mod">
       <span>Modifications</span>
     </div>
-    <paper-dialog id="addClass" modal>
+    <paper-dialog id="addClass" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>
-
       <paper-button raised on-tap="createClass">Enter</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
@@ -163,9 +162,9 @@ Polymer({
     console.log('polymer');
     console.log(this.classname);
     if (this.classname.length > 1) {
-    this.$.addClass.close();
-    this.addcount = '' + (Number.parseInt(this.addcount) + 1);
-  }
+      this.$.addClass.close();
+      this.addcount = '' + (Number.parseInt(this.addcount) + 1);
+    }
   }
 });
 </script>
