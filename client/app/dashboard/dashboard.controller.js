@@ -3,31 +3,37 @@
 angular.module('hrr10MjbeApp')
   .controller('DashboardCtrl', function($scope, $state, Teacher) {
     $scope.selectedClass = "";
-    
+
     $scope.classname = "";
     $scope.addCount = '0';
     $scope.inviteCount = '0';
     var addCount = 0;
     var inviteCount = 0;
-    
-    Teacher.getClasses(function(classes) {
-      $scope.listedClasses = classes;
-      Teacher.getRequests(function(requests) {
-        console.log(requests);
-        for (var i = 0; i < requests.length; i++) {
-          for (var j = 0; j < classes.length; j++) {
-            if (requests[i].class._id === classes[j]._id) {
-              console.log('pushing');
-              classes[j].students.push({name: requests[i].student.name, email: requests[i].student.email, status: 'pending'})
+
+    $scope.refresh = function() {
+      Teacher.getClasses(function(classes) {
+        $scope.listedClasses = classes;
+        Teacher.getRequests(function(requests) {
+          console.log(requests);
+          for (var i = 0; i < requests.length; i++) {
+            for (var j = 0; j < classes.length; j++) {
+              if (requests[i].class._id === classes[j]._id) {
+                console.log('pushing');
+                classes[j].students.push({
+                  name: requests[i].student.name,
+                  email: requests[i].student.email,
+                  status: 'pending'
+                })
+              }
             }
           }
-        }
-        $scope.classes = JSON.stringify(classes);
-        $scope.activeClass = classes[0]._id.toString();
-        console.log('activeClass is');
-        console.log($scope.activeClass);
-      })      
-    });
+          $scope.classes = JSON.stringify(classes);
+          $scope.activeClass = classes[0]._id.toString();
+          console.log('activeClass is');
+          console.log($scope.activeClass);
+        })
+      });
+    }
 
     $scope.submit = function() {
       console.log('submitting');
@@ -35,9 +41,7 @@ angular.module('hrr10MjbeApp')
       console.log($scope.activeClass);
       Teacher.sendInvite($scope.email, $scope.activeClass, function(result) {
         if (result === 200) {
-          Teacher.getRequests(function(requests) {
-            $scope.invitations = requests;
-          })
+          $scope.refresh();
         } else {
           $scope.invitations = [{
             student: 'error'
@@ -79,4 +83,6 @@ angular.module('hrr10MjbeApp')
         inviteCount++;
       }
     }
+
+    $scope.refresh();
   });
