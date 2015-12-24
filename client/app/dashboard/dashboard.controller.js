@@ -6,7 +6,9 @@ angular.module('hrr10MjbeApp')
     $scope.selectedClass = "";
     $scope.classname = "";
     $scope.addCount = '0';
+    $scope.inviteCount = '0';
     var addCount = 0;
+    var inviteCount = 0;
     Teacher.getClasses(function(classes) {
       $scope.listedClasses = classes;
       $scope.classes = JSON.stringify(classes.map(function(val) {
@@ -59,6 +61,13 @@ angular.module('hrr10MjbeApp')
       if (Number.parseInt($scope.addCount) > addCount) {
         $scope.submitClass();
         addCount++;
+      }
+
+      if (Number.parseInt($scope.inviteCount) > inviteCount) {
+        //$scope.submitClass();
+        console.log('inviting');
+        console.log($scope.email);
+        inviteCount++;
       }
     }
   });

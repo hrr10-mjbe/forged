@@ -136,8 +136,8 @@
     </iron-list>
 
     <paper-dialog id="inviteDialog" modal>
-      <paper-input label="Student email" value="{{classname::input}}" type="text" autofocus></paper-input>
-      <paper-button raised dialog-confirm on-tap="createClass">Invite</paper-button>
+      <paper-input label="Student email" value="{{email::input}}" type="text" autofocus></paper-input>
+      <paper-button raised dialog-confirm on-tap="invite">Invite</paper-button>
       <paper-button dialog-confirm autofocus>Cancel</paper-button>
     </paper-dialog>
   </template>
@@ -157,6 +157,12 @@
         data: {
           type: String,
           notify: true
+        },
+        email: {
+          notify: true
+        },
+        invitecount: {
+          notify: true
         }
       },
       _collapseExpand: function(e) {
@@ -165,9 +171,6 @@
         var isExpanded = list.items[index].expanded;
         list.set('items.' + index + '.expanded', !isExpanded);
         list.updateSizeForItem(e.model.index);
-      },
-      iconForItem: function(item) {
-        return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
       },
       getClassForItem: function(item, expanded) {
         return expanded ? 'item expanded' : 'item';
@@ -185,6 +188,10 @@
       },
       inviteModal: function() {
         this.$.inviteDialog.open();
+      },
+      invite: function() {
+        this.inviteCount++;
+        this.invitecount = '' + (Number.parseInt(this.invitecount) + 1);
       }
     });
   });

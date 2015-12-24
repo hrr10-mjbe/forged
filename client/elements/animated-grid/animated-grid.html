@@ -56,8 +56,8 @@
     <div class="tile d3">
       <span>[[item.value]]</span>
     </div>
-    <div class="tile  list">
-      <mjbe-collapse-list></mjbe-collapse-list>
+    <div class="tile list">
+      <mjbe-collapse-list email="{{email}}" invitecount="{{invitecount}}"></mjbe-collapse-list>
     </div>
     <div class="tile mod">
       <span>Modifications</span>
@@ -88,6 +88,13 @@ Polymer({
     addcount: {
       notify: true,
       value: '0'
+    },
+    invitecount: {
+      notify: true,
+      value: '0'
+    },
+    email: {
+      notify: true
     },
     classname: {
       notify: true
