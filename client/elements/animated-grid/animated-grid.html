@@ -47,15 +47,11 @@
       width: 60%;
     }
     </style>
-    <!--<paper-tab on-tap="openModal">Add class...</paper-tab>-->
-    <paper-tabs selected="{{selectedClass}}" scrollable id="classSelect" attr-for-selected="value">
+    <paper-tabs selected="{{selectedclass}}" scrollable id="classSelect" attr-for-selected="value">
     <paper-icon-button icon="add" style="color:white;" alt="Add student" on-tap="openModal"></paper-icon-button>
       <template is="dom-repeat" items="{{classes}}">
         <paper-tab value="{{item.id}}">{{item.name}}</paper-tab>
       </template>
-      
-      <paper-tab value="test">[[selectedClass]]</paper-tab>
-
     </paper-tabs>
 
     <div class="tile d3">
@@ -104,7 +100,9 @@ Polymer({
     classname: {
       notify: true
     },
-    selectedClass: String,
+    selectedclass: {
+      notify: true
+    },
     config: {
       type: Array,
       value: function() {

@@ -24,7 +24,9 @@ angular.module('hrr10MjbeApp')
     })
 
     $scope.submit = function() {
+      console.log('submitting');
       console.log($scope.email);
+      console.log($scope.activeClass);
       Teacher.sendInvite($scope.email, $scope.activeClass, function(result) {
         if (result === 200) {
           Teacher.getRequests(function(requests) {
@@ -67,6 +69,7 @@ angular.module('hrr10MjbeApp')
         //$scope.submitClass();
         console.log('inviting');
         console.log($scope.email);
+        $scope.submit();
         inviteCount++;
       }
     }
