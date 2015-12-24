@@ -134,7 +134,6 @@
         </div>
       </template>
     </iron-list>
-
     <paper-dialog id="inviteDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Student email" value="{{email::input}}" type="text" autofocus></paper-input>
       <paper-button raised dialog-confirm on-tap="invite">Invite</paper-button>
@@ -147,10 +146,6 @@
       is: 'mjbe-collapse-list',
       properties: {
         items: {
-          type: Array,
-          computed: 'select(parsed)'
-        },
-        parsed: {
           type: Array,
           computed: 'parseData(data)'
         },
@@ -183,16 +178,18 @@
         return expanded ? 'item expanded' : 'item';
       },
       parseData: function(data) {
+        console.log('parsing');
         console.log(data);
-        try {
+        //try {
           var result = JSON.parse(data);
           for (var i = 0; i < result.length; i++) {
             result[i].expanded = false;
           }
+          console.log('got result');
           return result;
-        } catch (e) {
-          return [];
-        }
+        //} catch (e) {
+        //  return [];
+        //}
       },
       inviteModal: function() {
         this.$.inviteDialog.open();
@@ -201,13 +198,6 @@
         this.inviteCount++;
         this.invitecount = '' + (Number.parseInt(this.invitecount) + 1);
       },
-      select: function(parsed) {
-        for (var i = 0; i < parsed.length; i++) {
-          if (parsed._id === this.activeclass) {
-            return parsed[i];
-          }
-        }
-      }
     });
   });
   </script>
