@@ -1,41 +1,12 @@
 'use strict';
 
 import crypto from 'crypto';
-import Badge from '../badge/badge.model';
 import Class from './class.model';
-import Skill from '../skill/skill.model';
+import Request from './request.schema';
+import SkillStatus from './skillstatus.schema';
 var mongoose = require('bluebird').promisifyAll(require('mongoose'));
 var Schema = mongoose.Schema;
 var authTypes = ['github', 'twitter', 'facebook', 'google'];
-
-//Note: changes to the schema that rely on relational data will need to be reflected in the normalize and denormalize functions
-//in the user controller
-
-var RequestSchema = new Schema({
-  student: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  teacher: {
-    type: Schema.Types.ObjectId,
-    ref: 'User'
-  },
-  class: {
-    name: String,
-      _id: Schema.Types.ObjectId
-  }
-});
-
-var SkillStatusSchema = new Schema({
-  skill: {
-    type: Schema.Types.ObjectId,
-    ref: 'Skill'
-  },
-  status: {
-    type: Number,
-    default: 0
-  }
-})
 
 var UserSchema = new Schema({
   name: String,
@@ -53,52 +24,55 @@ var UserSchema = new Schema({
   facebook: {},
   google: {},
   github: {},
+
   //start custom properties
   type: String,
   //student properties
   //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
   studentData: {
-    points: {
+    points: { //total earned points
       type: Number,
       default: 0
     },
-    skills: [SkillStatusSchema],
-    badges: [{
+    skills: [SkillStatus], //array of SkillStatusSchemas, each containing a reference to a skill and the user's progress
+    badges: [{ //array of earned badges
       type: Schema.Types.ObjectId,
       ref: 'Badge'
     }],
-    skillRoot: {
+    skillRoot: { //the skilltree node from which skills should be displayed for this user
       type: Schema.Types.ObjectId,
       ref: 'Skilltree'
     },
-    requests: [RequestSchema],
-    teacher: {
+    requests: [Request], //array of requests from teachers
+    teacher: { //this student's teacher
       type: Schema.Types.ObjectId,
       ref: 'User'
     },
-    myClass: {
+    myClass: { //this student's class
       name: String,
         _id: Schema.Types.ObjectId
     },
-    modifications: {
-      showTimer: {
+    modifications: { // UI/behavior modifications to apply to this student
+      showTimer: { //whether a timer should be shown on the problems page
         type: Boolean,
         default: false
       },
-      showWhiteboard: {
+      showWhiteboard: { //whether the student can use the whiteboard on the problems page
         type: Boolean,
         default: true
       },
-      showLeaderboard: {
+      showLeaderboard: { //whether to show the student a leaderboard of the points of other students in her class
         type: Boolean,
         default: false
       }
-    }
+    },
+    times: {}
   },
+  
   //teacher properties
   teacherData: {
-    classes: [Class.schema],
-    pendingStudents: [RequestSchema]
+    classes: [Class.schema], //list of the teachers classes, with student information for each
+    pendingStudents: [Request] //list of requests sent to students but not yet accepted
   }
 });
 
@@ -207,7 +181,6 @@ UserSchema
     }
   });
 
-//TODO: probably a lot of the controller logic should go here?
 /**
  * Methods
  */

@@ -190,11 +190,26 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         if (!user) return cb(null);
         $http({
-            method: 'GET',
-            url: '/api/users/leaderboard'            
-          }).then(function(res) {
-            cb(res.data);
-          })
+          method: 'GET',
+          url: '/api/users/leaderboard'
+        }).then(function(res) {
+          cb(res.data);
+        })
+      })
+    }
+
+    this.getTime = function(cb) {
+      getUser(function(user) {
+        if (!user) return cb(0);
+        cb(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)]);
+      })
+    }
+
+    this.updateTime = function(time) {
+      getUser(function(user) {
+        if (!user) return;
+        user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)] = time;
+        save();
       })
     }
   });

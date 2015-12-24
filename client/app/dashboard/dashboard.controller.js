@@ -2,31 +2,50 @@
 
 angular.module('hrr10MjbeApp')
   .controller('DashboardCtrl', function($scope, $state, Teacher) {
-    $scope.message = 'Hello';
     $scope.selectedClass = "";
 
-    Teacher.getClasses(function(classes) {
-      $scope.listedClasses = classes;
-      $scope.classes = JSON.stringify(classes.map(function(val) {
-        return {
-          id: val._id,
-          name: val.name
-        };
-      }));
-    });
+    $scope.classname = "";
+    $scope.addCount = '0';
+    $scope.inviteCount = '0';
+    var addCount = 0;
+    var inviteCount = 0;
+    var first = true;
 
-    Teacher.getRequests(function(requests) {
-      $scope.invitations = requests;
-    })
+    //reloads stuff
+    $scope.refresh = function() {
+      Teacher.getClasses(function(classes) {
+        $scope.listedClasses = classes;
+        Teacher.getRequests(function(requests) {
+          //this is pretty hacky. the pending students are stored seperately on the server, but now we want to show
+          //them as part of a particular class, so we scan through and populate them here
+          for (var i = 0; i < requests.length; i++) {
+            for (var j = 0; j < classes.length; j++) {
+              if (requests[i].class._id === classes[j]._id) {
+                classes[j].students.push({
+                  name: requests[i].student.name,
+                  email: requests[i].student.email,
+                  status: 'pending'
+                })
+              }
+            }
+          }
+          $scope.classes = JSON.stringify(classes);
+          //select first class as default
+          if (first) {
+            $scope.activeClass = classes[0]._id.toString();
+            first = false;
+          }
+        })
+      });
+    }
 
+    //submits invitation
     $scope.submit = function() {
-      console.log($scope.addSelected);
-      Teacher.sendInvite($scope.add, $scope.addSelected, function(result) {
+      Teacher.sendInvite($scope.email, $scope.activeClass, function(result) {
         if (result === 200) {
-          Teacher.getRequests(function(requests) {
-            $scope.invitations = requests;
-          })
+          $scope.refresh();
         } else {
+          //TODO this won't do anything anymore
           $scope.invitations = [{
             student: 'error'
           }];
@@ -34,30 +53,35 @@ angular.module('hrr10MjbeApp')
       })
     }
 
+    //submits new class
     $scope.submitClass = function() {
-      Teacher.addClass($scope.addClass, function(res) {
+      Teacher.addClass($scope.classname, function(res) {
         if (res === -1) {
           return alert('duplicate class');
         }
-        console.log('returning');
         Teacher.getClasses(function(classes) {
           $scope.listedClasses = classes;
           $scope.classes = JSON.stringify(classes.map(function(val) {
             return {
-              id: val._id,
+              _id: val._id,
               name: val.name
             };
           }));
-          console.log($scope.listedClasses);
         });
       });
     }
 
     $scope.polymerChange = function() {
-      if ($scope.selectedClass) {
-        $state.go('classprogress', {
-          id: $scope.selectedClass
-        });
+      if (Number.parseInt($scope.addCount) > addCount) {
+        $scope.submitClass();
+        addCount++;
+      }
+
+      if (Number.parseInt($scope.inviteCount) > inviteCount) {
+        $scope.submit();
+        inviteCount++;
       }
     }
+
+    $scope.refresh();
   });

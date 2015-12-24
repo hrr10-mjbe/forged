@@ -459,10 +459,10 @@ describe('Invitation API:', function() {
             console.log('newClass')
             console.log(newClass);
             console.log(user.studentData.requests);
-            expect(user.studentData.requests[0].teacher.toString()).to.equal(teacher._id.toString());
+            expect(user.studentData.requests[0].teacher._id.toString()).to.equal(teacher._id.toString());
             User.findByIdAsync(teacher._id).then(function(user) {
               console.log(user.teacherData.pendingStudents);
-              expect(user.teacherData.pendingStudents[0].student.toString()).to.equal(student._id.toString());
+              expect(user.teacherData.pendingStudents[0].student._id.toString()).to.equal(student._id.toString());
               expect(user.teacherData.pendingStudents[0].class._id.toString()).to.equal(newClass._id.toString());
               done();
             })

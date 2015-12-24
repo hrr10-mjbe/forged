@@ -3,9 +3,17 @@
 var User = require('../user/user.model');
 var Skilltree = require('../skilltree/skilltree.model');
 
+exports.makeUser = function(data, cb) {
+  var user = new User(data);
+  Skilltree.findOneAsync({name: 'Math'})
+  .then(function(tree) {
+    user.skillRoot = tree._id;
+    cb(user);
+  });
+}
+
 exports.defaultUser = function(req, res, next) {
-  var user = new User();
-  //TODO the default user should have a skilltree, or maybe just populate it client side?
-  //Skilltree.findOneAsync({name: })
-  res.json(user);
+  exports.makeUser(function(user) {
+    res.json(user);
+  });    
 }

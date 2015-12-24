@@ -26,6 +26,8 @@
     iron-list {
       padding-top: 1px;
       padding-bottom: 16px;
+      padding-left: 20px;
+      padding-right: 120px;
       -webkit-flex: 1 1;
       flex: 1 1;
       --iron-list-items-container: {
@@ -110,11 +112,11 @@
     </style>
     <!--<iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>-->
     <paper-toolbar>
-      <paper-icon-button icon="arrow-back" alt="Back" ui-sref="dashboard"></paper-icon-button>
-      <div class="spacer"></div>
-      <paper-icon-button icon="search" alt="Search"></paper-icon-button>
-      <paper-icon-button icon="image:view-comfy" alt="Grid view"></paper-icon-button>
-      <div class="bottom title">{{name}}</div>
+      <paper-icon-button icon="add" alt="Add student" on-tap="inviteModal"></paper-icon-button>
+      <!--<div class="spacer"></div>-->
+      <!--<paper-icon-button icon="search" alt="Search"></paper-icon-button>
+      <paper-icon-button icon="image:view-comfy" alt="Grid view"></paper-icon-button>-->
+      <!--<div class="bottom title">{{name}}</div>-->
     </paper-toolbar>
     <iron-list id="list" items="[[items]]" as="item">
       <template>
@@ -123,7 +125,11 @@
             <!--<img class="avatar" src="[[item.image]]">-->
             <iron-icon icon="accessibility"></iron-icon>
             <div class="pad">
-              <div class="primary">[[item.name]]</div>
+              <div class="primary">[[item.name]] [[item.pending]]
+                <template is="dom-if" if="{{isPending(item)}}">
+                  (Invitation pending)
+                </template>
+              </div>
               <div class="shortText">[[item.email]]</div>
               <div class="longText">We should put some stuff here</div>
             </div>
@@ -132,25 +138,51 @@
         </div>
       </template>
     </iron-list>
+    <!--modal to invite new students-->
+    <paper-dialog id="inviteDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <paper-input label="Student email" value="{{email::input}}" type="text" autofocus></paper-input>
+      <paper-button raised dialog-confirm on-tap="invite">Invite</paper-button>
+      <paper-button dialog-confirm autofocus>Cancel</paper-button>
+    </paper-dialog>
   </template>
   <script>
   HTMLImports.whenReady(function() {
     Polymer({
       is: 'mjbe-collapse-list',
       properties: {
+        //list of students
         items: {
           type: Array,
           computed: 'parseData(data)'
         },
-        name: {
+
+        /*name: {
           type: String,
           notify: true
-        },
+        },*/
+
+        //raw stringified student data pulled from the dom
         data: {
           type: String,
           notify: true
+        },
+
+        //email of student to invite
+        email: {
+          notify: true
+        },
+
+        //count of number of invitations (see explanation in mjbe-dashboard)
+        invitecount: {
+          notify: true
+        },
+
+        //class currently being viewed
+        activeclass: {
+          notify: true
         }
       },
+
       _collapseExpand: function(e) {
         var list = this.$.list;
         var index = e.model.index;
@@ -158,22 +190,35 @@
         list.set('items.' + index + '.expanded', !isExpanded);
         list.updateSizeForItem(e.model.index);
       },
-      iconForItem: function(item) {
-        return item ? (item.integer < 50 ? 'star-border' : 'star') : '';
-      },
+
       getClassForItem: function(item, expanded) {
         return expanded ? 'item expanded' : 'item';
       },
+
+      //converts raw string into real data and sets it up for the collapse list
       parseData: function(data) {
         try {
-          var result = JSON.parse(data);
-          for (var i = 0; i < result.length; i++) {
-            result[i].expanded = false;
-          }
-          return result;
-        } catch (e) {
-          return [];
+        var result = JSON.parse(data);
+        for (var i = 0; i < result.length; i++) {
+          result[i].expanded = false;
         }
+        return result;
+      } catch (e) {}
+      },
+
+      //opens the invite dialog
+      inviteModal: function() {
+        this.$.inviteDialog.open();
+      },
+
+      //sends invite by incrementing invitecount and triggering Angular
+      invite: function() {
+        this.invitecount = '' + (Number.parseInt(this.invitecount) + 1);
+      },
+
+      //check whether current student is pending or actual
+      isPending: function(item) {
+        return item.status === 'pending';
       }
     });
   });

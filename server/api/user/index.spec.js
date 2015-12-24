@@ -8,7 +8,10 @@ var userCtrlStub = {
   me: 'userCtrl.me',
   changePassword: 'userCtrl.changePassword',
   show: 'userCtrl.show',
-  create: 'userCtrl.create'
+  create: 'userCtrl.create',
+  accept: 'userCtrl.accept',
+  invite: 'userCtrl.invite',
+  leaderboard: 'userCtrl.leaderboard'
 };
 
 var authServiceStub = {
@@ -94,4 +97,33 @@ describe('User API Router:', function() {
 
   });
 
+  describe('POST /api/users/accept', function() {
+
+    it('should be authenticated and route to user.controller.accept', function() {
+      expect(routerStub.post
+        .withArgs('/accept', 'authService.isAuthenticated', 'userCtrl.accept')
+      ).to.have.been.calledOnce;
+    });
+
+  });
+
+  describe('POST /api/users/invite', function() {
+
+    it('should be authenticated and route to user.controller.invite', function() {
+      expect(routerStub.post
+        .withArgs('/invite', 'authService.isAuthenticated', 'userCtrl.invite')
+      ).to.have.been.calledOnce;
+    });
+
+  });
+
+  describe('GET /api/users/leaderboard', function() {
+
+    it('should be authenticated and route to user.controller.leaderboard', function() {
+      expect(routerStub.get
+        .withArgs('/leaderboard', 'authService.isAuthenticated', 'userCtrl.leaderboard')
+      ).to.have.been.calledOnce;
+    });
+
+  });
 });
