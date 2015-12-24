@@ -47,9 +47,7 @@ class LoginController {
       this.$state.go('main');
     })
     .catch(err => {
-      this.user.email = '';
-      this.user.password = '';
-      alert(err.message);
+      this.errormessage = err.message || 'Missing Credentials';
       this.signin = 'false';
     });
   };

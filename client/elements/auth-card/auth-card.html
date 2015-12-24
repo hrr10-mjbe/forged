@@ -1,6 +1,7 @@
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-dialog/paper-dialog.html">
 <link rel="import" href="../../bower_components/paper-material/paper-material.html">
+<link rel="import" href="../../bower_components/paper-toast/paper-toast.html">
 <dom-module id="auth-card">
   <template>
     <style>
@@ -8,8 +9,8 @@
         display: block;
       }
       paper-material {
-        width: 250px;
-        padding: 30px;
+        width: 300px;
+        padding: 40px;
         margin: 10px;
         background-color: white;
         overflow: auto;
@@ -17,38 +18,60 @@
       paper-button {
         background-color: white;
       }
-      paper-input {
-
-      }
     </style>
 
+    <paper-material elevation="2">
+      <h2>{{header}}</h2>
+      <div>
 
-
-<!--     <paper-button raised on-tap="openDialog">Click to sign in.</paper-button>
-    <paper-dialog id="authInput" entry-animation="scale-up-animation"
-      exit-animation="fade-out-animation" elevation="10" with-backdrop> -->
-      <paper-material elevation="2">
-        <h2>{{header}}</h2>
-        <div>
-
-          <div hidden$="{{isSignUpForm(header)}}">
-            <paper-radio-group id="radio">
-              <paper-radio-button name="student">Student</paper-radio-button>
-              <paper-radio-button name="teacher">Teacher</paper-radio-button>
-            </paper-radio-group>
-            <paper-input label="Full Name" value="{{username::input}}" type="text"></paper-input>
-          </div>
-
-          <paper-input label="Email Address" value="{{useremail::input}}" type="email"></paper-input>
-          <paper-input label="Password" value="{{userpass::input}}" type="password"></paper-input>
-          <br>
-          <div class="flex horizontal center-justified layout">
-            <paper-button raised on-tap="authenticate">Enter</paper-button>
-            <paper-button raised ui-sref="landing">Cancel</paper-button>
-          </div>
+        <div hidden$="{{isSignUpForm(header)}}">
+          <paper-radio-group id="radio">
+            <paper-radio-button name="student">Student</paper-radio-button>
+            <paper-radio-button name="teacher">Teacher</paper-radio-button>
+          </paper-radio-group>
+          <paper-input
+            id="nameInput"
+            label="Full Name"
+            value="{{name::input}}"
+            type="text"
+            error-message="Please enter your full name."
+            required>
+          </paper-input>
         </div>
-      </paper-material>
-    </paper-dialog>
+
+        <paper-input
+          id="emailInput"
+          label="Email Address"
+          value="{{useremail::input}}"
+          type="email"
+          error-message="Please enter your email address."
+          required>
+        </paper-input>
+        <paper-input
+          id="passwordInput"
+          label="Password"
+          value="{{userpass::input}}"
+          type="password"
+          error-message="Please enter a password."
+          required>
+        </paper-input>
+        <paper-input
+          id="passwordInput2"
+          label="Verify Password"
+          value="{{verifypass::input}}"
+          type="password"
+          error-message="Passwords do not match."
+          hidden$="{{isSignUpForm(header)}}"
+          required></paper-input>
+        <br>
+        <div class="flex horizontal center-justified layout">
+          <paper-button raised hidden$="{{!isSignUpForm(header)}}" on-tap="authenticate">Enter</paper-button>
+          <paper-button raised hidden$="{{isSignUpForm(header)}}" on-tap="createuser">Submit</paper-button>
+          <paper-button raised ui-sref="landing">Cancel</paper-button>
+        </div>
+      </div>
+    </paper-material>
+    <paper-toast id="errortoast" text="{{errormessage}}" duration="6000"></paper-toast>
   </template>
   <script>
     Polymer({
@@ -57,18 +80,23 @@
         header: {
           type: String
         },
-        username: {
+        name: {
           type: String
         },
         useremail: {
+          type: String,
           notify: true
         },
         userpass: {
+          type: String,
+          notify: true
+        },
+        verifypass: {
+          type: String,
           notify: true
         },
         usertype: {
-          type: String,
-          reflectToAttribute: true
+          type: String
         },
         signin: {
           type: String,
@@ -79,21 +107,58 @@
           notify: true,
         },
         errormessage: {
-          type: String
+          type: String,
+          observer: 'errorChanged'
         }
       },
       authenticate: function() {
-        if (this.header === 'Sign In') {
+        this.$.emailInput.validate();
+        this.$.passwordInput.validate();
+        if (!this.useremail) {
+          this.$.errortoast.text = 'Please enter your email address.';
+          this.$.errortoast.show();
+        } else if (!this.userpass) {
+          this.$.errortoast.text = 'Please enter a password.';
+          this.$.errortoast.show();
+        } else {
+          if (this.errormessage !== '' && this.errormessage !== '{{vm.errormessage}}') {
+            this.$.errortoast.show();
+          }
           this.signin = 'true';
         }
-
-        if (this.header === 'Sign Up') {
+      },
+      createuser: function() {
+        this.$.nameInput.validate();
+        this.$.emailInput.validate();
+        this.$.passwordInput.validate();
+        this.$.passwordInput2.validate();
+        if (!this.$.radio.selected) {
+          this.$.errortoast.text = 'Please select Student or Teacher.';
+          this.$.errortoast.show();
+        } else if (!this.name) {
+          this.$.errortoast.text = 'Please enter your full name.';
+          this.$.errortoast.show();
+        } else if (!this.useremail) {
+          this.$.errortoast.text = 'Please enter your email address.';
+          this.$.errortoast.show();
+        } else if (!this.userpass && this.userpass !== this.verifypass) {
+          this.$.errortoast.text = 'Passwords do not match.';
+          this.$.errortoast.show();
+        } else {
           this.usertype = this.$.radio.selected;
-          this.signUp = 'true';
+          this.signup = 'true';
+          if (this.errormessage !== '' && this.errormessage !== '{{vm.errormessage}}') {
+            this.$.errortoast.show();
+          }
         }
       },
       isSignUpForm: function(pageHeader) {
         return pageHeader === 'Sign In';
+      },
+      errorChanged: function(newVal, oldVal) {
+        if (newVal !== '' && newVal !== '{{vm.errormessage}}') {
+          this.$.errortoast.show();
+        }
       }
     });
   </script>

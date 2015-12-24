@@ -1,14 +1,17 @@
 <div class="flex horizontal center-justified layout">
   <div style="margin-top: 50px">
     <auth-card bind-polymer
-      header="Sign In" 
-      useremail="{{vm.user.email}}" 
-      userpass="{{vm.user.password}}" 
-      signin="{{vm.signin}}" 
+      header="Sign In"
+      useremail="{{vm.user.email}}"
+      userpass="{{vm.user.password}}"
+      signin="{{vm.signin}}"
       errormessage="{{vm.errormessage}}"
       event-namespace="vm">
     </auth-card>
-    <p style="text-align: center"><a ui-sref="signup">Create an account.</a></p>
+    <p style="text-align: center">Don't have an account?
+      <br>
+      <a ui-sref="signup">Get started here.</a>
+    </p>
   </div>
 </div>
 

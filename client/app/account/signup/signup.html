@@ -1,10 +1,22 @@
 <div class="flex horizontal center-justified layout">
   <div style="margin-top: 50px">
-    <auth-card header="Sign Up" useremail="{{vm.user.email}}" userpass="{{vm.user.password}}" submitted="{{vm.submitted}}" signUp="{{vm.signUp}}" event-namespace="vm" bind-polymer></auth-card>
-    <p style="text-align: center"><a ui-sref="signup">Create an account.</a></p>
+    <auth-card bind-polymer
+      header="Sign Up"
+      username="{{vm.user.name}}"
+      useremail="{{vm.user.email}}"
+      userpass="{{vm.user.password}}"
+      usertype="{{vm.user.type}}"
+      signup="{{vm.signup}}"
+      errormessage="{{vm.errormessage}}"
+      event-namespace="vm">
+    </auth-card>
+    <p style="text-align: center">Do you already have an account?
+      <br>
+      <a ui-sref="login">Sign in here.</a>
+    </p>
   </div>
 </div>
-
+<!-- 
 
 <navbar></navbar>
 
@@ -94,3 +106,4 @@
   </div>
   <hr>
 </div>
+ -->
