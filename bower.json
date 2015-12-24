@@ -39,7 +39,8 @@
     "paper-scroll-header-panel": "PolymerElements/paper-scroll-header-panel#~1.0.13",
     "paper-progress": "PolymerElements/paper-progress#~1.0.7",
     "paper-radio-group": "PolymerElements/paper-radio-group#~1.0.8",
-    "paper-radio-button": "PolymerElements/paper-radio-button#~1.0.12"
+    "paper-radio-button": "PolymerElements/paper-radio-button#~1.0.12",
+    "paper-toast": "PolymerElements/paper-toast#~1.1.1"
   },
   "devDependencies": {
     "angular-mocks": "~1.4.0"
