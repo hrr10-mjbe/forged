@@ -58,7 +58,7 @@
         <paper-input
           id="passwordInput2"
           label="Verify Password"
-          value="[[verifypass]]"
+          value="{{verifypass::input}}"
           type="password"
           error-message="Passwords do not match."
           hidden$="{{isSignUpForm(header)}}"
@@ -92,7 +92,8 @@
           notify: true
         },
         verifypass: {
-          type: String
+          type: String,
+          notify: true
         },
         usertype: {
           type: String
@@ -140,7 +141,7 @@
         } else if (!this.useremail) {
           this.$.errortoast.text = 'Please enter your email address.';
           this.$.errortoast.show();
-        } else if (this.userpass !== this.verifypass) {
+        } else if (!this.userpass && this.userpass !== this.verifypass) {
           this.$.errortoast.text = 'Passwords do not match.';
           this.$.errortoast.show();
         } else {
