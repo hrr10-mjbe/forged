@@ -135,7 +135,7 @@
       </template>
     </iron-list>
 
-    <paper-dialog id="inviteDialog" modal>
+    <paper-dialog id="inviteDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Student email" value="{{email::input}}" type="text" autofocus></paper-input>
       <paper-button raised dialog-confirm on-tap="invite">Invite</paper-button>
       <paper-button dialog-confirm autofocus>Cancel</paper-button>

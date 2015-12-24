@@ -47,12 +47,12 @@
       width: 60%;
     }
     </style>
-    <paper-tabs selected="{{selectedClass}}" scrollable id="classSelect">
+    <paper-tabs selected="{{selectedClass}}" scrollable id="classSelect" attr-for-selected="value">
       <template is="dom-repeat" items="{{classes}}">
-        <paper-tab>{{item.name}}</paper-tab>
+        <paper-tab value="{{item.name}}">{{item.name}}</paper-tab>
       </template>
-      <paper-tab on-tap="openModal">Add class...</paper-tab>
-      <paper-tab>[[selectedClass]]</paper-tab>
+      <!--<paper-tab on-tap="openModal">Add class...</paper-tab>-->
+      <paper-tab value="test">[[selectedClass]]</paper-tab>
     </paper-tabs>
     <div class="tile d3">
       <span>[[item.value]]</span>
