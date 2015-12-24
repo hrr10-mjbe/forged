@@ -24,8 +24,8 @@ angular.module('hrr10MjbeApp')
     })
 
     $scope.submit = function() {
-      console.log($scope.addSelected);
-      Teacher.sendInvite($scope.add, $scope.addSelected, function(result) {
+      console.log($scope.email);
+      Teacher.sendInvite($scope.email, $scope.activeClass, function(result) {
         if (result === 200) {
           Teacher.getRequests(function(requests) {
             $scope.invitations = requests;

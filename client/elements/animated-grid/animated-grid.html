@@ -47,11 +47,12 @@
       width: 60%;
     }
     </style>
-    <paper-tabs selected="0" scrollable id="classSelect">
+    <paper-tabs selected="{{selectedClass}}" scrollable id="classSelect">
       <template is="dom-repeat" items="{{classes}}">
         <paper-tab>{{item.name}}</paper-tab>
       </template>
       <paper-tab on-tap="openModal">Add class...</paper-tab>
+      <paper-tab>[[selectedClass]]</paper-tab>
     </paper-tabs>
     <div class="tile d3">
       <span>[[item.value]]</span>
@@ -64,6 +65,7 @@
     </div>
     <paper-dialog id="addClass" modal>
       <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus></paper-input>
+
       <paper-button raised dialog-confirm on-tap="createClass">Enter</paper-button>
       <paper-button dialog-confirm autofocus>Cancel</paper-button>
     </paper-dialog>
@@ -99,6 +101,7 @@ Polymer({
     classname: {
       notify: true
     },
+    selectedClass: String,
     config: {
       type: Array,
       value: function() {
