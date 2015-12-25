@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('DashboardCtrl', function($scope, $state, Teacher) {
+  .controller('DashboardCtrl', function($scope, $state, $rootScope, Teacher) {
     $scope.selectedClass = "";
 
     $scope.classname = "";
@@ -84,4 +84,12 @@ angular.module('hrr10MjbeApp')
     }
 
     $scope.refresh();
+
+    $rootScope.$on('$stateChangeSuccess', function(event, toState) {
+      console.log(toState);
+      if (toState.url === '/dashboard') {
+        console.log('refreshing');
+        $scope.refresh();
+      }
+    })
   });
