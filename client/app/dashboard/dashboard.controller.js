@@ -15,6 +15,7 @@ angular.module('hrr10MjbeApp')
     $scope.refresh = function() {
       Teacher.getClasses(function(classes) {
         $scope.listedClasses = classes;
+        classes = classes.slice();
         Teacher.getRequests(function(requests) {
           //this is pretty hacky. the pending students are stored seperately on the server, but now we want to show
           //them as part of a particular class, so we scan through and populate them here
