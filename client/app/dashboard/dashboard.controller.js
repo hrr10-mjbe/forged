@@ -12,6 +12,7 @@ angular.module('hrr10MjbeApp')
     var first = true;
 
     //reloads stuff
+    //TODO: refactor server instead
     $scope.refresh = function() {
       Teacher.getClasses(function(classes) {
         $scope.listedClasses = classes;
