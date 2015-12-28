@@ -12,29 +12,31 @@ angular.module('hrr10MjbeApp')
     var first = true;
 
     //reloads stuff
-    //TODO: refactor server instead
     $scope.refresh = function() {
       Teacher.getClasses(function(classes) {
-        $scope.listedClasses = classes;
-        classes = classes.slice();
+        console.log('classes');
+        console.log(classes);
+        $scope.listedClasses = JSON.parse(JSON.stringify(classes));
+        console.log('listed');
+        console.log($scope.listedClasses);
         Teacher.getRequests(function(requests) {
           //this is pretty hacky. the pending students are stored seperately on the server, but now we want to show
           //them as part of a particular class, so we scan through and populate them here
           for (var i = 0; i < requests.length; i++) {
-            for (var j = 0; j < classes.length; j++) {
+            for (var j = 0; j < $scope.listedClasses.length; j++) {
               if (requests[i].class._id === classes[j]._id) {
-                classes[j].students.push({
+                $scope.listedClasses[j].students.push({
                   name: requests[i].student.name,
                   email: requests[i].student.email,
                   status: 'pending'
-                })
+                });
               }
             }
           }
-          $scope.classes = JSON.stringify(classes);
+          $scope.classes = JSON.stringify($scope.listedClasses);
           //select first class as default
           if (first) {
-            $scope.activeClass = classes[0]._id.toString();
+            $scope.activeClass = $scope.listedClasses[0]._id.toString();
             first = false;
           }
         })
@@ -87,11 +89,11 @@ angular.module('hrr10MjbeApp')
 
     $scope.refresh();
 
-    $rootScope.$on('$stateChangeSuccess', function(event, toState) {
+    /*$rootScope.$on('$stateChangeSuccess', function(event, toState) {
       console.log(toState);
       if (toState.url === '/dashboard') {
         console.log('refreshing');
         $scope.refresh();
       }
-    })
+    })*/
   });
