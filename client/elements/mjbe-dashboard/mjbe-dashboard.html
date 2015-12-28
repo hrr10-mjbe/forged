@@ -73,9 +73,9 @@
     </paper-dialog>
 
     <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <div><paper-checkbox id="showTimerBox" checked="{{showtimer === 'true'}}">Show Timer</paper-checkbox></div>
-     <div><paper-checkbox id="showLeaderboardBox" checked="{{showleaderboard}}">Show Leaderboard</paper-checkbox></div>
-      <div><paper-checkbox id="showWhiteboardBox" checked="{{showwhiteboard}}">Show Whiteboard</paper-checkbox></div>
+      <div><paper-checkbox id="showTimerBox" checked="{{showTimer}}">Show Timer</paper-checkbox></div>
+     <div><paper-checkbox id="showLeaderboardBox" checked="{{showLeaderboard}}">Show Leaderboard</paper-checkbox></div>
+      <div><paper-checkbox id="showWhiteboardBox" checked="{{showWhiteboard}}">Show Whiteboard</paper-checkbox></div>
       <paper-button raised on-tap="updateMod">Save</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
@@ -146,6 +146,18 @@ Polymer({
 
     showwhiteboard: {
       notify: true
+    },
+
+    showTimer: {
+      computed: 'parseBool(showtimer)'
+    },
+
+    showLeaderboard: {
+      computed: 'parseBool(showleaderboard)'
+    },
+
+    showWhiteboard: {
+      computed: 'parseBool(showwhiteboard)'
     },
 
     animationConfig: {
@@ -221,6 +233,14 @@ Polymer({
     //this.showtimer = this.$.showTimerBox.checked;
     //this.showleaderboard = this.$.showLeaderboardBox.checked;
     //this.showwhiteboard = this.$.showWhiteboardBox.checked;
+  },
+
+  timerChecked: function() {
+    return true;
+  },
+
+  parseBool: function(bool) {
+    return bool === 'true';
   }
 });
 </script>
