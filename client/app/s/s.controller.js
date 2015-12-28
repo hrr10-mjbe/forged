@@ -42,10 +42,7 @@
 
     polymerChange() {
       if (this.timerMinutes != this.timerMinutesStore || this.timerSeconds != this.timerSecondsStore) {
-        console.log('time changed');
-        console.log(this.timeLoaded);
         if (this.timeLoaded) {
-          console.log('loaded');
           this.Student.updateTime(this.timerSeconds + 60 * this.timerMinutes);
         }        
       }
