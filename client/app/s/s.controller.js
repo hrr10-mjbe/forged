@@ -5,10 +5,6 @@
   class SController {
     constructor(Skills, Student, $state, $stateParams) {
       this.complete = 'false';
-      this.timerMinutes = 0;
-      this.timerSeconds = 0;
-      this.timerMinutesStore = 0;
-      this.timerSecondsStore = 0;
       this.Student = Student;
       Skills.getSkill($stateParams.id, function(skill) {
         this.skill = skill;
@@ -21,6 +17,14 @@
       Student.getLeaderboard(function(board) {
         this.leaderboard = JSON.stringify(board);
       }.bind(this));
+      Student.getTime(function(time) {
+        this.timerMinutes = Math.floor(time / 60);
+        console.log('timerMinutes in controller');
+        console.log(this.timerMinutes);
+        this.timerSeconds = time % 60;
+        this.timerMinutesStore = Math.floor(time / 60);
+        this.timerSecondsStore = time % 60;
+      }.bind(this))
     }
 
     finish() {
@@ -34,7 +38,7 @@
     }
 
     polymerChange() {
-      if (this.timerMinutes != this.timerMinutesStore || this.timerSeconds != timerSecondsStore) {
+      if (this.timerMinutes != this.timerMinutesStore || this.timerSeconds != this.timerSecondsStore) {
         console.log('time changed');
       }
       this.finish();

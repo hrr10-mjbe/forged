@@ -201,7 +201,8 @@ angular.module('hrr10MjbeApp')
     this.getTime = function(cb) {
       getUser(function(user) {
         if (!user) return cb(0);
-        cb(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)]);
+        cb(70);
+        //cb(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)]);
       })
     }
 
