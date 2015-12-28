@@ -33,11 +33,13 @@ angular.module('hrr10MjbeApp')
           //select first class as default
           if (first) {
             $scope.activeClass = $scope.listedClasses[0]._id.toString();
-            console.log($scope.listedClasses[0]);
+            //console.log($scope.listedClasses[0]);
             $scope.showTimer = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showTimer ? 'true' : 'false' : 'false';
-            console.log('$scope.showTimer');
-            $scope.showTimer = 'true';
-            console.log($scope.showTimer);
+            $scope.showLeaderboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showLeaderboard ? 'true' : 'false' : 'false';
+            $scope.showWhiteboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showWhiteboard ? 'true' : 'false' : 'false';
+            //console.log('$scope.showTimer');
+            //$scope.showTimer = 'true';
+           // console.log($scope.showTimer);
             first = false;
           }
         })

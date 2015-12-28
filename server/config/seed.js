@@ -21,7 +21,12 @@ User.find({}).removeAsync()
       password: 'test',
       studentData: {
         points: 50,
-        times: {nothing: 'h'}
+        times: {nothing: 'h'},
+        modifications: {
+          showTimer: false,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
       }
     })
 
@@ -33,7 +38,12 @@ User.find({}).removeAsync()
       password: 'test',
       studentData: {
         points: 200,
-        times: {nothing: 'h'}
+        times: {nothing: 'h'},
+        modifications: {
+          showTimer: false,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
       }
     })
 
