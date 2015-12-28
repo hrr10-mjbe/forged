@@ -36,6 +36,8 @@
     <div class="board">
       <h2>Leaderboard</h2>
 
+      <!--TODO maybe don't make this transparent so the user can't draw on it?-->
+
         <template is="dom-repeat" items="[[leaderboard]]">
           <li><span class="student-name">[[item.name]]</span> <span class="points">[[item.points]]</span></li>
         </template>

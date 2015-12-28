@@ -43,11 +43,11 @@
     </style>
     <div id="clockdiv">
       <div>
-        <span class="minutes">00</span>
+        <span class="minutes">{{minutesDisp}}</span>
         <div class="smalltext">Minutes</div>
       </div>
       <div>
-        <span class="seconds">00</span>
+        <span class="seconds">{{secondsDisp}}</span>
         <div class="smalltext">Seconds</div>
       </div>
     </div>
@@ -57,38 +57,34 @@
     Polymer({
       is: 'mjbe-timer',
       properties: {
-        time: {
-          type: Number,
-          value: 0
-        },
         seconds: {
           type: Number,
-          value: 0
+          notify: true
         },
         minutes: {
-          type: Boolean,
-          value: false
+          type: Number,
+          notify: true
+        },
+        secondsDisp: {
+          type: String,
+          computed: 'computeDisp(seconds)'
+        },
+        minutesDisp: {
+          type: String,
+          computed: 'computeDisp(minutes)'
         }
       },
-      initializeClock: function() {
-        var clock = this.$.clockdiv
-        var minutesSpan = clock.querySelector('.minutes');
-        var secondsSpan = clock.querySelector('.seconds');
-        var seconds = ~~secondsSpan.innerHTML;
-        var minutes = ~~minutesSpan.innerHTML;
+      initializeClock: function() {        
         window.onblur = function() {window.blurred = true;};
         window.onfocus = function() {window.blurred = false;};
 
         function updateClock() {
           if( window.blurred ) { return; }
-          seconds++
-          if( seconds >= 60 ) {
-            seconds = 0;
-            secondsSpan.innerHTML = '00';
-            minutes++;
-            minutesSpan.innerHTML = ('0' + minutes).slice(-2);
+          this.seconds++;
+          if( this.seconds >= 60 ) {
+            this.seconds = 0;
+            this.minutes++;
           }
-          secondsSpan.innerHTML = ('0' + seconds).slice(-2);
         }
 
         var clock = updateClock.bind(this);
@@ -96,6 +92,9 @@
       },
       ready: function() {
         this.initializeClock();
+      },
+      computeDisp: function(seconds) {
+        return seconds < 10 ? '0' + seconds : '' + seconds;
       }
     });
   </script>

@@ -201,15 +201,17 @@ angular.module('hrr10MjbeApp')
     this.getTime = function(cb) {
       getUser(function(user) {
         if (!user) return cb(0);
-        cb(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)]);
+        var time = Date.now();
+        cb(user.studentData.times[time - time % (24 * 60 * 60 * 1000)] || 0);
       })
     }
 
     this.updateTime = function(time) {
       getUser(function(user) {
         if (!user) return;
-        user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)] = time;
-        save();
+        var now = Date.now();
+        user.studentData.times[now - now % (24 * 60 * 60 * 1000)] = time;
+        if (time % 10 === 0) save();
       })
     }
   });
