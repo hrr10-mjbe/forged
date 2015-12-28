@@ -73,11 +73,10 @@
     </paper-dialog>
 
     <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <div><paper-checkbox>Checkbox</paper-checkbox></div>
-     <div><paper-checkbox>Checkbox</paper-checkbox></div>
-      <paper-checkbox>Checkbox</paper-checkbox>
-      <paper-checkbox>Checkbox</paper-checkbox>
-      <paper-button raised on-tap="createClass">Enter</paper-button>
+      <div><paper-checkbox id="showTimerBox">Show Timer</paper-checkbox></div>
+     <div><paper-checkbox id="showLeaderboardBox">Show Leaderboard</paper-checkbox></div>
+      <div><paper-checkbox id="showWhiteboardBox">Show Whiteboard</paper-checkbox></div>
+      <paper-button raised on-tap="updateMod">Save</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
   </template>
@@ -136,6 +135,11 @@ Polymer({
     selectedclass: {
       notify: true
     },
+
+    showtimer: {
+      notify: true
+    },
+    
     animationConfig: {
       type: Object,
       value: function() {
@@ -203,6 +207,11 @@ Polymer({
       this.$.addClass.close();
       this.addcount = '' + (Number.parseInt(this.addcount) + 1);
     }
+  },
+
+  updateMod: function() {
+    this.showtimer = this.$.showTimerBox.checked;
+    console.log(this.showtimer);
   }
 });
 </script>
