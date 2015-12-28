@@ -142,4 +142,12 @@ angular.module('hrr10MjbeApp')
         cb(user.teacherData.pendingStudents);
       })
     }
+
+    this.setModification = function(classId, mod, val) {
+      this.getClass(classId, function(theClass) {
+        for (var i = 0; i < theClass.students.length; i++) {
+          theClass.students[i].modifications[mod] = val;
+        }
+      })
+    }
   });
