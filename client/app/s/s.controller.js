@@ -5,6 +5,10 @@
   class SController {
     constructor(Skills, Student, $state, $stateParams) {
       this.complete = 'false';
+      this.timerMinutes = 0;
+      this.timerSeconds = 0;
+      this.timerMinutesStore = 0;
+      this.timerSecondsStore = 0;
       this.Student = Student;
       Skills.getSkill($stateParams.id, function(skill) {
         this.skill = skill;
@@ -30,7 +34,9 @@
     }
 
     polymerChange() {
-      console.log(this.timerMinutes + 4);
+      if (this.timerMinutes != this.timerMinutesStore || this.timerSeconds != timerSecondsStore) {
+        console.log('time changed');
+      }
       this.finish();
     }
   }

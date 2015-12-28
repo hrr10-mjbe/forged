@@ -84,13 +84,11 @@
         function updateClock() {
           if( window.blurred ) { return; }
           this.seconds++;
-          //this.str = '' + seconds;
-          console.log('updating');
           if( this.seconds >= 60 ) {
             this.seconds = 0;
             secondsSpan.innerHTML = '00';
-            minutes++;
-            minutesSpan.innerHTML = ('0' + minutes).slice(-2);
+            this.minutes++;
+            minutesSpan.innerHTML = ('0' + this.minutes).slice(-2);
           }
           secondsSpan.innerHTML = ('0' + this.seconds).slice(-2);
         }
