@@ -62,10 +62,17 @@
       <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}"></mjbe-collapse-list>
     </div>
     <div class="tile mod">
+    <paper-icon-button icon="arrow-forward" style="color:white;" alt="Add class" on-tap="openMod"></paper-icon-button>
       <span>Modifications</span>
     </div>
     <!--add class modal-->
     <paper-dialog id="addClass" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>
+      <paper-button raised on-tap="createClass">Enter</paper-button>
+      <paper-button dialog-confirm>Cancel</paper-button>
+    </paper-dialog>
+
+    <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>
       <paper-button raised on-tap="createClass">Enter</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
@@ -181,6 +188,10 @@ Polymer({
   //add class modal
   openModal: function() {
     this.$.addClass.open();
+  },
+
+  openMod: function() {
+    this.$.modDialog.open();
   },
   
   //creates a new class
