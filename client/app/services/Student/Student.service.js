@@ -201,8 +201,10 @@ angular.module('hrr10MjbeApp')
     this.getTime = function(cb) {
       getUser(function(user) {
         if (!user) return cb(0);
-        cb(70);
-        //cb(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)]);
+        console.log('getting');
+        //cb(70);
+        console.log(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)])
+        cb(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)] || 0);
       })
     }
 
@@ -210,6 +212,7 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         if (!user) return;
         user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)] = time;
+        console.log(user.studentData.times);
         save();
       })
     }

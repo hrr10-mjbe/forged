@@ -20,7 +20,8 @@ User.find({}).removeAsync()
       email: 'test@example.com',
       password: 'test',
       studentData: {
-        points: 50
+        points: 50,
+        times: []
       }
     })
 
@@ -31,7 +32,8 @@ User.find({}).removeAsync()
       email: 'test2@example.com',
       password: 'test',
       studentData: {
-        points: 200
+        points: 200,
+        times: []
       }
     })
 
