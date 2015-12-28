@@ -30,6 +30,7 @@
     }
 
     polymerChange() {
+      console.log(this.timerMinutes + 4);
       this.finish();
     }
   }

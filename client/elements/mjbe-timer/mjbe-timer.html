@@ -63,11 +63,13 @@
         },
         seconds: {
           type: Number,
-          value: 0
+          value: 0,
+          notify: true
         },
         minutes: {
           type: Boolean,
-          value: false
+          value: false,
+          notify: true
         }
       },
       initializeClock: function() {
@@ -81,14 +83,16 @@
 
         function updateClock() {
           if( window.blurred ) { return; }
-          seconds++
-          if( seconds >= 60 ) {
-            seconds = 0;
+          this.seconds++;
+          //this.str = '' + seconds;
+          console.log('updating');
+          if( this.seconds >= 60 ) {
+            this.seconds = 0;
             secondsSpan.innerHTML = '00';
             minutes++;
             minutesSpan.innerHTML = ('0' + minutes).slice(-2);
           }
-          secondsSpan.innerHTML = ('0' + seconds).slice(-2);
+          secondsSpan.innerHTML = ('0' + this.seconds).slice(-2);
         }
 
         var clock = updateClock.bind(this);
