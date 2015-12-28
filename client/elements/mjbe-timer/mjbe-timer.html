@@ -74,8 +74,7 @@
           computed: 'computeDisp(minutes)'
         }
       },
-      initializeClock: function() {
-        
+      initializeClock: function() {        
         window.onblur = function() {window.blurred = true;};
         window.onfocus = function() {window.blurred = false;};
 
@@ -84,11 +83,8 @@
           this.seconds++;
           if( this.seconds >= 60 ) {
             this.seconds = 0;
-            secondsSpan.innerHTML = '00';
             this.minutes++;
-            minutesSpan.innerHTML = ('0' + this.minutes).slice(-2);
           }
-          secondsSpan.innerHTML = ('0' + this.seconds).slice(-2);
         }
 
         var clock = updateClock.bind(this);
