@@ -215,8 +215,7 @@ angular.module('hrr10MjbeApp')
         if (!user) return;
         var now = Date.now();
         user.studentData.times[now - now % (24 * 60 * 60 * 1000)] = time;
-        console.log(user.studentData.times);
-        save();
+        if (time % 10 === 0) save();
       })
     }
   });
