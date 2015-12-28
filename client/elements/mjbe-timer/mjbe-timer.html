@@ -43,11 +43,11 @@
     </style>
     <div id="clockdiv">
       <div>
-        <span class="minutes">00</span>
+        <span class="minutes">{{minutesDisp}}</span>
         <div class="smalltext">Minutes</div>
       </div>
       <div>
-        <span class="seconds">00</span>
+        <span class="seconds">{{secondsDisp}}</span>
         <div class="smalltext">Seconds</div>
       </div>
     </div>
@@ -67,6 +67,14 @@
         minutes: {
           type: Number,
           notify: true
+        },
+        secondsDisp: {
+          type: String,
+          computed: 'computeDisp(seconds)'
+        },
+        minutesDisp: {
+          type: String,
+          computed: 'computeDisp(minutes)'
         }
       },
       initializeClock: function() {
@@ -95,6 +103,9 @@
       },
       ready: function() {
         this.initializeClock();
+      },
+      computeDisp: function(seconds) {
+        return seconds < 10 ? '0' + seconds : '' + seconds;
       }
     });
   </script>
