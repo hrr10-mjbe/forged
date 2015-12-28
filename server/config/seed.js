@@ -21,7 +21,7 @@ User.find({}).removeAsync()
       password: 'test',
       studentData: {
         points: 50,
-        times: []
+        times: {nothing: 'h'}
       }
     })
 
@@ -33,7 +33,7 @@ User.find({}).removeAsync()
       password: 'test',
       studentData: {
         points: 200,
-        times: []
+        times: {nothing: 'h'}
       }
     })
 

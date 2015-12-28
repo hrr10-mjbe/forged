@@ -204,6 +204,7 @@ angular.module('hrr10MjbeApp')
         console.log('getting');
         //cb(70);
         var time = Date.now();
+        console.log(user.studentData);
         console.log(user.studentData.times[time - time % (24 * 60 * 60 * 1000)])
         cb(user.studentData.times[time - time % (24 * 60 * 60 * 1000)] || 0);
       })
@@ -215,7 +216,7 @@ angular.module('hrr10MjbeApp')
         var now = Date.now();
         user.studentData.times[now - now % (24 * 60 * 60 * 1000)] = time;
         console.log(user.studentData.times);
-        //save();
+        save();
       })
     }
   });
