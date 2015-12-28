@@ -73,7 +73,10 @@
     </paper-dialog>
 
     <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>
+      <div><paper-checkbox>Checkbox</paper-checkbox></div>
+     <div><paper-checkbox>Checkbox</paper-checkbox></div>
+      <paper-checkbox>Checkbox</paper-checkbox>
+      <paper-checkbox>Checkbox</paper-checkbox>
       <paper-button raised on-tap="createClass">Enter</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
