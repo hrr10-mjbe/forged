@@ -20,13 +20,10 @@
       }.bind(this));
       Student.getTime(function(time) {
         this.timerMinutes = Math.floor(time / 60);
-        console.log('timerMinutes in controller');
-        console.log(this.timerMinutes);
         this.timerSeconds = time % 60;
         this.timerMinutesStore = Math.floor(time / 60);
         this.timerSecondsStore = time % 60;
         this.timeLoaded = true;
-        console.log(this.timeLoaded);
       }.bind(this))
     }
 
