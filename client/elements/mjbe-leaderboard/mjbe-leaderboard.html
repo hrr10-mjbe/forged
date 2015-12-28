@@ -36,7 +36,7 @@
     <div class="board">
       <h2>Leaderboard</h2>
 
-        <template is="dom-repeat" items="[[mockBoard]]">
+        <template is="dom-repeat" items="[[leaderboard]]">
           <li><span class="student-name">[[item.name]]</span> <span class="points">[[item.points]]</span></li>
         </template>
 
@@ -50,8 +50,11 @@
   Polymer({
     is: 'mjbe-leaderboard',
     properties: {
-      leaderboard: {
+      loadleaderboard: {
         notify: true
+      },
+      leaderboard: {
+        computed: 'parseLeaderboard(loadleaderboard)'
       },
       mockBoard: {
         value: [
@@ -68,6 +71,12 @@
           {name: 'Ben11', points: 0},
         ]
       }
-    }
+    },
+    parseLeaderboard: function(loadleaderboard) {
+        console.log(loadleaderboard);
+        try {
+          return JSON.parse(loadleaderboard);
+        } catch (e) {}
+      }
   });
 </script>
