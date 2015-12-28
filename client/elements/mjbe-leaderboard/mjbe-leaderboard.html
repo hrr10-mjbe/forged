@@ -55,25 +55,9 @@
       },
       leaderboard: {
         computed: 'parseLeaderboard(loadleaderboard)'
-      },
-      mockBoard: {
-        value: [
-          {name: 'Ben', points: 1000},
-          {name: 'Ben2', points: 900},
-          {name: 'Ben3', points: 800},
-          {name: 'Ben4', points: 700},
-          {name: 'Ben5', points: 600},
-          {name: 'Ben6', points: 400},
-          {name: 'Ben7', points: 300},
-          {name: 'Ben8', points: 200},
-          {name: 'Ben9', points: 100},
-          {name: 'Ben10', points: 90},
-          {name: 'Ben11', points: 0},
-        ]
-      }
+      }      
     },
     parseLeaderboard: function(loadleaderboard) {
-        console.log(loadleaderboard);
         try {
           return JSON.parse(loadleaderboard);
         } catch (e) {}
