@@ -73,9 +73,9 @@
     </paper-dialog>
 
     <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <div><paper-checkbox id="showTimerBox">Show Timer</paper-checkbox></div>
-     <div><paper-checkbox id="showLeaderboardBox">Show Leaderboard</paper-checkbox></div>
-      <div><paper-checkbox id="showWhiteboardBox">Show Whiteboard</paper-checkbox></div>
+      <div><paper-checkbox id="showTimerBox" checked="{{showtimer === 'true'}}">Show Timer</paper-checkbox></div>
+     <div><paper-checkbox id="showLeaderboardBox" checked="{{showleaderboard}}">Show Leaderboard</paper-checkbox></div>
+      <div><paper-checkbox id="showWhiteboardBox" checked="{{showwhiteboard}}">Show Whiteboard</paper-checkbox></div>
       <paper-button raised on-tap="updateMod">Save</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
@@ -139,7 +139,15 @@ Polymer({
     showtimer: {
       notify: true
     },
-    
+
+    showleaderboard: {
+      notify: true
+    },
+
+    showwhiteboard: {
+      notify: true
+    },
+
     animationConfig: {
       type: Object,
       value: function() {
@@ -210,8 +218,9 @@ Polymer({
   },
 
   updateMod: function() {
-    this.showtimer = this.$.showTimerBox.checked;
-    console.log(this.showtimer);
+    //this.showtimer = this.$.showTimerBox.checked;
+    //this.showleaderboard = this.$.showLeaderboardBox.checked;
+    //this.showwhiteboard = this.$.showWhiteboardBox.checked;
   }
 });
 </script>
