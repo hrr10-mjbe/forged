@@ -57,9 +57,6 @@
     Polymer({
       is: 'mjbe-timer',
       properties: {
-        time: {
-          type: Number,
-        },
         seconds: {
           type: Number,
           notify: true
@@ -78,11 +75,7 @@
         }
       },
       initializeClock: function() {
-        var clock = this.$.clockdiv
-        var minutesSpan = clock.querySelector('.minutes');
-        var secondsSpan = clock.querySelector('.seconds');
-        var seconds = ~~secondsSpan.innerHTML;
-        var minutes = ~~minutesSpan.innerHTML;
+        
         window.onblur = function() {window.blurred = true;};
         window.onfocus = function() {window.blurred = false;};
 
