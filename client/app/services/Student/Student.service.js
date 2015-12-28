@@ -203,17 +203,19 @@ angular.module('hrr10MjbeApp')
         if (!user) return cb(0);
         console.log('getting');
         //cb(70);
-        console.log(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)])
-        cb(user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)] || 0);
+        var time = Date.now();
+        console.log(user.studentData.times[time - time % (24 * 60 * 60 * 1000)])
+        cb(user.studentData.times[time - time % (24 * 60 * 60 * 1000)] || 0);
       })
     }
 
     this.updateTime = function(time) {
       getUser(function(user) {
         if (!user) return;
-        user.studentData.times[Date.now() % (24 * 60 * 60 * 1000)] = time;
+        var now = Date.now();
+        user.studentData.times[now - now % (24 * 60 * 60 * 1000)] = time;
         console.log(user.studentData.times);
-        save();
+        //save();
       })
     }
   });

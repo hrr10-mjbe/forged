@@ -46,7 +46,7 @@
         console.log(this.timeLoaded);
         if (this.timeLoaded) {
           console.log('loaded');
-          //this.Student.updateTime(this.timerSeconds + 60 * this.timerMinutes);
+          this.Student.updateTime(this.timerSeconds + 60 * this.timerMinutes);
         }        
       }
       this.finish();
