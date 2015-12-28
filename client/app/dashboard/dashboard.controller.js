@@ -14,11 +14,7 @@ angular.module('hrr10MjbeApp')
     //reloads stuff
     $scope.refresh = function() {
       Teacher.getClasses(function(classes) {
-        console.log('classes');
-        console.log(classes);
         $scope.listedClasses = JSON.parse(JSON.stringify(classes));
-        console.log('listed');
-        console.log($scope.listedClasses);
         Teacher.getRequests(function(requests) {
           //this is pretty hacky. the pending students are stored seperately on the server, but now we want to show
           //them as part of a particular class, so we scan through and populate them here
@@ -89,11 +85,11 @@ angular.module('hrr10MjbeApp')
 
     $scope.refresh();
 
-    /*$rootScope.$on('$stateChangeSuccess', function(event, toState) {
+    $rootScope.$on('$stateChangeSuccess', function(event, toState) {
       console.log(toState);
       if (toState.url === '/dashboard') {
         console.log('refreshing');
         $scope.refresh();
       }
-    })*/
+    })
   });
