@@ -15,8 +15,8 @@
         this.showCanvas = mod.showWhiteboard;
       }.bind(this));
       Student.getLeaderboard(function(board) {
-        console.log(board);
-      })
+        this.leaderboard = JSON.stringify(board);
+      }.bind(this));
     }
 
     finish() {
