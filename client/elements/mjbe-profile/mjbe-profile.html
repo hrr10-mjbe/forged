@@ -51,7 +51,7 @@
       <paper-material elevation="1" class="flex invitation heightfix">
           <h2>You got a class invitation from {{request.teacher.name}}!</h2>
           <p>{{request.class.name}}</p>
-          <paper-button raised><iron-icon icon="social:group-add"></iron-icon> Click here to join the class</paper-button>
+          <paper-button raised on-tap="acceptRequest"><iron-icon icon="social:group-add"></iron-icon> Click here to join the class</paper-button>
       </paper-material>
     </div>
     </template>
@@ -148,6 +148,10 @@
           computed: 'parse(loadrequest)'
         },
 
+        accepted: {
+          notify: true
+        },
+
         animationConfig: {
           type: Object,
           value: function() {
@@ -186,6 +190,10 @@
         try {
           return JSON.parse(loadrequest);
         } catch (e) {}
+      },
+
+      acceptRequest: function() {
+        this.accepted = true;
       }
     });
   </script>

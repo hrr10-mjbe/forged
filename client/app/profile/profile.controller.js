@@ -1,13 +1,20 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('ProfileCtrl', function ($scope, Student) {
+  .controller('ProfileCtrl', function($scope, Student) {
     $scope.message = 'Hello';
     $scope.accepted = 'false';
 
     Student.getRequests(function(requests) {
       $scope.request = requests[0];
-      $scope.request = {teacher: {name: 'a teacher'}, class: {name: 'Math'}};
+      $scope.request = {
+        teacher: {
+          name: 'a teacher'
+        },
+        class: {
+          name: 'Math'
+        }
+      };
       console.log(requests);
     });
 
@@ -17,9 +24,12 @@ angular.module('hrr10MjbeApp')
     })
 
     $scope.accept = function() {
-      console.log('accepting');
-      Student.acceptRequest($scope.requests[0], function(res) {
-        console.log(res);
-      });
+      if ($scope.accepted === 'true') {
+        console.log('accepting');
+        Student.acceptRequest($scope.request, function(res) {
+          console.log(res);
+        });
+      }
+
     }
   });
