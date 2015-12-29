@@ -231,7 +231,7 @@ exports.accept = function(req, res, next) {
               return res.status(404).end();
             }
             student.studentData.teacher = req.body.request.teacher._id;
-            student.studentData.class = {
+            student.studentData.myClass = {
               _id: req.body.request.class._id, name: req.body.request.class.name
             };
 
