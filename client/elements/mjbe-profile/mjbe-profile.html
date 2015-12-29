@@ -49,8 +49,8 @@
     <template is="dom-if" if="{{request}}">
     <div class="tile layout horizontal">
       <paper-material elevation="1" class="flex invitation heightfix">
-          <h2>You got a class invitation from TeacherName!</h2>
-          <p>SubjectName</p>
+          <h2>You got a class invitation from {{request.teacher.name}}!</h2>
+          <p>{{request.class.name}}</p>
           <paper-button raised><iron-icon icon="social:group-add"></iron-icon> Click here to join the class</paper-button>
       </paper-material>
     </div>

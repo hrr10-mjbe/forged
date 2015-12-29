@@ -7,7 +7,7 @@ angular.module('hrr10MjbeApp')
 
     Student.getRequests(function(requests) {
       $scope.request = requests[0];
-      $scope.request = {test: 'hi'};
+      $scope.request = {teacher: {name: 'a teacher'}, class: {name: 'Math'}};
       console.log(requests);
     });
 
