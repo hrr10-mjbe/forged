@@ -184,6 +184,10 @@ Polymer({
       observer: 'newStudentMod'
     },
 
+    sendindividualmod: {
+      notify: true
+    },
+
     animationConfig: {
       type: Object,
       value: function() {
@@ -269,6 +273,7 @@ Polymer({
   newStudentMod: function() {
     console.log('new student mod');
     console.log(this.individualMod);
+    this.sendindividualmod = JSON.stringify(this.individualMod);
   }
 });
 </script>

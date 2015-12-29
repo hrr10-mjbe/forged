@@ -13,6 +13,7 @@ angular.module('hrr10MjbeApp')
     $scope.modSubmitCount = '0';
     var modSubmitCount = 0;
     var activeClass;
+    var individualMod;
 
     Skills.getSkills(function(skills) {
       $scope.skills = skills;
@@ -116,6 +117,12 @@ angular.module('hrr10MjbeApp')
           }
         }
         activeClass = $scope.activeClass;
+      }
+
+      if (individualMod !== $scope.individualMod) {
+        individualMod = $scope.individualMod;
+        console.log('changing individual');
+        console.log(JSON.parse(individualMod));
       }
     }
 
