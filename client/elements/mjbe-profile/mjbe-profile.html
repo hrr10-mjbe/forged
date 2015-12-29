@@ -1,16 +1,13 @@
+<link rel="import" href="../../bower_components/iron-icons/social-icons.html">
 <dom-module id="mjbe-profile">
   <template>
     <style>
       :host {
-          display: block;
-          padding: 15px;
-      }
-      .bar {
         display: block;
-        overflow: auto;
+        padding: 15px;
+        background: #444;
       }
       paper-material {
-        height: 100px;
         margin: 10px;
         padding: 10px;
       }
@@ -18,34 +15,89 @@
         width: 500px;
         min-width: 300px;
       }
+      .tall-box {
+        height: 300px;
+      }
+      .square-box {
+        height: 150px;
+      }
+      .really-tall-box {
+        height: 490px;
+      }
+      .namebox {
+        background: #333;
+        color: #fff;
+        height: 100px;
+      }
+      .heightfix {
+        overflow: auto;
+      }
+      .invitation {
+        background: #FFCC00;
+        text-align: center;
+      }
+      paper-button {
+        background: white;
+        color: #007AFF;
+      }
     </style>
     
+    <!-- top bar only for pending teacher invitation -->
+    <div class="tile layout horizontal">
+      <paper-material elevation="1" class="flex invitation heightfix">
+          <h3>You got a class invitation from TeacherName!</h3>
+          <p>SubjectName</p>
+          <paper-button raised><iron-icon icon="social:group-add"></iron-icon> Click here to join the class</paper-button>
+      </paper-material>
+    </div>
+
     <!-- whole grid -->
     <div class="bar horizontal layout around-justified wrap tile">
-      <!-- first column -->
-      <div class="box tile layout vertical flex">
 
-        <paper-material elevation="1">
+      <!-- first column -->
+      <div class="box tile flex layout vertical">
+
+        <paper-material elevation="4" class="namebox">
           <h2>Eric Hollenberry</h2>
           <p>Member since April 1, 2017</p>
         </paper-material>
 
-        <paper-material elevation="1">
-          <h3>Another box</h3>
+        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
+          <h3>Date and Time</h3>
           <p>Member since April 1, 2017</p>
         </paper-material>
 
-        <paper-material elevation="1">
-          <h3>Another box</h3>
-          <p>Member since April 1, 2017</p>
+        <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box">
+          <mjbe-updating-grid></mjbe-updating-grid>
         </paper-material>
 
       </div>
+
       <!-- second column -->
-      <div class="box tile layout vertical flex">
-        <paper-material elevation="1">
-          <h4>Latest Badge</h4>
+      <div class="box tile flex layout vertical">
+
+        <paper-material elevation="1" style="background-color: white">
+          <h3>Latest Badge</h3>
         </paper-material>
+
+        <paper-material elevation="1" style="background-color: #4CD964" class="really-tall-box">
+          
+        </paper-material>
+
+      </div>
+
+      <!-- third column -->
+      <div class="box tile layout vertical flex">
+
+        <paper-material elevation="1" style="background-color: white">
+          <h3>Latest Badge</h3>
+        </paper-material>
+
+        <paper-material elevation="1" style="background-color: #FF9500" class="tall-box">
+          <h3>Another box</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+
       </div>
     </div>
 <!--     <div class="bar horizontal layout around-justified wrap tile">
