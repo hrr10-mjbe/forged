@@ -207,7 +207,8 @@ exports.invite = function(req, res, next) {
  */
 exports.accept = function(req, res, next) {
   //look up the teacher in the database
-  User.findByIdAsync(req.body.request.teacher)
+  console.log(req.body.request);
+  User.findByIdAsync(req.body.request.teacher._id)
     .then(function(teacher) {
       if (!teacher) {
         return res.status(404).end();

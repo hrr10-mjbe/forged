@@ -23,7 +23,7 @@ angular.module('hrr10MjbeApp')
     $scope.polymerChange = function() {
       if ($scope.accepted === 'true') {
         console.log('accepting');
-        Student.acceptRequest($scope.request, function(res) {
+        Student.acceptRequest(JSON.parse($scope.request), function(res) {
           console.log(res);
         });
       }
