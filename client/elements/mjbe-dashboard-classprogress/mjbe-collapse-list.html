@@ -131,7 +131,8 @@
                 </template>
               </div>
               <div class="shortText">[[item.email]]</div>
-              <div class="longText">We should put some stuff here</div>
+              <div class="longText" on-tap="openMod">Individual modifications
+              <paper-icon-button icon="arrow-forward" style="color:black;" alt="Add class" on-tap="openMod"></paper-icon-button></div>
             </div>
             <!--<iron-icon icon$="[[iconForItem(item)]]"></iron-icon>-->
           </div>
@@ -143,6 +144,20 @@
       <paper-input label="Student email" value="{{email::input}}" type="text" autofocus></paper-input>
       <paper-button raised dialog-confirm on-tap="invite">Invite</paper-button>
       <paper-button dialog-confirm autofocus>Cancel</paper-button>
+    </paper-dialog>
+
+    <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <div>
+        <paper-checkbox id="showTimerBox" checked="{{showTimer}}">Show Timer</paper-checkbox>
+      </div>
+      <div>
+        <paper-checkbox id="showLeaderboardBox" checked="{{showLeaderboard}}">Show Leaderboard</paper-checkbox>
+      </div>
+      <div>
+        <paper-checkbox id="showWhiteboardBox" checked="{{showWhiteboard}}">Show Whiteboard</paper-checkbox>
+      </div>
+      <paper-button raised on-tap="updateMod">Save</paper-button>
+      <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
   </template>
   <script>
@@ -219,6 +234,10 @@
       //check whether current student is pending or actual
       isPending: function(item) {
         return item.status === 'pending';
+      },
+
+      openMod: function() {
+        this.$.modDialog.open();
       }
     });
   });
