@@ -15,11 +15,6 @@ angular.module('hrr10MjbeApp')
       $scope.teacher = teacher;
     })
 
-    $scope.accept = function() {
-      
-
-    }
-
     $scope.polymerChange = function() {
       if ($scope.accepted === 'true') {
         console.log('accepting');

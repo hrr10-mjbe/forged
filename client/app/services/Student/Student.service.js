@@ -214,4 +214,8 @@ angular.module('hrr10MjbeApp')
         if (time % 10 === 0) save();
       })
     }
+
+    this.clear = function() {
+      user = null;
+    }
   });

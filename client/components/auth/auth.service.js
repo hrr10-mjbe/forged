@@ -45,6 +45,8 @@
        * Delete access token and user info
        */
       logout: function() {
+        Student.clear();
+        Teacher.clear();
         $cookies.remove('token');
         currentUser = {};
       },

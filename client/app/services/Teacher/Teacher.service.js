@@ -154,4 +154,24 @@ angular.module('hrr10MjbeApp')
         })
       })
     }
+
+    this.setIndividualModifications = function(classId, studentId, mod, cb) {
+      this.getStudent(classId, studentId, function(student) {
+        $http({
+          method: 'PUT',
+          url: '/api/users/updatestudentmod',
+          data: {
+            studentId: studentId,
+            modifications: mod
+          }
+        }).then(function(response) {
+          user.teacherData = response.teacherData;
+          cb();
+        })
+      })
+    }
+
+    this.clear = function() {
+      user = null;
+    }
   });
