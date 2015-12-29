@@ -10,6 +10,9 @@ angular.module('hrr10MjbeApp')
     var addCount = 0;
     var inviteCount = 0;
     var first = true;
+    var showTimer;
+    var showLeaderboard;
+    var showWhiteboard;
 
     //reloads stuff
     $scope.refresh = function() {
@@ -37,7 +40,10 @@ angular.module('hrr10MjbeApp')
             $scope.showTimer = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showTimer ? 'true' : 'false' : 'false';
             $scope.showLeaderboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showLeaderboard ? 'true' : 'false' : 'false';
             $scope.showWhiteboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showWhiteboard ? 'true' : 'false' : 'false';
-            //console.log('$scope.showTimer');
+            showTimer = $scope.showTimer;
+            showLeaderboard = $scope.showLeaderboard;
+            showWhiteboard = $scope.showWhiteboard;
+           //console.log('$scope.showTimer');
             //$scope.showTimer = 'true';
            // console.log($scope.showTimer);
             first = false;
@@ -87,6 +93,15 @@ angular.module('hrr10MjbeApp')
       if (Number.parseInt($scope.inviteCount) > inviteCount) {
         $scope.submit();
         inviteCount++;
+      }
+
+      if ($scope.showTimer !== showTimer || $scope.showWhiteboard !== showWhiteboard || $scope.showLeaderboard !== $scope.showLeaderboard) {
+        Teacher.setModifications($scope.activeClass, {
+          showTimer: $scope.showTimer,
+          showWhiteboard: $scope.showWhiteboard,
+          showLeaderboard: $scope.showLeaderboard
+          //TODO sync!!!
+        })
       }
     }
 

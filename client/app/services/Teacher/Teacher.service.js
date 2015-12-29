@@ -143,11 +143,19 @@ angular.module('hrr10MjbeApp')
       })
     }
 
-    this.setModification = function(classId, mod, val) {
+    this.setModifications = function(classId, mod) {
       this.getClass(classId, function(theClass) {
-        for (var i = 0; i < theClass.students.length; i++) {
-          theClass.students[i].modifications[mod] = val;
-        }
+        $http({
+          method: 'POST',
+          url: '/api/users/updateclassmod',
+          data {
+            class: theClass,
+            modifications: mod
+          }
+        }).then(function(response) {
+          console.log('saved mods');
+          console.log(response.data);
+        })
       })
     }
   });

@@ -290,6 +290,24 @@ exports.leaderboard = function(req, res, next) {
     })
 }
 
+exports.updateClassMod = function(req, res, next) {
+  var updateCount = 0;
+  for (var i = 0; i < req.body.class.students.length; i++) {
+    User.findOneAsync(req.body.class.students[i]).then(function(student) {
+      console.log('saving student with id');
+      console.log(student._id);
+      student.studentData.modifications = req.body.modifications;
+      student.saveAsync().then(function() {
+        updateCount++;
+        if (updateCount === req.body.class.students.length) {
+          exports.me(req, res, next);
+        }
+      });
+    })
+  }
+
+}
+
 /**
  * Authentication callback
  */

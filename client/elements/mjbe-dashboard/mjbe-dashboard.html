@@ -230,13 +230,12 @@ Polymer({
   },
 
   updateMod: function() {
-    //this.showtimer = this.$.showTimerBox.checked;
-    //this.showleaderboard = this.$.showLeaderboardBox.checked;
-    //this.showwhiteboard = this.$.showWhiteboardBox.checked;
-  },
-
-  timerChecked: function() {
-    return true;
+    this.showtimer = this.showTimer;
+    this.showleaderboard = this.showLeaderboard;
+    this.showtimer = this.$.showTimerBox.checked ? 'true' : 'false';
+    this.showleaderboard = this.$.showLeaderboardBox.checked ? 'true' : 'false';
+    this.showwhiteboard = this.$.showWhiteboardBox.checked ? 'true' : 'false';
+    this.$.modDialog.close();
   },
 
   parseBool: function(bool) {
