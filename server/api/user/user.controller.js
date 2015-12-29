@@ -234,7 +234,8 @@ exports.accept = function(req, res, next) {
             }
             student.studentData.teacher = req.body.request.teacher._id;
             student.studentData.myClass = {
-              _id: req.body.request.class._id, name: req.body.request.class.name
+              _id: req.body.request.class._id,
+              name: req.body.request.class.name
             };
 
             //and remove from requests
