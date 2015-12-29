@@ -24,12 +24,16 @@ angular.module('hrr10MjbeApp')
     })
 
     $scope.accept = function() {
+      
+
+    }
+
+    $scope.polymerChange = function() {
       if ($scope.accepted === 'true') {
         console.log('accepting');
         Student.acceptRequest($scope.request, function(res) {
           console.log(res);
         });
       }
-
     }
   });
