@@ -35,16 +35,9 @@ angular.module('hrr10MjbeApp')
           //select first class as default
           if (first) {
             $scope.activeClass = $scope.listedClasses[0]._id.toString();
-            //console.log($scope.listedClasses[0]);
             $scope.showTimer = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showTimer ? 'true' : 'false' : 'false';
             $scope.showLeaderboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showLeaderboard ? 'true' : 'false' : 'false';
             $scope.showWhiteboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showWhiteboard ? 'true' : 'false' : 'false';
-            /*showTimer = $scope.showTimer === 'true' ? true : false;
-            showLeaderboard = $scope.showLeaderboard === 'true' ? true : false;
-            showWhiteboard = $scope.showWhiteboard === 'true' ? true : false;*/
-           //console.log('$scope.showTimer');
-            //$scope.showTimer = 'true';
-           // console.log($scope.showTimer);
             first = false;
           }
         })
@@ -93,13 +86,8 @@ angular.module('hrr10MjbeApp')
         $scope.submit();
         inviteCount++;
       }
-      /*console.log('change:');
-      console.log(showTimer + ', ' + showWhiteboard + ', ' + showLeaderboard);
-      console.log('change scope');
-      console.log($scope.showTimer + ', ' + $scope.showWhiteboard + ', ' + $scope.showLeaderboard);*/
 
       if (Number.parseInt($scope.modSubmitCount) > modSubmitCount) {
-        console.log(Teacher);
         Teacher.setModifications($scope.activeClass, {
           showTimer: $scope.showTimer,
           showWhiteboard: $scope.showWhiteboard,

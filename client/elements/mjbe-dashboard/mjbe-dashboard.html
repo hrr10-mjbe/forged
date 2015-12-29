@@ -243,13 +243,11 @@ Polymer({
     this.showtimer = this.$.showTimerBox.checked ? 'true' : 'false';
     this.showleaderboard = this.$.showLeaderboardBox.checked ? 'true' : 'false';
     this.showwhiteboard = this.$.showWhiteboardBox.checked ? 'true' : 'false';
-    console.log('updating polymer to ' + this.showtimer + ', ' + this.showwhiteboard + ', ' + this.showleaderboard);
     this.modsubmitcount = '' + (Number.parseInt(this.modsubmitcount) + 1);
     this.$.modDialog.close();
   },
 
   parseBool: function(bool) {
-    console.log('parsebool returning ' + bool === 'true');
     return bool === 'true';
   }
 });

@@ -112,8 +112,6 @@ angular.module('hrr10MjbeApp')
     }
 
     this.sendInvite = function(email, classId, cb) {
-      console.log('sending classid');
-      console.log(classId);
       getUser(function(user) {
         if (hasStudent(user.teacherData.classes, classId, email)) return cb(-1);
         if (hasInvited(user.teacherData.pendingStudents, email)) return cb(-1);
@@ -126,8 +124,6 @@ angular.module('hrr10MjbeApp')
           }
         }).then(function successCallback(response) {
           getUser(function(user) {
-            console.log('invite responded with');
-            console.log(response.data.teacherData);
             user.teacherData = response.data.teacherData;
             cb(response.status);
           })
@@ -153,8 +149,6 @@ angular.module('hrr10MjbeApp')
             modifications: mod
           }
         }).then(function(response) {
-          console.log('saved mods');
-          console.log(response.data);
           user.teacherData = response.data.teacherData;
         })
       })
