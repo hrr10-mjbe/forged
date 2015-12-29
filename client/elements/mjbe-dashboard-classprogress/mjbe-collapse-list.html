@@ -157,21 +157,21 @@
         <paper-checkbox id="showWhiteboardBox" checked="{{showWhiteboard}}">Show Whiteboard</paper-checkbox>
       </div>-->
       <div class="labelText">Show timer:
-        <paper-radio-group id="timerRadio">
+        <paper-radio-group id="timerRadio" selected="{{timerSelected}}">
           <paper-radio-button name="yes">Yes</paper-radio-button>
           <paper-radio-button name="no">No</paper-radio-button>
           <paper-radio-button name="defer">Use class-wide setting</paper-radio-button>
         </paper-radio-group>
       </div>
       <div class="labelText">Show leaderboard:
-        <paper-radio-group id="leaderboardRadio">
+        <paper-radio-group id="leaderboardRadio" selected="{{leaderboardSelected}}">
           <paper-radio-button name="yes">Yes</paper-radio-button>
           <paper-radio-button name="no">No</paper-radio-button>
           <paper-radio-button name="defer">Use class-wide setting</paper-radio-button>
         </paper-radio-group>
       </div>
       <div class="labelText">Show whiteboard:
-        <paper-radio-group id="whiteboardRadio">
+        <paper-radio-group id="whiteboardRadio" selected="{{whiteboardSelected}}">
           <paper-radio-button name="yes">Yes</paper-radio-button>
           <paper-radio-button name="no">No</paper-radio-button>
           <paper-radio-button name="defer">Use class-wide setting</paper-radio-button>
@@ -279,18 +279,31 @@
 
       openMod: function(e) {
         this.openModalStudent = e.model.item._id;
-        this.showTimer = e.model
+        this.timerSelected = this.getRadioName(e.model.item.modifications.showTimer);
+        this.whiteBoardSelected = this.getRadioName(e.model.item.modifications.showWhiteboard);
+        this.leaderboardSelected = this.getRadioName(e.model.item.modifications.showLeaderboard);
         this.$.modDialog.open();
       },
 
       updateMod: function() {
         this.modification = {
           student: this.openModalStudent,
-          showTimer: this.showTimer,
-          showWhiteboard: this.showWhiteboard,
-          showLeaderboard: this.showLeaderboard
+          showTimer: this.translateRadioName(this.timerSelected),
+          showWhiteboard: this.translateRadioName(this.showWhiteboard),
+          showLeaderboard: this.translateRadioName(this.showLeaderboard)
         }
         this.$.modDialog.close();
+      },
+
+      getRadioName: function(status) {
+        if (status === undefined) return 'defer';
+        if (status) return 'yes';
+        return 'no';
+      },
+
+      translateRadioName: function(radioStatus) {
+        if (radioStatus === 'yes') return true;
+        if (radioStatus === 'no') return false;
       }
     });
   });
