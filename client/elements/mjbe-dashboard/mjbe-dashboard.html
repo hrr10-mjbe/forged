@@ -216,7 +216,6 @@ Polymer({
   getStudents: function(classes, selected) {
     for (var i = 0; i < classes.length; i++) {
       if (classes[i]._id === selected) {
-        console.log('returning');
         return JSON.stringify(classes[i].students);
       }
     }
@@ -242,7 +241,6 @@ Polymer({
   updateMod: function() {
     this.showtimer = this.$.showTimerBox.checked ? 'true' : 'false';
     this.showleaderboard = this.$.showLeaderboardBox.checked ? 'true' : 'false';
-    console.log('polymer ' + this.showleaderboard);
     this.showwhiteboard = this.$.showWhiteboardBox.checked ? 'true' : 'false';
     this.modsubmitcount = '' + (Number.parseInt(this.modsubmitcount) + 1);
     this.$.modDialog.close();

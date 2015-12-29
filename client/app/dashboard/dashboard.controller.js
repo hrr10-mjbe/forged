@@ -91,14 +91,12 @@ angular.module('hrr10MjbeApp')
       }
 
       if (Number.parseInt($scope.modSubmitCount) > modSubmitCount) {
-        console.log($scope.showLeaderboard);
         Teacher.setModifications($scope.activeClass, {
           showTimer: $scope.showTimer === 'true' ? true : false,
           showWhiteboard: $scope.showWhiteboard === 'true' ? true : false,
           showLeaderboard: $scope.showLeaderboard === 'true' ? true : false
         }, function() {
           $scope.refresh();
-          console.log($scope.listedClasses);
         })
         modSubmitCount++;
       }
@@ -110,7 +108,6 @@ angular.module('hrr10MjbeApp')
             $scope.showTimer = $scope.listedClasses[i].students[0] ? $scope.listedClasses[i].students[0].studentData.modifications.showTimer ? 'true' : 'false' : 'false';
             $scope.showLeaderboard = $scope.listedClasses[i].students[0] ? $scope.listedClasses[i].students[0].studentData.modifications.showLeaderboard ? 'true' : 'false' : 'false';
             $scope.showWhiteboard = $scope.listedClasses[i].students[0] ? $scope.listedClasses[i].students[0].studentData.modifications.showWhiteboard ? 'true' : 'false' : 'false';
-            console.log('active changed, set to ' + $scope.showTimer + ', ' + $scope.showWhiteboard + ', ' + $scope.showLeaderboard);
           }
         }
         activeClass = $scope.activeClass;

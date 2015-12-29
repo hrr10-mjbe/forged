@@ -101,19 +101,7 @@ User.find({}).removeAsync()
     student2.saveAsync();
     student3.saveAsync();
     })    
-
-    //student1.saveAsync();
-    //student2.saveAsync();
-    //teacher.saveAsync();
   });
-
-
-
-/*var simpleAddition = new Skill({
-      name: 'Simple Addition',
-      info: 'Practice addition with problems within 10',
-      problemGenId: 0
-    });*/
 
 var multiplication1 = new Skill({
   name: 'Multiplication by 0 or 1',
