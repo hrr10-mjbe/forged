@@ -134,6 +134,7 @@ exports.me = function(req, res, next) {
       }
     })
     .populate('studentData.teacher', 'name email')
+    .populate('studentData.myClass', 'name modifications')
     .exec(function(err, user) {
       if (err) {
         return res.status(404).end();
