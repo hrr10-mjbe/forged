@@ -112,8 +112,6 @@ angular.module('hrr10MjbeApp')
     }
 
     this.sendInvite = function(email, classId, cb) {
-      console.log('sending classid');
-      console.log(classId);
       getUser(function(user) {
         if (hasStudent(user.teacherData.classes, classId, email)) return cb(-1);
         if (hasInvited(user.teacherData.pendingStudents, email)) return cb(-1);
@@ -126,8 +124,6 @@ angular.module('hrr10MjbeApp')
           }
         }).then(function successCallback(response) {
           getUser(function(user) {
-            console.log('invite responded with');
-            console.log(response.data.teacherData);
             user.teacherData = response.data.teacherData;
             cb(response.status);
           })
@@ -140,6 +136,22 @@ angular.module('hrr10MjbeApp')
     this.getRequests = function(cb) {
       getUser(function(user) {
         cb(user.teacherData.pendingStudents);
+      })
+    }
+
+    this.setModifications = function(classId, mod, cb) {
+      this.getClass(classId, function(theClass) {
+        $http({
+          method: 'PUT',
+          url: '/api/users/updateclassmod',
+          data: {
+            theClass: theClass,
+            modifications: mod
+          }
+        }).then(function(response) {
+          user.teacherData = response.data.teacherData;
+          cb();
+        })
       })
     }
   });

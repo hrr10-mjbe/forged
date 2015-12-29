@@ -231,7 +231,7 @@ exports.accept = function(req, res, next) {
               return res.status(404).end();
             }
             student.studentData.teacher = req.body.request.teacher._id;
-            student.studentData.class = {
+            student.studentData.myClass = {
               _id: req.body.request.class._id, name: req.body.request.class.name
             };
 
@@ -288,6 +288,28 @@ exports.leaderboard = function(req, res, next) {
       })
       res.json(result);
     })
+}
+
+exports.updateClassMod = function(req, res, next) {
+  console.log('in update');
+  console.log(req.body);
+  var updateCount = 0;
+  for (var i = 0; i < req.body.theClass.students.length; i++) {
+    User.findByIdAsync(req.body.theClass.students[i]._id).then(function(student) {
+      console.log('saving mods');
+      console.log(req.body.modifications);
+      console.log('saving student with id');
+      console.log(student._id);
+      student.studentData.modifications = req.body.modifications;
+      student.saveAsync().then(function() {
+        updateCount++;
+        if (updateCount === req.body.theClass.students.length) {
+          exports.me(req, res, next);
+        }
+      });
+    })
+  }
+
 }
 
 /**

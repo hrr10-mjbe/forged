@@ -14,6 +14,8 @@
       Student.getModifications(function(mod) {
         console.log(mod);
         this.showCanvas = mod.showWhiteboard;
+        this.showTimer = mod.showTimer;
+        this.showLeaderboard = mod.showLeaderboard;
       }.bind(this));
       Student.getLeaderboard(function(board) {
         this.leaderboard = JSON.stringify(board);

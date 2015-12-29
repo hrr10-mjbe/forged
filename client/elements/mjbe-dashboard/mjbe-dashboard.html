@@ -62,12 +62,26 @@
       <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}"></mjbe-collapse-list>
     </div>
     <div class="tile mod">
+      <paper-icon-button icon="arrow-forward" style="color:white;" alt="Add class" on-tap="openMod"></paper-icon-button>
       <span>Modifications</span>
     </div>
     <!--add class modal-->
     <paper-dialog id="addClass" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>
       <paper-button raised on-tap="createClass">Enter</paper-button>
+      <paper-button dialog-confirm>Cancel</paper-button>
+    </paper-dialog>
+    <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
+      <div>
+        <paper-checkbox id="showTimerBox" checked="{{showTimer}}">Show Timer</paper-checkbox>
+      </div>
+      <div>
+        <paper-checkbox id="showLeaderboardBox" checked="{{showLeaderboard}}">Show Leaderboard</paper-checkbox>
+      </div>
+      <div>
+        <paper-checkbox id="showWhiteboardBox" checked="{{showWhiteboard}}">Show Whiteboard</paper-checkbox>
+      </div>
+      <paper-button raised on-tap="updateMod">Save</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
   </template>
@@ -112,6 +126,11 @@ Polymer({
       value: '0'
     },
 
+    modsubmitcount: {
+      notify: true,
+      value: '0'
+    },
+
     //passing through from collapse list
     email: {
       notify: true
@@ -126,6 +145,31 @@ Polymer({
     selectedclass: {
       notify: true
     },
+
+    showtimer: {
+      notify: true
+    },
+
+    showleaderboard: {
+      notify: true
+    },
+
+    showwhiteboard: {
+      notify: true
+    },
+
+    showTimer: {
+      computed: 'parseBool(showtimer)'
+    },
+
+    showLeaderboard: {
+      computed: 'parseBool(showleaderboard)'
+    },
+
+    showWhiteboard: {
+      computed: 'parseBool(showwhiteboard)'
+    },
+
     animationConfig: {
       type: Object,
       value: function() {
@@ -150,7 +194,7 @@ Polymer({
       }
     }
   },
-  
+
   attached: function() {
     this.async(function() {
       var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
@@ -159,7 +203,7 @@ Polymer({
       this.playAnimation('entry');
     });
   },
-  
+
   parseClasses: function(classes) {
     try {
       return JSON.parse(classes);
@@ -167,28 +211,43 @@ Polymer({
       return [];
     }
   },
-  
+
   //gets the appropriate list of students for the current class
   getStudents: function(classes, selected) {
     for (var i = 0; i < classes.length; i++) {
       if (classes[i]._id === selected) {
-        console.log('returning');
         return JSON.stringify(classes[i].students);
       }
     }
   },
-  
+
   //add class modal
   openModal: function() {
     this.$.addClass.open();
   },
-  
+
+  openMod: function() {
+    this.$.modDialog.open();
+  },
+
   //creates a new class
   createClass: function() {
     if (this.classname.length > 1) {
       this.$.addClass.close();
       this.addcount = '' + (Number.parseInt(this.addcount) + 1);
     }
+  },
+
+  updateMod: function() {
+    this.showtimer = this.$.showTimerBox.checked ? 'true' : 'false';
+    this.showleaderboard = this.$.showLeaderboardBox.checked ? 'true' : 'false';
+    this.showwhiteboard = this.$.showWhiteboardBox.checked ? 'true' : 'false';
+    this.modsubmitcount = '' + (Number.parseInt(this.modsubmitcount) + 1);
+    this.$.modDialog.close();
+  },
+
+  parseBool: function(bool) {
+    return bool === 'true';
   }
 });
 </script>
