@@ -47,6 +47,23 @@ User.find({}).removeAsync()
       }
     })
 
+    var student3 = new User({
+      provider: 'local',
+      name: 'Test User 3',
+      type: 'student',
+      email: 'test3@example.com',
+      password: 'test',
+      studentData: {
+        points: 200,
+        times: {nothing: 'h'},
+        modifications: {
+          showTimer: false,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
     var teacher = new User({
       provider: 'local',
       name: 'A Teacher',
@@ -58,7 +75,8 @@ User.find({}).removeAsync()
           name: 'Math',
           students: [student1._id, student2._id]
         }, {
-          name: 'Algebra'
+          name: 'Algebra',
+          students:[student3._id]
         }]
       },
       studentData: {
@@ -75,10 +93,13 @@ User.find({}).removeAsync()
     teacher.saveAsync().then(function() {
     student1.studentData.teacher = teacher;
     student2.studentData.teacher = teacher;
+    student3.studentData.teacher = teacher;
     student1.studentData.myClass._id = teacher.teacherData.classes[0]._id;
     student2.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+    student3.studentData.myClass._id = teacher.teacherData.classes[1]._id;
     student1.saveAsync();
     student2.saveAsync();
+    student3.saveAsync();
     })    
 
     //student1.saveAsync();

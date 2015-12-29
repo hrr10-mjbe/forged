@@ -292,6 +292,7 @@ exports.leaderboard = function(req, res, next) {
 
 exports.updateClassMod = function(req, res, next) {
   console.log('in update');
+  console.log(req.body);
   var updateCount = 0;
   for (var i = 0; i < req.body.theClass.students.length; i++) {
     User.findByIdAsync(req.body.theClass.students[i]._id).then(function(student) {
