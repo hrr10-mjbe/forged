@@ -65,7 +65,7 @@
       <!-- SECOND COLUMN -->
       <!-- CLASS ROSTER box -->
       <div class="tile list">
-        <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}"></mjbe-collapse-list>
+        <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}" modification="{{individualMod}}"></mjbe-collapse-list>
       </div>
       <!-- MODIFICATIONS box -->
       <div class="tile mod">
@@ -176,6 +176,11 @@ Polymer({
 
     showWhiteboard: {
       computed: 'parseBool(showwhiteboard)'
+    },
+
+    individualMod: {
+      type: Object,
+      value: {test: 'hello'}
     },
 
     animationConfig: {

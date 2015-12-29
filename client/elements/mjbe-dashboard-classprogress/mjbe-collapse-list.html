@@ -132,7 +132,7 @@
               </div>
               <div class="shortText">[[item.email]]</div>
               <div class="longText" on-tap="openMod">Individual modifications
-              <paper-icon-button icon="arrow-forward" style="color:black;" alt="Add class" on-tap="openMod"></paper-icon-button></div>
+              <paper-icon-button icon="arrow-forward" style="color:black;" alt="Edit modifications"></paper-icon-button></div>
             </div>
             <!--<iron-icon icon$="[[iconForItem(item)]]"></iron-icon>-->
           </div>
@@ -195,7 +195,24 @@
         //class currently being viewed
         activeclass: {
           notify: true
+        },
+
+        showTimer: {
+          notify: true
+        },
+        
+        showLeaderboard: {
+          notify: true
+        },
+
+        showWhiteboard: {
+          notify: true
+        },
+
+        modification: {
+          type: Object
         }
+
       },
 
       _collapseExpand: function(e) {
@@ -238,6 +255,12 @@
 
       openMod: function() {
         this.$.modDialog.open();
+      },
+
+      updateMod: function() {
+        this.modification = {
+          student: 
+        }
       }
     });
   });
