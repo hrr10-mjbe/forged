@@ -1,0 +1,118 @@
+<dom-module id="mjbe-profile">
+  <template>
+    <style>
+      :host {
+          display: block;
+          padding: 15px;
+      }
+      .bar {
+        display: block;
+        overflow: auto;
+      }
+      paper-material {
+        height: 100px;
+        margin: 10px;
+        padding: 10px;
+      }
+      .box {
+        width: 500px;
+        min-width: 300px;
+      }
+    </style>
+    
+    <!-- whole grid -->
+    <div class="bar horizontal layout around-justified wrap tile">
+      <!-- first column -->
+      <div class="box tile layout vertical flex">
+
+        <paper-material elevation="1">
+          <h2>Eric Hollenberry</h2>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+
+        <paper-material elevation="1">
+          <h3>Another box</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+
+        <paper-material elevation="1">
+          <h3>Another box</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+
+      </div>
+      <!-- second column -->
+      <div class="box tile layout vertical flex">
+        <paper-material elevation="1">
+          <h4>Latest Badge</h4>
+        </paper-material>
+      </div>
+    </div>
+<!--     <div class="bar horizontal layout around-justified wrap tile">
+      <div class="box tile layout flex">
+        <paper-material elevation="1">
+          <h3>Let's go</h3>
+        </paper-material>
+      </div>
+      <div class="box tile layout flex">
+        <paper-material elevation="1">
+          <h4>Almost Halvzies</h4>
+        </paper-material>
+      </div>
+    </div> -->
+
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'mjbe-profile',
+
+      behaviors: [
+        Polymer.NeonSharedElementAnimatableBehavior,
+        Polymer.NeonAnimatableBehavior,
+        Polymer.NeonAnimationRunnerBehavior
+      ],
+
+      properties: {
+      //stringified version of raw class data
+        // loadclasses: {
+        //   type: String,
+        //   notify: true
+        // },
+
+        animationConfig: {
+          type: Object,
+          value: function() {
+            return {
+              'entry': [{
+                name: 'cascaded-animation',
+                animation: 'transform-animation',
+                transformFrom: 'translateY(100%)',
+                transformTo: 'none',
+                timing: {
+                  delay: 50
+                }
+              }]
+              // 'toolbar': [{
+              //   name: 'slide-down-animation',
+              //   node: this.$.classSelect,
+              //   timing: {
+              //     delay: 50
+              //   }
+              // }]
+            }
+          }
+        }
+      },
+    
+      attached: function() {
+        this.async(function() {
+          var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+          this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+          // this.playAnimation('toolbar');
+          this.playAnimation('entry');
+        });
+      }
+    });
+  </script>
+</dom-module>
