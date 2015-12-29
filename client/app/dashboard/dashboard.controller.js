@@ -101,11 +101,11 @@ angular.module('hrr10MjbeApp')
           showTimer: $scope.showTimer,
           showWhiteboard: $scope.showWhiteboard,
           showLeaderboard: $scope.showLeaderboard
-          //TODO sync!!!
         })
         showTimer = $scope.showTimer;
         showWhiteboard = $scope.showWhiteboard;
         showLeaderboard = $scope.showLeaderboard;
+        console.log('updating saved to ' + showTimer + ', ' + showWhiteboard + ', ' + showLeaderboard);
       }
     }
 

@@ -60,11 +60,20 @@ User.find({}).removeAsync()
         }, {
           name: 'Algebra'
         }]
+      },
+      studentData: {
+        points: 50,
+        times: {nothing: 'h'},
+        modifications: {
+          showTimer: false,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
       }
     })
 
     teacher.saveAsync().then(function() {
-      student1.studentData.teacher = teacher;
+    student1.studentData.teacher = teacher;
     student2.studentData.teacher = teacher;
     student1.studentData.myClass._id = teacher.teacherData.classes[0]._id;
     student2.studentData.myClass._id = teacher.teacherData.classes[0]._id;

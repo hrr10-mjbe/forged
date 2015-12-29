@@ -274,6 +274,7 @@ exports.leaderboard = function(req, res, next) {
       }
 
       //generate list of students and points
+      console.log(theClass);
       var result = [];
       for (var i = 0; i < theClass.students.length; i++) {
         result.push({
@@ -295,6 +296,8 @@ exports.updateClassMod = function(req, res, next) {
   var updateCount = 0;
   for (var i = 0; i < req.body.theClass.students.length; i++) {
     User.findByIdAsync(req.body.theClass.students[i]._id).then(function(student) {
+      console.log('saving mods');
+      console.log(req.body.modifications);
       console.log('saving student with id');
       console.log(student._id);
       student.studentData.modifications = req.body.modifications;
