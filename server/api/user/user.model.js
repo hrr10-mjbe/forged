@@ -58,16 +58,13 @@ var UserSchema = new Schema({
     },
     modifications: { // UI/behavior modifications to apply to this student
       showTimer: { //whether a timer should be shown on the problems page
-        type: Boolean,
-        default: false
+        type: Boolean
       },
       showWhiteboard: { //whether the student can use the whiteboard on the problems page
-        type: Boolean,
-        default: true
+        type: Boolean
       },
       showLeaderboard: { //whether to show the student a leaderboard of the points of other students in her class
-        type: Boolean,
-        default: false
+        type: Boolean
       }
     },
     times: {}
