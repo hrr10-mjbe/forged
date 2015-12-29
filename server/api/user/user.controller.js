@@ -274,7 +274,6 @@ exports.leaderboard = function(req, res, next) {
       }
 
       //generate list of students and points
-      console.log(theClass);
       var result = [];
       for (var i = 0; i < theClass.students.length; i++) {
         result.push({
