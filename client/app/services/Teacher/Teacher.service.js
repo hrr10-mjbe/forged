@@ -155,6 +155,7 @@ angular.module('hrr10MjbeApp')
         }).then(function(response) {
           console.log('saved mods');
           console.log(response.data);
+          user.teacherData = response.data.teacherData;
         })
       })
     }

@@ -103,6 +103,9 @@ angular.module('hrr10MjbeApp')
           showLeaderboard: $scope.showLeaderboard
           //TODO sync!!!
         })
+        showTimer = $scope.showTimer;
+        showWhiteboard = $scope.showWhiteboard;
+        showLeaderboard = $scope.showLeaderboard;
       }
     }
 
