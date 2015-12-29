@@ -132,7 +132,8 @@
               </div>
               <div class="shortText">[[item.email]]</div>
               <div class="longText" on-tap="openMod">Individual modifications
-              <paper-icon-button icon="arrow-forward" style="color:black;" alt="Edit modifications"></paper-icon-button></div>
+                <paper-icon-button icon="arrow-forward" style="color:black;" alt="Edit modifications"></paper-icon-button>
+              </div>
             </div>
             <!--<iron-icon icon$="[[iconForItem(item)]]"></iron-icon>-->
           </div>
@@ -145,9 +146,8 @@
       <paper-button raised dialog-confirm on-tap="invite">Invite</paper-button>
       <paper-button dialog-confirm autofocus>Cancel</paper-button>
     </paper-dialog>
-
     <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <div>
+      <!--<div>
         <paper-checkbox id="showTimerBox" checked="{{showTimer}}">Show Timer</paper-checkbox>
       </div>
       <div>
@@ -155,6 +155,27 @@
       </div>
       <div>
         <paper-checkbox id="showWhiteboardBox" checked="{{showWhiteboard}}">Show Whiteboard</paper-checkbox>
+      </div>-->
+      <div class="labelText">Show timer:
+        <paper-radio-group id="timerRadio">
+          <paper-radio-button name="yes">Yes</paper-radio-button>
+          <paper-radio-button name="no">No</paper-radio-button>
+          <paper-radio-button name="defer">Use class-wide setting</paper-radio-button>
+        </paper-radio-group>
+      </div>
+      <div class="labelText">Show leaderboard:
+        <paper-radio-group id="leaderboardRadio">
+          <paper-radio-button name="yes">Yes</paper-radio-button>
+          <paper-radio-button name="no">No</paper-radio-button>
+          <paper-radio-button name="defer">Use class-wide setting</paper-radio-button>
+        </paper-radio-group>
+      </div>
+      <div class="labelText">Show whiteboard:
+        <paper-radio-group id="whiteboardRadio">
+          <paper-radio-button name="yes">Yes</paper-radio-button>
+          <paper-radio-button name="no">No</paper-radio-button>
+          <paper-radio-button name="defer">Use class-wide setting</paper-radio-button>
+        </paper-radio-group>
       </div>
       <paper-button raised on-tap="updateMod">Save</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
@@ -200,7 +221,7 @@
         showTimer: {
           notify: true
         },
-        
+
         showLeaderboard: {
           notify: true
         },
@@ -233,12 +254,12 @@
       //converts raw string into real data and sets it up for the collapse list
       parseData: function(data) {
         try {
-        var result = JSON.parse(data);
-        for (var i = 0; i < result.length; i++) {
-          result[i].expanded = false;
-        }
-        return result;
-      } catch (e) {}
+          var result = JSON.parse(data);
+          for (var i = 0; i < result.length; i++) {
+            result[i].expanded = false;
+          }
+          return result;
+        } catch (e) {}
       },
 
       //opens the invite dialog
@@ -257,8 +278,9 @@
       },
 
       openMod: function(e) {
-        this.$.modDialog.open();
         this.openModalStudent = e.model.item._id;
+        this.showTimer = e.model
+        this.$.modDialog.open();
       },
 
       updateMod: function() {
