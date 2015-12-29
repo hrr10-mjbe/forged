@@ -1,0 +1,43 @@
+<dom-module id="mjbe-updating-grid">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+      google-chart {
+        width: 100%;
+        min-height: 100%;
+      }
+
+    </style>
+  <google-chart
+    id='mutating_chart'
+    type='column'
+    options='{"title": "Random data",
+              "vAxis": {"minValue" : 0, "maxValue": 10},
+              "animation": {"duration": "1000"}}'
+    cols='[{"label": "Data", "type": "string"},{"label": "Value", "type": "number"}]'
+    rows='[["Col1", 5.0],["Col2", 5.0],["Col3", 5.0]]'>
+  </google-chart>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'mjbe-updating-grid',
+
+      attached: function() {
+        function getRandomValue() {
+          return Math.random() * 10;
+        }
+        window.setInterval(function() {
+          var chart = document.getElementById('mutating_chart');
+          chart.rows = [["Col1", getRandomValue()],
+                        ["Col2", getRandomValue()],
+                        ["Col3", getRandomValue()]];
+        }, 3000);
+      }
+
+  });
+  </script>
+</dom-module>
