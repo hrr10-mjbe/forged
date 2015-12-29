@@ -180,7 +180,8 @@ Polymer({
 
     individualMod: {
       type: Object,
-      value: {test: 'hello'}
+      value: {test: 'hello'},
+      observer: 'newStudentMod'
     },
 
     animationConfig: {
@@ -263,6 +264,10 @@ Polymer({
 
   parseBool: function(bool) {
     return bool === 'true';
+  },
+
+  newStudentMod: function() {
+    console.log('new student mod');
   }
 });
 </script>

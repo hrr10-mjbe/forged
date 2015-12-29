@@ -210,8 +210,11 @@
         },
 
         modification: {
-          type: Object
-        }
+          type: Object,
+          notify: true
+        },
+
+        openModalStudent: String
 
       },
 
@@ -253,14 +256,19 @@
         return item.status === 'pending';
       },
 
-      openMod: function() {
+      openMod: function(e) {
         this.$.modDialog.open();
+        this.openModalStudent = e.model.item._id;
       },
 
       updateMod: function() {
         this.modification = {
-          student: 
+          student: this.openModalStudent,
+          showTimer: this.showTimer,
+          showWhiteboard: this.showWhiteboard,
+          showLeaderboard: this.showLeaderboard
         }
+        this.$.modDialog.close();
       }
     });
   });
