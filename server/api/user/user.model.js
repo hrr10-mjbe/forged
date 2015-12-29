@@ -57,6 +57,10 @@ var UserSchema = new Schema({
         _id: Schema.Types.ObjectId
     },
     modifications: { // UI/behavior modifications to apply to this student
+      loaded: {
+        type: Boolean,
+        default: true
+      },
       showTimer: { //whether a timer should be shown on the problems page
         type: Boolean
       },
