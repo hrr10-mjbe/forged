@@ -62,7 +62,7 @@
       <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}"></mjbe-collapse-list>
     </div>
     <div class="tile mod">
-    <paper-icon-button icon="arrow-forward" style="color:white;" alt="Add class" on-tap="openMod"></paper-icon-button>
+      <paper-icon-button icon="arrow-forward" style="color:white;" alt="Add class" on-tap="openMod"></paper-icon-button>
       <span>Modifications</span>
     </div>
     <!--add class modal-->
@@ -71,11 +71,16 @@
       <paper-button raised on-tap="createClass">Enter</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
-
     <paper-dialog id="modDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
-      <div><paper-checkbox id="showTimerBox" checked="{{showTimer}}">Show Timer</paper-checkbox></div>
-     <div><paper-checkbox id="showLeaderboardBox" checked="{{showLeaderboard}}">Show Leaderboard</paper-checkbox></div>
-      <div><paper-checkbox id="showWhiteboardBox" checked="{{showWhiteboard}}">Show Whiteboard</paper-checkbox></div>
+      <div>
+        <paper-checkbox id="showTimerBox" checked="{{showTimer}}">Show Timer</paper-checkbox>
+      </div>
+      <div>
+        <paper-checkbox id="showLeaderboardBox" checked="{{showLeaderboard}}">Show Leaderboard</paper-checkbox>
+      </div>
+      <div>
+        <paper-checkbox id="showWhiteboardBox" checked="{{showWhiteboard}}">Show Whiteboard</paper-checkbox>
+      </div>
       <paper-button raised on-tap="updateMod">Save</paper-button>
       <paper-button dialog-confirm>Cancel</paper-button>
     </paper-dialog>
@@ -184,7 +189,7 @@ Polymer({
       }
     }
   },
-  
+
   attached: function() {
     this.async(function() {
       var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
@@ -193,7 +198,7 @@ Polymer({
       this.playAnimation('entry');
     });
   },
-  
+
   parseClasses: function(classes) {
     try {
       return JSON.parse(classes);
@@ -201,7 +206,7 @@ Polymer({
       return [];
     }
   },
-  
+
   //gets the appropriate list of students for the current class
   getStudents: function(classes, selected) {
     for (var i = 0; i < classes.length; i++) {
@@ -211,7 +216,7 @@ Polymer({
       }
     }
   },
-  
+
   //add class modal
   openModal: function() {
     this.$.addClass.open();
@@ -220,7 +225,7 @@ Polymer({
   openMod: function() {
     this.$.modDialog.open();
   },
-  
+
   //creates a new class
   createClass: function() {
     if (this.classname.length > 1) {
