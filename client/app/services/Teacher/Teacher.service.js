@@ -139,7 +139,7 @@ angular.module('hrr10MjbeApp')
       })
     }
 
-    this.setModifications = function(classId, mod) {
+    this.setModifications = function(classId, mod, cb) {
       this.getClass(classId, function(theClass) {
         $http({
           method: 'PUT',
@@ -150,6 +150,7 @@ angular.module('hrr10MjbeApp')
           }
         }).then(function(response) {
           user.teacherData = response.data.teacherData;
+          cb();
         })
       })
     }

@@ -242,6 +242,7 @@ Polymer({
   updateMod: function() {
     this.showtimer = this.$.showTimerBox.checked ? 'true' : 'false';
     this.showleaderboard = this.$.showLeaderboardBox.checked ? 'true' : 'false';
+    console.log('polymer ' + this.showleaderboard);
     this.showwhiteboard = this.$.showWhiteboardBox.checked ? 'true' : 'false';
     this.modsubmitcount = '' + (Number.parseInt(this.modsubmitcount) + 1);
     this.$.modDialog.close();
