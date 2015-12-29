@@ -96,6 +96,7 @@ angular.module('hrr10MjbeApp')
       }
 
       if ($scope.showTimer !== showTimer || $scope.showWhiteboard !== showWhiteboard || $scope.showLeaderboard !== $scope.showLeaderboard) {
+        console.log(Teacher);
         Teacher.setModifications($scope.activeClass, {
           showTimer: $scope.showTimer,
           showWhiteboard: $scope.showWhiteboard,

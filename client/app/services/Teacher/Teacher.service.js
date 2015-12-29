@@ -146,10 +146,10 @@ angular.module('hrr10MjbeApp')
     this.setModifications = function(classId, mod) {
       this.getClass(classId, function(theClass) {
         $http({
-          method: 'POST',
+          method: 'PUT',
           url: '/api/users/updateclassmod',
-          data {
-            class: theClass,
+          data: {
+            theClass: theClass,
             modifications: mod
           }
         }).then(function(response) {
