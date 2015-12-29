@@ -279,19 +279,20 @@
 
       openMod: function(e) {
         this.openModalStudent = e.model.item._id;
-        this.timerSelected = this.getRadioName(e.model.item.modifications.showTimer);
-        this.whiteBoardSelected = this.getRadioName(e.model.item.modifications.showWhiteboard);
-        this.leaderboardSelected = this.getRadioName(e.model.item.modifications.showLeaderboard);
+        console.log(e.model.item);
+        this.timerSelected = this.getRadioName(e.model.item.studentData.modifications.showTimer);
+        this.whiteboardSelected = this.getRadioName(e.model.item.studentData.modifications.showWhiteboard);
+        this.leaderboardSelected = this.getRadioName(e.model.item.studentData.modifications.showLeaderboard);
         this.$.modDialog.open();
       },
 
       updateMod: function() {
-        this.modification = {
+        this.modification = JSON.stringify({
           student: this.openModalStudent,
           showTimer: this.translateRadioName(this.timerSelected),
           showWhiteboard: this.translateRadioName(this.showWhiteboard),
           showLeaderboard: this.translateRadioName(this.showLeaderboard)
-        }
+        });
         this.$.modDialog.close();
       },
 
