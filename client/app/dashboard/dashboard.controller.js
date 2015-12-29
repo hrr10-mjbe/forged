@@ -43,9 +43,9 @@ angular.module('hrr10MjbeApp')
           if (first) {
             $scope.activeClass = $scope.listedClasses[0]._id.toString();
             activeClass = $scope.activeClass;
-            $scope.showTimer = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showTimer ? 'true' : 'false' : 'false';
-            $scope.showLeaderboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showLeaderboard ? 'true' : 'false' : 'false';
-            $scope.showWhiteboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showWhiteboard ? 'true' : 'false' : 'false';
+            $scope.showTimer = $scope.listedClasses[i].modifications.showTimer ? 'true' : 'false';
+            $scope.showLeaderboard = $scope.listedClasses[i].modifications.showLeaderboard ? 'true' : 'false';
+            $scope.showWhiteboard = $scope.listedClasses[i].modifications.showWhiteboard ? 'true' : 'false';
             first = false;
           }
         })
@@ -111,9 +111,9 @@ angular.module('hrr10MjbeApp')
       if (activeClass !== $scope.activeClass) {
         for (var i = 0; i < $scope.listedClasses.length; i++) {
           if ($scope.listedClasses[i]._id === $scope.activeClass) {
-            $scope.showTimer = $scope.listedClasses[i].students[0] ? $scope.listedClasses[i].students[0].studentData.modifications.showTimer ? 'true' : 'false' : 'false';
-            $scope.showLeaderboard = $scope.listedClasses[i].students[0] ? $scope.listedClasses[i].students[0].studentData.modifications.showLeaderboard ? 'true' : 'false' : 'false';
-            $scope.showWhiteboard = $scope.listedClasses[i].students[0] ? $scope.listedClasses[i].students[0].studentData.modifications.showWhiteboard ? 'true' : 'false' : 'false';
+            $scope.showTimer = $scope.listedClasses[i].modifications.showTimer ? 'true' : 'false';
+            $scope.showLeaderboard = $scope.listedClasses[i].modifications.showLeaderboard ? 'true' : 'false';
+            $scope.showWhiteboard = $scope.listedClasses[i].modifications.showWhiteboard ? 'true' : 'false';
           }
         }
         activeClass = $scope.activeClass;
@@ -122,7 +122,10 @@ angular.module('hrr10MjbeApp')
       if (individualMod !== $scope.individualMod) {
         individualMod = $scope.individualMod;
         console.log('changing individual');
-        console.log(JSON.parse(individualMod));
+        var theMod = JSON.parse(individualMod);
+        Teacher.setIndividualModifications($scope.activeClass, theMod.student, theMod, function() {
+          $scope.refresh();
+        });
       }
     }
 

@@ -296,34 +296,24 @@ exports.leaderboard = function(req, res, next) {
 exports.updateClassMod = function(req, res, next) {
   console.log('in update');
   console.log(req.body);
-  var updateCount = 0;
-  for (var i = 0; i < req.body.theClass.students.length; i++) {
-    User.findByIdAsync(req.body.theClass.students[i]._id).then(function(student) {
-      console.log('saving mods');
-      console.log(req.body.modifications);
-      console.log('saving student with id');
-      console.log(student._id);
-      student.studentData.modifications = req.body.modifications;
-      student.saveAsync().then(function() {
-        updateCount++;
-        if (updateCount === req.body.theClass.students.length) {
-          exports.me(req, res, next);
-        }
-      });
+  User.findByIdAsync(req.user._id).then(function(teacher) {
+    var theClass = teacher.teacherData.classes.id(req.body.theClass._id);
+    theClass.modifications = req.body.modifications;
+    teacher.saveAsync().then(function() {
+      exports.me(req, res, next);
     })
-  }
+  })
+}
 
-  exports.updateStudentMod = function(req, res, next) {
-    console.log('updating student');
-    console.log(req.body);
-    User.findByIdAsync(req.body.StudentId).then(function(student) {
-      student.studentData.modifications = req.body.modifications;
-      student.saveAsync().then(function() {
-        exports.me(req, res, next);
-      })
+exports.updateStudentMod = function(req, res, next) {
+  console.log('updating student');
+  console.log(req.body);
+  User.findByIdAsync(req.body.StudentId).then(function(student) {
+    student.studentData.modifications = req.body.modifications;
+    student.saveAsync().then(function() {
+      exports.me(req, res, next);
     })
-  }
-
+  })
 }
 
 /**
