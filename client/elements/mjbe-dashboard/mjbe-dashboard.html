@@ -126,6 +126,11 @@ Polymer({
       value: '0'
     },
 
+    modsubmitcount: {
+      notify: true,
+      value: '0'
+    },
+
     //passing through from collapse list
     email: {
       notify: true
@@ -239,6 +244,7 @@ Polymer({
     this.showleaderboard = this.$.showLeaderboardBox.checked ? 'true' : 'false';
     this.showwhiteboard = this.$.showWhiteboardBox.checked ? 'true' : 'false';
     console.log('updating polymer to ' + this.showtimer + ', ' + this.showwhiteboard + ', ' + this.showleaderboard);
+    this.modsubmitcount = '' + (Number.parseInt(this.modsubmitcount) + 1);
     this.$.modDialog.close();
   },
 

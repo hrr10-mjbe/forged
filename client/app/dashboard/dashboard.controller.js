@@ -10,9 +10,8 @@ angular.module('hrr10MjbeApp')
     var addCount = 0;
     var inviteCount = 0;
     var first = true;
-    var showTimer;
-    var showLeaderboard;
-    var showWhiteboard;
+    $scope.modSubmitCount = '0';
+    var modSubmitCount = 0;
 
     //reloads stuff
     $scope.refresh = function() {
@@ -40,9 +39,9 @@ angular.module('hrr10MjbeApp')
             $scope.showTimer = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showTimer ? 'true' : 'false' : 'false';
             $scope.showLeaderboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showLeaderboard ? 'true' : 'false' : 'false';
             $scope.showWhiteboard = $scope.listedClasses[0].students[0] ? $scope.listedClasses[0].students[0].studentData.modifications.showWhiteboard ? 'true' : 'false' : 'false';
-            showTimer = $scope.showTimer === 'true' ? true : false;
+            /*showTimer = $scope.showTimer === 'true' ? true : false;
             showLeaderboard = $scope.showLeaderboard === 'true' ? true : false;
-            showWhiteboard = $scope.showWhiteboard === 'true' ? true : false;
+            showWhiteboard = $scope.showWhiteboard === 'true' ? true : false;*/
            //console.log('$scope.showTimer');
             //$scope.showTimer = 'true';
            // console.log($scope.showTimer);
@@ -94,22 +93,19 @@ angular.module('hrr10MjbeApp')
         $scope.submit();
         inviteCount++;
       }
-      console.log('change:');
+      /*console.log('change:');
       console.log(showTimer + ', ' + showWhiteboard + ', ' + showLeaderboard);
       console.log('change scope');
-      console.log($scope.showTimer + ', ' + $scope.showWhiteboard + ', ' + $scope.showLeaderboard);
+      console.log($scope.showTimer + ', ' + $scope.showWhiteboard + ', ' + $scope.showLeaderboard);*/
 
-      if (true) {
+      if (Number.parseInt($scope.modSubmitCount) > modSubmitCount) {
         console.log(Teacher);
         Teacher.setModifications($scope.activeClass, {
           showTimer: $scope.showTimer,
           showWhiteboard: $scope.showWhiteboard,
           showLeaderboard: $scope.showLeaderboard
         })
-        showTimer = $scope.showTimer;
-        showWhiteboard = $scope.showWhiteboard;
-        showLeaderboard = $scope.showLeaderboard;
-        console.log('updating saved to ' + showTimer + ', ' + showWhiteboard + ', ' + showLeaderboard);
+        modSubmitCount++;
       }
     }
 
