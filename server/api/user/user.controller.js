@@ -312,6 +312,17 @@ exports.updateClassMod = function(req, res, next) {
     })
   }
 
+  exports.updateStudentMod = function(req, res, next) {
+    console.log('updating student');
+    console.log(req.body);
+    User.findByIdAsync(req.body.StudentId).then(function(student) {
+      student.studentData.modifications = req.body.modifications;
+      student.saveAsync().then(function() {
+        exports.me(req, res, next);
+      })
+    })
+  }
+
 }
 
 /**

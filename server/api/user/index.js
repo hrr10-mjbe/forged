@@ -16,5 +16,6 @@ router.post('/invite', auth.isAuthenticated(), controller.invite);
 router.post('/accept', auth.isAuthenticated(), controller.accept);
 router.get('/leaderboard', auth.isAuthenticated(), controller.leaderboard);
 router.put('/updateclassmod', auth.isAuthenticated(), controller.updateClassMod);
+router.put('/updatestudentmod', auth.isAuthenticated(), controller.updateStudentMod);
 
 module.exports = router;
