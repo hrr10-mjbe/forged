@@ -3,9 +3,11 @@
 angular.module('hrr10MjbeApp')
   .controller('ProfileCtrl', function ($scope, Student) {
     $scope.message = 'Hello';
+    $scope.accepted = 'false';
 
     Student.getRequests(function(requests) {
-      $scope.requests = requests;
+      $scope.request = requests[0];
+      $scope.request = {test: 'hi'};
       console.log(requests);
     });
 
