@@ -21,7 +21,11 @@ User.find({}).removeAsync()
       password: 'test',
       studentData: {
         points: 50,
-        times: {nothing: 'h'},
+        times: {
+          nothing: 'h',
+          1451347200000: 25,
+          1451433600000: 75
+        },
         modifications: {
           showTimer: false,
           showLeaderboard: true,
@@ -38,7 +42,9 @@ User.find({}).removeAsync()
       password: 'test',
       studentData: {
         points: 200,
-        times: {nothing: 'h'},
+        times: {
+          nothing: 'h'
+        },
         modifications: {
           showTimer: false,
           showLeaderboard: true,
@@ -55,7 +61,9 @@ User.find({}).removeAsync()
       password: 'test',
       studentData: {
         points: 200,
-        times: {nothing: 'h'},
+        times: {
+          nothing: 'h'
+        },
         modifications: {
           showTimer: false,
           showLeaderboard: true,
@@ -76,12 +84,14 @@ User.find({}).removeAsync()
           students: [student1._id, student2._id]
         }, {
           name: 'Algebra',
-          students:[student3._id]
+          students: [student3._id]
         }]
       },
       studentData: {
         points: 50,
-        times: {nothing: 'h'},
+        times: {
+          nothing: 'h'
+        },
         modifications: {
           showTimer: false,
           showLeaderboard: true,
@@ -91,16 +101,16 @@ User.find({}).removeAsync()
     })
 
     teacher.saveAsync().then(function() {
-    student1.studentData.teacher = teacher;
-    student2.studentData.teacher = teacher;
-    student3.studentData.teacher = teacher;
-    student1.studentData.myClass._id = teacher.teacherData.classes[0]._id;
-    student2.studentData.myClass._id = teacher.teacherData.classes[0]._id;
-    student3.studentData.myClass._id = teacher.teacherData.classes[1]._id;
-    student1.saveAsync();
-    student2.saveAsync();
-    student3.saveAsync();
-    })    
+      student1.studentData.teacher = teacher;
+      student2.studentData.teacher = teacher;
+      student3.studentData.teacher = teacher;
+      student1.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student2.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student3.studentData.myClass._id = teacher.teacherData.classes[1]._id;
+      student1.saveAsync();
+      student2.saveAsync();
+      student3.saveAsync();
+    })
   });
 
 var multiplication1 = new Skill({
@@ -222,10 +232,10 @@ roundingSkill.parent = rootSkill;
 Skilltree.find({}).removeAsync()
   .then(function() {
     rootSkill.saveAsync().then(function() {
-    additionSkill.saveAsync().then(function() {
-      multiplicationSkill.saveAsync().then(function() {
-        divisionSkill.saveAsync().then(function() {
-          roundingSkill.saveAsync()
+      additionSkill.saveAsync().then(function() {
+        multiplicationSkill.saveAsync().then(function() {
+          divisionSkill.saveAsync().then(function() {
+            roundingSkill.saveAsync()
           })
         })
       })
