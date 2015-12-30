@@ -47,6 +47,10 @@ angular.module('hrr10MjbeApp')
       });
     }
 
+    Student.getPoints(function(points) {
+      $scope.points = points;
+    })
+
     $scope.polymerChange = function() {
       if ($scope.userselection) {
         $scope.go();

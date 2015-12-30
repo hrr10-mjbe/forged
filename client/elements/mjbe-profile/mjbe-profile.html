@@ -68,8 +68,8 @@
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since {{joined}}</p>
+          <h3>Total points</h3>
+          <p>{{points}}</p>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box">
@@ -146,6 +146,10 @@
 
         request: {
           computed: 'parse(loadrequest)'
+        },
+
+        points: {
+          notify: true
         },
 
         accepted: {
