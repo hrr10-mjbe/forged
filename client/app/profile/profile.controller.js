@@ -16,8 +16,11 @@ angular.module('hrr10MjbeApp')
     })
 
     Student.getJoined(function(joined) {
-      console.log('joined');
-      console.log(joined);
+      $scope.joined = new Date(joined).toDateString();
+    })
+
+    Student.getName(function(name) {
+      $scope.name = name;
     })
 
     $scope.polymerChange = function() {

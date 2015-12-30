@@ -62,6 +62,12 @@ angular.module('hrr10MjbeApp')
       });
     }
 
+    this.getName = function(cb) {
+      getUser(function(user) {
+        cb(user === null ? 'Guest' : user.name);
+      })
+    }
+
     this.getSkills = function(cb) {
       getUser(function(user) {
         console.log('skills');
