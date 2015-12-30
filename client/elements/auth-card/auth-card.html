@@ -45,7 +45,9 @@
           value="{{useremail::input}}"
           type="email"
           error-message="Please enter your email address."
-          required>
+          required
+          autofocus
+          >
         </paper-input>
         <paper-input
           id="passwordInput"
@@ -53,7 +55,9 @@
           value="{{userpass::input}}"
           type="password"
           error-message="Please enter a password."
-          required>
+          required
+          on-keypress="_keyPressed"
+          >
         </paper-input>
         <paper-input
           id="passwordInput2"
@@ -161,6 +165,11 @@
       errorChanged: function(newVal, oldVal) {
         if (newVal !== '' && newVal !== '{{vm.errormessage}}') {
           this.$.errortoast.show();
+        }
+      },
+      _keyPressed: function(e) {
+        if (e.charCode === 13) {
+          this.authenticate();
         }
       }
     });
