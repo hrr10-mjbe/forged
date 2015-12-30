@@ -5,34 +5,31 @@
     :host {
       display: block;
     }
-    
-    #chart-container{
-      position: absolute;
-      top: 80px;
-      margin: 20px;
+
+    #holder {
+      margin: 0 auto;
+      text-align: center;
     }
+
+    .dropdownmenu {
+      margin: 0 auto;
+      bottom: 20px;
+    }
+
     </style>
 
 
-        <div id="holder"><h1>Subjects</h1></div>
+        <div id="holder"><h1>Class Progress</h1></div>
 
         <figure id="chart-container"></figure>
 
-        <paper-dropdown-menu label="Classes">
+        <paper-dropdown-menu class="dropdownmenu" label="Classes">
           <paper-menu class="dropdown-content">
             <template is="dom-repeat" items="[[parsedSkills]]">
             <paper-item>[[item.name]]</paper-item>
             </template>
           </paper-menu>
         </paper-dropdown-menu>
-<!--         <google-chart
-          type='column'
-          options='{"title": "Class Progress"}'
-          cols='[{"label":"Subject", "type":"string"}, {"label":"Class completion", "type":"number"}]'
-          rows='[["Addition", 80],["Subtraction", 70],["Division", 90], ["Multiplication", 70]]'>
-        </google-chart> -->
-
-
   </template>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script>
