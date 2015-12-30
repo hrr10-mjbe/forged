@@ -15,6 +15,11 @@ angular.module('hrr10MjbeApp')
       $scope.teacher = teacher;
     })
 
+    Student.getJoined(function(joined) {
+      console.log('joined');
+      console.log(joined);
+    })
+
     $scope.polymerChange = function() {
       if ($scope.accepted === 'true') {
         console.log('accepting');

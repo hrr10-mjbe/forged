@@ -215,6 +215,12 @@ angular.module('hrr10MjbeApp')
       })
     }
 
+    this.getJoined = function(cb) {
+      getUser(function(user) {
+        cb(user.joined);
+      })
+    }
+
     this.clear = function() {
       user = null;
     }
