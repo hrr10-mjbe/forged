@@ -83,6 +83,16 @@
 
         <paper-material elevation="1" style="background-color: white" class="short-box" >
           <h3>Latest Badge</h3>
+          <template is="dom-if" if="{{badge}}">
+          <paper-card animatedShadow="true" elevation="1" id="badgecard" on-mouseover="raise" on-mouseout="lower">
+              <paper-icon-button icon="{{badge.image}}" style="color: blue"></paper-icon-button>
+              <paper-tooltip position="top" offset="-5" delay="0">{{badge.name}}</paper-tooltip>
+              <div>{{badge.name}}</div>
+            </paper-card>
+            </template>
+            <template is="dom-if" if="{{noBadge(badge)}}">
+            <div>No badges yet!</div>
+            </template>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #4CD964" class="really-tall-box">
@@ -155,6 +165,14 @@
 
         request: {
           computed: 'parse(loadrequest)'
+        },
+
+        loadbadge: {
+          notify: true
+        },
+
+        badge: {
+          computed: 'parse(loadbadge)'
         },
 
         points: {
@@ -231,14 +249,21 @@
         this.quote = quotes[Math.floor(Math.random() * quotes.length)];
       },
 
-      parse: function(loadrequest) {
+      parse: function(load) {
         try {
-          return JSON.parse(loadrequest);
+          console.log('loading');
+          console.log(load);
+          return JSON.parse(load);
         } catch (e) {}
       },
 
+      noBadge: function() {
+        console.log('nobadge');
+        console.log(!this.badge);
+        return !this.badge;
+      },
+
       acceptRequest: function() {
-        console.log('accepting in polymer');
         this.accepted = 'true';
       }
     });

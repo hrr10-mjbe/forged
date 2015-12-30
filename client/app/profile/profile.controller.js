@@ -51,6 +51,10 @@ angular.module('hrr10MjbeApp')
       $scope.points = points;
     })
 
+    Student.getBadges(function(badges) {
+      $scope.badge = badges && badges.length ? JSON.stringify(badges[0]) : 'null';
+    })
+
     Student.getTimes(function(times) {
       console.log('times');
       console.log(times);
