@@ -104,8 +104,7 @@
         </paper-material>
         
         <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since April 1, 2017</p>
+          <p>{{quote}}</p>
         </paper-material>
       </div>
     </div>
@@ -125,6 +124,16 @@
     
   </template>
   <script>
+    var quotes = ['“Don’t let what you can’t do stop you from doing what you can do.” – John Wooden',
+                   'I think I can. I know I can.',
+                   '“When you know better you do better.” – Maya Angelou',
+                   '“Do what you can, with what you have, where you are.” - Theodore Roosevelt',
+                   '“You always pass failure on the way to success.” - Mickey Rooney',
+                   '“No one is perfect – that’s why pencils have erasers.”  – Wolfgang Riebe',
+                   '“The more that you read, the more things you will know. The more that you learn, the more places you’ll go.” -Dr. Suess',
+                   '“Anything is possible. Anything can be.” – Shel Silverstein',
+                   ]
+
     Polymer({
       is: 'mjbe-profile',
 
@@ -177,6 +186,8 @@
           notify: true
         },
 
+        quote: String,
+
         loadtimes: {
           notify: true
         },
@@ -217,6 +228,7 @@
           // this.playAnimation('toolbar');
           this.playAnimation('entry');
         });
+        this.quote = quotes[Math.floor(Math.random() * quotes.length)];
       },
 
       parse: function(loadrequest) {
