@@ -86,7 +86,7 @@ angular.module('hrr10MjbeApp')
               if (user.studentData.skills[i].skill._id === skillId) {
                 console.log('has skill');
                 user.studentData.skills[i].status = status;
-                return save();
+                return //save();
               }
             }
             console.log('pushing skill');
@@ -94,7 +94,7 @@ angular.module('hrr10MjbeApp')
               skill: skill,
               status: status
             });
-            save();
+            //save();
           })
         })
       })

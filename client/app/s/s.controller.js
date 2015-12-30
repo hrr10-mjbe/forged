@@ -31,6 +31,7 @@
 
     finish() {
       if (this.complete === 'true') {
+        console.log('completed skill');
         console.log(this.Student);
         this.Student.addOrUpdateSkill(this.skill._id, 1);
         this.Student.awardBadges(function(badges) {
