@@ -17,6 +17,7 @@
     .square-box {
       height: 140px;
       width: 140px;
+      cursor: pointer;
     }
 
     #holder {
@@ -51,116 +52,22 @@
       margin: 0px auto;
     }
 
-/*    .container {
-      transition: background-color 1.5s ease;
-    }*/
-
-/*    .page-title {
-      margin: 0;
-      padding: 20px;
-      transition: background-color 1.5s ease;
-    }*/
-
-/*    .titlebox {
-      width: 400px;
-      min-width: 300px;
-      height: 100px;
-      transition: background-color 1.5s ease;
-    }*/
     </style>
-
     <paper-toolbar class="toolbar-header" style$="background-color: [[hoverbackground]]">
       <h3>[[hoverselection]]</h3>
     </paper-toolbar>
-
     <div class="tile layout horizontal center-justified">
       <paper-material elevation="0" class="piebox">
           <div id="holder"></div>
       </paper-material>
-      <!-- <paper-material elevation="1" class="flex titlebox center-align" style$="background-color: [[hovercolor]]">
-        <h3 class="page-title" style$="background-color: [[hoverbackground]]">[[hoverselection]]</h3>
-      </paper-material> -->
-    <!-- <div class="container" style$="background-color: [[hoverbackground]]"> -->
-        
     </div>
     <div class="bar horizontal layout around-justified wrap tile">
-
-      <!-- third column -->
       <div class="box tile horizontal layout around-justified wrap flex">
-
-
         <template is="dom-repeat" items="{{skills}}">
-            <paper-material elevation="1" style$="background-color: {{item.color}}" class="square-box">
-              <h3 id="{{item.name}}">{{item.name}}</h3>
+            <paper-material elevation="1" style$="background-color: {{item.color}}" class="square-box" data-custom$="{{item._id}}" on-tap="tapHandler">
+              <h3 data-custom$="{{item._id}}" id="{{item.name}}">{{item.name}}</h3>
             </paper-material>
         </template>
-
-
-<!--         <paper-material elevation="1" style="background-color: white" class="square-box" >
-          <h3>Latest Badge</h3>
-        </paper-material>
-
-        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
-          <h3>Another box</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-        
-        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-      </div>
-
-      <div class="box tile layout vertical flex">
-
-        <paper-material elevation="1" style="background-color: white" class="square-box" >
-          <h3>Latest Badge</h3>
-        </paper-material>
-
-        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
-          <h3>Another box</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-        
-        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-      </div>
-
-      <div class="box tile layout vertical flex">
-
-        <paper-material elevation="1" style="background-color: white" class="square-box" >
-          <h3>Latest Badge</h3>
-        </paper-material>
-
-        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
-          <h3>Another box</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-        
-        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-      </div>
-
-      <div class="box tile layout vertical flex">
-
-        <paper-material elevation="1" style="background-color: white" class="square-box" >
-          <h3>Latest Badge</h3>
-        </paper-material>
-
-        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
-          <h3>Another box</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-        
-        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since April 1, 2017</p>
-        </paper-material>
-      </div> -->
     </div>
   </template>
   <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -203,12 +110,6 @@
       loadskills: {
         notify: true
       },
-      tree: {
-        computed: 'parseTree(loadtree)',
-      },
-      loadtree: {
-        notify: true
-      },
       active: {
         notify: true
       },
@@ -228,6 +129,9 @@
           }
         }
       }
+    },
+    tapHandler: function(e) {
+      this.userselection = e.target.getAttribute('data-custom');
     },
     clickHandler: function(d) {
       this.userselection = d.data._id;
