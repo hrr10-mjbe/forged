@@ -212,6 +212,13 @@ angular.module('hrr10MjbeApp')
       })
     }
 
+    this.getTimes = function(cb) {
+      getUser(function(user) {
+        if (!user) return cb([]);
+        cb(user.studentData.times);
+      })
+    }
+
     this.updateTime = function(time) {
       getUser(function(user) {
         if (!user) return;

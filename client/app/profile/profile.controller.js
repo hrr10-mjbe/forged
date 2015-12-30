@@ -51,6 +51,12 @@ angular.module('hrr10MjbeApp')
       $scope.points = points;
     })
 
+    Student.getTimes(function(times) {
+      console.log('times');
+      console.log(times);
+      $scope.times = JSON.stringify(times);
+    })
+
     $scope.polymerChange = function() {
       if ($scope.userselection) {
         $scope.go();

@@ -10,25 +10,50 @@
       min-height: 100%;
     }
     </style>
-    <google-chart id='mutating_chart' type='column' options='{"title": "Random data",
-              "vAxis": {"minValue" : 0, "maxValue": 10}
-              }' cols='[{"label": "Data", "type": "string"},{"label": "Value", "type": "number"}]' rows='[["Col1", 5.0],["Col2", 5.0],["Col3", 5.0]]'>
+    <google-chart id='mutating_chart' type='column' options='{"title": "Time worked, in minutes"}' cols='[{"type": "string"},{"type": "number"}]' rows='[["Col1", 5.0],["Col2", 5.0],["Col3", 5.0]]'>
     </google-chart>
   </template>
   <script>
   Polymer({
     is: 'mjbe-updating-grid',
 
+    properties: {
+      loadtimes: {
+        notify: true
+      },
+      times: {
+        computed: 'processTimes(loadtimes)'
+      }
+    },
+
     attached: function() {
       this.drawChart();
     },
-    drawChart: function() {
+    drawChart: function(data) {
       var chart = document.getElementById('mutating_chart');
-      chart.rows = [
+      chart.rows = data;/*[
         ["Col1", 5],
         ["Col2", 5],
         ["Col3", 5]
-      ];
+      ];*/
+    },
+    parse: function(json) {
+      try {
+        return JSON.parse(json);
+      } catch (e) {}
+    },
+    processTimes: function(loadtimes) {
+      var times = this.parse(loadtimes);
+      if (!times) return [];
+      var data = [];
+      for (var key in times) {
+        console.log(key);
+        console.log(new Date(key));
+        console.log(typeof times[key]);
+        console.log('pushing ' + [(new Date(Number.parseInt(key))).toDateString(), times[key]])
+        data.push([(new Date(Number.parseInt(key))).toDateString(), parseFloat(times[key] / 60)]);
+      }
+      this.drawChart(data);
     }
 
   });

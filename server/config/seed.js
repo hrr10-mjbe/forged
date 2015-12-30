@@ -22,7 +22,6 @@ User.find({}).removeAsync()
       studentData: {
         points: 50,
         times: {
-          nothing: 'h',
           1451347200000: 25,
           1451433600000: 75
         },
