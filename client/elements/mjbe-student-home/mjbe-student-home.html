@@ -1,0 +1,197 @@
+<dom-module id="mjbe-student-home">
+  <template>
+    <style>
+      :host {
+        display: block;
+        padding: 15px;
+        background: #444;
+      }
+      paper-material {
+        margin: 10px;
+        padding: 10px;
+      }
+      .box {
+        width: 500px;
+        min-width: 300px;
+      }
+      .square-box {
+        height: 200px;
+        min-width: 150px;
+      }
+      .namebox {
+        background: #333;
+        color: #fff;
+        height: 100px;
+      }
+      .heightfix {
+        overflow: auto;
+      }
+      .invitation {
+        background: #FFCC00;
+        text-align: center;
+      }
+      .piebox {
+        background: #444;
+        height: 250px;
+        width: 250px;
+      }
+      paper-button {
+        background: white;
+        color: #007AFF;
+      }
+    </style>
+    
+    <!-- top bar only for pending teacher invitation -->
+<!--     <div class="tile layout horizontal center-justified">
+      <paper-material elevation="0" class="piebox"> -->
+          <pie-status userselection="{{userselection}}" loadskills="{{loadskills}}" loadtree="{{loadtree}}" loadstudentskills="{{loadstudentskills}}"></pie-status>
+<!--       </paper-material>
+    </div> -->
+
+    <!-- whole grid -->
+    <div class="bar horizontal layout around-justified wrap tile">
+
+      <!-- third column -->
+      <div class="box tile layout vertical flex">
+
+        <paper-material elevation="1" style="background-color: white" class="square-box" >
+          <h3>Latest Badge</h3>
+        </paper-material>
+
+        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
+          <h3>Another box</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+        
+        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
+          <h3>Date and Time</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+      </div>
+
+      <div class="box tile layout vertical flex">
+
+        <paper-material elevation="1" style="background-color: white" class="square-box" >
+          <h3>Latest Badge</h3>
+        </paper-material>
+
+        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
+          <h3>Another box</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+        
+        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
+          <h3>Date and Time</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+      </div>
+
+      <div class="box tile layout vertical flex">
+
+        <paper-material elevation="1" style="background-color: white" class="square-box" >
+          <h3>Latest Badge</h3>
+        </paper-material>
+
+        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
+          <h3>Another box</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+        
+        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
+          <h3>Date and Time</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+      </div>
+
+      <div class="box tile layout vertical flex">
+
+        <paper-material elevation="1" style="background-color: white" class="square-box" >
+          <h3>Latest Badge</h3>
+        </paper-material>
+
+        <paper-material elevation="1" style="background-color: #FF9500" class="square-box">
+          <h3>Another box</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+        
+        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
+          <h3>Date and Time</h3>
+          <p>Member since April 1, 2017</p>
+        </paper-material>
+      </div>
+    </div>
+<!--     <div class="bar horizontal layout around-justified wrap tile">
+      <div class="box tile layout flex">
+        <paper-material elevation="1">
+          <h3>Let's go</h3>
+        </paper-material>
+      </div>
+      <div class="box tile layout flex">
+        <paper-material elevation="1">
+          <h4>Almost Halvzies</h4>
+        </paper-material>
+      </div>
+    </div> -->
+
+    
+  </template>
+  <script>
+    Polymer({
+      is: 'mjbe-student-home',
+
+      behaviors: [
+        Polymer.NeonSharedElementAnimatableBehavior,
+        Polymer.NeonAnimatableBehavior,
+        Polymer.NeonAnimationRunnerBehavior
+      ],
+
+      properties: {
+        userselection: {
+          notify: true
+        },
+        loadskills: {
+          notify: true
+        },
+        loadtree: {
+          notify: true
+        },
+        loadstudentskills: {
+          notify: true
+        },
+
+        animationConfig: {
+          type: Object,
+          value: function() {
+            return {
+              'entry': [{
+                name: 'cascaded-animation',
+                animation: 'transform-animation',
+                transformFrom: 'translateY(100%)',
+                transformTo: 'none',
+                timing: {
+                  delay: 50
+                }
+              }]
+              // 'toolbar': [{
+              //   name: 'slide-down-animation',
+              //   node: this.$.classSelect,
+              //   timing: {
+              //     delay: 50
+              //   }
+              // }]
+            }
+          }
+        }
+      },
+    
+      attached: function() {
+        this.async(function() {
+          var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+          this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+          // this.playAnimation('toolbar');
+          this.playAnimation('entry');
+        });
+      }
+    });
+  </script>
+</dom-module>

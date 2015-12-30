@@ -26,7 +26,16 @@
         Skills.getSkillTree(root, function(tree) {
           this.treeData = tree;
         }.bind(this));
-      }.bind(this))
+      }.bind(this));
+
+      Student.getSkills(function(skills) {
+        this.studentSkills = skills;
+        this.studentSkillsData = JSON.stringify(skills);
+        console.log(skills);
+        //Student.addOrUpdateSkill(skills[0]._id, 4);
+        //Student.awardBadges();
+        //console.log(skills);
+      }.bind(this));
     }
 
     addThing() {

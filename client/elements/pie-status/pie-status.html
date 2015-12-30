@@ -7,12 +7,22 @@
     <style>
     :host {
       display: block;
+      padding: 15px;
+      background: #444;
+    }
+    .box {
+      width: 500px;
+      min-width: 300px;
+    }
+    .square-box {
+      height: 140px;
+      width: 140px;
+      cursor: pointer;
     }
 
     #holder {
-      width: 50%;
-      right: 0;
-      position: absolute;
+      position: relative;
+      margin: 0 auto;
     }
 
     li {
@@ -20,24 +30,44 @@
       padding: 5px 20px;
     }
 
-    .container {
-      transition: background-color 1.5s ease;
-      max-width: 1000px;
-      min-height: 800px;
+    .piebox {
+        background: #444;
+        height: 250px;
+        width: 250px;
     }
 
-    .page-title {
-      margin: 0;
-      padding: 20px;
-      transition: background-color 1.5s ease;
+    paper-material {
+      margin: 10px;
+      padding: 10px;
     }
+
+    .toolbar-header {
+      overflow: auto;
+      color: black;
+      transition: background-color 1.5s ease;
+      padding: 0px;
+    }
+
+    h3 {
+      margin: 0px auto;
+    }
+
     </style>
-    <h2 class="page-title" style$="background-color: [[hovercolor]]">Go to: [[hoverselection]]</h2>
-    <div class="container" style$="background-color: [[hoverbackground]]">
-    <div id="holder"></div>
-    <template is="dom-repeat" items="{{skills}}">
-      <li>{{item.name}}</li>
-    </template>
+    <paper-toolbar class="toolbar-header" style$="background-color: [[hoverbackground]]">
+      <h3>[[hoverselection]]</h3>
+    </paper-toolbar>
+    <div class="tile layout horizontal center-justified">
+      <paper-material elevation="0" class="piebox">
+          <div id="holder"></div>
+      </paper-material>
+    </div>
+    <div class="bar horizontal layout around-justified wrap tile">
+      <div class="box tile horizontal layout around-justified wrap flex">
+        <template is="dom-repeat" items="{{skills}}">
+            <paper-material elevation="1" style$="background-color: {{item.color}}" class="square-box" data-custom$="{{item._id}}" on-tap="tapHandler">
+              <h3 data-custom$="{{item._id}}" id="{{item.name}}">{{item.name}}</h3>
+            </paper-material>
+        </template>
     </div>
   </template>
   <script src="https://d3js.org/d3.v3.min.js"></script>
@@ -45,9 +75,16 @@
   'use strict';
   Polymer({
     is: 'pie-status',
+    behaviors: [
+      Polymer.NeonSharedElementAnimatableBehavior,
+      Polymer.NeonAnimatableBehavior,
+      Polymer.NeonAnimationRunnerBehavior
+    ],
+
     properties: {
       hoverselection: {
-        type: String
+        type: String,
+        // observer: "getCard"
       },
       hovercolor: {
         type: String
@@ -60,21 +97,41 @@
       },
       skills: {
         computed: 'parseSkills(loadskills)',
-        observer: 'drawPie'
+        observer: 'colorMaker'
+      },
+      studentskills: {
+        computed: 'parseSkills(loadstudentskills)',
+        notify: true,
+        observer: 'colorMaker'
+      },
+      loadstudentskills: {
+        notify: true
       },
       loadskills: {
         notify: true
       },
-      tree: {
-        computed: 'parseTree(loadtree)',
-        observer: 'drawPie'
-      },
-      loadtree: {
-        notify: true
-      },
       active: {
         notify: true
+      },
+      animationConfig: {
+        type: Object,
+        value: function() {
+          return {
+            'entry': [{
+              name: 'cascaded-animation',
+              animation: 'transform-animation',
+              transformFrom: 'translateY(100%)',
+              transformTo: 'none',
+              timing: {
+                delay: 50
+              }
+            }]
+          }
+        }
       }
+    },
+    tapHandler: function(e) {
+      this.userselection = e.target.getAttribute('data-custom');
     },
     clickHandler: function(d) {
       this.userselection = d.data._id;
@@ -82,16 +139,12 @@
    
     parseSkills: function(loadskills) {
       try {
-        console.log('loadskills');
-        console.log(loadskills);
         return JSON.parse(loadskills);
       } catch (e) {}
     },
 
     parseTree: function(loadtree) {
-      try {       
-        console.log('in polymer');
-        console.log(loadtree);
+      try {
         return JSON.parse(loadtree);
       } catch (e) {}
     },
@@ -115,14 +168,50 @@
       return 'rgb(' + transformed[0] + ','+ transformed[1] + ',' +transformed[2] + ')';
     },
 
+    getCard: function() {
+      // console.log(this.hoverselection);
+      // document.getElementById(this.hoverselection).style.color = 'white';
+    },
+
+    colorMaker: function() {
+
+      // pass in color ids into subfunction
+      var fader = this.fadeDown.bind(this);
+
+      var completedSkills = [];
+
+      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
+
+      var that = this;
+
+      this.skills.forEach(function(item) {
+        if(completedSkills.indexOf(item["_id"]) >= 0) {
+          item.color = "#FFCC00";
+        } else {
+          var uniq = item.problemGenId * 14;
+
+          var red   = Math.floor(Math.sin(.1*uniq + 0) * 127 + 128);
+          var green = Math.floor(Math.sin(.1*uniq + 2) * 127 + 128);
+          var blue  = Math.floor(Math.sin(.1*uniq + 4) * 127 + 128);
+
+          var darkerColor = 'rgb(' + red + ','+ green + ',' + blue + ')';
+
+          item.color = fader(darkerColor);
+        }
+      });
+    },
+
     drawPie: function() {
-      console.log('got a response');
-      console.log(this.skills);
+      this.colorMaker();
+      var completedSkills = [];
+
+      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
+
       var data = this.skills;
       var that = this;
 
-      var width = 400,
-        height = 400;
+      var width = 250,
+        height = 250;
       var outerRadius = height / 2 - 20,
         innerRadius = outerRadius / 3,
         cornerRadius = 10;
@@ -145,25 +234,36 @@
           d.outerRadius = outerRadius;
         })
         .attr("d", arc)
-        .style("fill", function() {
-          var color = '#' + Math.floor(Math.random() * 16777215).toString(16)
-          console.log(color);
-          return color;
+        .style("fill", function(d) {
+          if(completedSkills.indexOf(d.data["_id"]) >= 0) {
+            return "#FFCC00";
+          } else {
+
+          var uniq = d.data.problemGenId * 14;
+
+          var red   = Math.floor(Math.sin(.1*uniq + 0) * 127 + 128);
+          var green = Math.floor(Math.sin(.1*uniq + 2) * 127 + 128);
+          var blue  = Math.floor(Math.sin(.1*uniq + 4) * 127 + 128);
+
+          return 'rgb(' + red + ','+ green + ',' + blue + ')';
+          }
+
         })
-        .on("mouseover", arcTween(outerRadius + 20, 0))
-        .on("mouseout", arcTween(outerRadius, 150))
+        .on("mouseover", arcTween(outerRadius + 20, 0, true))
+        .on("mouseout", arcTween(outerRadius, 150, false))
         .on("click", this.clickHandler.bind(this));
 
-      function arcTween(outerRadius, delay) {
+      function arcTween(outerRadius, delay, mouseover) {
         return function() {
 
           that.hovercolor = d3.select(this)[0][0].style.fill; //get color of current selection
           that.hoverbackground = that.fadeDown(that.hovercolor);
-          console.log(that.hovercolor);
 
 
           d3.select(this).transition().delay(delay).attrTween("d", function(d) {
-            that.hoverselection = d.data.name;
+            if(mouseover){
+              that.hoverselection = d.data.name;
+            }
 
             var i = d3.interpolate(d.outerRadius, outerRadius);
             return function(t) {
@@ -173,7 +273,18 @@
           });
         };
       }
-    }
+    },
+    attached: function() {
+        this.async(function() {
+          var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+          this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+          // this.playAnimation('toolbar');
+          this.playAnimation('entry');
+
+          var draw = this.drawPie.bind(this);
+          setTimeout(draw, 500);
+        });
+      }
   });
   </script>
 </dom-module>
