@@ -48,6 +48,8 @@ class SignupController {
   }
 
   signUpPolymer = function() {
+    console.log('sigining up name');
+    console.log(this.user.name);
     this.Auth.createUser({
       name: this.user.name,
       email: this.user.email,

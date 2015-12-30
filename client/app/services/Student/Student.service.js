@@ -62,6 +62,12 @@ angular.module('hrr10MjbeApp')
       });
     }
 
+    this.getName = function(cb) {
+      getUser(function(user) {
+        cb(user === null ? 'Guest' : user.name);
+      })
+    }
+
     this.getSkills = function(cb) {
       getUser(function(user) {
         console.log('skills');
@@ -213,5 +219,15 @@ angular.module('hrr10MjbeApp')
         user.studentData.times[now - now % (24 * 60 * 60 * 1000)] = time;
         if (time % 10 === 0) save();
       })
+    }
+
+    this.getJoined = function(cb) {
+      getUser(function(user) {
+        cb(user.joined);
+      })
+    }
+
+    this.clear = function() {
+      user = null;
     }
   });

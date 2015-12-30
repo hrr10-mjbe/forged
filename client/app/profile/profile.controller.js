@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('ProfileCtrl', function ($scope, Student) {
+  .controller('ProfileCtrl', function($scope, Student) {
     $scope.message = 'Hello';
+    $scope.accepted = 'false';
 
     Student.getRequests(function(requests) {
-      $scope.requests = requests;
+      $scope.request = requests[0];
       console.log(requests);
     });
 
@@ -14,10 +15,20 @@ angular.module('hrr10MjbeApp')
       $scope.teacher = teacher;
     })
 
-    $scope.accept = function() {
-      console.log('accepting');
-      Student.acceptRequest($scope.requests[0], function(res) {
-        console.log(res);
-      });
+    Student.getJoined(function(joined) {
+      $scope.joined = new Date(joined).toDateString();
+    })
+
+    Student.getName(function(name) {
+      $scope.name = name;
+    })
+
+    $scope.polymerChange = function() {
+      if ($scope.accepted === 'true') {
+        console.log('accepting');
+        Student.acceptRequest(JSON.parse($scope.request), function(res) {
+          console.log(res);
+        });
+      }
     }
   });

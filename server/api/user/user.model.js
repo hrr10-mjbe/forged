@@ -27,6 +27,10 @@ var UserSchema = new Schema({
 
   //start custom properties
   type: String,
+  joined: {
+    type: Date,
+    default: Date.now
+  },
   //student properties
   //we keep these in a nested object both for cleanness and security - this way we can ensure that only this data can be arbitrarily updated
   studentData: {

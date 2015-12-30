@@ -46,13 +46,15 @@
     </style>
     
     <!-- top bar only for pending teacher invitation -->
+    <template is="dom-if" if="{{request}}">
     <div class="tile layout horizontal">
       <paper-material elevation="1" class="flex invitation heightfix">
-          <h2>You got a class invitation from TeacherName!</h2>
-          <p>SubjectName</p>
-          <paper-button raised><iron-icon icon="social:group-add"></iron-icon> Click here to join the class</paper-button>
+          <h2>You got a class invitation from {{request.teacher.name}}!</h2>
+          <p>{{request.class.name}}</p>
+          <paper-button raised on-tap="acceptRequest"><iron-icon icon="social:group-add"></iron-icon> Click here to join the class</paper-button>
       </paper-material>
     </div>
+    </template>
 
     <!-- whole grid -->
     <div class="bar horizontal layout around-justified wrap tile">
@@ -61,13 +63,13 @@
       <div class="box tile flex layout vertical">
 
         <paper-material elevation="4" class="namebox">
-          <h2>Eric Hollenberry</h2>
-          <p>Member since April 1, 2017</p>
+          <h2>{{name}}</h2>
+          <p>Member since {{joined}}</p>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
           <h3>Date and Time</h3>
-          <p>Member since April 1, 2017</p>
+          <p>Member since {{joined}}</p>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box">
@@ -138,6 +140,25 @@
         //   type: String,
         //   notify: true
         // },
+        loadrequest: {
+          notify: true
+        },
+
+        request: {
+          computed: 'parse(loadrequest)'
+        },
+
+        accepted: {
+          notify: true
+        },
+
+        name: {
+          notify: true
+        },
+
+        joined: {
+          notify: true
+        },
 
         animationConfig: {
           type: Object,
@@ -171,6 +192,17 @@
           // this.playAnimation('toolbar');
           this.playAnimation('entry');
         });
+      },
+
+      parse: function(loadrequest) {
+        try {
+          return JSON.parse(loadrequest);
+        } catch (e) {}
+      },
+
+      acceptRequest: function() {
+        console.log('accepting in polymer');
+        this.accepted = 'true';
       }
     });
   </script>

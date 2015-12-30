@@ -81,7 +81,8 @@
           type: String
         },
         name: {
-          type: String
+          type: String,
+          notify: true
         },
         useremail: {
           type: String,
@@ -146,6 +147,8 @@
           this.$.errortoast.show();
         } else {
           this.usertype = this.$.radio.selected;
+          console.log('name in polymer');
+          console.log(this.name);
           this.signup = 'true';
           if (this.errormessage !== '' && this.errormessage !== '{{vm.errormessage}}') {
             this.$.errortoast.show();
