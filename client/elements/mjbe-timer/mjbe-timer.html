@@ -1,45 +1,45 @@
 <dom-module id="mjbe-timer">
   <template>
     <style>
-      :host {
-        text-align: center;
-        background: #00ECB9;
-        font-family: sans-serif;
-        font-weight: 100;
-      }
-
-      h1 {
-        color: #396;
-        font-weight: 100;
-        font-size: 40px;
-        margin: 40px 0px 20px;
-      }
-
-      #clockdiv {
-        font-family: sans-serif;
-        color: #fff;
-        display: inline-block;
-        font-weight: 100;
-        text-align: center;
-        font-size: 30px;
-      }
-
-      #clockdiv > div {
-        padding: 10px;
-        background: #00BF96;
-        display: inline-block;
-      }
-
-      #clockdiv div > span {
-        padding: 15px;
-        background: #00816A;
-        display: inline-block;
-      }
-
-      .smalltext {
-        padding-top: 5px;
-        font-size: 16px;
-      }
+    :host {
+      text-align: center;
+      background: #00ECB9;
+      font-family: sans-serif;
+      font-weight: 100;
+    }
+    
+    h1 {
+      color: #396;
+      font-weight: 100;
+      font-size: 40px;
+      margin: 40px 0px 20px;
+    }
+    
+    #clockdiv {
+      font-family: sans-serif;
+      color: #fff;
+      display: inline-block;
+      font-weight: 100;
+      text-align: center;
+      font-size: 30px;
+    }
+    
+    #clockdiv > div {
+      padding: 10px;
+      background: #00BF96;
+      display: inline-block;
+    }
+    
+    #clockdiv div > span {
+      padding: 15px;
+      background: #00816A;
+      display: inline-block;
+    }
+    
+    .smalltext {
+      padding-top: 5px;
+      font-size: 16px;
+    }
     </style>
     <div id="clockdiv">
       <div>
@@ -53,49 +53,60 @@
     </div>
   </template>
   <script>
-
-    Polymer({
-      is: 'mjbe-timer',
-      properties: {
-        seconds: {
-          type: Number,
-          notify: true
-        },
-        minutes: {
-          type: Number,
-          notify: true
-        },
-        secondsDisp: {
-          type: String,
-          computed: 'computeDisp(seconds)'
-        },
-        minutesDisp: {
-          type: String,
-          computed: 'computeDisp(minutes)'
-        }
+  Polymer({
+    is: 'mjbe-timer',
+    properties: {
+      seconds: {
+        type: Number,
+        notify: true
       },
-      initializeClock: function() {        
-        window.onblur = function() {window.blurred = true;};
-        window.onfocus = function() {window.blurred = false;};
-
-        function updateClock() {
-          if( window.blurred ) { return; }
-          this.seconds++;
-          if( this.seconds >= 60 ) {
-            this.seconds = 0;
-            this.minutes++;
-          }
-        }
-
-        var clock = updateClock.bind(this);
-        var timeinterval = setInterval(clock, 1000);
+      minutes: {
+        type: Number,
+        notify: true
       },
-      ready: function() {
-        this.initializeClock();
+      secondsDisp: {
+        type: String,
+        computed: 'computeDisp(seconds)'
       },
-      computeDisp: function(seconds) {
-        return seconds < 10 ? '0' + seconds : '' + seconds;
+      minutesDisp: {
+        type: String,
+        computed: 'computeDisp(minutes)'
+      },
+      count: {
+        type: String,
+        notify: true
       }
-    });
+    },
+    initializeClock: function() {
+      window.onblur = function() {
+        window.blurred = true;
+      };
+      window.onfocus = function() {
+        window.blurred = false;
+      };
+
+      function updateClock() {
+        if (window.blurred) {
+          return;
+        }
+        this.seconds++;
+        if (this.seconds >= 60) {
+          this.seconds = 0;
+          this.minutes++;
+        }
+      }
+
+      var clock = updateClock.bind(this);
+      if (this.count === 'true') {
+        var timeinterval = setInterval(clock, 1000);
+      }
+    },
+    ready: function() {
+      this.initializeClock();
+    },
+    computeDisp: function(seconds) {
+      return seconds < 10 ? '0' + seconds : '' + seconds;
+    }
+  });
   </script>
 </dom-module>

@@ -87,7 +87,7 @@
           <paper-card animatedShadow="true" elevation="1" id="badgecard" on-mouseover="raise" on-mouseout="lower">
               <paper-icon-button icon="{{badge.image}}" style="color: blue"></paper-icon-button>
               <paper-tooltip position="top" offset="-5" delay="0">{{badge.name}}</paper-tooltip>
-              <div>{{badge.name}}</div>
+              {{badge.name}}
             </paper-card>
             </template>
             <template is="dom-if" if="{{noBadge(badge)}}">
@@ -105,11 +105,11 @@
       <div class="box tile layout vertical flex">
 
         <paper-material elevation="1" style="background-color: white" class="short-box" >
-          <h3>Latest Badge</h3>
+          <h3>Total time today</h3><mjbe-timer minutes="{{minutes}}" seconds="{{seconds}}"></mjbe-timer>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #FF9500" class="tall-box">
-          <h3>Another box</h3>
+          <h3>Calendar?</h3>
           <p>Member since April 1, 2017</p>
         </paper-material>
         
@@ -210,6 +210,11 @@
           notify: true
         },
 
+        times: {
+          computed: 'parse(loadtimes)',
+          observer: 'setClock'
+        },
+
         animationConfig: {
           type: Object,
           value: function() {
@@ -261,6 +266,12 @@
         console.log('nobadge');
         console.log(!this.badge);
         return !this.badge;
+      },
+
+      setClock: function() {
+        var time = Date.now();
+        this.seconds = this.times[time - time % (24 * 60 * 60 * 1000)] % 60;
+        this.minutes = Math.floor(this.times[time - time % (24 * 60 * 60 * 1000)] / 60);
       },
 
       acceptRequest: function() {
