@@ -177,7 +177,7 @@
     properties: {
       hoverselection: {
         type: String,
-        observer: "getCard"
+        // observer: "getCard"
       },
       hovercolor: {
         type: String
@@ -195,6 +195,7 @@
       studentskills: {
         computed: 'parseSkills(loadstudentskills)',
         notify: true,
+        observer: 'colorMaker'
       },
       loadstudentskills: {
         notify: true
@@ -265,7 +266,7 @@
 
     getCard: function() {
       // console.log(this.hoverselection);
-      document.getElementById(this.hoverselection).style.color = 'white';
+      // document.getElementById(this.hoverselection).style.color = 'white';
     },
 
     colorMaker: function() {
@@ -297,6 +298,7 @@
     },
 
     drawPie: function() {
+      this.colorMaker();
       var completedSkills = [];
 
       this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
