@@ -42,30 +42,38 @@
     }
 
     .toolbar-header {
+      height: 80px;
       overflow: auto;
       color: black;
       transition: background-color 1.5s ease;
       padding: 0px;
+      max-width: 760px;
+      margin: 40px auto;
     }
 
     h3 {
       margin: 0px auto;
     }
 
+    .tileholder{
+      max-width: 800px;
+      margin: 40px auto 0;
+    }
+
     </style>
     <paper-toolbar class="toolbar-header" style$="background-color: [[hoverbackground]]">
-      <h3>[[hoverselection]]</h3>
+      <h3>Go to: [[hoverselection]]</h3>
     </paper-toolbar>
-    <div class="tile layout horizontal center-justified">
+<!--     <div class="tile layout horizontal center-justified">
       <paper-material elevation="0" class="piebox">
           <div id="holder"></div>
       </paper-material>
-    </div>
-    <div class="bar horizontal layout around-justified wrap tile">
+    </div> -->
+    <div class="bar horizontal layout around-justified wrap tile tileholder">
       <div class="box tile horizontal layout around-justified wrap flex">
         <template is="dom-repeat" items="{{skills}}">
-            <paper-material elevation="1" style$="background-color: {{item.color}}" class="square-box" data-custom$="{{item._id}}" on-tap="tapHandler">
-              <h3 data-custom$="{{item._id}}" id="{{item.name}}">{{item.name}}</h3>
+            <paper-material elevation="1" style$="background-color: {{item.color}}" class="square-box" data-custom$="{{item._id}}" on-tap="tapHandler" data-name$="{{item.name}}" on-mouseover="hoverselect" on-mouseout="hoverleave" data-color$="{{item.color}}">
+              <h3 data-custom$="{{item._id}}" id="{{item.name}}" data-name$="{{item.name}}" on-mouseover="hoverselect" on-mouseout="hoverleave" >{{item.name}}</h3>
             </paper-material>
         </template>
     </div>
@@ -201,79 +209,18 @@
       });
     },
 
-    drawPie: function() {
-      this.colorMaker();
-      var completedSkills = [];
-
-      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
-
-      var data = this.skills;
-      var that = this;
-
-      var width = 250,
-        height = 250;
-      var outerRadius = height / 2 - 20,
-        innerRadius = outerRadius / 3,
-        cornerRadius = 10;
-      var pie = d3.layout.pie()
-        .padAngle(.02).value(function(d) {
-          return 1;
-        });
-      var arc = d3.svg.arc()
-        .padRadius(outerRadius)
-        .innerRadius(innerRadius);
-      var svg = d3.select(this.$.holder).append("svg")
-        .attr("width", width)
-        .attr("height", height)
-        .append("g")
-        .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
-      svg.selectAll("path")
-        .data(pie(data))
-        .enter().append("path")
-        .each(function(d) {
-          d.outerRadius = outerRadius;
-        })
-        .attr("d", arc)
-        .style("fill", function(d) {
-          if(completedSkills.indexOf(d.data["_id"]) >= 0) {
-            return "#FFCC00";
-          } else {
-
-          var uniq = d.data.problemGenId * 14;
-
-          var red   = Math.floor(Math.sin(.1*uniq + 0) * 127 + 128);
-          var green = Math.floor(Math.sin(.1*uniq + 2) * 127 + 128);
-          var blue  = Math.floor(Math.sin(.1*uniq + 4) * 127 + 128);
-
-          return 'rgb(' + red + ','+ green + ',' + blue + ')';
-          }
-
-        })
-        .on("mouseover", arcTween(outerRadius + 20, 0, true))
-        .on("mouseout", arcTween(outerRadius, 150, false))
-        .on("click", this.clickHandler.bind(this));
-
-      function arcTween(outerRadius, delay, mouseover) {
-        return function() {
-
-          that.hovercolor = d3.select(this)[0][0].style.fill; //get color of current selection
-          that.hoverbackground = that.fadeDown(that.hovercolor);
-
-
-          d3.select(this).transition().delay(delay).attrTween("d", function(d) {
-            if(mouseover){
-              that.hoverselection = d.data.name;
-            }
-
-            var i = d3.interpolate(d.outerRadius, outerRadius);
-            return function(t) {
-              d.outerRadius = i(t);
-              return arc(d);
-            };
-          });
-        };
-      }
+    hoverselect: function(e) {
+      this.hoverselection = e.target.getAttribute('data-name');
+      this.hoverbackground = this.fadeDown(e.target.getAttribute('data-color'));
+      e.target.setAttribute('elevation', 5);
+      // document.getElementById(this.hoverselection).style.color = '#EFEFEF';
     },
+
+    hoverleave: function(e) {
+      e.target.setAttribute('elevation', 1);
+      // document.getElementById(this.hoverselection).style.color = 'black';
+    },
+
     attached: function() {
         this.async(function() {
           var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
