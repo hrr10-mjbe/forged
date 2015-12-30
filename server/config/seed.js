@@ -26,7 +26,7 @@ User.find({}).removeAsync()
           1451433600000: 75
         },
         modifications: {
-          showTimer: false,
+          showTimer: true,
           showLeaderboard: true,
           showWhiteboard: true
         }

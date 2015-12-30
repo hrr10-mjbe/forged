@@ -3,5 +3,5 @@
 
 <mjbe-drawing-canvas class="fit" ng-if="s.showCanvas"></mjbe-drawing-canvas>
 <problems-addition problemtype="{{s.type}}" complete="{{s.complete}}" event-namespace="s" bind-polymer></problems-addition>
-<mjbe-timer class="timer" minutes="{{s.timerMinutes}}" seconds="{{s.timerSeconds}}" event-namespace="s" ng-if="s.showTimer" bind-polymer></mjbe-timer>
+<mjbe-timer class="timer" minutes="{{s.timerMinutes}}" seconds="{{s.timerSeconds}}" count="true" event-namespace="s" ng-if="s.showTimer" bind-polymer></mjbe-timer>
 <mjbe-leaderboard class="leaderboard" loadleaderboard="{{s.leaderboard}}" ng-if="s.showLeaderboard"></mjbe-leaderboard>
