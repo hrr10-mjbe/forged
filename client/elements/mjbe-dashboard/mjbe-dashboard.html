@@ -55,16 +55,35 @@
       </template>
     </paper-tabs>
     <!--dashboard content-->
-    <div class="tile d3">
-      <mjbe-teacher-pie skills="{{skills}}" loadstudents="{{students}}"></mjbe-teacher-pie>
+
+    <!-- whole grid -->
+    <div class="bar horizontal layout around-justified wrap tile">
+
+
+      <!-- FIRST COLUMN -->
+
+        <!-- PIE CHART box -->
+        <div class="tile d3">
+          <mjbe-teacher-pie skills="{{skills}}" loadstudents="{{students}}"></mjbe-teacher-pie>
+        </div>
+
+      <!-- SECOND COLUMN -->
+      
+        <!-- CLASS ROSTER box -->
+        <div class="tile list">
+          <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}"></mjbe-collapse-list>
+        </div>
+
+        <!-- MODIFICATIONS box -->
+        <div class="tile mod">
+          <paper-icon-button icon="arrow-forward" style="color:white;" alt="Add class" on-tap="openMod"></paper-icon-button>
+          <span>Modifications</span>
+        </div>
+
+
     </div>
-    <div class="tile list">
-      <mjbe-collapse-list activeclass="{{selectedclass}}" email="{{email}}" invitecount="{{invitecount}}" data="{{students}}"></mjbe-collapse-list>
-    </div>
-    <div class="tile mod">
-      <paper-icon-button icon="arrow-forward" style="color:white;" alt="Add class" on-tap="openMod"></paper-icon-button>
-      <span>Modifications</span>
-    </div>
+
+
     <!--add class modal-->
     <paper-dialog id="addClass" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Class name" value="{{classname::input}}" type="text" autofocus auto-validate minlength="2" error-message="Enter at least two characters"></paper-input>

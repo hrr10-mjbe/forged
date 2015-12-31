@@ -27,21 +27,21 @@
       width: 100%;
       margin: 16px auto;
       background-color: #eee;
-      --paper-progress-active-color: #2444A9;
+      --paper-progress-active-color: #FFCC00;
       --paper-progress-secondary-color: #A90000;
-      --paper-progress-container-color: #6EB2E9;
+      --paper-progress-container-color: #007AFF;
       --paper-progress-height: 10px;
       --paper-progress-width: 400px;
     }
 
     paper-dialog {
-      background-color: #9BD16D;
-      color: #881FD1;
+      background-color: #5AC8FA;
+      color: #FFF;
       font-size: 20px;
-      width: 600px;
-      height: 400px;
+      width: 500px;
+      height: 300px;
+      padding: 30px;
       text-align: center;
-      padding: 20px;
     }
 
     .timer {
@@ -55,9 +55,11 @@
     }
 
     .practice {
-      postiion: absolute;
       text-align: right;
-      right: 0;
+    }
+
+    .dialogbutton {
+      background-color: #007AFF;
     }
     </style>
     <paper-material elevation="1" horizontal layout>
@@ -72,13 +74,15 @@
     </paper-material>
 
 <!--     <mjbe-timer class="timer"></mjbe-timer> -->
-
     <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation" with-backdrop>
-      Congratulations! You passed this module.
-      <paper-button class="backbutton" ui-sref="main">
-        <paper-icon-button mini icon="arrow-back" ui-sref="home"></paper-icon-button> Go back to Main Page
+      <h3>Congratulations!</h3>
+      <h5>You passed this module.</h5>
+      <paper-button ui-sref="main" class="dialogbutton">
+        <paper-icon-button mini icon="home" ui-sref="home"></paper-icon-button> Go back to Home Page
       </paper-button>
-      <paper-button dialog-confirm class="practice">Keep Practicing</paper-button>
+      <paper-button dialog-confirm class="dialogbutton">
+        <paper-icon-button mini icon="arrow-forward"></paper-icon-button> Keep Practicing
+      </paper-button>
     </paper-dialog>
 
   </template>
