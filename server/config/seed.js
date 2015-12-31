@@ -192,9 +192,13 @@ Skill.find({}).removeAsync()
 Badge.find({}).removeAsync()
   .then(function() {
     Badge.create({
-      name: 'WOO you passed a thing',
+      name: 'First skill complete!',
       info: 'Congrats',
       badgeDefId: 0,
+      image: 'add'
+    }, {
+      name: 'Two skills complete!',
+      badgeDefId: 1,
       image: 'add'
     });
   });
