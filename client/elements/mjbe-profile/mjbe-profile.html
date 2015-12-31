@@ -18,10 +18,16 @@
         min-width: 300px;
       }
       .short-box {
-        overflow: auto;
+        height: 100px;
+      }
+      .time-box {
+        height: 175px;
       }
       .tall-box {
         height: 300px;
+      }
+      .bargraph-box {
+        height: 330px;
       }
       .square-box {
         height: 175px;
@@ -113,8 +119,8 @@
         </paper-material>
 
         <!-- QUOTE box -->
-        <paper-material elevation="1" style="background-color: #5AC8FA" class="quote-box">
-          <p>{{quote}}</p>
+        <paper-material elevation="1" style="background-color: #FFCC00" class="quote-box">
+          <h2><em>{{quote}}</em></h2>
         </paper-material>
 
       </div>
@@ -138,7 +144,7 @@
         </paper-material>
 
         <!-- TODAY'S TIME box -->
-        <paper-material elevation="1" style="background-color: #00ECB9" class="short-box">
+        <paper-material elevation="1" style="background-color: #00ECB9" class="time-box">
             <h3>Time worked today</h3>
           <div class="timerholder flex horizontal layout center-justified">
             <mjbe-timer minutes="{{minutes}}" seconds="{{seconds}}"></mjbe-timer>
