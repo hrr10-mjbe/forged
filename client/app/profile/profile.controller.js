@@ -52,7 +52,7 @@ angular.module('hrr10MjbeApp')
     })
 
     Student.getBadges(function(badges) {
-      $scope.badge = badges && badges.length ? JSON.stringify(badges[0]) : 'null';
+      $scope.badge = badges && badges.length ? JSON.stringify(badges[badges.length - 1]) : 'null';
     })
 
     Student.getTimes(function(times) {
