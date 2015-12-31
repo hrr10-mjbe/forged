@@ -288,6 +288,7 @@ User.find({}).removeAsync()
       student11.studentData.teacher = teacher;
       student12.studentData.teacher = teacher;
       student1.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      
       student2.studentData.myClass._id = teacher.teacherData.classes[0]._id;
       student3.studentData.myClass._id = teacher.teacherData.classes[0]._id;
       student4.studentData.myClass._id = teacher.teacherData.classes[0]._id;
@@ -299,7 +300,12 @@ User.find({}).removeAsync()
       student10.studentData.myClass._id = teacher.teacherData.classes[1]._id;
       student11.studentData.myClass._id = teacher.teacherData.classes[1]._id;
       student12.studentData.myClass._id = teacher.teacherData.classes[1]._id;
-      student1.saveAsync();
+      student1.saveAsync().then(function() {
+        User.findByIdAsync(student1._id).then(function(student) {
+        console.log('id =');
+      console.log(student.studentData.myClass._id);
+      })
+      });
       student2.saveAsync();
       student3.saveAsync();
       student4.saveAsync();

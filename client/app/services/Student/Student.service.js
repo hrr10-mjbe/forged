@@ -182,7 +182,7 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         if (user === null) return cb(defaultUser.studentData.modifications);
         console.log('in getmod');
-        console.log(user.studentData.modifications);
+        console.log(user.studentData);
         var ret = {
           showTimer: user.studentData.modifications.showTimer !== undefined ? user.studentData.modifications.showTimer : user.studentData.myClass.modifications.showTimer,
           showLeaderboard: user.studentData.modifications.showLeaderboard !== undefined ? user.studentData.modifications.showLeaderboard : user.studentData.myClass.modifications.showLeaderboard,

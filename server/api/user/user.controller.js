@@ -140,6 +140,8 @@ exports.me = function(req, res, next) {
       if (err) {
         return res.status(404).end();
       }
+      console.log('returning user');
+      console.log(user);
       res.json(user);
     });
 };
@@ -312,6 +314,8 @@ exports.updateStudentMod = function(req, res, next) {
   User.findByIdAsync(mongoose.Types.ObjectId(req.body.studentId)).then(function(student) {
     console.log('found ' + student);
     student.studentData.modifications = req.body.modifications;
+    console.log('new mods');
+    console.log(student.studentData.modifications);
     student.saveAsync().then(function() {
       exports.me(req, res, next);
     })
