@@ -68,7 +68,7 @@ angular.module('hrr10MjbeApp')
       if ($scope.accepted === 'true') {
         console.log('accepting');
         Student.acceptRequest(JSON.parse($scope.request), function(res) {
-          console.log(res);
+          $scope.request = null;
         });
       }
     }
