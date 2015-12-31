@@ -254,10 +254,10 @@ User.find({}).removeAsync()
       password: 'test',
       teacherData: {
         classes: [{
-          name: 'Math',
+          name: 'Math 1',
           students: [student1._id, student2._id, student3._id, student4._id, student5._id, student6._id, student7._id, student8._id, student9._id,]
         }, {
-          name: 'Algebra',
+          name: 'Math 2',
           students: [student10._id, student11._id, student12._idnt ]
         }]
       },
