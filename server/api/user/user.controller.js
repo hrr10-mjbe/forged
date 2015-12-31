@@ -5,6 +5,7 @@ import config from '../../config/environment';
 import jwt from 'jsonwebtoken';
 import _ from 'lodash';
 import DefaultUser from '../defaultuser/defaultuser.controller';
+import mongoose from 'mongoose';
 
 function validationError(res, statusCode) {
   statusCode = statusCode || 422;
@@ -308,7 +309,8 @@ exports.updateClassMod = function(req, res, next) {
 exports.updateStudentMod = function(req, res, next) {
   console.log('updating student');
   console.log(req.body);
-  User.findByIdAsync(req.body.StudentId).then(function(student) {
+  User.findByIdAsync(mongoose.Types.ObjectId(req.body.studentId)).then(function(student) {
+    console.log('found ' + student);
     student.studentData.modifications = req.body.modifications;
     student.saveAsync().then(function() {
       exports.me(req, res, next);

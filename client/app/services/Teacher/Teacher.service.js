@@ -156,6 +156,8 @@ angular.module('hrr10MjbeApp')
     }
 
     this.setIndividualModifications = function(classId, studentId, mod, cb) {
+      console.log('in ind');
+      console.log(studentId);
       this.getStudent(classId, studentId, function(student) {
         console.log('setting mods on student')
         console.log(studentId);

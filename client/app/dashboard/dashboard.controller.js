@@ -122,8 +122,12 @@ angular.module('hrr10MjbeApp')
       if (individualMod !== $scope.individualMod) {
         individualMod = $scope.individualMod;
         console.log('changing individual');
-        var theMod = JSON.parse(individualMod);
+        var theMod = JSON.parse(JSON.parse(individualMod));
+        i/*var theMod2 = JSON.parse(theMod);
+        console.log(theMod2.student);
+        console.log($scope.activeClass);
         console.log(theMod);
+        console.log(theMod['student']);*/
         Teacher.setIndividualModifications($scope.activeClass, theMod.student, theMod, function() {
           $scope.refresh();
         });
