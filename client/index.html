@@ -47,14 +47,13 @@
         <!-- Main Toolbar -->
 
         <paper-toolbar ng-controller="NavbarCtrl" style="background:#FF3B30">
-          <div class="title top">TORCHCADEMY</div>
+          <div class="title top">forgED</div>
 <!--           <div class="top" ng-show="loggedIn">Hello {{name}}</div> -->
           <div class="horizontal layout">
             <paper-tabs>
               <paper-tab ui-sref="main" ng-show="loggedIn">Home</paper-tab>
               <paper-tab ui-sref="landing" ng-show="!loggedIn">Home</paper-tab>
               <paper-tab ui-sref="profile" ng-show="loggedIn">Profile</paper-tab>
-              <paper-tab ui-sref="badges" ng-show="loggedIn">Badges</paper-tab>
               <paper-tab ui-sref="dashboard" ng-show="isTeacher">Dashboard</paper-tab>
               <paper-tab ui-sref="about">About</paper-tab>
               <paper-tab ui-sref="login" ng-show="!loggedIn">Sign In</paper-tab>

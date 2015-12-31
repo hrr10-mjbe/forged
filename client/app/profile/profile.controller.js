@@ -47,6 +47,20 @@ angular.module('hrr10MjbeApp')
       });
     }
 
+    Student.getPoints(function(points) {
+      $scope.points = points;
+    })
+
+    Student.getBadges(function(badges) {
+      $scope.badge = badges && badges.length ? JSON.stringify(badges[badges.length - 1]) : 'null';
+    })
+
+    Student.getTimes(function(times) {
+      console.log('times');
+      console.log(times);
+      $scope.times = JSON.stringify(times);
+    })
+
     $scope.polymerChange = function() {
       if ($scope.userselection) {
         $scope.go();

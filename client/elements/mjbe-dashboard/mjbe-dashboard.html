@@ -214,6 +214,8 @@ Polymer({
 
   //gets the appropriate list of students for the current class
   getStudents: function(classes, selected) {
+    console.log('in getStudents');
+    console.log(classes);
     for (var i = 0; i < classes.length; i++) {
       if (classes[i]._id === selected) {
         return JSON.stringify(classes[i].students);

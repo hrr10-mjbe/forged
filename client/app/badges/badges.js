@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('hrr10MjbeApp')
+/*angular.module('hrr10MjbeApp')
   .config(function ($stateProvider) {
     $stateProvider
       .state('badges', {
@@ -9,4 +9,4 @@ angular.module('hrr10MjbeApp')
         controller: 'BadgesCtrl',
         authenticate: true
       });
-  });
+  });*/

@@ -31,11 +31,14 @@
 
     finish() {
       if (this.complete === 'true') {
+        console.log('completed skill');
         console.log(this.Student);
-        this.Student.addOrUpdateSkill(this.skill._id, 1);
-        this.Student.awardBadges(function(badges) {
-          console.log('new badges ' + badges);
-        });
+        this.Student.addOrUpdateSkill(this.skill._id, 1, function() {
+          this.Student.awardBadges(function(badges) {
+            console.log('new badges ' + badges);
+          });
+        }.bind(this));
+
       }
     }
 
@@ -43,7 +46,7 @@
       if (this.timerMinutes != this.timerMinutesStore || this.timerSeconds != this.timerSecondsStore) {
         if (this.timeLoaded) {
           this.Student.updateTime(this.timerSeconds + 60 * this.timerMinutes);
-        }        
+        }
       }
       this.finish();
     }

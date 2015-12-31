@@ -68,12 +68,12 @@
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since {{joined}}</p>
+          <h3>Total points</h3>
+          <p>{{points}}</p>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box">
-          <mjbe-updating-grid></mjbe-updating-grid>
+          <mjbe-updating-grid loadtimes="{{loadtimes}}"></mjbe-updating-grid>
         </paper-material>
 
       </div>
@@ -83,6 +83,16 @@
 
         <paper-material elevation="1" style="background-color: white" class="short-box" >
           <h3>Latest Badge</h3>
+          <template is="dom-if" if="{{badge}}">
+          <paper-card animatedShadow="true" elevation="1" id="badgecard" on-mouseover="raise" on-mouseout="lower">
+              <paper-icon-button icon="{{badge.image}}" style="color: blue"></paper-icon-button>
+              <paper-tooltip position="top" offset="-5" delay="0">{{badge.name}}</paper-tooltip>
+              {{badge.name}}
+            </paper-card>
+            </template>
+            <template is="dom-if" if="{{noBadge(badge)}}">
+            <div>No badges yet!</div>
+            </template>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #4CD964" class="really-tall-box">
@@ -95,17 +105,16 @@
       <div class="box tile layout vertical flex">
 
         <paper-material elevation="1" style="background-color: white" class="short-box" >
-          <h3>Latest Badge</h3>
+          <h3>Time worked today</h3><mjbe-timer minutes="{{minutes}}" seconds="{{seconds}}"></mjbe-timer>
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #FF9500" class="tall-box">
-          <h3>Another box</h3>
+          <h3>Calendar?</h3>
           <p>Member since April 1, 2017</p>
         </paper-material>
         
         <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Date and Time</h3>
-          <p>Member since April 1, 2017</p>
+          <p>{{quote}}</p>
         </paper-material>
       </div>
     </div>
@@ -125,6 +134,16 @@
     
   </template>
   <script>
+    var quotes = ['“Don’t let what you can’t do stop you from doing what you can do.” – John Wooden',
+                   'I think I can. I know I can.',
+                   '“When you know better you do better.” – Maya Angelou',
+                   '“Do what you can, with what you have, where you are.” - Theodore Roosevelt',
+                   '“You always pass failure on the way to success.” - Mickey Rooney',
+                   '“No one is perfect – that’s why pencils have erasers.”  – Wolfgang Riebe',
+                   '“The more that you read, the more things you will know. The more that you learn, the more places you’ll go.” -Dr. Suess',
+                   '“Anything is possible. Anything can be.” – Shel Silverstein',
+                   ]
+
     Polymer({
       is: 'mjbe-profile',
 
@@ -146,6 +165,18 @@
 
         request: {
           computed: 'parse(loadrequest)'
+        },
+
+        loadbadge: {
+          notify: true
+        },
+
+        badge: {
+          computed: 'parse(loadbadge)'
+        },
+
+        points: {
+          notify: true
         },
 
         accepted: {
@@ -171,6 +202,17 @@
 
         loadstudentskills: {
           notify: true
+        },
+
+        quote: String,
+
+        loadtimes: {
+          notify: true
+        },
+
+        times: {
+          computed: 'parse(loadtimes)',
+          observer: 'setClock'
         },
 
         animationConfig: {
@@ -209,16 +251,30 @@
           // this.playAnimation('toolbar');
           this.playAnimation('entry');
         });
+        this.quote = quotes[Math.floor(Math.random() * quotes.length)];
       },
 
-      parse: function(loadrequest) {
+      parse: function(load) {
         try {
-          return JSON.parse(loadrequest);
+          console.log('loading');
+          console.log(load);
+          return JSON.parse(load);
         } catch (e) {}
       },
 
+      noBadge: function() {
+        console.log('nobadge');
+        console.log(!this.badge);
+        return !this.badge;
+      },
+
+      setClock: function() {
+        var time = Date.now();
+        this.seconds = this.times[time - time % (24 * 60 * 60 * 1000)] % 60 || 0;
+        this.minutes = Math.floor(this.times[time - time % (24 * 60 * 60 * 1000)] / 60) || 0;
+      },
+
       acceptRequest: function() {
-        console.log('accepting in polymer');
         this.accepted = 'true';
       }
     });

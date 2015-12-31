@@ -8,8 +8,13 @@
     return false;
   }
 
+  var twoSkillsBadge = function(studentData) {
+    return studentData.skills.length > 1;
+  }
+
   var map = {
-    0: skillCompleteBadge
+    0: skillCompleteBadge,
+    1: twoSkillsBadge
   }
 
   window.checkBadge = function(badgeDefId, studentData) {
