@@ -19,9 +19,13 @@ User.find({}).removeAsync()
       type: 'student',
       email: 'test@example.com',
       password: 'test',
+      joined: 1451088000000,
       studentData: {
         points: 50,
         times: {
+          1451088000000: 60,
+          1451174400000: 120,
+          1451260800000: 60,
           1451347200000: 25,
           1451433600000: 75
         },
