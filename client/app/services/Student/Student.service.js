@@ -180,7 +180,15 @@ angular.module('hrr10MjbeApp')
 
     this.getModifications = function(cb) {
       getUser(function(user) {
-        cb(user === null ? defaultUser.studentData.modifications : user.studentData.modifications);
+        if (user === null) return cb(defaultUser.studentData.modifications);
+        console.log('in getmod');
+        console.log(user.studentData);
+        var ret = {
+          showTimer: user.studentData.modifications.showTimer !== undefined ? user.studentData.modifications.showTimer : user.studentData.myClass.modifications.showTimer,
+          showLeaderboard: user.studentData.modifications.showLeaderboard !== undefined ? user.studentData.modifications.showLeaderboard : user.studentData.myClass.modifications.showLeaderboard,
+          showWhiteboard: user.studentData.modifications.showWhiteboard !== undefined ? user.studentData.modifications.showWhiteboard : user.studentData.myClass.modifications.showWhiteboard
+        }
+        cb(ret);
       });
     }
 
@@ -195,6 +203,8 @@ angular.module('hrr10MjbeApp')
     this.getLeaderboard = function(cb) {
       getUser(function(user) {
         if (!user) return cb(null);
+        console.log('getting leaderboard');
+        console.log(user.studentData);
         $http({
           method: 'GET',
           url: '/api/users/leaderboard'

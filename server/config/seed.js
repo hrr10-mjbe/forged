@@ -15,13 +15,17 @@ User.find({}).removeAsync()
   .then(function() {
     var student1 = new User({
       provider: 'local',
-      name: 'Test User',
+      name: 'Laura Franklin',
       type: 'student',
       email: 'test@example.com',
       password: 'test',
+      joined: 1451088000000,
       studentData: {
         points: 50,
         times: {
+          1451088000000: 60,
+          1451174400000: 120,
+          1451260800000: 60,
           1451347200000: 25,
           1451433600000: 75
         },
@@ -35,7 +39,7 @@ User.find({}).removeAsync()
 
     var student2 = new User({
       provider: 'local',
-      name: 'Test User 2',
+      name: 'Leroy Walker',
       type: 'student',
       email: 'test2@example.com',
       password: 'test',
@@ -45,7 +49,7 @@ User.find({}).removeAsync()
           nothing: 'h'
         },
         modifications: {
-          showTimer: false,
+          showTimer: true,
           showLeaderboard: true,
           showWhiteboard: true
         }
@@ -54,9 +58,123 @@ User.find({}).removeAsync()
 
     var student3 = new User({
       provider: 'local',
-      name: 'Test User 3',
+      name: 'John Tilley',
       type: 'student',
       email: 'test3@example.com',
+      password: 'test',
+      studentData: {
+        points: 500,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student4 = new User({
+      provider: 'local',
+      name: 'Jerry Maffei',
+      type: 'student',
+      email: 'test4@example.com',
+      password: 'test',
+      studentData: {
+        points: 800,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student5 = new User({
+      provider: 'local',
+      name: 'John Tilley',
+      type: 'student',
+      email: 'test5@example.com',
+      password: 'test',
+      studentData: {
+        points: 1000,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student6 = new User({
+      provider: 'local',
+      name: 'Jeff Cousins',
+      type: 'student',
+      email: 'jeff.cousins@example.com',
+      password: 'test',
+      studentData: {
+        points: 10000000,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student7 = new User({
+      provider: 'local',
+      name: 'Mike Lee',
+      type: 'student',
+      email: 'mike.lee@example.com',
+      password: 'test',
+      studentData: {
+        points: 10000000,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student8 = new User({
+      provider: 'local',
+      name: 'Ben Pochily',
+      type: 'student',
+      email: 'ben.pochily@example.com',
+      password: 'test',
+      studentData: {
+        points: 10000000,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student9 = new User({
+      provider: 'local',
+      name: 'Marlene Allen',
+      type: 'student',
+      email: 'test9@example.com',
       password: 'test',
       studentData: {
         points: 200,
@@ -64,7 +182,64 @@ User.find({}).removeAsync()
           nothing: 'h'
         },
         modifications: {
-          showTimer: false,
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student10 = new User({
+      provider: 'local',
+      name: 'Jim Bryant',
+      type: 'student',
+      email: 'test10@example.com',
+      password: 'test',
+      studentData: {
+        points: 400,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student11 = new User({
+      provider: 'local',
+      name: 'Celeste Sheridan',
+      type: 'student',
+      email: 'test11@example.com',
+      password: 'test',
+      studentData: {
+        points: 100,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
+          showLeaderboard: true,
+          showWhiteboard: true
+        }
+      }
+    })
+
+    var student12 = new User({
+      provider: 'local',
+      name: 'Patricia Brown',
+      type: 'student',
+      email: 'test12@example.com',
+      password: 'test',
+      studentData: {
+        points: 3000,
+        times: {
+          nothing: 'h'
+        },
+        modifications: {
+          showTimer: true,
           showLeaderboard: true,
           showWhiteboard: true
         }
@@ -73,17 +248,17 @@ User.find({}).removeAsync()
 
     var teacher = new User({
       provider: 'local',
-      name: 'A Teacher',
+      name: 'Eric Hollenbery',
       type: 'teacher',
       email: 'teacher@example.com',
       password: 'test',
       teacherData: {
         classes: [{
-          name: 'Math',
-          students: [student1._id, student2._id]
+          name: 'Math 1',
+          students: [student1._id, student2._id, student3._id, student4._id, student5._id, student6._id, student7._id, student8._id, student9._id,]
         }, {
-          name: 'Algebra',
-          students: [student3._id]
+          name: 'Math 2',
+          students: [student10._id, student11._id, student12._idnt ]
         }]
       },
       studentData: {
@@ -92,7 +267,7 @@ User.find({}).removeAsync()
           nothing: 'h'
         },
         modifications: {
-          showTimer: false,
+          showTimer: true,
           showLeaderboard: true,
           showWhiteboard: true
         }
@@ -103,12 +278,45 @@ User.find({}).removeAsync()
       student1.studentData.teacher = teacher;
       student2.studentData.teacher = teacher;
       student3.studentData.teacher = teacher;
+      student4.studentData.teacher = teacher;
+      student5.studentData.teacher = teacher;
+      student6.studentData.teacher = teacher;
+      student7.studentData.teacher = teacher;
+      student8.studentData.teacher = teacher;
+      student9.studentData.teacher = teacher;
+      student10.studentData.teacher = teacher;
+      student11.studentData.teacher = teacher;
+      student12.studentData.teacher = teacher;
       student1.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      
       student2.studentData.myClass._id = teacher.teacherData.classes[0]._id;
-      student3.studentData.myClass._id = teacher.teacherData.classes[1]._id;
-      student1.saveAsync();
+      student3.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student4.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student5.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student6.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student7.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student8.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student9.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      student10.studentData.myClass._id = teacher.teacherData.classes[1]._id;
+      student11.studentData.myClass._id = teacher.teacherData.classes[1]._id;
+      student12.studentData.myClass._id = teacher.teacherData.classes[1]._id;
+      student1.saveAsync().then(function() {
+        User.findByIdAsync(student1._id).then(function(student) {
+        console.log('id =');
+      console.log(student.studentData.myClass._id);
+      })
+      });
       student2.saveAsync();
       student3.saveAsync();
+      student4.saveAsync();
+      student5.saveAsync();
+      student6.saveAsync();
+      student7.saveAsync();
+      student8.saveAsync();
+      student9.saveAsync();
+      student10.saveAsync();
+      student11.saveAsync();
+      student12.saveAsync();
     })
   });
 
