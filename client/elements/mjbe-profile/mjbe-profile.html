@@ -67,6 +67,9 @@
       .second {
         min-width: 420px;
       }
+      .lol {
+        min-width: 100%;
+      }
     </style>
     
     <!-- top bar only for pending teacher invitation -->
@@ -104,7 +107,7 @@
 
         <!-- CALENDAR box -->
         <paper-material elevation="1" style="background-color: #FF9500" class="tall-box">
-              Calendar
+              <paper-calendar></paper-calendar>
         </paper-material>
 
       </div>
@@ -131,7 +134,7 @@
         <paper-material elevation="1" style="background-color: white" class="short-box" >
           <h3>Latest Badge</h3>
           <template is="dom-if" if="{{badge}}">
-          <paper-card animatedShadow="true" elevation="1" id="badgecard" on-mouseover="raise" on-mouseout="lower">
+          <paper-card animatedShadow="true" elevation="1" id="badgecard">
               <paper-icon-button icon="{{badge.image}}" style="color: blue"></paper-icon-button>
               <paper-tooltip position="top" offset="-5" delay="0">{{badge.name}}</paper-tooltip>
               {{badge.name}}
@@ -151,8 +154,8 @@
         </paper-material>
 
         <!-- BAR GRAPH box -->
-        <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box">
-          <mjbe-updating-grid loadtimes="{{loadtimes}}"></mjbe-updating-grid>
+        <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box" id="graphbox">
+          <mjbe-updating-grid loadtimes="{{loadtimes}}" class="lol"></mjbe-updating-grid>
         </paper-material>
         
       </div>
@@ -198,6 +201,14 @@
         //   type: String,
         //   notify: true
         // },
+        chartheight: {
+          computed: 'getHeight()',
+          notify: true
+        },
+        chartwidth: {
+          computed: 'getWidth()',
+          notify: true
+        },
         loadrequest: {
           notify: true
         },

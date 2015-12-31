@@ -55,7 +55,7 @@
 
       <paper-toolbar class="cardheader"><div class="headertitle">Badges</div></paper-toolbar>
         <template is="dom-repeat" items="{{badges}}">
-            <paper-card animatedShadow="true" elevation="1" id="badgecard" on-mouseover="raise" on-mouseout="lower">
+            <paper-card animatedShadow="true" elevation="1" id="badgecard">
               <paper-icon-button icon="{{item.image}}" style="color: blue"></paper-icon-button>
               <paper-tooltip position="top" offset="-5" delay="0">{{item.name}}</paper-tooltip>
               <div>{{item.name}}</div>
@@ -87,13 +87,6 @@
         } catch (e) {
           return [];
         }
-      },
-      raise: function(){
-        console.log('raise');
-      },
-
-      lower: function(){
-        console.log('lower')
       }
     });
   </script>

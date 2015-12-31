@@ -14,6 +14,7 @@
     </google-chart>
   </template>
   <script>
+
   Polymer({
     is: 'mjbe-updating-grid',
 
@@ -31,11 +32,8 @@
     },
     drawChart: function(data) {
       var chart = document.getElementById('mutating_chart');
-      chart.rows = data;/*[
-        ["Col1", 5],
-        ["Col2", 5],
-        ["Col3", 5]
-      ];*/
+      console.log('this is drawchart firing');
+      chart.rows = data;
     },
     parse: function(json) {
       try {
@@ -55,7 +53,6 @@
       }
       this.drawChart(data);
     }
-
   });
   </script>
 </dom-module>
