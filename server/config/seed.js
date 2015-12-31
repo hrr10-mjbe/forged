@@ -133,7 +133,7 @@ var multiplication4 = new Skill({
 });
 
 var division1 = new Skill({
-  name: 'Division by 0 or 1',
+  name: 'Division by 1',
   problemGenId: 4
 });
 
