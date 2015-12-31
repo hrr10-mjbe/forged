@@ -123,7 +123,7 @@ angular.module('hrr10MjbeApp')
         individualMod = $scope.individualMod;
         console.log('changing individual');
         var theMod = JSON.parse(JSON.parse(individualMod));
-        i/*var theMod2 = JSON.parse(theMod);
+        /*var theMod2 = JSON.parse(theMod);
         console.log(theMod2.student);
         console.log($scope.activeClass);
         console.log(theMod);

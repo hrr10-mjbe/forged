@@ -181,6 +181,8 @@ angular.module('hrr10MjbeApp')
     this.getModifications = function(cb) {
       getUser(function(user) {
         if (user === null) return cb(defaultUser.studentData.modifications);
+        console.log('in getmod');
+        console.log(user.studentData.modifications);
         var ret = {
           showTimer: user.studentData.modifications.showTimer !== undefined ? user.studentData.modifications.showTimer : user.studentData.myClass.modifications.showTimer,
           showLeaderboard: user.studentData.modifications.showLeaderboard !== undefined ? user.studentData.modifications.showLeaderboard : user.studentData.myClass.modifications.showLeaderboard,
@@ -201,6 +203,8 @@ angular.module('hrr10MjbeApp')
     this.getLeaderboard = function(cb) {
       getUser(function(user) {
         if (!user) return cb(null);
+        console.log('getting leaderboard');
+        console.log(user.studentData);
         $http({
           method: 'GET',
           url: '/api/users/leaderboard'

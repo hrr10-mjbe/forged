@@ -169,7 +169,7 @@ angular.module('hrr10MjbeApp')
             modifications: mod
           }
         }).then(function(response) {
-          user.teacherData = response.teacherData;
+          user.teacherData = response.data.teacherData;
           cb();
         })
       })
