@@ -29,3 +29,7 @@
 body {
   font-family: 'Roboto', sans-serif;
 }
+
+pie-status {
+  background-color: #444;
+}

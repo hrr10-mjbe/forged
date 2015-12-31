@@ -1,9 +1,27 @@
 'use strict';
 
 angular.module('hrr10MjbeApp')
-  .controller('ProfileCtrl', function($scope, Student) {
+  .controller('ProfileCtrl', function($scope, $state, Student, Skills) {
     $scope.message = 'Hello';
     $scope.accepted = 'false';
+
+    Skills.getSkills(function(skills) {
+      $scope.skills = skills;
+      $scope.skillsData = JSON.stringify(skills);
+      console.log(skills);
+      //Student.addOrUpdateSkill(skills[0]._id, 4);
+      //Student.awardBadges();
+      //console.log(skills);
+    });
+
+    Student.getSkills(function(skills) {
+      $scope.studentSkills = skills;
+      $scope.studentSkillsData = JSON.stringify(skills);
+      console.log(skills);
+      //Student.addOrUpdateSkill(skills[0]._id, 4);
+      //Student.awardBadges();
+      //console.log(skills);
+    });
 
     Student.getRequests(function(requests) {
       $scope.request = requests[0];
@@ -23,7 +41,16 @@ angular.module('hrr10MjbeApp')
       $scope.name = name;
     })
 
+    $scope.go = function(){
+      $state.go('s', {
+        id: $scope.userselection
+      });
+    }
+
     $scope.polymerChange = function() {
+      if ($scope.userselection) {
+        $scope.go();
+      }
       if ($scope.accepted === 'true') {
         console.log('accepting');
         Student.acceptRequest(JSON.parse($scope.request), function(res) {
