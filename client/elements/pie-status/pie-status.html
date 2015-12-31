@@ -211,8 +211,15 @@
     },
 
     hoverselect: function(e) {
+      var completedSkills = [];
+      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
       this.hoverselection = e.target.getAttribute('data-name');
-      this.hoverbackground = this.fadeDown(e.target.getAttribute('data-color'));
+
+      if(completedSkills.indexOf(e.target.getAttribute('data-custom')) >= 0) {
+        this.hoverbackground = "#FFCC00";
+      } else {
+        this.hoverbackground = this.fadeDown(e.target.getAttribute('data-color'));
+      }
       e.target.setAttribute('elevation', 5);
       // document.getElementById(this.hoverselection).style.color = '#EFEFEF';
     },

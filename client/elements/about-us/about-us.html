@@ -1,29 +1,209 @@
 <dom-module id="about-us">
   <template>
+  <style>
+    :host {
+    display: block;
+    background: #444;
+    }
+    paper-tabs {
+      background-color: #FF9500;
+    }
+    paper-card {
+      margin: 25px;
+      max-width: 60%;
+      position: float;
+      background-color: rgba(255,204,0,.7);
+      padding: 30px;
+      left: 18%
+    }
+    .photo {
+      position: absolute;
+      background-image: url('about-us.jpg');
+      background-size: 100%;
+      height: calc(100% - 48px);
+      width: 100%;
+    }
+    .quote {
+      background-color: rgba(0,0,0,0);
+      font-size: 25px;
+      margin: 0;
+      padding: 0 30px;
+      color: rgba(255,255,255,.8);
+      text-align: right;
+      width: 50%;
+      left: 30%;
+    }
+    .quotetext {
+      top: 0;
+    }
+    .square {
+      max-width: 150px;
+      max-height: 150px;
+      background: none;
+      margin: 10px;
+      left: 2.5%;
+    }
+     .circle {
+      display: inline-block;
+      box-sizing: border-box;
+      min-width: 200px;
+      min-height: 200px;
+      margin: 16px;
+      border-radius: 50%;
+      background: var(--color-one);
+      background-size: 200px;
+      background-position: center;
+    }
+    .circle:hover {
+      opacity: 1;
+      transition: opacity .5s ease;
+    }
+    .eric {
+      background-image: url('https://avatars3.githubusercontent.com/u/13326548?v=3&s=460');
+      opacity: .5;
+    }
+    .jeff {
+      background-image: url('https://avatars3.githubusercontent.com/u/12756546?v=3&s=460');
+      opacity: .5;
+    }
+    .mike {
+      background-image: url('https://avatars0.githubusercontent.com/u/12353798?v=3&s=400');
+      opacity: .5;
+    }
+    .ben {
+      background-image: url('https://avatars1.githubusercontent.com/u/13758563?v=3&s=460');
+      opacity: .5;
+    }
+    .descriptionmike {
+      visibility: hidden;
+      color: #EEE4FF;
+      bottom: 20px;
+      left: 30px;
+      position: absolute;
+      font-size: 25px;
+      text-shadow:
+      -1px -1px 0 #566AFF,
+      1px -1px 0 #566AFF,
+      -1px 1px 0 #566AFF,
+      1px 1px 0 #566AFF; 
+    }
+    .mike:hover .descriptionmike {
+      visibility: visible;
+    }
+    .descriptioneric {
+      visibility: hidden;
+      color: #EEE4FF;
+      bottom: 30px;
+      left: 25px;
+      position: absolute;
+      font-size: 22px;
+      text-shadow:
+      -1px -1px 0 #566AFF,
+      1px -1px 0 #566AFF,
+      -1px 1px 0 #566AFF,
+      1px 1px 0 #566AFF; 
+    }
+    .ben:hover .descriptionben {
+      visibility: visible;
+    }
+    .descriptionben {
+      visibility: hidden;
+      color: #EEE4FF;
+      bottom: 20px;
+      left: 34px;
+      position: absolute;
+      font-size: 25px;
+      text-shadow:
+      -1px -1px 0 #566AFF,
+      1px -1px 0 #566AFF,
+      -1px 1px 0 #566AFF,
+      1px 1px 0 #566AFF; 
+    }
+    .jeff:hover .descriptionjeff {
+      visibility: visible;
+    }
+    .descriptionjeff {
+      visibility: hidden;
+      color: #EEE4FF;
+      bottom: 20px;
+      left: 30px;
+      position: absolute;
+      font-size: 25px;
+      text-shadow:
+      -1px -1px 0 #566AFF,
+      1px -1px 0 #566AFF,
+      -1px 1px 0 #566AFF,
+      1px 1px 0 #566AFF; 
+    }
+    .eric:hover .descriptioneric {
+      visibility: visible;
+    }
+  </style>
+
     <paper-tabs selected="{{selected}}">
       <paper-tab>Our Vision</paper-tab>
-      <paper-tab>About Us</paper-tab>
-      <paper-tab>Contact</paper-tab>
+      <paper-tab>The Team</paper-tab>
+      <paper-tab>How We Built It</paper-tab>
     </paper-tabs>
   
     <iron-pages selected="{{selected}}">
       <div>
+<!--         <paper-card class="photo" image=http://wscreenwallpapers.com/wp-content/uploads/2015/04/New-York-City-Sunrise-Wallpaper.jpg>
+        </paper-card> -->
+          <div class="photo"></div>
+        <paper-card heading="Crafted in New York">
+          <div class="card-content">Project ForgED is the result of teaching experience based on two principles. <br><br> 1) Learning should be fun. <br><br> 2) Learning is NOT the same for every student. <br><br> Our industrialized school system is based on factory principles and the relentless molding of students into one shape, outliers cast aside or forgotten. It's not working. <br><br> Ask any teacher, parent, or guardian: What's different about your child(ren)? You'll certainly get an answer. Students are unique. Everyone is unique. The tools to forge each student and to ignite their passion for learning are dramatically varied. Far beyond aptitude, behavior and determination play huge roles in the classroom and at home. <br><br> Through world class, cutting-edge technology, forgED provides students with the opportunity to thrive, grow, and ignite their passion, on an individualized and completely personal level.</div>
+        </paper-card>
         
+        <paper-card class="quote">
+        <span><i><b>For the mind does not require filling like a bottle, but rather, like wood, it only requires kindling to create in it an impulse to think independently and an ardent desire for the truth.</b></i>
+        <br> - Plutarch</span>
+        </paper-card>
+
       </div>
       
       <div>
+          
+        <a href="https://github.com/mlee0330"><paper-card class="circle mike">
+          <span class="descriptionmike">Michael Lee</span>
+        </paper-card></a>
+        <a href="https://github.com/erichollenberry"><paper-card class="circle eric">
+          <span class="descriptioneric">Eric Hollenberry</span>
+        </paper-card></a>
+        <a href="https://github.com/jeffcousins"><paper-card class="circle jeff">
+          <span class="descriptionjeff">Jeff Cousins</span>
+        </paper-card></a>
+        <a href="https://github.com/bpochily"><paper-card class="circle ben">
+          <span class="descriptionben">Ben Pochily</span>
+        </paper-card></a>
+
           <template is="dom-bind" id="t">
-            <google-map map="{{map}}" latitude="38.6" longitude="-100" zoom="4" style="height:600px"
+            <google-map map="{{map}}" latitude="28.6" longitude="-100" zoom="4" style="height:600px"
             styles='[{"stylers":[{"saturation":-85}]},{"featureType":"water","stylers":[{"lightness":-20}]}]'
             on-zoom-changed="setPointSize" on-google-map-ready="setPointSize">
             </google-map>
             <point-overlay map="[[map]]" uniforms="{{uniforms}}" data='[{"lat": 34.05227, "lng": -118.243474}, 
-              {"lat": 32.7157205, "lng": -117.1609371}, {"lat": 30.396105, "lng": -88.8855034}, {"lat": 42.09867, "lng": -75.9180003}]'>
+              {"lat": 32.7157205, "lng": -117.1609371}, {"lat": 30.396105, "lng": -88.8855034}, {"lat": 42.09867, "lng": -75.918FFF3}]'>
             </point-overlay>
           </template>
       </div>
       
-      <div>Three</div>
+      <div>
+        <paper-card class="square" image="https://www.polymer-project.org/images/logos/lockup.svg"></paper-card>
+        <paper-card class="square" image="https://angularjs.org/img/AngularJS-large.png"></paper-card>
+        <paper-card class="square" image="https://www.mongodb.com/assets/global/mongodb-logo-web-tagline-b2622b08d239fca84b1787bb211115e264a3629b9e99f1bb46ff1b092877b03c.png"></paper-card>
+        <paper-card class="square" image="https://nodejs.org/static/images/logo.svg"></paper-card>
+        <paper-card class="square" image="http://yeoman.io/static/logo.f0661e3819.png"></paper-card>
+        <paper-card class="square" image="https://i.cloudup.com/zfY6lL7eFa-3FFFx3FFF.png"></paper-card>
+        <paper-card class="square" image="https://www.npmjs.com/static/images/npm-logo.svg"></paper-card>
+        <paper-card class="square" image="https://avatars2.githubusercontent.com/u/1630826?v=3&s=200"></paper-card>
+        <paper-card class="square" image="http://bower.io/img/bower-logo.png"></paper-card>
+        <paper-card class="square" image="https://assets-cdn.github.com/images/modules/contact/heartocat.png"></paper-card>
+        <paper-card class="square" image="https://cldup.com/0286W-2y27.png"></paper-card>
+        <paper-card class="square" image="https://circleci.com/outer/assets/img/logo-circleci.svg"></paper-card>
+        <paper-card class="square" image="https://avatars1.githubusercontent.com/u/23211?v=3&s=200"></paper-card>
+      </div>
+
     </iron-pages>
   </template>
 
