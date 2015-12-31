@@ -157,6 +157,8 @@ angular.module('hrr10MjbeApp')
 
     this.setIndividualModifications = function(classId, studentId, mod, cb) {
       this.getStudent(classId, studentId, function(student) {
+        console.log('setting mods on student')
+        console.log(studentId);
         $http({
           method: 'PUT',
           url: '/api/users/updatestudentmod',

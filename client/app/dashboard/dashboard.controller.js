@@ -123,6 +123,7 @@ angular.module('hrr10MjbeApp')
         individualMod = $scope.individualMod;
         console.log('changing individual');
         var theMod = JSON.parse(individualMod);
+        console.log(theMod);
         Teacher.setIndividualModifications($scope.activeClass, theMod.student, theMod, function() {
           $scope.refresh();
         });

@@ -290,9 +290,11 @@
         this.modification = JSON.stringify({
           student: this.openModalStudent,
           showTimer: this.translateRadioName(this.timerSelected),
-          showWhiteboard: this.translateRadioName(this.showWhiteboard),
-          showLeaderboard: this.translateRadioName(this.showLeaderboard)
+          showWhiteboard: this.translateRadioName(this.whiteboardSelected),
+          showLeaderboard: this.translateRadioName(this.leaderboardSelected)
         });
+        console.log('mod in polymer');
+        console.log(this.modification);
         this.$.modDialog.close();
       },
 
