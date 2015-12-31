@@ -1,5 +1,66 @@
 <dom-module id="about-us">
   <template>
+  <style>
+    :host {
+    display: block;
+    background: #444;
+    }
+    paper-tabs {
+      background-color: #FF9500;
+    }
+    paper-card {
+      margin: 25px;
+      max-width: 60%;
+      position: float;
+      background-color: rgba(255,204,0,.7);
+      padding: 30px;
+      left: 18%
+    }
+    .photo {
+      position: absolute;
+      background-image: url('about-us.jpg');
+      background-size: 100%;
+      height: calc(100% - 48px);
+      width: 100%;
+    }
+    .quote {
+      background-color: rgba(0,0,0,0);
+      font-size: 25px;
+      margin: 0;
+      padding: 0 30px;
+      color: rgba(255,255,255,.8);
+      text-align: right;
+      width: 50%;
+      left: 30%;
+    }
+    .quotetext {
+      top: 0;
+    }
+     .circle {
+      display: inline-block;
+      box-sizing: border-box;
+      min-width: 200px;
+      min-height: 200px;
+      margin: 16px;
+      border-radius: 50%;
+      background: var(--color-one);
+      background-size: 200px;
+      background-position: center;
+    }
+    .eric {
+      background-image: url('https://avatars3.githubusercontent.com/u/13326548?v=3&s=460');
+    }
+    .jeff {
+      background-image: url('https://avatars3.githubusercontent.com/u/12756546?v=3&s=460');
+    }
+    .mike {
+      background-image: url('https://avatars0.githubusercontent.com/u/12353798?v=3&s=400');
+    }
+    .ben {
+      background-image: url('https://avatars1.githubusercontent.com/u/13758563?v=3&s=460');
+    }
+  </style>
+
     <paper-tabs selected="{{selected}}">
       <paper-tab>Our Vision</paper-tab>
       <paper-tab>About Us</paper-tab>
@@ -8,12 +69,29 @@
   
     <iron-pages selected="{{selected}}">
       <div>
+<!--         <paper-card class="photo" image=http://wscreenwallpapers.com/wp-content/uploads/2015/04/New-York-City-Sunrise-Wallpaper.jpg>
+        </paper-card> -->
+          <div class="photo"></div>
+        <paper-card heading="Crafted in New York">
+          <div class="card-content">Project ForgED is the result of teaching experience based on two principles. <br><br> 1) Learning should be fun. <br><br> 2) Learning is NOT the same for every student. <br><br> Our industrialized school system is based on factory principles and the relentless molding of students into one shape, outliers cast aside or forgotten. It's not working. <br><br> Ask any teacher, parent, or guardian: What's different about your child(ren)? You'll certainly get an answer. Students are unique. Everyone is unique. The tools to forge each student and to ignite their passion for learning are dramatically varied. Far beyond aptitude, behavior and determination play huge roles in the classroom and at home. <br><br> Through world class, cutting-edge technology, forgED provides students with the opportunity to thrive, grow, and ignite their passion, on an individualized and completely personal level.</div>
+        </paper-card>
         
+        <paper-card class="quote">
+        <span><i><b>For the mind does not require filling like a bottle, but rather, like wood, it only requires kindling to create in it an impulse to think independently and an ardent desire for the truth.</b></i>
+        <br> - Plutarch</span>
+        </paper-card>
+
       </div>
       
       <div>
+          
+        <a href="https://github.com/mlee0330"><paper-card class="circle mike"></paper-card></a>
+        <a href="https://github.com/erichollenberry"><paper-card class="circle eric"></paper-card></a>
+        <a href="https://github.com/jeffcousins"><paper-card class="circle jeff"></paper-card></a>
+        <a href="https://github.com/bpochily"><paper-card class="circle ben"></paper-card></a>
+
           <template is="dom-bind" id="t">
-            <google-map map="{{map}}" latitude="38.6" longitude="-100" zoom="4" style="height:600px"
+            <google-map map="{{map}}" latitude="58.6" longitude="-100" zoom="4" style="height:600px"
             styles='[{"stylers":[{"saturation":-85}]},{"featureType":"water","stylers":[{"lightness":-20}]}]'
             on-zoom-changed="setPointSize" on-google-map-ready="setPointSize">
             </google-map>
