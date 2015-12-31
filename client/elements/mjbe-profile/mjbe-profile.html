@@ -86,7 +86,7 @@
         </paper-material>
 
         <paper-material elevation="1" style="background-color: #4CD964" class="really-tall-box">
-          
+          <mjbe-profile-pie userselection="{{userselection}}" loadskills="{{loadskills}}"  loadstudentskills="{{loadstudentskills}}"></mjbe-profile-pie>
         </paper-material>
 
       </div>
@@ -160,6 +160,19 @@
           notify: true
         },
 
+        userselection: {
+          notify: true,
+          observer: 'userselect'
+        },
+
+        loadskills: {
+          notify: true
+        },
+
+        loadstudentskills: {
+          notify: true
+        },
+
         animationConfig: {
           type: Object,
           value: function() {
@@ -183,6 +196,10 @@
             }
           }
         }
+      },
+
+      userselect: function() {
+        console.log(this.userselection, 'this is the observer');
       },
     
       attached: function() {

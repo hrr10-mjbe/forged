@@ -46,7 +46,6 @@
           type="email"
           error-message="Please enter your email address."
           required
-          autofocus
           >
         </paper-input>
         <paper-input
@@ -80,6 +79,13 @@
   <script>
     Polymer({
       is: 'auth-card',
+      attached: function() {
+        if (this.header == 'Sign Up') {
+          this.$.nameInput.focus();
+        } else {
+          this.$.emailInput.focus();
+        }
+      },
       properties: {
         header: {
           type: String
@@ -151,8 +157,6 @@
           this.$.errortoast.show();
         } else {
           this.usertype = this.$.radio.selected;
-          console.log('name in polymer');
-          console.log(this.name);
           this.signup = 'true';
           if (this.errormessage !== '' && this.errormessage !== '{{vm.errormessage}}') {
             this.$.errortoast.show();
