@@ -6,6 +6,8 @@
         display: block;
         padding: 15px;
         background: #444;
+/*        height: calc(100% - 30px);
+        min-height: 730px;*/
       }
       paper-material {
         margin: 10px;
@@ -16,15 +18,18 @@
         min-width: 300px;
       }
       .short-box {
-        height: 100px;
+        overflow: auto;
       }
       .tall-box {
         height: 300px;
       }
       .square-box {
-        height: 150px;
+        height: 175px;
       }
-      .really-tall-box {
+      .quote-box {
+        height: 125px;
+      }
+      .d3box {
         height: 490px;
       }
       .namebox {
@@ -39,9 +44,22 @@
         background: #FFCC00;
         text-align: center;
       }
+      .timerholder {
+        margin: 0 auto;
+      }
+      .pointstext {
+        color: white;
+        margin: 0;
+        padding: 0;
+        font-size: 120px;
+        text-align: right;
+      }
       paper-button {
         background: white;
         color: #007AFF;
+      }
+      .second {
+        min-width: 420px;
       }
     </style>
     
@@ -61,26 +79,50 @@
 
       <!-- first column -->
       <div class="box tile flex layout vertical">
-
+        
+        <!-- NAME box -->
         <paper-material elevation="4" class="namebox">
           <h2>{{name}}</h2>
           <p>Member since {{joined}}</p>
         </paper-material>
-
+        
+        <!-- POINTS box -->
         <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <h3>Total points</h3>
-          <p>{{points}}</p>
+          <div class="horizontal layout start-justified self-start">
+            <h3>Total points</h3>
+          </div>
+          <div class="horizontal layout end-justified self-end">
+            <p class="pointstext">{{points}}</p>
+          </div>
         </paper-material>
 
-        <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box">
-          <mjbe-updating-grid loadtimes="{{loadtimes}}"></mjbe-updating-grid>
+        <!-- CALENDAR box -->
+        <paper-material elevation="1" style="background-color: #FF9500" class="tall-box">
+          <h3>Calendar?</h3>
+          <p>Member since April 1, 2017</p>
         </paper-material>
 
       </div>
 
       <!-- second column -->
-      <div class="box tile flex layout vertical">
+      <div class="tile flex layout vertical second">
+        
+        <!-- D3 box -->
+        <paper-material elevation="1" style="background-color: #4CD964" class="d3box">
+          <mjbe-profile-pie userselection="{{userselection}}" loadskills="{{loadskills}}"  loadstudentskills="{{loadstudentskills}}"></mjbe-profile-pie>
+        </paper-material>
 
+        <!-- QUOTE box -->
+        <paper-material elevation="1" style="background-color: #5AC8FA" class="quote-box">
+          <p>{{quote}}</p>
+        </paper-material>
+
+      </div>
+
+      <!-- third column -->
+      <div class="box tile layout vertical flex">
+
+        <!-- BADGE box -->
         <paper-material elevation="1" style="background-color: white" class="short-box" >
           <h3>Latest Badge</h3>
           <template is="dom-if" if="{{badge}}">
@@ -95,27 +137,19 @@
             </template>
         </paper-material>
 
-        <paper-material elevation="1" style="background-color: #4CD964" class="really-tall-box">
-          <mjbe-profile-pie userselection="{{userselection}}" loadskills="{{loadskills}}"  loadstudentskills="{{loadstudentskills}}"></mjbe-profile-pie>
+        <!-- TODAY'S TIME box -->
+        <paper-material elevation="1" style="background-color: #00ECB9" class="short-box">
+            <h3>Time worked today</h3>
+          <div class="timerholder flex horizontal layout center-justified">
+            <mjbe-timer minutes="{{minutes}}" seconds="{{seconds}}"></mjbe-timer>
+          </div>
         </paper-material>
 
-      </div>
-
-      <!-- third column -->
-      <div class="box tile layout vertical flex">
-
-        <paper-material elevation="1" style="background-color: white" class="short-box" >
-          <h3>Time worked today</h3><mjbe-timer minutes="{{minutes}}" seconds="{{seconds}}"></mjbe-timer>
-        </paper-material>
-
-        <paper-material elevation="1" style="background-color: #FF9500" class="tall-box">
-          <h3>Calendar?</h3>
-          <p>Member since April 1, 2017</p>
+        <!-- BAR GRAPH box -->
+        <paper-material elevation="1" style="background-color: #FF2D55" class="tall-box">
+          <mjbe-updating-grid loadtimes="{{loadtimes}}"></mjbe-updating-grid>
         </paper-material>
         
-        <paper-material elevation="1" style="background-color: #5AC8FA" class="square-box">
-          <p>{{quote}}</p>
-        </paper-material>
       </div>
     </div>
 <!--     <div class="bar horizontal layout around-justified wrap tile">
