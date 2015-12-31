@@ -45,7 +45,6 @@
       padding: 20px;
       background-color: white;
       border: 1px solid #ddd;
-      cursor: pointer;
       margin-bottom: 10px;
     }
     
@@ -82,8 +81,12 @@
       color: gray;
       display: none;
     }
+
+    .item:hover {
+      background-color: #F7F7F7;
+    }
     
-    .item:hover .shortText::after {
+/*    .item:hover .shortText::after {
       content: ' [+]';
       color: gray;
     }
@@ -98,7 +101,7 @@
     
     .item.expanded:hover .longText::after {
       content: ' [–]';
-    }
+    }*/
     
     .spacer {
       @apply(--layout-flex);
@@ -109,20 +112,62 @@
         font-size: 14px;
       }
     }
+    .modText {
+      font-size: 12px;
+    }
+    paper-checkbox.mod {
+      --paper-checkbox-checked-color: #4CD964;
+      --paper-checkbox-checked-ink-color: #4CD964;
+      color: red;
+    }
     </style>
-    <!--<iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>-->
+
     <paper-toolbar>
-      <paper-icon-button icon="add" alt="Add student" on-tap="inviteModal"></paper-icon-button>
-      <!--<div class="spacer"></div>-->
-      <!--<paper-icon-button icon="search" alt="Search"></paper-icon-button>
-      <paper-icon-button icon="image:view-comfy" alt="Grid view"></paper-icon-button>-->
-      <!--<div class="bottom title">{{name}}</div>-->
+      <div>
+        <paper-icon-button icon="add" alt="Add student" on-tap="inviteModal"></paper-icon-button>
+      </div>
+      <div>
+        <template is="dom-if" if="{{!modsOpened}}">
+          <paper-tab on-tap="toggleEdit" style="margin-left: 75px;">Edit</paper-tab>
+        </template>
+        <template is="dom-if" if="{{modsOpened}}">
+          <paper-tab on-tap="toggleEdit" style="margin-left: 75px;">Cancel</paper-tab>
+          <paper-tab style="margin-left: 75px;">Save</paper-tab>
+        </template>
+      </div>
     </paper-toolbar>
+
     <iron-list id="list" items="[[items]]" as="item">
       <template>
+        <div class$="[[getClassForItem(item, item.expanded)]]" tabindex="0">
+          <div class="horizontal justified layout flex">
+            <div class="horizontal layout">
+              <div class="self-center">
+                <iron-icon icon="face"></iron-icon>
+              </div>
+              <div class="pad self-center">
+                <div class="primary">[[item.name]] [[item.pending]]
+                  <template is="dom-if" if="{{isPending(item)}}">
+                    (Invitation pending)
+                  </template>
+                </div>
+                <div class="shortText">[[item.email]]</div>
+                <div class="longText">Skills: [[item.studentData.skills.length]]</div>
+              </div>
+            </div>
+            <div class="self-center">
+              <template is="dom-if" if="{{modsOpened}}">
+                <span class="modText">Timer: </span><paper-checkbox class="mod"></paper-checkbox>
+                <span class="modText">Leaderboard: </span><paper-checkbox class="mod"></paper-checkbox>
+                <span class="modText">Whiteboard: </span><paper-checkbox class="mod"></paper-checkbox>
+              </template>
+            </div>
+          </div>
+        </div>
+      </template>
+      <!-- <template>
         <div on-tap="_collapseExpand">
           <div class$="[[getClassForItem(item, item.expanded)]]" tabindex="0">
-            <!--<img class="avatar" src="[[item.image]]">-->
             <iron-icon icon="accessibility"></iron-icon>
             <div class="pad">
               <div class="primary">[[item.name]] [[item.pending]]
@@ -131,13 +176,14 @@
                 </template>
               </div>
               <div class="shortText">[[item.email]]</div>
-              <div class="longText">We should put some stuff here</div>
+              <div class="longText">Skills: [[item.studentData.skills.length]]</div>
             </div>
-            <!--<iron-icon icon$="[[iconForItem(item)]]"></iron-icon>-->
           </div>
         </div>
-      </template>
+      </template> -->
+
     </iron-list>
+
     <!--modal to invite new students-->
     <paper-dialog id="inviteDialog" modal entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <paper-input label="Student email" value="{{email::input}}" type="text" autofocus></paper-input>
@@ -180,7 +226,16 @@
         //class currently being viewed
         activeclass: {
           notify: true
+        },
+
+        modsOpened: {
+          notify: true,
+          value: false
         }
+      },
+
+      toggleEdit: function() {
+        this.modsOpened = !this.modsOpened;
       },
 
       _collapseExpand: function(e) {
@@ -197,11 +252,16 @@
 
       //converts raw string into real data and sets it up for the collapse list
       parseData: function(data) {
+        console.log('---inside parseData---')
+        console.log('string data (from Angular?):')
+        console.log(data)
         try {
         var result = JSON.parse(data);
         for (var i = 0; i < result.length; i++) {
           result[i].expanded = false;
         }
+        console.log('---parsed data---')
+        console.log(result)
         return result;
       } catch (e) {}
       },
