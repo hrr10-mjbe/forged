@@ -13,8 +13,6 @@ angular.module('hrr10MjbeApp')
         method: 'GET',
         url: '/api/skilltree/' + root
       }).then(function(res) {
-        console.log('in skilltree');
-        console.log(res.data);
         tree[root] = res.data;
         cb(tree[root]);
       })
@@ -28,8 +26,6 @@ angular.module('hrr10MjbeApp')
           method: 'GET',
           url: '/api/skills'
         }).then(function(res) {
-          console.log('in skills');
-          console.log(res.data);
           skills = res.data;
           cb(skills);
         })

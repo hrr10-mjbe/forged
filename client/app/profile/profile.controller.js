@@ -8,28 +8,18 @@ angular.module('hrr10MjbeApp')
     Skills.getSkills(function(skills) {
       $scope.skills = skills;
       $scope.skillsData = JSON.stringify(skills);
-      console.log(skills);
-      //Student.addOrUpdateSkill(skills[0]._id, 4);
-      //Student.awardBadges();
-      //console.log(skills);
     });
 
     Student.getSkills(function(skills) {
       $scope.studentSkills = skills;
       $scope.studentSkillsData = JSON.stringify(skills);
-      console.log(skills);
-      //Student.addOrUpdateSkill(skills[0]._id, 4);
-      //Student.awardBadges();
-      //console.log(skills);
     });
 
     Student.getRequests(function(requests) {
       $scope.request = requests[0];
-      console.log(requests);
     });
 
     Student.getTeacher(function(teacher) {
-      console.log(teacher);
       $scope.teacher = teacher;
     })
 
@@ -41,12 +31,6 @@ angular.module('hrr10MjbeApp')
       $scope.name = name;
     })
 
-    $scope.go = function(){
-      $state.go('s', {
-        id: $scope.userselection
-      });
-    }
-
     Student.getPoints(function(points) {
       $scope.points = points;
     })
@@ -56,17 +40,20 @@ angular.module('hrr10MjbeApp')
     })
 
     Student.getTimes(function(times) {
-      console.log('times');
-      console.log(times);
       $scope.times = JSON.stringify(times);
     })
+
+    $scope.go = function() {
+      $state.go('s', {
+        id: $scope.userselection
+      });
+    }
 
     $scope.polymerChange = function() {
       if ($scope.userselection) {
         $scope.go();
       }
       if ($scope.accepted === 'true') {
-        console.log('accepting');
         Student.acceptRequest(JSON.parse($scope.request), function(res) {
           $scope.request = null;
         });
