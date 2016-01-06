@@ -110,7 +110,7 @@
       }
     }
     </style>
-    <!--<iron-ajax url="contacts.json" last-response="{{items}}" auto></iron-ajax>-->
+
     <paper-toolbar>
       <paper-icon-button icon="add" alt="Add student" on-tap="inviteModal"></paper-icon-button>
       <!--<div class="spacer"></div>-->
@@ -258,8 +258,6 @@
           for (var i = 0; i < result.length; i++) {
             result[i].expanded = false;
           }
-          console.log('students');
-          console.log(result);
           return result;
         } catch (e) {}
       },
@@ -281,7 +279,6 @@
 
       openMod: function(e) {
         this.openModalStudent = e.model.item._id;
-        console.log(e.model.item);
         this.timerSelected = this.getRadioName(e.model.item.studentData.modifications.showTimer);
         this.whiteboardSelected = this.getRadioName(e.model.item.studentData.modifications.showWhiteboard);
         this.leaderboardSelected = this.getRadioName(e.model.item.studentData.modifications.showLeaderboard);
@@ -295,8 +292,6 @@
           showWhiteboard: this.translateRadioName(this.whiteboardSelected),
           showLeaderboard: this.translateRadioName(this.leaderboardSelected)
         });
-        console.log('mod in polymer');
-        console.log(this.modification);
         this.$.modDialog.close();
       },
 

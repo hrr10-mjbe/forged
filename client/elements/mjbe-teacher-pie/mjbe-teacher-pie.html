@@ -71,7 +71,6 @@
       }
     },
     attached: function() {
-      console.log('inside attached')
       var container = document.querySelector('figure#chart-container');
       var attrs = {
           'id': 'col-chart',
@@ -93,7 +92,6 @@
 
     parseStudents: function(loadstudents) {
       try {
-        console.log(loadstudents, 'this is loadstudents');
         return JSON.parse(loadstudents);
       } catch (e) {}
     },

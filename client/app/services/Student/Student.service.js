@@ -5,8 +5,6 @@ angular.module('hrr10MjbeApp')
     var user;
     var defaultUser;
 
-    //TODO indexOf _id helper method
-
     var getUser = function(cb) {
       if (user) return cb(user);
       Auth.isLoggedIn(function(is) {
@@ -22,7 +20,6 @@ angular.module('hrr10MjbeApp')
             url: '/api/defaultuser'
           }).then(function(res) {
             defaultUser = res.data;
-            console.log(defaultUser);
             cb(null);
           })
         }
@@ -32,20 +29,16 @@ angular.module('hrr10MjbeApp')
     var save = function(cb) {
       getUser(function(student) {
         student.$update({}, function(res) {
-          console.log('Saved and got: ');
-          console.log(res.studentData);
           user.studentData = res.studentData;
           Util.safeCb(cb)();
         }, function(err) {
-          Util.safeCb(cb)();
           console.log(err);
+          Util.safeCb(cb)();
         })
       })
     }
 
     this.acceptRequest = function(req, cb) {
-      console.log('accepting');
-      console.log(req);
       $http({
         method: 'POST',
         url: '/api/users/accept',
@@ -70,8 +63,6 @@ angular.module('hrr10MjbeApp')
 
     this.getSkills = function(cb) {
       getUser(function(user) {
-        console.log('skills');
-        console.log(user);
         cb(user === null ? [] : user.studentData.skills);
       })
     }
@@ -81,15 +72,12 @@ angular.module('hrr10MjbeApp')
         getUser(function(user) {
           if (!user) return;
           Skills.getSkill(skillId, function(skill) {
-            console.log('found skill');
             for (var i = 0; i < user.studentData.skills.length; i++) {
               if (user.studentData.skills[i].skill._id === skillId) {
-                console.log('has skill');
                 user.studentData.skills[i].status = status;
                 return save(cb);
               }
             }
-            console.log('pushing skill');
             user.studentData.skills.push({
               skill: skill,
               status: status
@@ -102,9 +90,6 @@ angular.module('hrr10MjbeApp')
 
     this.getSkillRoot = function(cb) {
       getUser(function(user) {
-        //what to do here
-        console.log('getting skill root');
-        console.log(user.studentData.skillRoot);
         cb(user.studentData.skillRoot);
       })
     }
@@ -161,7 +146,6 @@ angular.module('hrr10MjbeApp')
 
     this.getBadges = function(cb) {
       getUser(function(user) {
-        console.log(user);
         cb(user === null ? [] : user.studentData.badges);
       })
     }
@@ -181,12 +165,10 @@ angular.module('hrr10MjbeApp')
     this.getModifications = function(cb) {
       getUser(function(user) {
         if (user === null) return cb(defaultUser.studentData.modifications);
-        console.log('in getmod');
-        console.log(user.studentData);
         var ret = {
-          showTimer: user.studentData.modifications.showTimer !== undefined ? user.studentData.modifications.showTimer : user.studentData.myClass.modifications.showTimer,
-          showLeaderboard: user.studentData.modifications.showLeaderboard !== undefined ? user.studentData.modifications.showLeaderboard : user.studentData.myClass.modifications.showLeaderboard,
-          showWhiteboard: user.studentData.modifications.showWhiteboard !== undefined ? user.studentData.modifications.showWhiteboard : user.studentData.myClass.modifications.showWhiteboard
+          showTimer: user.studentData.modifications.showTimer !== undefined ? user.studentData.modifications.showTimer : (user.studentData.myClass ? user.studentData.myClass.modifications.showTimer : true),
+          showLeaderboard: user.studentData.modifications.showLeaderboard !== undefined ? user.studentData.modifications.showLeaderboard : (user.studentData.myClass ? user.studentData.myClass.modifications.showLeaderboard : false),
+          showWhiteboard: user.studentData.modifications.showWhiteboard !== undefined ? user.studentData.modifications.showWhiteboard : (user.studentData.myClass ? user.studentData.myClass.modifications.showWhiteboard : true)
         }
         cb(ret);
       });
@@ -203,8 +185,6 @@ angular.module('hrr10MjbeApp')
     this.getLeaderboard = function(cb) {
       getUser(function(user) {
         if (!user) return cb(null);
-        console.log('getting leaderboard');
-        console.log(user.studentData);
         $http({
           method: 'GET',
           url: '/api/users/leaderboard'
@@ -218,6 +198,9 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         if (!user) return cb(0);
         var time = Date.now();
+        if (!user.studentData.times) {
+          user.studentData.times = {};
+        }
         cb(user.studentData.times[time - time % (24 * 60 * 60 * 1000)] || 0);
       })
     }

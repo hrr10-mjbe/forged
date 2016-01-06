@@ -11,10 +11,6 @@
       Skills.getSkills(function(skills) {
         this.skills = skills;
         this.skillsData = JSON.stringify(skills);
-        console.log(skills);
-        //Student.addOrUpdateSkill(skills[0]._id, 4);
-        //Student.awardBadges();
-        //console.log(skills);
       }.bind(this));
       this.awesomeThings = [];
 
@@ -22,33 +18,16 @@
         this.awesomeThings = response.data;
       });
 
-      Student.getSkillRoot(function(root) {
+      /*Student.getSkillRoot(function(root) {
         Skills.getSkillTree(root, function(tree) {
           this.treeData = tree;
         }.bind(this));
-      }.bind(this));
+      }.bind(this));*/
 
       Student.getSkills(function(skills) {
         this.studentSkills = skills;
         this.studentSkillsData = JSON.stringify(skills);
-        console.log(skills);
-        //Student.addOrUpdateSkill(skills[0]._id, 4);
-        //Student.awardBadges();
-        //console.log(skills);
       }.bind(this));
-    }
-
-    addThing() {
-      if (this.newThing) {
-        this.$http.post('/api/things', {
-          name: this.newThing
-        });
-        this.newThing = '';
-      }
-    }
-
-    deleteThing(thing) {
-      this.$http.delete('/api/things/' + thing._id);
     }
 
     go() {

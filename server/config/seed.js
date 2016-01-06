@@ -119,10 +119,15 @@ User.find({}).removeAsync()
       type: 'student',
       email: 'jeff.cousins@example.com',
       password: 'test',
+      joined: 1451088000000,
       studentData: {
-        points: 10000000,
+        points: 100,
         times: {
-          nothing: 'h'
+          1451088000000: 60,
+          1451174400000: 120,
+          1451260800000: 60,
+          1451347200000: 25,
+          1451433600000: 75
         },
         modifications: {
           showTimer: true,
@@ -255,7 +260,7 @@ User.find({}).removeAsync()
       teacherData: {
         classes: [{
           name: 'Math 1',
-          students: [student1._id, student2._id, student3._id, student4._id, student5._id, student6._id, student7._id, student8._id, student9._id,]
+          students: [student1._id, student2._id, student3._id, student4._id, student5._id, student7._id, student8._id, student9._id,]
         }, {
           name: 'Math 2',
           students: [student10._id, student11._id, student12._idnt ]
@@ -280,7 +285,7 @@ User.find({}).removeAsync()
       student3.studentData.teacher = teacher;
       student4.studentData.teacher = teacher;
       student5.studentData.teacher = teacher;
-      student6.studentData.teacher = teacher;
+      //student6.studentData.teacher = teacher;
       student7.studentData.teacher = teacher;
       student8.studentData.teacher = teacher;
       student9.studentData.teacher = teacher;
@@ -293,7 +298,7 @@ User.find({}).removeAsync()
       student3.studentData.myClass._id = teacher.teacherData.classes[0]._id;
       student4.studentData.myClass._id = teacher.teacherData.classes[0]._id;
       student5.studentData.myClass._id = teacher.teacherData.classes[0]._id;
-      student6.studentData.myClass._id = teacher.teacherData.classes[0]._id;
+      //student6.studentData.myClass._id = teacher.teacherData.classes[0]._id;
       student7.studentData.myClass._id = teacher.teacherData.classes[0]._id;
       student8.studentData.myClass._id = teacher.teacherData.classes[0]._id;
       student9.studentData.myClass._id = teacher.teacherData.classes[0]._id;

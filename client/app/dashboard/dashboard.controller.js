@@ -85,7 +85,6 @@ angular.module('hrr10MjbeApp')
     }
 
     $scope.polymerChange = function() {
-      console.log('change');
       if (Number.parseInt($scope.addCount) > addCount) {
         $scope.submitClass();
         addCount++;
@@ -121,13 +120,7 @@ angular.module('hrr10MjbeApp')
 
       if (individualMod !== $scope.individualMod) {
         individualMod = $scope.individualMod;
-        console.log('changing individual');
         var theMod = JSON.parse(JSON.parse(individualMod));
-        /*var theMod2 = JSON.parse(theMod);
-        console.log(theMod2.student);
-        console.log($scope.activeClass);
-        console.log(theMod);
-        console.log(theMod['student']);*/
         Teacher.setIndividualModifications($scope.activeClass, theMod.student, theMod, function() {
           $scope.refresh();
         });
@@ -137,9 +130,7 @@ angular.module('hrr10MjbeApp')
     $scope.refresh();
 
     $rootScope.$on('$stateChangeSuccess', function(event, toState) {
-      console.log(toState);
       if (toState.url === '/dashboard') {
-        console.log('refreshing');
         $scope.refresh();
       }
     })
