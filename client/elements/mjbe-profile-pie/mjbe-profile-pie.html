@@ -11,72 +11,73 @@
       height: calc(100% - 30px);
       background-color: #333;
     }
+    
     .box {
       width: 500px;
       min-width: 300px;
     }
+    
     .square-box {
       height: 140px;
       width: 140px;
       cursor: pointer;
     }
-
+    
     #holder {
       position: relative;
       margin: 0 auto;
       background-color: #333;
     }
-
+    
     li {
       width: 50%;
       padding: 5px 20px;
     }
-
+    
     .piebox {
-        background: #333;
-        height: 350px;
-        width: 350px;
+      background: #333;
+      height: 350px;
+      width: 350px;
     }
-
+    
     paper-material {
       margin: 10px;
       padding: 10px;
     }
-
+    
     .toolbar-header {
       overflow: auto;
       color: black;
       transition: background-color 1.5s ease;
       padding: 0px;
     }
-
+    
     h3 {
       margin: 0px auto;
     }
-
+    
     .hovertitle {
       margin: auto;
     }
-
+    
     .profiletoolbar {
       transition: background-color 1.5s ease;
     }
-
+    
     .hovertitletext {
       color: black;
     }
-
+    
     .pieboxholder {
       background-color: #333;
     }
-
     </style>
     <paper-toolbar style$="background-color: [[hoverbackground]]" class="profiletoolbar">
       <div class="hovertitle"><span class="hovertitletext">{{hoverselection}}</span></div>
     </paper-toolbar>
     <div class="layout horizontal center-justified pieboxholder">
       <paper-material elevation="0" class="piebox">
-          <div id="holder"></div>
+        <div id="holder"></div>
       </paper-material>
     </div>
   </template>
@@ -147,7 +148,7 @@
       console.log(this.userselection, 'this is click handler');
       this.userselection = d.data._id;
     },
-   
+
     parseSkills: function(loadskills) {
       try {
         return JSON.parse(loadskills);
@@ -163,20 +164,20 @@
     fadeDown: function(currentcolor) {
       var rgb = currentcolor;
       rgb = rgb.replace(/[^\d,]/g, '').split(',');
-      if(rgb.length < 3) {
-        rgb = [0,0,0];
+      if (rgb.length < 3) {
+        rgb = [0, 0, 0];
       }
-      var transformed = rgb.map(function(val){
+      var transformed = rgb.map(function(val) {
         val = val || 0;
-          if(~~val < 100) {
-            return ~~val + 100;
-          } else if (~~val + 40 < 255) {
-            return ~~val + 70;
-          } else {
-            return 255;
-          }
+        if (~~val < 100) {
+          return ~~val + 100;
+        } else if (~~val + 40 < 255) {
+          return ~~val + 70;
+        } else {
+          return 255;
+        }
       })
-      return 'rgb(' + transformed[0] + ','+ transformed[1] + ',' +transformed[2] + ')';
+      return 'rgb(' + transformed[0] + ',' + transformed[1] + ',' + transformed[2] + ')';
     },
 
     getCard: function() {
@@ -185,27 +186,31 @@
     },
 
     colorMaker: function() {
-
+     if (!this.skills) return;
       // pass in color ids into subfunction
       var fader = this.fadeDown.bind(this);
 
       var completedSkills = [];
 
-      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
+      if (this.studentskills) {
+        this.studentskills.forEach(function(item) {
+          completedSkills.push(item.skill._id)
+        });
+      }
 
       var that = this;
 
       this.skills.forEach(function(item) {
-        if(completedSkills.indexOf(item["_id"]) >= 0) {
+        if (completedSkills.indexOf(item["_id"]) >= 0) {
           item.color = "#FFCC00";
         } else {
           var uniq = item.problemGenId * 14;
 
-          var red   = Math.floor(Math.sin(.1*uniq + 0) * 127 + 128);
-          var green = Math.floor(Math.sin(.1*uniq + 2) * 127 + 128);
-          var blue  = Math.floor(Math.sin(.1*uniq + 4) * 127 + 128);
+          var red = Math.floor(Math.sin(.1 * uniq + 0) * 127 + 128);
+          var green = Math.floor(Math.sin(.1 * uniq + 2) * 127 + 128);
+          var blue = Math.floor(Math.sin(.1 * uniq + 4) * 127 + 128);
 
-          var darkerColor = 'rgb(' + red + ','+ green + ',' + blue + ')';
+          var darkerColor = 'rgb(' + red + ',' + green + ',' + blue + ')';
 
           item.color = fader(darkerColor);
         }
@@ -216,7 +221,9 @@
       this.colorMaker();
       var completedSkills = [];
 
-      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
+      this.studentskills.forEach(function(item) {
+        completedSkills.push(item.skill._id)
+      });
 
       var data = this.skills;
       var that = this;
@@ -246,17 +253,17 @@
         })
         .attr("d", arc)
         .style("fill", function(d) {
-          if(completedSkills.indexOf(d.data["_id"]) >= 0) {
+          if (completedSkills.indexOf(d.data["_id"]) >= 0) {
             return "#FFCC00";
           } else {
 
-          var uniq = d.data.problemGenId * 14;
+            var uniq = d.data.problemGenId * 14;
 
-          var red   = Math.floor(Math.sin(.1*uniq + 0) * 127 + 128);
-          var green = Math.floor(Math.sin(.1*uniq + 2) * 127 + 128);
-          var blue  = Math.floor(Math.sin(.1*uniq + 4) * 127 + 128);
+            var red = Math.floor(Math.sin(.1 * uniq + 0) * 127 + 128);
+            var green = Math.floor(Math.sin(.1 * uniq + 2) * 127 + 128);
+            var blue = Math.floor(Math.sin(.1 * uniq + 4) * 127 + 128);
 
-          return 'rgb(' + red + ','+ green + ',' + blue + ')';
+            return 'rgb(' + red + ',' + green + ',' + blue + ')';
           }
 
         })
@@ -272,7 +279,7 @@
 
 
           d3.select(this).transition().delay(delay).attrTween("d", function(d) {
-            if(mouseover){
+            if (mouseover) {
               that.hoverselection = d.data.name;
             }
 
@@ -286,16 +293,16 @@
       }
     },
     attached: function() {
-        this.async(function() {
-          var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
-          this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
-          // this.playAnimation('toolbar');
-          this.playAnimation('entry');
+      this.async(function() {
+        var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+        this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+        // this.playAnimation('toolbar');
+        this.playAnimation('entry');
 
-          var draw = this.drawPie.bind(this);
-          setTimeout(draw, 500);
-        });
-      }
+        var draw = this.drawPie.bind(this);
+        setTimeout(draw, 500);
+      });
+    }
   });
   </script>
 </dom-module>
