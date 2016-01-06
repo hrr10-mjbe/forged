@@ -1,9 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="pie-status">
   <template>
-    <!--TODO this should maybe go through Angular to avoid multiple requests, but can't think of a good way to do that-->
-    <!--<iron-ajax auto url="/api/skilltree" handle-as="json" on-response="handleResponse" last-response="{{treeResponse}}"></iron-ajax>
-    <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>-->
     <style>
     :host {
       display: block;
@@ -11,37 +8,39 @@
       background: #444;
       min-height: 800px;
     }
+    
     .box {
       width: 500px;
       min-width: 300px;
     }
+    
     .square-box {
       height: 140px;
       width: 140px;
       cursor: pointer;
     }
-
+    
     #holder {
       position: relative;
       margin: 0 auto;
     }
-
+    
     li {
       width: 50%;
       padding: 5px 20px;
     }
-
+    
     .piebox {
-        background: #444;
-        height: 250px;
-        width: 250px;
+      background: #444;
+      height: 250px;
+      width: 250px;
     }
-
+    
     paper-material {
       margin: 10px;
       padding: 10px;
     }
-
+    
     .toolbar-header {
       height: 80px;
       overflow: auto;
@@ -51,33 +50,27 @@
       max-width: 760px;
       margin: 40px auto;
     }
-
+    
     h3 {
       margin: 0px auto;
     }
-
-    .tileholder{
+    
+    .tileholder {
       max-width: 800px;
       margin: 40px auto 0;
     }
-
     </style>
     <paper-toolbar class="toolbar-header" style$="background-color: [[hoverbackground]]">
       <h3>Go to: [[hoverselection]]</h3>
     </paper-toolbar>
-<!--     <div class="tile layout horizontal center-justified">
-      <paper-material elevation="0" class="piebox">
-          <div id="holder"></div>
-      </paper-material>
-    </div> -->
     <div class="bar horizontal layout around-justified wrap tile tileholder">
       <div class="box tile horizontal layout around-justified wrap flex">
         <template is="dom-repeat" items="{{skills}}">
-            <paper-material elevation="1" style$="background-color: {{item.color}}" class="square-box" data-custom$="{{item._id}}" on-tap="tapHandler" data-name$="{{item.name}}" on-mouseover="hoverselect" on-mouseout="hoverleave" data-color$="{{item.color}}">
-              <h3 data-custom$="{{item._id}}" id="{{item.name}}" data-name$="{{item.name}}" on-mouseover="hoverselect" on-mouseout="hoverleave" >{{item.name}}</h3>
-            </paper-material>
+          <paper-material elevation="1" style$="background-color: {{item.color}}" class="square-box" data-custom$="{{item._id}}" on-tap="tapHandler" data-name$="{{item.name}}" on-mouseover="hoverselect" on-mouseout="hoverleave" data-color$="{{item.color}}">
+            <h3 data-custom$="{{item._id}}" id="{{item.name}}" data-name$="{{item.name}}" on-mouseover="hoverselect" on-mouseout="hoverleave">{{item.name}}</h3>
+          </paper-material>
         </template>
-    </div>
+      </div>
   </template>
   <script src="https://d3js.org/d3.v3.min.js"></script>
   <script>
@@ -92,8 +85,7 @@
 
     properties: {
       hoverselection: {
-        type: String,
-        // observer: "getCard"
+        type: String
       },
       hovercolor: {
         type: String
@@ -145,7 +137,7 @@
     clickHandler: function(d) {
       this.userselection = d.data._id;
     },
-   
+
     parseSkills: function(loadskills) {
       try {
         return JSON.parse(loadskills);
@@ -161,49 +153,49 @@
     fadeDown: function(currentcolor) {
       var rgb = currentcolor;
       rgb = rgb.replace(/[^\d,]/g, '').split(',');
-      if(rgb.length < 3) {
-        rgb = [0,0,0];
+      if (rgb.length < 3) {
+        rgb = [0, 0, 0];
       }
-      var transformed = rgb.map(function(val){
+      var transformed = rgb.map(function(val) {
         val = val || 0;
-          if(~~val < 100) {
-            return ~~val + 100;
-          } else if (~~val + 40 < 255) {
-            return ~~val + 70;
-          } else {
-            return 255;
-          }
+        if (~~val < 100) {
+          return ~~val + 100;
+        } else if (~~val + 40 < 255) {
+          return ~~val + 70;
+        } else {
+          return 255;
+        }
       })
-      return 'rgb(' + transformed[0] + ','+ transformed[1] + ',' +transformed[2] + ')';
-    },
-
-    getCard: function() {
-      // console.log(this.hoverselection);
-      // document.getElementById(this.hoverselection).style.color = 'white';
+      return 'rgb(' + transformed[0] + ',' + transformed[1] + ',' + transformed[2] + ')';
     },
 
     colorMaker: function() {
+      if (!this.skills) return;
 
       // pass in color ids into subfunction
       var fader = this.fadeDown.bind(this);
 
       var completedSkills = [];
 
-      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
+      if (this.studentskills) {
+        this.studentskills.forEach(function(item) {
+          completedSkills.push(item.skill._id)
+        });
+      }
 
       var that = this;
 
       this.skills.forEach(function(item) {
-        if(completedSkills.indexOf(item["_id"]) >= 0) {
+        if (completedSkills.indexOf(item["_id"]) >= 0) {
           item.color = "#FFCC00";
         } else {
           var uniq = item.problemGenId * 14;
 
-          var red   = Math.floor(Math.sin(.1*uniq + 0) * 127 + 128);
-          var green = Math.floor(Math.sin(.1*uniq + 2) * 127 + 128);
-          var blue  = Math.floor(Math.sin(.1*uniq + 4) * 127 + 128);
+          var red = Math.floor(Math.sin(.1 * uniq + 0) * 127 + 128);
+          var green = Math.floor(Math.sin(.1 * uniq + 2) * 127 + 128);
+          var blue = Math.floor(Math.sin(.1 * uniq + 4) * 127 + 128);
 
-          var darkerColor = 'rgb(' + red + ','+ green + ',' + blue + ')';
+          var darkerColor = 'rgb(' + red + ',' + green + ',' + blue + ')';
 
           item.color = fader(darkerColor);
         }
@@ -212,34 +204,31 @@
 
     hoverselect: function(e) {
       var completedSkills = [];
-      this.studentskills.forEach(function(item){completedSkills.push(item.skill._id)});
+      this.studentskills.forEach(function(item) {
+        completedSkills.push(item.skill._id)
+      });
       this.hoverselection = e.target.getAttribute('data-name');
 
-      if(completedSkills.indexOf(e.target.getAttribute('data-custom')) >= 0) {
+      if (completedSkills.indexOf(e.target.getAttribute('data-custom')) >= 0) {
         this.hoverbackground = "#FFCC00";
       } else {
         this.hoverbackground = this.fadeDown(e.target.getAttribute('data-color'));
       }
       e.target.setAttribute('elevation', 5);
-      // document.getElementById(this.hoverselection).style.color = '#EFEFEF';
     },
 
     hoverleave: function(e) {
       e.target.setAttribute('elevation', 1);
-      // document.getElementById(this.hoverselection).style.color = 'black';
     },
 
     attached: function() {
-        this.async(function() {
-          var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
-          this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
-          // this.playAnimation('toolbar');
-          this.playAnimation('entry');
+      this.async(function() {
+        var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
+        this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
+        this.playAnimation('entry');
 
-          var draw = this.drawPie.bind(this);
-          setTimeout(draw, 500);
-        });
-      }
+      });
+    }
   });
   </script>
 </dom-module>
