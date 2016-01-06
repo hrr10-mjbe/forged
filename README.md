@@ -1,6 +1,12 @@
-# hrr10-mjbe
+# ForgED
 
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.0.1.
+> An adaptive learning platform to meet individualized student needs
+
+## Team
+
+  - __Product Owner__: Eric Hollenberry
+  - __Scrum Master__: Ben Pochily
+  - __Development Team Members__: Jeff Cousins, Mike Lee
 
 ## Getting Started
 
@@ -29,3 +35,7 @@ Run `grunt build` for building and `grunt serve` for preview.
 ## Testing
 
 Running `npm test` will run the unit tests with karma.
+
+## Contributing
+
+See [CONTRIBUTING.md](CONTRIBUTING.md) for contribution guidelines.
