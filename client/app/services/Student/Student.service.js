@@ -218,6 +218,9 @@ angular.module('hrr10MjbeApp')
       getUser(function(user) {
         if (!user) return cb(0);
         var time = Date.now();
+        if (!user.studentData.times) {
+          user.studentData.times = {};
+        }
         cb(user.studentData.times[time - time % (24 * 60 * 60 * 1000)] || 0);
       })
     }
