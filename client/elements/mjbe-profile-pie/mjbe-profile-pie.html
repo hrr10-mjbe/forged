@@ -1,9 +1,6 @@
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <dom-module id="mjbe-profile-pie">
   <template>
-    <!--TODO this should maybe go through Angular to avoid multiple requests, but can't think of a good way to do that-->
-    <!--<iron-ajax auto url="/api/skilltree" handle-as="json" on-response="handleResponse" last-response="{{treeResponse}}"></iron-ajax>
-    <iron-ajax auto url="/api/skills" handle-as="json" on-response="drawPie" last-response="{{ajaxResponse}}"></iron-ajax>-->
     <style>
     :host {
       display: block;
@@ -94,8 +91,7 @@
 
     properties: {
       hoverselection: {
-        type: String,
-        // observer: "getCard"
+        type: String
       },
       hovercolor: {
         type: String
@@ -178,11 +174,6 @@
         }
       })
       return 'rgb(' + transformed[0] + ',' + transformed[1] + ',' + transformed[2] + ')';
-    },
-
-    getCard: function() {
-      // console.log(this.hoverselection);
-      // document.getElementById(this.hoverselection).style.color = 'white';
     },
 
     colorMaker: function() {
@@ -296,7 +287,6 @@
       this.async(function() {
         var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
         this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
-        // this.playAnimation('toolbar');
         this.playAnimation('entry');
 
         var draw = this.drawPie.bind(this);
