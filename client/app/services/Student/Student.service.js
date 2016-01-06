@@ -103,8 +103,6 @@ angular.module('hrr10MjbeApp')
     this.getSkillRoot = function(cb) {
       getUser(function(user) {
         //what to do here
-        console.log('getting skill root');
-        console.log(user.studentData.skillRoot);
         cb(user.studentData.skillRoot);
       })
     }

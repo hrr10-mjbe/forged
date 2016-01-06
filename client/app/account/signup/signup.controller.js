@@ -40,16 +40,12 @@ class SignupController {
   }
 
   polymerChange = function() {
-    console.log('polymerchange')
-    console.log('this.signup is ... ' + this.signup)
     if (this.signup === 'true') {
       this.signUpPolymer();
     }
   }
 
   signUpPolymer = function() {
-    console.log('sigining up name');
-    console.log(this.user.name);
     this.Auth.createUser({
       name: this.user.name,
       email: this.user.email,
@@ -62,7 +58,6 @@ class SignupController {
     })
     .catch(err => {
       // TO-DO: err.data may have more specific error messages.
-      console.log(err.data);
       this.errormessage = 'Error creating your account.';
       this.signup = 'false';
     });
