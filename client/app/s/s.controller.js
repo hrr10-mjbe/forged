@@ -12,7 +12,6 @@
         this.type = skill.problemGenId;
       }.bind(this));
       Student.getModifications(function(mod) {
-        console.log(mod);
         this.showCanvas = mod.showWhiteboard;
         this.showTimer = mod.showTimer;
         this.showLeaderboard = mod.showLeaderboard;
@@ -31,14 +30,10 @@
 
     finish() {
       if (this.complete === 'true') {
-        console.log('completed skill');
-        console.log(this.Student);
         this.Student.addOrUpdateSkill(this.skill._id, 1, function() {
           this.Student.awardBadges(function(badges) {
-            console.log('new badges ' + badges);
           });
         }.bind(this));
-
       }
     }
 

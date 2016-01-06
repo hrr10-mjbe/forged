@@ -27,7 +27,6 @@
       Student.getSkills(function(skills) {
         this.studentSkills = skills;
         this.studentSkillsData = JSON.stringify(skills);
-        console.log(skills);
       }.bind(this));
     }
 
