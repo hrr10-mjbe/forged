@@ -151,6 +151,7 @@
     },
 
     fadeDown: function(currentcolor) {
+      if (!currentcolor) return;
       var rgb = currentcolor;
       rgb = rgb.replace(/[^\d,]/g, '').split(',');
       if (rgb.length < 3) {
