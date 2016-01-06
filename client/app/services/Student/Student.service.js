@@ -20,7 +20,6 @@ angular.module('hrr10MjbeApp')
             url: '/api/defaultuser'
           }).then(function(res) {
             defaultUser = res.data;
-            console.log(defaultUser);
             cb(null);
           })
         }

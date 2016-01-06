@@ -290,14 +290,12 @@
       },
 
       userselect: function() {
-        console.log(this.userselection, 'this is the observer');
       },
     
       attached: function() {
         this.async(function() {
           var nodeList = Polymer.dom(this.root).querySelectorAll('.tile');
           this.animationConfig['entry'][0].nodes = Array.prototype.slice.call(nodeList);
-          // this.playAnimation('toolbar');
           this.playAnimation('entry');
         });
         this.quote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -307,15 +305,11 @@
 
       parse: function(load) {
         try {
-          console.log('loading');
-          console.log(load);
           return JSON.parse(load);
         } catch (e) {}
       },
 
       noBadge: function() {
-        console.log('nobadge');
-        console.log(!this.badge);
         return !this.badge;
       },
 

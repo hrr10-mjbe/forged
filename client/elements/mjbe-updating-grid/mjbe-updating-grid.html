@@ -32,7 +32,6 @@
     },
     drawChart: function(data) {
       var chart = document.getElementById('mutating_chart');
-      console.log('this is drawchart firing');
       chart.rows = data;
     },
     parse: function(json) {
@@ -45,10 +44,6 @@
       if (!times) return [];
       var data = [];
       for (var key in times) {
-        console.log(key);
-        console.log(new Date(key));
-        console.log(typeof times[key]);
-        console.log('pushing ' + [(new Date(Number.parseInt(key))).toDateString(), times[key]])
         data.push([(new Date(Number.parseInt(key))).toDateString(), parseFloat(times[key] / 60)]);
       }
       this.drawChart(data);

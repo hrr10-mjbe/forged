@@ -137,7 +137,6 @@
       isTeacher: function(callback) {
         Auth.getCurrentUser(null)
         .then(function(user) {
-          console.log(user.type);
           safeCb(callback)(user.type && user.type === 'teacher');
         })
       },

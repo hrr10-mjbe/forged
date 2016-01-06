@@ -5,8 +5,6 @@ angular.module('hrr10MjbeApp')
 
     var user, activeClass;
 
-    //var indexOfId(arr, )
-
     var hasClass = function(classes, name) {
       for (var i = 0; i < classes.length; i++) {
         if (classes[i].name.toLowerCase() === name.toLowerCase()) return true;
@@ -48,10 +46,7 @@ angular.module('hrr10MjbeApp')
     var save = function(cb) {
       getUser(function(teacher) {
         teacher.$update({}, function(res) {
-          console.log('Saved and got: ');
-          console.log(res.teacherData);
           user.teacherData = res.teacherData;
-          console.log(cb);
           Util.safeCb(cb)();
         }, function(err) {
           console.log(err);
@@ -95,7 +90,6 @@ angular.module('hrr10MjbeApp')
 
     this.getClasses = function(cb) {
       getUser(function(teacher) {
-        console.log(teacher.teacherData);
         cb(teacher.teacherData.classes);
       })
     }
@@ -156,11 +150,7 @@ angular.module('hrr10MjbeApp')
     }
 
     this.setIndividualModifications = function(classId, studentId, mod, cb) {
-      console.log('in ind');
-      console.log(mod);
       this.getStudent(classId, studentId, function(student) {
-        console.log('setting mods on student')
-        console.log(studentId);
         $http({
           method: 'PUT',
           url: '/api/users/updatestudentmod',
