@@ -184,9 +184,9 @@ angular.module('hrr10MjbeApp')
         console.log('in getmod');
         console.log(user.studentData);
         var ret = {
-          showTimer: user.studentData.modifications.showTimer !== undefined ? user.studentData.modifications.showTimer : user.studentData.myClass.modifications.showTimer,
-          showLeaderboard: user.studentData.modifications.showLeaderboard !== undefined ? user.studentData.modifications.showLeaderboard : user.studentData.myClass.modifications.showLeaderboard,
-          showWhiteboard: user.studentData.modifications.showWhiteboard !== undefined ? user.studentData.modifications.showWhiteboard : user.studentData.myClass.modifications.showWhiteboard
+          showTimer: user.studentData.modifications.showTimer !== undefined ? user.studentData.modifications.showTimer : (user.studentData.myClass ? user.studentData.myClass.modifications.showTimer : true),
+          showLeaderboard: user.studentData.modifications.showLeaderboard !== undefined ? user.studentData.modifications.showLeaderboard : (user.studentData.myClass ? user.studentData.myClass.modifications.showLeaderboard : false),
+          showWhiteboard: user.studentData.modifications.showWhiteboard !== undefined ? user.studentData.modifications.showWhiteboard : (user.studentData.myClass ? user.studentData.myClass.modifications.showWhiteboard : true)
         }
         cb(ret);
       });

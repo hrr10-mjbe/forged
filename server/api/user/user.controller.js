@@ -272,7 +272,7 @@ exports.leaderboard = function(req, res, next) {
     })
     .exec(function(err, teacher) {
       if (err || !teacher) {
-        res.status(404).end();
+        return res.status(404).end();
       }
       console.log('found teacher');
       console.log(teacher);
@@ -280,7 +280,7 @@ exports.leaderboard = function(req, res, next) {
       //look up the student's class
       var theClass = teacher.teacherData.classes.id(req.user.studentData.myClass._id);
       if (!theClass) {
-        res.status(404).end();
+        return res.status(404).end();
       }
       console.log('theclass:');
       console.log(theClass);
