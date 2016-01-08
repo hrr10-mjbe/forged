@@ -1,0 +1,92 @@
+<dom-module id="mjbe-landing">
+  <template>
+    <style>
+    :host {
+      display: block;
+      background: #444444;
+    }
+    
+    paper-card {
+      margin: 25px;
+      max-width: 60%;
+      position: float;
+      background-color: rgba(255, 204, 0, .7);
+      padding: 30px;
+      left: 18%
+    }
+    
+    .photo {
+      position: absolute;
+      background-image: url('../../elements/about-us/about-us.jpg');
+      background-size: 100%;
+      height: calc(100% - 48px);
+      width: 100%;
+    }
+    
+    .quote {
+      background-color: rgba(0, 0, 0, 0);
+      font-size: 25px;
+      margin: 0;
+      padding: 0 30px;
+      color: rgba(255, 255, 255, .8);
+      text-align: right;
+      width: 50%;
+      left: 30%;
+    }
+    
+    .quotetext {
+      top: 0;
+    }
+    
+    .square {
+      max-width: 150px;
+      max-height: 150px;
+      background: none;
+      margin: 10px;
+      left: 2.5%;
+    }
+    
+    .circle {
+      display: inline-block;
+      box-sizing: border-box;
+      min-width: 200px;
+      min-height: 200px;
+      margin: 16px;
+      border-radius: 50%;
+      background: var(--color-one);
+      background-size: 200px;
+      background-position: center;
+    }
+    
+    .circle:hover {
+      opacity: 1;
+      transition: opacity .5s ease;
+    }
+    </style>
+    <div>
+      <div class="photo"></div>
+      <paper-card heading="Crafted in New York">
+        <div class="card-content">Project ForgED is the result of teaching experience based on two principles.
+          <br>
+          <br> 1) Learning should be fun.
+          <br>
+          <br> 2) Learning is NOT the same for every student.
+          <br>
+          <br> Our industrialized school system is based on factory principles and the relentless molding of students into one shape, outliers cast aside or forgotten. It's not working.
+          <br>
+          <br> Ask any teacher, parent, or guardian: What's different about your child(ren)? You'll certainly get an answer. Students are unique. Everyone is unique. The tools to forge each student and to ignite their passion for learning are dramatically varied. Far beyond aptitude, behavior and determination play huge roles in the classroom and at home.
+          <br>
+          <br> Through world class, cutting-edge technology, forgED provides students with the opportunity to thrive, grow, and ignite their passion, on an individualized and completely personal level.</div>
+      </paper-card>
+      <paper-card class="quote">
+        <span><i><b>For the mind does not require filling like a bottle, but rather, like wood, it only requires kindling to create in it an impulse to think independently and an ardent desire for the truth.</b></i>
+        <br> - Plutarch</span>
+      </paper-card>
+    </div>
+  </template>
+  <script>
+  Polymer({
+    is: 'mjbe-landing',
+  });
+  </script>
+</dom-module>
