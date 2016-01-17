@@ -1,7 +1,8 @@
 # ForgED
 
 > An adaptive learning platform to meet individualized student needs
-> Demo video: [http://www.youtube.com/watch?v=0Y_gc3er1jE&feature=youtu.be](ForgED Demo)
+>
+> Demo video: [ForgED Demo](http://www.youtube.com/watch?v=0Y_gc3er1jE&feature=youtu.be)
 
 ## Team
 
